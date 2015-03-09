@@ -1,0 +1,293 @@
+% \chapter{Implementation of the Package Dedicated to the
+% \gztcl{}' Documentation}
+% \label{Package}
+%
+% Now comes the (undocumented) code of package dedicated to the \gztcl{}' documentation.
+%
+%    \begin{macrocode}
+%<*class-doc-package>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\let\maketitle\oldmaketitle
+\newcommand{\includeall}{%
+  \renewcommand\includeonly[1]{}%
+  % \let\include\input%
+}%
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{xpatch}
+\RequirePackage[lining]{libertine}%
+\RequirePackage{todonotes}
+\RequirePackage[a4paper,hmargin={6cm,2.25cm}]{geometry}
+\RequirePackage[xparse,documentation]{tcolorbox}
+\RequirePackage{hologo}
+\RequirePackage{expl3}
+\RequirePackage[autostyle=once]{csquotes}
+\RequirePackage{iflang}%
+\RequirePackage{xifthen}%
+\RequirePackage{varioref}
+\RequirePackage{babel}
+\RequirePackage{hyperref}
+\RequirePackage[xindy,toc]{glossaries}%
+\RequirePackage{glossaries-babel}%
+% \RequirePackage{cleveref}%
+%
+\makeglossaries
+\loadglsentries{glossaries/glossary}
+\loadglsentries{glossaries/acronyms}
+%
+\setglossarystyle{indexhypergroup}
+\setacronymstyle{long-sc-short}
+%
+% For the documentation, using \Cls{ltxdoc}, we need to
+% perform some changes in \Pkg{glossaries} provided by its author.
+\renewcommand*{\newacronymhook}{%
+  \edef\tmp{\noexpand\textsc{\the\glsshorttok}}%
+  \expandafter\glsshorttok\expandafter{\tmp}%
+}%
+\renewcommand*{\acrpluralsuffix}{\textup{\glspluralsuffix}}
+%
+\renewcommand{\ttdefault}{lmtt}
+%
+\hypersetup{colorlinks}%
+%
+\AtBeginDocument{%
+  \renewcommand*{\meta}[2][meta]{%
+    \bgroup%
+    \normalfont
+    \ttfamily%
+    \textcolor{#1}{$\langle$\emph{#2}$\rangle$}%
+    \egroup%
+  }%
+}%
+%
+% \setlength   \textwidth      { 385pt }
+% \addtolength \marginparwidth {  30pt }
+% \addtolength \oddsidemargin  {  20pt }
+% \addtolength \evensidemargin {  20pt }
+%
+\AtBeginDocument
+  {
+    \MakeShortVerb \"
+  }
+\AtEndDocument
+  {
+    \DeleteShortVerb \"
+  }
+%
+\colorlet{texcs}{blue}
+\colorlet{environment}{teal}
+\colorlet{key}{purple}
+\colorlet{value}{violet}
+\colorlet{keyword4}{key}
+\colorlet{keyword5}{magenta}
+\colorlet{comment}{gray}
+\colorlet{string}{cyan}
+\colorlet{meta}{brown}
+\colorlet{preamble}{violet}
+%
+\lstset{%
+  escapeinside=~~,
+  breaklines=true,
+  basicstyle=\normalfont\ttfamily,
+  commentstyle=\color{comment},
+  keywordstyle=\color{environment},
+  keywordstyle=[2]\color{key},
+  keywordstyle=[3]\color{value},
+  keywordstyle=[4]\color{keyword4},
+  keywordstyle=[5]\color{keyword5},
+  stringstyle=\color{string},
+  columns=flexible,
+  % prebreak={\space\Righttorque},
+  % postbreak={\space\Lefttorque}
+}%
+\lstdefinestyle{dbtex}{%
+  language=[LaTeX]TeX,
+  alsolanguage=[extLaTeX]TeX,
+  alsolanguage=[gzt]TeX,
+  alsolanguage=[glossaries]TeX,
+  alsolanguage=[biblatex]TeX,
+  alsolanguage=[tcolorbox]TeX,
+  texcsstyle=*\color{texcs},
+  % numbers=left,
+  numberstyle=\small,
+}%
+%
+\tcbset{%
+  /tcb/doclang/environment content=contenu de l'environnement,
+  /tcb/doclang/color= (couleur),
+  /tcb/doclang/colors=Couleurs,
+  /tcb/doclang/environments=Environnements,
+  /tcb/doclang/keys=Clés,
+  /tcb/doclang/values=Valeurs,
+  /tcb/doclang/pageshort=p.,
+  /tcb/documentation listing style=dbtex,
+  /tcb/color command=texcs,
+  /tcb/color environment=environment,
+  /tcb/color key=key,
+  /tcb/color value=value,
+  index format=pgfchapter,
+  index colorize,
+  index annotate=false,
+  enhanced,
+  % index actual={},
+  every box/.style={documentation listing style=dbtex},
+  % doc left indent=-15mm,
+  % doc right indent=-15mm+2em
+}%
+\tcbset{codes/.style={%
+    listing only,
+    enlarge top by=1mm,
+    colframe=ExampleFrame,
+    colback=ExampleBack,
+    fonttitle=\bfseries,
+    fontupper=\small,
+    enhanced,
+    listing options={style=dbtex}
+  }%
+}%
+\newtcblisting{origpreamblecode}[1][]{%
+  % beamer,%
+  codes,%
+  drop lifted shadow,
+  #1%
+}%
+\newtcblisting{origbodycode}[1][]{%
+  codes,%
+  #1%
+}%
+\begingroup%
+\catcode`\^^M\active%
+\global\def\activeeol{^^M}%
+\endgroup%
+\newenvironment{preamblecode}{%
+  \@ifnextchar[\YAD@preamblecode@\YAD@preamblecode@noargs%]
+}{%
+  \endorigpreamblecode%
+}%
+\def\YAD@preamblecode@[#1]{%
+  \origpreamblecode[#1]%
+}%
+\def\YAD@preamblecode@noargs#1{%
+  \edef\temp{[]\activeeol\string#1}%
+  \expandafter\YAD@preamblecode@\temp%
+}%
+\newenvironment{bodycode}{%
+  \@ifnextchar[\YAD@bodycode@\YAD@bodycode@noargs%
+}{%
+  \endorigbodycode%
+}%
+\def\YAD@bodycode@[#1]{%
+  \origbodycode[#1]%
+}%
+\def\YAD@bodycode@noargs#1{%
+  \edef\temp{[]\activeeol\string#1}%
+  \expandafter\YAD@bodycode@\temp%
+}%
+\tcbset{samples/.style={%
+    codes,
+    % listing options={rangebeginprefix=\\,rangeendsuffix=\}}
+  }%
+}%
+\def\tcb@Index@Print@C#1#2{%
+  \iftcb@doc@colorize%
+  \textcolor{#2}{\texttt{\detokenize{#1}}}%
+  \else%
+  \texttt{\detokenize{#1}}%
+  \fi%
+}
+
+\def\tcb@Index@Print@Ccs#1#2{%
+  \iftcb@doc@colorize%
+  \textcolor{#2}{\texttt{\cs{}\detokenize{#1}}}%
+  \else%
+  \texttt{\cs{}\detokenize{#1}}%
+  \fi%
+}
+
+\renewrobustcmd{\tcbIndexPrintComC}[1]{%
+  \tcb@Index@Print@Ccs{#1}{\kvtcb@col@command}%
+}
+% \tcbset{index format=doc}
+\tcbset{index german settings}
+%
+\DeclareTotalTCBox{\myverb}{ v }{verbatim,
+  % colframe=red!75!black
+  ,colupper=blue}{#1}
+%
+\DeclareRobustCommand*{\pkg}{%
+  \texorpdfstring{%
+    \@ifstar{\pkg@star}{\pkg@nostar}%
+  }{%
+    \pkg@nostar%
+  }%
+}
+\DeclareRobustCommand*{\pkg@star}[2][]{%
+  \ifthenelse{\isempty{#1}}{%
+    \href{http://www.ctan.org/pkg/#2}{\textsf{#2}}%
+  }{%
+    \href{#1}{\textsf{#2}}%
+  }%
+}
+\DeclareRobustCommand*{\pkg@nostar}[2][]{%
+  \textsf{#2}%
+}
+\DeclareRobustCommand*{\Pkg}[2][]{%
+  \IfLanguageName{french}{paquet }{}%
+  \@ifstar{\pkg@star[#1]{#2}}{\pkg@nostar[#1]{#2}}%
+  \IfLanguageName{english}{ package}{}%
+  % \xspace%
+}
+%
+\DeclareRobustCommand*{\cls}{\pkg}
+\DeclareRobustCommand*{\Cls}[2][]{%
+  \IfLanguageName{french}{classe }{}%
+  \texorpdfstring{%
+    \@ifstar{\pkg@star[#1]{#2}}{\pkg@nostar[#1]{#2}}%
+  }{%
+    \pkg@nostar%
+  }%
+  \IfLanguageName{english}{ class}{}%
+  % \xspace%
+}%
+\DeclareRobustCommand*{\file}[1]{\bgroup% \color{magenta}
+  \texttt{#1}\egroup}
+\DeclareRobustCommand*{\File}[1]{%
+  \IfLanguageName{french}{fichier }{}%
+  \file{#1}%
+  \IfLanguageName{english}{ file}{}%
+  \xspace%
+}%
+\DeclareRobustCommand*{\directory}{\file}
+\DeclareRobustCommand*{\Directory}[1]{%
+  \IfLanguageName{french}{répertoire }{}%
+  \directory{#1}%
+  \IfLanguageName{english}{ directory}{}%
+  \xspace%
+}%
+\DeclareRobustCommand*{\program}{\file}
+%
+\DeclareRobustCommand*{\gzt}{\textsl{\texttt{gzt}}}
+\DeclareRobustCommand*{\gztpa}{\textsl{\texttt{gzt-doc}}}
+\DeclareRobustCommand*{\gztcl}{\Cls{\gzt}}
+%    \end{macrocode}
+% Hack for allowing \docAuxEnvironment*{macro} environment to describe macros
+% with "_" in their names.
+%    \begin{macrocode}
+\catcode`\_=\active
+\def_{\relax\ifmmode\sb \else \_\fi}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class-doc-package>
+%    \end{macrocode}
+%
+
+% \endinput
+
+% Local Variables:
+% mode: doctex
+% TeX-command-default: "TeX"
+% TeX-master: "gzt"
+% End:

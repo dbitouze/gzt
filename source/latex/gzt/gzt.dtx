@@ -1,0 +1,6063 @@
+% \iffalse meta-comment
+%
+% File: gzt.dtx Copyright (C) 2014, 2015 by
+%  Denis Bitouz'e <denis.bitouze@lmpa.univ-littoral.fr>
+%
+% It may be distributed and/or modified under the conditions of the
+% LaTeX Project Public License (LPPL), either version 1.3c of this
+% license or (at your option) any later version.  The latest version
+% of this license is in the file
+%
+%    http://www.latex-project.org/lppl.txt
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Denis Bitouz'e.
+%
+% This work consists of the files gzt.dtx and gzt.ins
+% and the derived filebase gzt.cls.
+%
+%<*internal>
+\iffalse
+%</internal>
+%<*readme>
+-----------------------------------------------------------------------------
+gzt --- SMF class for the French journal "La gazette des math'ematiciens",
+            version 0.1
+
+E-mail: denis.bitouze@lmpa.univ-littoral.fr
+Released under the LaTeX Project Public License v1.3c or later
+See http://www.latex-project.org/lppl.txt
+-----------------------------------------------------------------------------
+
+`gzt' is the new SMF class for the French journal "La gazette des
+math'ematiciens".
+
+Installation
+------------
+
+The class is supplied in dtx format. If you want to unpack the dtx yourself,
+running 'tex gzt.dtx' will extract the class whereas 'pdflatex
+gzt.dtx will extract it and also typeset the documentation.
+
+Typesetting the documentation also requires a number of packages in addition to
+those needed to use the gzt class.  To compile the documentation without
+error, you will need the packages:
+
+...
+
+%</readme>
+%<*internal>
+\fi
+\def\nameofplainTeX{plain}
+\ifx\fmtname\nameofplainTeX\else
+  \expandafter\begingroup
+\fi
+%</internal>
+%<*install>
+\input l3docstrip.tex
+% \input docstrip.tex
+\Msg{********************************************************}
+\Msg{* Installation}
+\Msg{* Class: gzt 2015/02/27 v0.9}
+\Msg{* for the French journal}
+\Msg{* "La gazette des math'ematiciens" (DB)}
+\Msg{********************************************************}
+\keepsilent
+\askforoverwritefalse
+\preamble
+-----------------------------------------------------------------------------
+gzt --- SMF class for the French journal "La gazette des math'ematiciens",
+            version 0.1
+E-mail: denis.bitouze@lmpa.univ-littoral.fr
+Released under the LaTeX Project Public License v1.3c or later
+See http://www.latex-project.org/lppl.txt
+-----------------------------------------------------------------------------
+\endpreamble
+\postamble
+% Copyright (C) 2014, 2015 by Denis Bitouz'e <denis.bitouze@lmpa.univ-littoral.fr>
+----------------------------------------------------------------------------
+This work may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either version 1.3
+of this license or (at your option) any later version.
+The latest version of this license is in
+  http://www.latex-project.org/lppl.txt
+and version 1.3 or later is part of all distributions of LaTeX
+version 2005/12/01 or later.
+
+This work has the LPPL maintenance status `maintained'.
+
+The Current Maintainer of this work is Denis Bitouz'e.
+
+This work consists of the file  gzt.dtx
+          and the derived files gzt.cls,
+                                gzt.ins,
+                                gzt.pdf,
+                                gzt-doc.sty,
+                                and a number of configuration files.
+\endpostamble
+%
+\def\GZT@classname{\jobname}
+\def\GZT@packagename{\GZT@classname-doc}
+\def\GZT@logo{\GZT@classname-logo}
+\def\GZT@addons{addons}
+\usedir{/}
+\generate{
+  \nopreamble\nopostamble
+  \file{README}{\from{\jobname.dtx}{readme}}
+}%
+\usedir{tex/latex/\GZT@classname}
+\generate{%
+  \file{\GZT@classname.cls}{\from{\jobname.dtx}{class}}
+  \file{\GZT@classname article.cls}{\from{\jobname.dtx}{class-article}}
+  \file{\GZT@classname.dbx}{\from{\jobname.dtx}{datamodel}}
+  \file{\GZT@classname.lbx}{\from{\jobname.dtx}{languagemodel}}
+  \file{\GZT@classname.cfg}{\from{\jobname.dtx}{configuration}}
+}%
+%</install>
+%<install>\endbatchfile
+%<*internal>
+\usedir{source/latex/\GZT@classname}
+\generate{
+  \file{\GZT@classname.ins}{\from{\jobname.dtx}{install}}
+  \file{\GZT@packagename.sty}{\from{\GZT@packagename.dtx}{class-doc-package}}
+  % \file{\GZT@packagename.sty}{\from{\jobname.dtx}{class-doc-package}}
+  \file{\GZT@classname.drv}{\from{\jobname.dtx}{driver}}%
+  \nopreamble\nopostamble
+  \file{\GZT@logo.tex}{\from{\jobname.dtx}{class-logo}}%
+  \file{lstlang0.sty}{\from{\jobname.dtx}{class-lstlang0}}
+  \file{latexmkrc}{\from{\jobname.dtx}{class-latexmkrc}}
+}%
+\usedir{doc/latex/\GZT@classname}
+\generate{
+  \nopreamble\nopostamble
+  \file{README}{\from{\jobname.dtx}{readme}}
+}%
+\usedir{doc/latex/\GZT@classname/\GZT@addons/completion}
+\generate{%
+  \nopreamble\nopostamble
+  \file{\GZT@classname.cwl}{\from{\jobname.dtx}{class-cwl}}
+}%
+\ifx\fmtname\nameofplainTeX
+  \expandafter\endbatchfile
+\else
+  \expandafter\endgroup
+\fi
+%</internal>
+%
+%<*driver>
+\ProvidesFile{gzt.dtx}
+  [2015/02/27\space v0.9\space SMF class for the French journal "La gazette des math'ematiciens"]
+\RequirePackage{scrlfile}
+\ReplaceClass{article}{report}
+\BeforePackage{doc}{\let\oldmaketitle\maketitle}
+\documentclass[english,french]{ltxdoc}
+\usepackage{gzt-doc}
+%
+\includeall
+\includeonly{%
+  % sections/introduction,
+}%
+\begin{document}
+\tableofcontents
+\DocInput{\jobname.dtx}
+% \DocInput{\jobname-doc.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \changes{v0.9}{2015/02/27}{First public version}%
+%
+% \CheckSum{4413}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%^^A \include{sections/introduction}
+% \include{sections/gztarticle}
+% ^^A\include{sections/gzt}
+% ^^A\include{sections/todo}
+% ^^A\PrintChanges%
+%^^A \printbibliography[heading=bibintoc]
+% ^^A\printglossaries
+% \begingroup
+% \setlength{\parskip}{0pt plus .1pt}
+% ^^A\listoffigures
+% ^^A\listoftables
+% \endgroup
+%^^A  \tcblistof[\chapter*]{dbwarninglist}{Table des avertissements\addcontentsline{toc}{chapter}{Table des avertissements}}%
+%^^A  \tcblistof[\chapter*]{dbremarklist}{Table des remarques\addcontentsline{toc}{chapter}{Table des remarques}}%
+%^^A  \tcblistof[\chapter*]{dbexamplelist}{Table des exemples\addcontentsline{toc}{chapter}{Table des exemples}}%
+%^^A  \tcblistof[\chapter*]{dbfaqlist}{Table des questions\addcontentsline{toc}{chapter}{Table des questions}}%
+%^^A  \printindex
+%
+% \StopEventually{}
+%
+% \selectlanguage{english}
+% \chapter{Auxiliary files}
+%
+% \section{Gazette's logo}
+% \label{sec:gzts-logo}
+% Before the code of the \gztcl{} by itself, we give the begining of the
+% code of the source file of the Gazette's logo (to be compiled with "xelatex").
+%    \begin{macrocode}
+%<*class-logo>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\documentclass{standalone}
+\usepackage{fontspec}
+\usepackage[export]{adjustbox}
+\usepackage[cmyk]{xcolor}
+\usepackage{xparse}
+%
+\setmainfont{HelveticaNeueLTStd-ThEx}
+\newfontfamily\des{HelveticaNeueLTStd-Th}
+\newfontfamily\mathematiciens{HelveticaNeueLTStd-Lt}
+%
+\ExplSyntaxOn
+\tl_new:N \l__gzt_frontmatter_head_text_tl
+\tl_set:Nn \l__gzt_frontmatter_head_text_tl {%
+  \adjustbox{stack=r}
+  {%
+    \addfontfeature{LetterSpace=10}
+    \textcolor{__gzt_generic_light_color}{%
+      \fontsize{21}{0}\selectfont%
+      la\hspace{5mm}%
+      \fontsize{45}{0}\selectfont%
+      Gazette%
+    }%
+    \\[1.7mm]%
+    \fontsize{15}{0}\selectfont%
+    \textcolor{__gzt_generic_light_color}{%
+      \des%
+      \addfontfeature{LetterSpace=6}%
+      des%
+    }%
+    \hspace{2.5mm}%
+    \textcolor{__gzt_generic_dark_color}{%
+      \mathematiciens%
+      \addfontfeature{LetterSpace=6}%
+      Math\'ematiciens%
+    }%
+ }%
+}
+%
+\NewDocumentCommand \frontmatterheadtext {  } {
+  \l__gzt_frontmatter_head_text_tl
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class-logo>
+%    \end{macrocode}
+%
+% \section{(\Pkg{biblatex}) Data model}
+% Before the code of the \gztcl{} by itself, we give the (\pkg{biblatex})
+% data model that enriches the default one for several purposes:
+% \begin{itemize}
+% \item the interviews,
+% \item the books reviews,
+% \item the books advertisements,
+% \item the tributes.
+% \end{itemize}
+%
+%    \begin{macrocode}
+%<*languagemodel>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+  \ProvidesFile{gzt.lbx}
+  \InheritBibliographyExtras{french}% extras are inherited from French...
+  \DeclareBibliographyStrings{%
+    inherit          = {french},% .... as well as all the keys
+    number           = {{\no}{\no}},
+    volume           = {{volume}{vol\adddot}},
+    volumes          = {{volumes}{vol\adddot}},
+  }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</languagemodel>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*datamodel>
+%    \end{macrocode}
+%
+% \subsection{For the interviews}
+%
+% First, we create the new entry type "interview" and the new field
+% "interviewee".
+%    \begin{macrocode}
+% \DeclareDatamodelEntrytypes{interview}
+\DeclareDatamodelFields[type=list,datatype=name]{interviewee}
+%    \end{macrocode}
+%
+% Then, we declare the fields known by the entry type "interview": our new field
+% "interviewee" and the existing one "author".
+%    \begin{macrocode}
+\DeclareDatamodelEntryfields[interview]{
+  interviewee,
+  author
+}
+%    \end{macrocode}
+%
+% An finally, we create the bibliography driver for the "interview" (that seems to
+% create the corresponding new entry).
+%    \begin{macrocode}
+\DeclareBibliographyDriver{interview}{%
+  \printnames{author}~interviewent~\printnames{interviewee}%
+  \usebibmacro{finentry}%
+}
+%    \end{macrocode}
+% %
+% % \subsection{For the tributes}
+% %
+% % First, we create the new entry type "tribute" and the new field
+% % "honouree".
+% %    \begin{macrocode}
+% % \DeclareDatamodelEntrytypes{tribute}
+% % \DeclareDatamodelFields[type=list,datatype=name]{honouree}
+% %    \end{macrocode}
+% %
+% % Then, we declare the fields known by the entry type "tribute": our new field
+% % "honouree" and the existing one "author".
+% %    \begin{macrocode}
+% \DeclareDatamodelEntryfields[tribute]{
+%   honouree,
+%   author
+% }
+% %    \end{macrocode}
+% %
+% % An finally, we create the bibliography driver for the "tribute" (that seems to
+% % create the corresponding new entry).
+% %    \begin{macrocode}
+% \DeclareBibliographyDriver{tribute}{%
+%   \printnames{author}~rendent~hommage~\`a~\printnames{honouree}%
+%   \usebibmacro{finentry}%
+% }
+% %    \end{macrocode}
+%
+% \subsection{For the books reviews}
+%
+% First, we create the new bibliography driver "bookreview" (that seems to
+% create the corresponding new entry).
+%    \begin{macrocode}
+\DeclareBibliographyDriver{bookreview}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{maintitle+title}%
+  \newline\nopunct\newblock
+  \usebibmacro{author/editor+others/translator+others}%
+  \setunit{\labelnamepunct}
+  \newline\nopunct\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \printfield{edition}%
+  \newunit
+  \iffieldundef{maintitle}
+    {\printfield{volume}%
+     \printfield{part}}
+    {}%
+  \newunit
+  \printfield{volumes}%
+  \newunit\newblock
+  \usebibmacro{series+number}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{publisher+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \printlist{language}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+    \usebibmacro{finentry}}
+%    \end{macrocode}
+%
+% Then, we create the new fields "reviewer" and "reviewerinstitution" and make
+% them known by the entry type "bookreview".
+%    \begin{macrocode}
+\DeclareDatamodelFields[type=list,datatype=name]{reviewer}
+\DeclareDatamodelFields[type=list,datatype=literal]{reviewerinstitution}
+\DeclareDatamodelEntryfields[bookreview]{
+  reviewer,
+  reviewerinstitution
+}
+%    \end{macrocode}
+%
+% \subsection{For the books advertisements}
+%
+% First, we create the new bibliography driver "bookadvertisement" (that seems to
+% create the corresponding new entry).
+%    \begin{macrocode}
+\DeclareBibliographyDriver{bookadvertisement}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \textbf{\printfield{series}}%
+  % \usebibmacro{series+number}%
+  \newline\newline\nopunct\newblock
+  {%
+    \Large%
+    \printfield{title}%
+    \newunit\newblock
+  }%
+  \iffieldundef{volume}
+  {}%
+  {\textbf{\printfield{volume}}}
+  \newline\nopunct\newblock
+  \textbf{\printfield{titleaddon}}%
+  \newline\nopunct\newblock
+  \printfield{subtitle}%
+  \newline\nopunct\newblock
+  \usebibmacro{author/editor+others/translator+others}%
+  \setunit{\labelnamepunct}
+  \newline\nopunct\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \printfield{edition}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{publisher+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \printlist{language}%
+  \newline\nopunct\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+    \usebibmacro{finentry}}
+%    \end{macrocode}
+%
+% Then, we create the new fields "publicprice" and "smfprice" and make
+% them known by the entry type "bookadvertisement".
+%    \begin{macrocode}
+\DeclareDatamodelFields[type=field,datatype=literal]{publicprice}
+\DeclareDatamodelFields[type=field,datatype=literal]{smfprice}
+\DeclareDatamodelFields[type=field,datatype=literal]{frenchabstract}
+\DeclareDatamodelFields[type=field,datatype=literal]{englishabstract}
+\DeclareDatamodelFields[type=list,datatype=literal]{copublisher}
+\DeclareDatamodelEntryfields[bookadvertisement]{
+  publicprice,
+  smfprice,
+  frenchabstract,
+  englishabstract,
+  copublisher
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</datamodel>
+%    \end{macrocode}
+%
+% \section{Initial configuration file}
+% Before the code of the \gztcl{} by itself, we give the initial configuration
+% file.
+%
+%    \begin{macrocode}
+%<*configuration>
+%    \end{macrocode}
+%
+% First, we create the new entry type "interview" and the new field
+% "interviewee".
+%    \begin{macrocode}
+%<<COMMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Journal data
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%COMMENT
+\journalsetup{%
+  publisher = \smf,
+  address = Institut Henri Poincar\'e\newline
+            11 rue Pierre et Marie Curie\newline
+            75231 Paris cedex 05,
+  phone = 01 44 27 67 96,
+  fax = 01 40 46 90 96,
+  email = gazette@dma.ens.fr,
+  url = http://smf.emath.fr,
+  issn = 0224-8999
+}
+%<<COMMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SMF President
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%COMMENT
+\president{Peigné, Marc}{}{}
+%<<COMMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Editor in chief
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%COMMENT
+\editorinchief{Adamczewski, Boris}{Institut de Mathématiques de Marseille}{boris.adamczewski@math.cnrs.fr}
+%<<COMMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Editors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%COMMENT
+\editor{Colin, Vincent}{Université de Nantes}{vincent.colin@math.univ-nantes.fr}
+\editor{Ehrhardt, Caroline}{Université Vincennes Saint-Denis}{caroline.ehrhardt@inrp.fr}
+\editor{Gayet, Damien}{Institut Fourier, Grenoble}{damien.gayet@ujf-grenoble.fr}
+\editor{Gouëzel, Sébastien}{Université Rennes 1}{sebastien.gouezel@univ-rennes1.fr}
+\editor{Helffer, Bernard}{Université Paris-Sud}{bernard.helffer@math.u-psud.fr}
+\editor{Loidreau, Pierre}{Université Rennes 1}{pierre.loidreau@univ-rennes1.fr}
+\editor{Planchon, Fabrice}{Université de Nice}{fab@unice.fr}
+\editor{Queffélec, Martine}{Université Lille 1}{Martine.Queffelec@univ-lille1.fr}
+\editor{Seuret, Stéphane}{Université Paris Est Créteil}{seuret@u-pec.fr}
+%<<COMMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Graphic designer
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%COMMENT
+\graphicdesigner{Lozanne, Nathalie}{}{n.lozanne@free.fr}
+%<<COMMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LaTeX class designer (and maintainer(s))
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%COMMENT
+\classdesigner{Bitouzé, Denis}{Université du Littoral Côte d'Opale}{denis.bitouze@lmpa.univ-littoral.fr}
+%<<COMMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Font designer
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%COMMENT
+\fontdesigner{Caignaert, Christophe}{}{}
+%<<COMMENT
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Réglages divers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%COMMENT
+\pgfplotsset{compat=1.12}%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</configuration>
+%    \end{macrocode}
+%
+% \chapter{Implementation of the \gztcl{}}
+%
+% Here comes the code of the \gztcl{}.
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
+% \section{Removability of local customizations}
+%
+% We define two...
+%    \begin{macrocode}
+\def\sectioncommandslist{}%
+\let\saved@ifdefinable\@ifdefinable%
+\let\saved@@ifdefinable\@@ifdefinable%
+\newcommand{\startcustomization}{%
+  % Redefine \@ifdefinable
+  \renewcommand{\@ifdefinable}[2]{%
+    \listadd\sectioncommandslist##1%
+    \saved@ifdefinable{##1}{##2}%
+  }%
+  \renewcommand{\@@ifdefinable}[2]{%
+    \listadd\sectioncommandslist##1%
+    \saved@@ifdefinable{##1}{##2}%
+  }%
+}%
+\newcommand{\cleancustomization}{%
+  \forlistloop{\undef}{\sectioncommandslist}%
+  \def\sectioncommandslist{}%
+  \let\@ifdefinable\saved@ifdefinable%
+  \let\@@ifdefinable\saved@@ifdefinable%
+}%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article|class-doc-package>
+%    \end{macrocode}
+%
+% Selective filtering of error messages and warnings:
+%    \begin{macrocode}
+\RequirePackage{silence}%
+\WarningFilter{kpfonts}{With 'easyscsl' option}
+%    \end{macrocode}
+%
+% Extending \pkg{etoolbox}'s patching commands:
+%    \begin{macrocode}
+\RequirePackage{xpatch}%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article|class-doc-package>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
+%
+% We alter the behaviour of the internals of "\usetikzlibrary" so that the
+% \LaTeXe{} push/pop filename system is used (see
+% \url{http://tex.stackexchange.com/a/57428/18401}).
+%    \begin{macrocode}
+\patchcmd%
+  {\use@@tikzlibrary}%
+  {%
+    \pgfutil@InputIfFileExists{tikzlibrary\pgf@temp.code.tex}{}{
+      \pgfutil@IfFileExists{pgflibrary\pgf@temp.code.tex}{%
+        \expandafter\usepgflibrary\expandafter{\pgf@temp}%
+      }{%
+        \tikzerror{I did not find the tikz library
+          '\pgf@temp'. I looked for files named
+          tikzlibrary\pgf@temp.code.tex and
+          pgflibrary\pgf@temp.code.tex, but neither
+          could be found in the current texmf trees.}
+      }}%
+  }%
+  {%
+    \@pushfilename
+      \pgfutil@InputIfFileExists{tikzlibrary\pgf@temp.code.tex}{}{
+        \pgfutil@IfFileExists{pgflibrary\pgf@temp.code.tex}{%
+          \expandafter\usepgflibrary\expandafter{\pgf@temp}%
+        }{%
+          \tikzerror{I did not find the tikz library
+            '\pgf@temp'. I looked for files named
+            tikzlibrary\pgf@temp.code.tex and
+            pgflibrary\pgf@temp.code.tex, but neither
+            could be found in the current texmf trees.}
+        }}%
+    \@popfilename
+  }%
+  {}{}%
+\patchcmd
+  {\tcb@input@library@in}
+  {%
+    \input\tcbpkgprefix#1\relax%
+  }
+  {%
+    \@pushfilename
+    \input\tcbpkgprefix#1\relax%
+    \@popfilename
+  }
+  {}{}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article|class-doc-package>
+%    \end{macrocode}
+%
+% In order to avoid "__gzt" in the name of each internal (i.e. private) function
+% and variable, we make use of the "@@" place holder provided by the
+% \Pkg{l3docstrip}.
+%    \begin{macrocode}
+%<@@=gzt>
+%    \end{macrocode}
+%
+% \section{\LaTeX3 loading}
+%
+% For debugging purpose, \Pkg{expl3} could be loaded with its
+% \docAuxKey*{check-declarations} option.
+%    \begin{macrocode}
+% \PassOptionsToPackage{check-declarations}{expl3}
+%    \end{macrocode}
+%
+% ^^AIn order to define class options, in key-value form, \Pkg{l3keys2e} is
+% ^^Aloaded. This have to be done at an early stage because options have to be
+% ^^Adefined before the (here `book') class loading.
+%    \begin{macrocode}
+\RequirePackage{l3keys2e}
+%    \end{macrocode}
+%
+% This \gztcl{} will make use of the \pkg{expl3} programming interface
+% (\LaTeX3). In order to load this package, it is enough to load the
+% \Pkg{xparse} which is anyway needed to produce document-level commands.
+%    \begin{macrocode}
+\RequirePackage{xparse}
+\ExplSyntaxOn
+%    \end{macrocode}
+%
+% The \gztcl{} is declared in the \LaTeX3{}'s way.
+%    \begin{macrocode}
+%<class-doc-package>\ProvidesExplPackage
+%<class|class-article>\ProvidesExplClass
+%<class>  {gzt}
+%<class-article>  {gztarticle}
+  {2015/02/27}
+  {0.9}
+  {
+%<class|class-article>    SMF class for the French journal^^J
+%<class-doc-package>    SMF package for the documentation^^J
+%<class-doc-package>    of the classes for the French journal^^J
+    "La gazette des math'ematiciens".
+%<class-article>^^J    (Author version.)
+  }
+%    \end{macrocode}
+%
+% The needed \TeX{} format is specified.
+%    \begin{macrocode}
+\NeedsTeXFormat{LaTeX2e}
+%    \end{macrocode}
+%
+% \section{Class loading}
+%
+%    \begin{macrocode}
+%</class|class-article|class-doc-package>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
+% \begin{macro}{\c_@@_pagegrid_dim}
+%   We declare the constant dimension of the pagegrid, when enabled.
+%    \begin{macrocode}
+\dim_const:Nn \c_@@_pagegrid_dim { 1mm}
+%    \end{macrocode}
+% \end{macro}
+%
+% We define some class options:
+% \begin{itemize}
+% \item "pagegrid" in order to draw a grid on each page, in order to check the
+%   layout (most debugging purpose),
+% \item ...
+% \end{itemize}
+%
+%    \begin{macrocode}
+\keys_define:nn { gzt }
+{
+  pagegrid .dim_gset:N = \g_@@_pagegrid_dim,
+  pagegrid .default:n = {\c_@@_pagegrid_dim},
+  forprinter .bool_gset:N = \g_@@_for_printer_bool,
+  % cover .bool_gset:N = \g_@@_cover_bool,
+  cover .code:n = {%
+    \bool_gset_true:N \g_@@_for_printer_bool%
+    \bool_gset_true:N \g_@@_cover_bool%
+  },%
+  forauthors .bool_gset:N = \g_@@_for_authors_bool,%
+}%
+%
+\ProcessKeysOptions { gzt }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article|class-doc-package>
+%    \end{macrocode}
+%
+% As subsequent class, the \Cls{book} is loaded, with "openany", "english" and
+% "french" options.
+%    \begin{macrocode}
+%<class|class-article>\PassOptionsToClass{openany,english,french}{book}
+%<class|class-article>\LoadClassWithOptions { book }
+\PassOptionsToPackage{table,cmyk}{xcolor}%
+\PassOptionsToPackage{export}{adjustbox}%
+\PassOptionsToPackage{english,french}{babel}
+\PassOptionsToPackage{english,french}{varioref}
+\PassOptionsToPackage{english,french}{cleveref}
+%    \end{macrocode}
+%
+% \section{Packages loading}
+%
+% Many of the \gztcl{} features are provided by third party packages. In this
+% section, we load them and outline their features interesting from the \gztcl{}
+% point of view.\todo{When possible, the list of loaded packages should be split
+% into two lists: one of the packages needed just by \gzt{} (for both its logic
+% and its layout) and one of packages useful for the end user.}
+%
+% \begin{enumerate}
+% \item Compile \TeX{} pictures stand-alone or as part of a document:
+%    \begin{macrocode}
+\RequirePackage{standalone}%
+%    \end{macrocode}
+%
+% \item Extending \pkg{etoolbox}'s patching commands:
+%    \begin{macrocode}
+\RequirePackage{xpatch}%
+%    \end{macrocode}
+%
+% \item Tools to load and manipulate data:
+%    \begin{macrocode}
+\RequirePackage{datatool}%
+%    \end{macrocode}
+%
+% \item In case of \hologo{pdfTeX} engine, we enforce \pkg{fontenc} to be loaded
+%   with its \docAuxKey*{T1} option (usual for French and English documents) and
+%   \pkg{inputenc} to be loaded with its \docAuxKey*{utf8} option. Otherwise
+%   \pkg{fontspec}, convenient for both \hologo{XeLaTeX} and \hologo{LuaLaTeX},
+%   is loaded, with ligatures à la \TeX{} by default enabled.
+%    \begin{macrocode}
+\pdftex_if_engine:TF
+  {
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage[utf8]{inputenc}
+  }{
+    \RequirePackage{fontspec}
+  }
+%    \end{macrocode}
+%
+% Load of main font to be used:
+%    \begin{macrocode}
+%<class|class-article>      \RequirePackage[sfmath,easyscsl,noDcommand]{kpfonts}
+%<class-doc-package>\RequirePackage[lining]{libertine}%
+%    \end{macrocode}
+%
+% \item Formatting both header and footers (pagestyle), and sections headers:
+%    \begin{macrocode}
+\RequirePackage[pagestyles]{titlesec}%
+%    \end{macrocode}
+%
+% \item Multicolumn output:
+%    \begin{macrocode}
+\RequirePackage{multicol}%
+%    \end{macrocode}
+%
+% \item Graphics inclusion:
+%    \begin{macrocode}
+\RequirePackage{graphicx}%
+%    \end{macrocode}
+%
+% \item Establish input relative to a directory:
+%    \begin{macrocode}
+%<class|class-doc-package>\RequirePackage{import}%
+%    \end{macrocode}
+%
+% \item Allow tables to flow over page boundaries:
+%    \begin{macrocode}
+\RequirePackage{longtable}%
+%    \end{macrocode}
+%
+% \item Put a grey textual watermark on document pages (loaded only if
+% "forauthors" \gzt{}'s option is on):
+%    \begin{macrocode}
+%<class>\bool_if:nT { \g_@@_for_authors_bool } {
+%<class>  \RequirePackage{draftwatermark}[2006/06/30]%
+%<class>}
+%    \end{macrocode}
+%
+% \item Graphics package-alike macros for \enquote{general} boxes:
+%    \begin{macrocode}
+\RequirePackage{adjustbox}%
+%    \end{macrocode}
+%
+% \item Context sensitive quotation facilities:
+%    \begin{macrocode}
+\RequirePackage[autostyle]{csquotes}%
+%    \end{macrocode}
+%
+% \item Programmable bibliographies and citations:
+%    \begin{macrocode}
+\RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
+%    \end{macrocode}
+%
+% \item Extended implementation of the \LaTeX{} array and
+%   tabular–environments:
+%    \begin{macrocode}
+\RequirePackage{array}
+%    \end{macrocode}
+%
+% \item Tabulars with adjustable-width columns:
+%    \begin{macrocode}
+\RequirePackage{tabularx}
+%    \end{macrocode}
+%
+% % \item Set of tools for authors to typeset quantities in a consistent way
+% %   (automated processing of numbers and units, and control of tabular alignment
+% %   of numbers):
+% %    \begin{macrocode}
+% \RequirePackage{siunitx}
+% %    \end{macrocode}
+%
+% \item Modify skips between paragraphs:
+%    \begin{macrocode}
+\RequirePackage{nccparskip}
+%    \end{macrocode}
+%
+% \item Construction for table cells that span more than one row of the table:
+%    \begin{macrocode}
+\RequirePackage{multirow}
+%    \end{macrocode}
+%
+% \item Intelligent page references:
+%    \begin{macrocode}
+\RequirePackage{varioref}
+%    \end{macrocode}
+%
+% \item Extension to \Pkg{amsmath}: correct various bugs/defeciencies in amsmath
+%   and useful tools for mathematical typesetting\footnote{The \Pkg{mathtools}
+%   loads \pkg{amsmath}, hence it's not nescessary to load the latter.}:
+%    \begin{macrocode}
+\RequirePackage{mathtools}
+%    \end{macrocode}
+%
+% \item Support for using RSFS fonts in maths:
+%    \begin{macrocode}
+\RequirePackage{mathrsfs}
+%    \end{macrocode}
+%
+% \item Vector arrows:
+%    \begin{macrocode}
+\RequirePackage{esvect}
+%    \end{macrocode}
+%
+% \item Hooks to do actions on every page or on the current page:
+%    \begin{macrocode}
+\RequirePackage{everypage}
+%    \end{macrocode}
+%
+% \item Flexible and easy interface to page dimensions:
+%    \begin{macrocode}
+\RequirePackage{geometry}
+%    \end{macrocode}
+%
+% \item Bilingual (French and English) documents, with French as default
+%   language:
+%    \begin{macrocode}
+\RequirePackage{babel}%
+%    \end{macrocode}
+%
+% \item METAFONT and macros for Euro sign:
+%    \begin{macrocode}
+\RequirePackage{eurosym}%
+%    \end{macrocode}
+%
+% Expandable checks for the current language:
+%    \begin{macrocode}
+\RequirePackage{iflang}[2007/11/11]%
+%    \end{macrocode}
+%
+% \item Tagging tables of contents:
+%    \begin{macrocode}
+%<class>\RequirePackage{tableof}%
+%    \end{macrocode}
+%
+% \item Completely customisable TOCs:
+%    \begin{macrocode}
+%<class>\RequirePackage{etoc}%
+%    \end{macrocode}
+%
+% \item Subliminal refinements towards typographical perfection:
+%    \begin{macrocode}
+\RequirePackage[babel=true]{microtype}%
+%    \end{macrocode}
+%
+% \item Current date and time formatting:
+%    \begin{macrocode}
+\RequirePackage[nodayofweek]{datetime}%
+%    \end{macrocode}
+%
+% \item Customization of lists:
+%    \begin{macrocode}
+\RequirePackage[inline]{enumitem}%
+%    \end{macrocode}
+%
+% \item Patches for \LaTeX{}:
+%    \begin{macrocode}
+\RequirePackage{fixltx2e}%
+%    \end{macrocode}
+%
+% \item Execute command after the next page break:
+%    \begin{macrocode}
+\RequirePackage{afterpage}
+%    \end{macrocode}
+%
+% \item Extension of \LaTeX{}'s color facilities:
+%    \begin{macrocode}
+\RequirePackage{xcolor}%
+%    \end{macrocode}
+%
+% \item We need to avoid some macros from few of the following packages to be
+%   added to "\@preamblecmds":
+%    \begin{macrocode}
+%<class|class-article>\cs_set_eq:NN \_@@_orig_preamblecmds \@preamblecmds
+%    \end{macrocode}
+%
+% Create PostScript and PDF graphics in \TeX:
+%    \begin{macrocode}
+\RequirePackage{tikz}
+%    \end{macrocode}
+%
+% Create normal/logarithmic plots in two and three dimensions:
+%    \begin{macrocode}
+\RequirePackage{pgfplots}
+%    \end{macrocode}
+%
+% \item Environments for colored and framed text boxes, e.g. theorems:
+%    \begin{macrocode}
+\RequirePackage{tcolorbox}
+%    \end{macrocode}
+%
+% \item A single TikZ node for the whole page:
+%    \begin{macrocode}
+\RequirePackage{tikzpagenodes}
+%    \end{macrocode}
+%
+% \item Tools for drawing Euclidean geometry:
+%    \begin{macrocode}
+%<class>\RequirePackage{tkz-euclide}
+%    \end{macrocode}
+%
+% \item Print page grid in background:
+%    \begin{macrocode}
+%<class>\RequirePackage[foreground]{pagegrid}%
+%    \end{macrocode}
+%
+% We restore "\@preamblecmds" as it was before:
+%    \begin{macrocode}
+%<class|class-article>\cs_set_eq:NN \@preamblecmds \_@@_orig_preamblecmds
+%    \end{macrocode}
+%
+% \item Typesetting theorems (AMS style):
+%    \begin{macrocode}
+\RequirePackage{amsthm}
+%    \end{macrocode}
+%
+% \item Extensions to theorem environments:
+%    \begin{macrocode}
+\RequirePackage{thmtools}
+%    \end{macrocode}
+%
+% \item Control float placement:
+%    \begin{macrocode}
+\RequirePackage{placeins}%
+%    \end{macrocode}
+%
+% \item Hypertext marks:
+%    \begin{macrocode}
+\RequirePackage[hidelinks,hypertexnames=false]{hyperref}%
+%    \end{macrocode}
+%
+% \item A new bookmark (outline) organization for \Pkg{hyperref}:
+%    \begin{macrocode}
+\RequirePackage[numbered]{bookmark}%
+%    \end{macrocode}
+%
+% \item Create glossaries and lists of acronyms:
+%    \begin{macrocode}
+\RequirePackage[nowarn]{glossaries}%
+%    \end{macrocode}
+%
+% \item Intelligent cross-referencing:
+%    \begin{macrocode}
+\RequirePackage{cleveref}%
+%    \end{macrocode}
+% \end{enumerate}
+%
+% Setings of the glossaries and acronyms.
+%    \begin{macrocode}
+\makeglossaries
+% \loadglsentries{../glossaries/glossary}
+% \loadglsentries{../glossaries/acronyms}
+%
+\setglossarystyle{indexhypergroup}
+\setacronymstyle{long-sc-short}
+\glsaddall
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article|class-doc-package>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
+%
+% In case of \hologo{pdfTeX} engine, the document is by default in sans serif
+% and makes use of the \pkg{lmodern} for the \enquote{ttfamily} font.
+%
+%    \begin{macrocode}
+\pdftex_if_engine:T
+  {
+    \renewcommand\familydefault{\sfdefault}
+    \renewcommand{\ttdefault}{lmtt}
+  }
+%    \end{macrocode}
+%
+% \section{Miscellaneous patches}
+%
+% We pop some commands from the "\@preamblecmds" list in order to allow
+% "\DeclareMathOperator" to be used after the preamble (see
+% \url{http://tex.stackexchange.com/q/223421/18401}).
+%    \begin{macrocode}
+\tl_remove_all:Nn \@preamblecmds { \do \DeclareMathOperator }
+\tl_remove_all:Nn \@preamblecmds { \do \newacronym }
+\tl_remove_all:Nn \@preamblecmds { \do \@declmathop }
+\tl_remove_all:Nn \@preamblecmds { \do \usetikzlibrary }
+%    \end{macrocode}
+%
+% \section{Messages}
+%
+% In this section, some messages are declared for future use.
+%    \begin{macrocode}
+\msg_new:nnnn{gzt}{issue-number-needed}{Option~`#1'~needed!}
+  {Please~specify~`#1=<number>',
+    ~otherwise~`<number>'~will~be~set~to
+    ~`\int_use:N\c_@@_first_issue_number_int'.}
+%    \end{macrocode}
+%
+% \section{Counters}
+%
+% In this section, we define some counters for future use.
+%
+% \begin{macro}{\g_@@_editors_in_chief_int}
+% \begin{macro}{\g_@@_articles_int}
+% \begin{macro}{\g_@@_questions_answers_int}
+%
+%   The integer "\g_@@_editors_in_chief_int" will count the number of editors in
+%   chief in order to use singular or plural form of the corresponding string
+%   \enquote{Rédacteur(s) en chef}.
+%    \begin{macrocode}
+%<class>\int_new:N \g_@@_editors_in_chief_int
+%    \end{macrocode}
+%
+% The integer "\g_@@_item_in_rubric_int" will count the number of item in
+% a rubric in order to give a specific behavior of the first of them.
+%    \begin{macrocode}
+\int_new:N \g_@@_item_in_rubric_int
+%    \end{macrocode}
+%
+% The integer "\g_@@_articles_int" will count the number of articles in order to
+% provide for each of them a unique bibliographic key.
+%    \begin{macrocode}
+\int_new:N \g_@@_articles_int
+%    \end{macrocode}
+%
+% The integer "\g_@@_question_int" will count the number of questions
+% (and hence of answers) in order to provide distinguish between the first and
+% the subsequent questions/answers of an interview, the former being likely to
+% be typeset differently (e.g. the names of the interviewer and the interviewee
+% may appear only in the first question/answer).
+%    \begin{macrocode}
+\int_new:N \g_@@_question_int
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \section{Constants}
+%
+% In this section, we declared some constants for future use.
+%
+% \subsection{Integers}
+%
+% \subsubsection{Issue numbers}
+%
+% \begin{macro}{\c_@@_first_issue_number_int}
+% \begin{macro}{\c_@@_first_issue_year_int}
+% \begin{macro}{\c_@@_first_issue_month_int}
+% \begin{macro}{\c_@@_interval_in_months_int}
+%   The first issue number, month and year, and the interval (in months) between
+%   two consecutive issues, are declared.
+%    \begin{macrocode}
+\int_const:Nn \c_@@_first_issue_number_int { 143 }
+\int_const:Nn \c_@@_first_issue_year_int   { 2015 }
+\int_const:Nn \c_@@_first_issue_month_int  { 1 }
+\int_const:Nn \c_@@_interval_in_months_int { 3 }
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+%    \begin{macrocode}
+%</class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article|class-doc-package>
+%    \end{macrocode}
+%
+% \subsection{Strings and keywords}
+%
+% We now declare some private string constants.
+%
+% \begin{macro}{\c_@@_journal_short_title_string_tl}
+% \begin{macro}{\c_@@_journal_title_string_tl}
+% \begin{macro}{\c_@@_editors_in_chief_string_tl}
+% \begin{macro}{\c_@@_editors_string_tl}
+% \begin{macro}{\c_@@_editorial_board_string_tl}
+% \begin{macro}{\c_@@_editorial_secretariat_string_tl}
+% \begin{macro}{\c_@@_phone_string_tl}
+% \begin{macro}{\c_@@_fax_string_tl}
+% \begin{macro}{\c_@@_informations_string_tl}
+% \begin{macro}{\c_@@_publishingdirector_string_tl}
+% \begin{macro}{\c_@@_issn_string_tl}
+% \begin{macro}{\c_@@_isbn_string_tl}
+% \begin{macro}{\c_@@_latexclass_string_tl}
+% \begin{macro}{\c_@@_font_string_tl}
+% \begin{macro}{\c_@@_configuration_file_string_tl}
+% \begin{macro}{\c_@@_cover_string_tl}
+% \begin{macro}{\c_@@_artistic_director_string_tl}
+% \begin{macro}{\c_@@_editorial_string_tl}
+% \begin{macro}{\c_@@_toc_string_tl}
+% \begin{macro}{\c_@@_message_string_tl}
+% \begin{macro}{\c_@@_president_signatory_string_tl}
+% \begin{macro}{\c_@@_editorinchief_signatory_string_tl}
+% \begin{macro}{\c_@@_issue_bib_file_tl}
+% \begin{macro}{\c_@@_about_front_cover_string_tl}
+% \begin{macro}{\c_@@_credit_front_cover_string_tl}
+% For the journal's short and long titles.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_journal_short_title_string_tl {Gazette}
+\tl_const:Nn \c_@@_journal_title_string_tl {
+  \c_@@_journal_short_title_string_tl{}~des~Math\'ematiciens%
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article|class-doc-package>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-doc-package>
+%    \end{macrocode}
+%
+% For the editor(s) in chief.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_editors_in_chief_string_tl
+{
+  \int_compare:nNnTF { \g_@@_editors_in_chief_int } > { 1 }
+  { \c_@@_editorsinchief_string_tl }
+  { \c_@@_editorinchief_string_tl }
+}
+%    \end{macrocode}
+% For the editor in chief.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_editorinchief_string_tl {R\'edacteur~en~chef }
+%    \end{macrocode}
+% For the editors in chief (plural form of the previous one).
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_editorsinchief_string_tl {R\'edacteurs~en~chef }
+%    \end{macrocode}
+% For the editors.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_editors_string_tl {R\'edacteurs }
+%    \end{macrocode}
+% For the editorial board.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_editorial_board_string_tl {Comit\'e~de~r\'edaction}
+%    \end{macrocode}
+% For the editorial_secretariat.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_editorial_secretariat_string_tl {Secr\'etariat~de~r\'edaction}
+%    \end{macrocode}
+% For the phone.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_phone_string_tl {T\'el.}
+%    \end{macrocode}
+% For the fax.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_fax_string_tl {Fax}
+%    \end{macrocode}
+% For the informations.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_informations_string_tl {Renseignements}
+%    \end{macrocode}
+% For the publishing director.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_publishingdirector_string_tl {Directeur~de~la~publication}
+%    \end{macrocode}
+% For the \gls{issn}.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_issn_string_tl {\textsc{issn}}
+%    \end{macrocode}
+% For the \gls{isbn}.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_isbn_string_tl {\textsc{isbn}}
+%    \end{macrocode}
+% For "\LaTeX Class".
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_latexclass_string_tl {Classe~\LaTeX{}}
+%    \end{macrocode}
+% For the \enquote{about font designer} sentence.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_font_string_tl {Nous~utilisons~la~police~Kp-Fonts~cr{\'e}{\'e}e~par~Christophe~\textsc{Caignaert}.}
+%    \end{macrocode}
+% For configuration file.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_configuration_file_string_tl {gzt.cfg}
+%    \end{macrocode}
+% For the artistic director.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_artistic_director_string_tl {Conception~graphique}
+%    \end{macrocode}
+% For the editorial.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_editorial_string_tl {\'Editorial}
+%    \end{macrocode}
+% For the editor in chief.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_editorinchief_signatory_string_tl {\c_@@_editorinchief_string_tl~de~la~\c_@@_journal_title_string_tl}
+%    \end{macrocode}
+% For the table of contents.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_toc_string_tl {Sommaire}
+%    \end{macrocode}
+% For the president message.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_president_message_string_tl {Mot~du~pr\'esident}
+%    \end{macrocode}
+% For the president.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_president_signatory_string_tl {pr\'esident~de~la~\l_@@_smf_short_string_tl}
+%    \end{macrocode}
+% For the date of the editor in chief's message.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_editorinchief_message_date_string_tl {Le~\displaydate{@@_editorinchief_message_date}}
+%    \end{macrocode}
+% For the date of the president's message.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_president_message_date_string_tl {Le~\displaydate{@@_president_message_date}}
+%    \end{macrocode}
+% For the front cover header text.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_front_cover_header_string_tl {
+  \l_@@_uppercased_date_format\displaydate{@@_date}
+  \nobreakspace
+  \textendash{}\nobreakspace
+  \No\int_use:N\g_@@_issue_number_int%
+}
+%    \end{macrocode}
+% For the name of the directory containing the editorial and the president message.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_frontmatter_directory_string_tl {frontmatter}
+%    \end{macrocode}
+% For the name of the file containing the editorial.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_editorial_file_string_tl {\c_@@_frontmatter_directory_string_tl/editorial}
+%    \end{macrocode}
+% For the name of the file containing the president message.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_president_message_file_string_tl {\c_@@_frontmatter_directory_string_tl/presidentmessage}
+%    \end{macrocode}
+% For the path to the current issue's directory.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_issue_path_string_tl {\int_use:N \g_@@_issue_number_int}
+%    \end{macrocode}
+% For the name and path of the images directory.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_images_directory_string_tl {images}
+\tl_const:Nn \c_@@_issue_images_path_string_tl {% \c_@@_issue_path_string_tl/
+  \c_@@_images_directory_string_tl}
+%    \end{macrocode}
+% For the name of the file containing the image of the current issue's front cover.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_issue_frontcover_image_file_string_tl {frontcover}
+\tl_const:Nn \c_@@_issue_frontcover_image_path_string_tl {\c_@@_issue_images_path_string_tl/\c_@@_issue_frontcover_image_file_string_tl}
+%    \end{macrocode}
+% For the few words about the front cover.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_about_front_cover_string_tl {\`A~propos~de~la~couverture.}
+%    \end{macrocode}
+% For the credit of the front cover.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_credit_front_cover_string_tl {cr\'edit}
+%    \end{macrocode}
+% For the preliminary versions sent to authors for checking.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_preliminary_version_string_tl {%
+  Ce~document~est~une~{\'e}preuve~vous~permettant~de~contr{\^o}ler~l'int{\'e}grit{\'e}~du~
+  texte~d'origine~(et~de~la~bibliographie~s'il~y~en~a~une)~de~votre~article~
+  {\`a}~para{\^\i}tre~dans~le~prochain~num{\'e}ro~de~la~\gzt*{}.~La~mise~en~page~
+  actuelle~n'est~pas~d{\'e}finitive\,:~votre~article~pourra~en~particulier~ne~pas~
+  d{\'e}buter~en~haut~d'une~page.%
+}
+%    \end{macrocode}
+% For the string that preceeds the title in the \enquote{Tell me} rubric.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_tellme_extra_title_string_tl {...\space}
+%    \end{macrocode}
+% For the separator between a rubric and an article's title in the minitoc.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_minitoc_rubric_title_separator_string_tl {\space\textendash}
+%    \end{macrocode}
+% For the miscellaneous rubrics.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_mathematics_rubric_string_tl {Math\'ematiques}
+\tl_const:Nn \c_@@_dossier_rubric_string_tl {Dossier}
+\tl_const:Nn \c_@@_community_rubric_string_tl {Vie~de~la~communaut\'e}
+\tl_const:Nn \c_@@_interview_rubric_string_tl {Entretien}
+\tl_const:Nn \c_@@_teaching_rubric_string_tl {Enseignement}
+\tl_const:Nn \c_@@_parity_rubric_string_tl {Parit\'e}
+\tl_const:Nn \c_@@_tellme_rubric_string_tl {Raconte-moi}
+\tl_const:Nn \c_@@_information_rubric_string_tl {Information}
+\tl_const:Nn \c_@@_rearviewmirror_rubric_string_tl {R\'etroviseur}
+\tl_const:Nn \c_@@_tribute_rubric_string_tl {Carnet}
+% \tl_const:Nn \c_@@_books_rubric_string_tl {Recension}
+\tl_const:Nn \c_@@_books_rubric_string_tl {Livres}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+%    \begin{macrocode}
+%</class|class-doc-package>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article|class-doc-package>
+%    \end{macrocode}
+%
+% For the long and short forms of \acrshort*{smf}.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_smf_short_string_tl {SMF}
+\tl_const:Nn \c_@@_smf_string_tl {Soci\'et\'e~Math\'ematique~de~France}
+%    \end{macrocode}
+% For the long and short forms of \enquote{c'est-à-dire} and
+% \enquote{C'est-à-dire} (\enquote{that is} and \enquote{That is}).
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_cad_short_string_tl {c.-\`a-d.}
+\tl_const:Nn \c_@@_cad_string_tl {c'est-\`a-dire}
+\tl_const:Nn \c_@@_Cad_short_string_tl {C.-\`a-d.}
+\tl_const:Nn \c_@@_Cad_string_tl {C'est-\`a-dire}
+%    \end{macrocode}
+% For the footer text.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_footer_string_tl {
+  \c_@@_footer_size_font_tl
+  \textcolor{@@_smf_number_color}{\c_@@_smf_short_string_tl}
+  \nobreakspace
+  \textcolor{@@_date_color}{
+    \textendash{}\nobreakspace
+    \MakeTextUppercase{\c_@@_journal_short_title_string_tl}
+    \int_compare:nNnF {\g_@@_issue_number_int}<{1}
+    {
+      \nobreakspace\textendash{}\nobreakspace
+      \l_@@_uppercased_date_format\displaydate{@@_date}
+      \nobreakspace
+      \textendash{}\nobreakspace
+      \textcolor{@@_smf_number_color}{\No\int_use:N\g_@@_issue_number_int}
+    }
+  }
+}
+%    \end{macrocode}
+% For the name of the file containing the \gls{smf} logo.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_smf_logo_file_string_tl {logo_SMF}
+%    \end{macrocode}
+% For the name of the file containing the bibliography of the current issue.
+%    \begin{macrocode}
+% \tl_const:Nn \c_@@_issue_bib_file_string_tl {\c_job_name_tl.bib}
+\tl_const:Nn \c_@@_issue_bib_file_string_tl {issue-\c_job_name_tl.bib}
+\tl_const:Nn \c_@@_issue_bib_path_string_tl {\c_@@_issue_bib_file_string_tl}
+%    \end{macrocode}
+% For the prefix of the bibliographic key of each article.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_issue_bib_key_tl {\int_use:N \g_@@_issue_number_int}
+%    \end{macrocode}
+% For the interview title.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_interview_title_string_tl {En~apart\'e~avec~}
+%    \end{macrocode}
+% For the asides opening and eventuelly closing punctuation marks.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_aside_string_tl {---}
+%    \end{macrocode}
+% For the draft watermark.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_draftwatermark_string_tl {draft}
+%    \end{macrocode}
+%
+% \begin{macro}{smf}
+% \begin{macro}{issn}
+% \begin{macro}{isbn}
+% \begin{macro}{cv}
+%    \begin{macrocode}
+\newacronym{smf}{smf}{\c_@@_smf_string_tl}%
+\newacronym{issn}{issn}{International Standard Serial Number}%
+\newacronym{isbn}{isbn}{International Standard Book Number}%
+\newacronym{cv}{cv}{curriculum vit\ae}%
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Booleans}
+%
+% We now declare the booleans that will be used.
+%
+% \begin{macro}{\g_@@_frontcovermatter_bool}
+% \begin{macro}{\g_@@_insidefrontcovermatter_bool}
+% \begin{macro}{\g_@@_frontmatter_bool}
+% \begin{macro}{\g_@@_rubric_bool}
+% \begin{macro}{\g_@@_interview_rubric_bool}
+% \begin{macro}{\g_@@_mainmatter_bool}
+%   The following booleans will be used to test wheter we are respectively in the
+%   front cover, in the inside front cover, in the frontmatter, in (first page
+%   of) a rubric, in the mainmatter.
+%    \begin{macrocode}
+\bool_new:N \g_@@_frontcovermatter_bool
+\bool_new:N \g_@@_insidefrontcovermatter_bool
+\bool_new:N \g_@@_frontmatter_bool
+\bool_new:N \g_@@_rubric_bool
+\bool_new:N \g_@@_interview_rubric_bool
+\bool_new:N \g_@@_tellme_rubric_bool
+\bool_new:N \g_@@_rearviewmirror_rubric_bool
+\bool_new:N \g_@@_books_rubric_bool
+\bool_new:N \g_@@_mainmatter_bool
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\g_@@_previous_article_with_bibliography_or_minibio_bool}
+%   The following boolean will be used to test, for a given (not first) article
+%   of a rubric, whether the previous article ends with a bibliography or
+%   a minibio, in order to adjust the vertical space before its \enquote{bullet
+%   and rule}.
+%    \begin{macrocode}
+\bool_new:N \g_@@_previous_article_with_bibliography_or_minibio_bool
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\g_@@_advertisement_bool}
+%   The following boolean will be used to test wheter we are inside
+%   an advertisement page.
+%    \begin{macrocode}
+\bool_new:N \g_@@_advertisement_bool
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\g_@@_multicols_bool}
+%   The following boolean will be used to test wheter we are inside
+%   a \pkg{multicol}'s "multicols" environment.
+%    \begin{macrocode}
+\bool_new:N \g_@@_multicols_bool
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\g_@@_refsection_bool}
+%   The following boolean will be used to test wheter we are inside
+%   a \pkg{biblatex}'s "refsection" environment.
+%    \begin{macrocode}
+\bool_new:N \g_@@_refsection_bool
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Dimensions}
+%
+% \subsubsection{Geometry of the page}
+%
+% \begin{macro}{\c_@@_rubrics_abstract_width_dim}
+% \begin{macro}{\c_@@_rubrics_head_text_abstract_width_dim}
+% \begin{macro}{\c_@@_rubrics_head_text_no_abstract_width_dim}
+% \begin{macro}{\l_@@_rubrics_head_text_width_dim}
+%   We declare the constant (default) dimensions of the boxes containing the
+%   abstract and head text rubrics.
+%    \begin{macrocode}
+\dim_const:Nn \c_@@_rubrics_abstract_width_dim { 85mm}
+\dim_const:Nn \c_@@_rubrics_head_text_abstract_width_dim { 50mm}
+\dim_const:Nn \c_@@_rubrics_head_text_no_abstract_width_dim
+{ \c_@@_rubrics_abstract_width_dim + \c_@@_rubrics_head_text_abstract_width_dim}
+\dim_new:N \l_@@_rubrics_head_text_width_dim
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\c_@@_offset_dim}
+% \begin{macro}{\c_@@_paperheight_dim}
+% \begin{macro}{\c_@@_paperwidth_dim}
+% \begin{macro}{\c_@@_topmargin_dim}
+% \begin{macro}{\c_@@_headsep_dim}
+% \begin{macro}{\c_@@_botmargin_dim}
+% \begin{macro}{\c_@@_innermargin_dim}
+% \begin{macro}{\c_@@_outermargin_dim}
+% \begin{macro}{\c_@@_footskip_dim}
+% \begin{macro}{\c_@@_header_line_width_dim}
+% \begin{macro}{\c_@@_header_line_yshift_dim}
+%   We declare the default page layout constant dimensions.
+%    \begin{macrocode}
+\dim_const:Nn \c_@@_layoutheight_dim { 270mm}
+\dim_const:Nn \c_@@_layoutwidth_dim  { 210mm}
+\dim_const:Nn \c_@@_future_layoutoffset_dim { 5mm}
+\bool_if:NTF {\g_@@_for_printer_bool} {
+  \dim_const:Nn \c_@@_layoutoffset_dim { \c_@@_future_layoutoffset_dim}
+}{
+  \dim_const:Nn \c_@@_layoutoffset_dim {\c_zero_dim}
+}
+\dim_const:Nn \c_@@_future_bindingoffset_dim { 4.1mm}
+% \dim_const:Nn \c_@@_future_bindingoffset_dim { 65mm}
+\bool_if:NTF {\g_@@_cover_bool} {
+  \dim_const:Nn \c_@@_bindingoffset_dim { \c_@@_future_bindingoffset_dim }
+}{
+  \dim_const:Nn \c_@@_bindingoffset_dim {\c_zero_dim}
+}
+\dim_const:Nn \c_@@_paperheight_dim { \c_@@_layoutheight_dim+2\c_@@_layoutoffset_dim}
+\bool_if:NTF {\g_@@_cover_bool} {
+  \dim_const:Nn \c_@@_paperwidth_dim  {
+    \c_@@_layoutwidth_dim
+    +
+    \c_@@_layoutoffset_dim
+    +\c_@@_bindingoffset_dim
+  }
+}{
+  \dim_const:Nn \c_@@_paperwidth_dim  {
+    \c_@@_layoutwidth_dim
+    +
+    2
+    \c_@@_layoutoffset_dim
+    +\c_@@_bindingoffset_dim
+  }
+}
+\dim_const:Nn \c_@@_frontcover_image_width_dim {
+    \c_@@_layoutwidth_dim
+    +
+    \c_@@_future_layoutoffset_dim
+}
+\dim_const:Nn \c_@@_topmargin_dim   {  31mm}
+\dim_const:Nn \c_@@_topmargin_frontcover_dim {
+  \c_@@_topmargin_dim
+  + 30mm
+}
+\dim_const:Nn \c_@@_topmargin_inside_frontcover_dim   {
+  \c_@@_topmargin_dim
+  +10mm
+}
+\dim_const:Nn \c_@@_headsep_dim     {  24mm}
+\dim_const:Nn \c_@@_headsep_frontcover_dim {
+  \c_@@_headsep_dim
+  +31mm
+  -\c_@@_layoutoffset_dim
+}
+\dim_const:Nn \c_@@_headsep_inside_frontcover_dim {
+  \c_@@_headsep_dim
+  +5mm
+}
+\dim_const:Nn \c_@@_headheight_dim  {  7mm}
+\dim_const:Nn \c_@@_botmargin_dim   {  30mm}
+\dim_const:Nn \c_@@_footskip_dim    {  26mm}
+\dim_const:Nn \c_@@_innermargin_dim  { 15mm - \c_@@_bindingoffset_dim}
+\dim_const:Nn \c_@@_outermargin_dim {  30mm}
+\dim_const:Nn \c_@@_frontcover_image_height_dim {  160mm}
+\dim_const:Nn \c_@@_radius_arc_dim { 85mm }%
+\dim_const:Nn \c_@@_inside_frontcover_box_width_dim { 165mm }%
+\dim_const:Nn \c_@@_frontmatter_headtext_xshift_dim { 19mm }%
+\dim_const:Nn \c_@@_frontmatter_headtext_o_xshift_dim {
+  -\c_@@_frontmatter_headtext_xshift_dim  -\c_@@_layoutoffset_dim%
+}%
+\dim_const:Nn \c_@@_frontmatter_headtext_e_xshift_dim {
+  \c_@@_frontmatter_headtext_xshift_dim  +\c_@@_layoutoffset_dim%
+}%
+\dim_const:Nn \c_@@_frontmatter_headtext_yshift_dim { -6.5mm-\c_@@_layoutoffset_dim }%
+\dim_const:Nn \c_@@_header_line_width_dim    {  0.25mm}
+\dim_const:Nn \c_@@_header_line_yshift_dim {  1mm-\c_@@_header_line_width_dim}%
+\dim_const:Nn \c_@@_yshift_mainmatter_headrule_dim { \c_@@_header_line_yshift_dim-2mm }%
+\dim_const:Nn \c_@@_footer_background_height_dim    { 10mm + \c_@@_layoutoffset_dim }
+\dim_const:Nn \c_@@_front_matter_extra_innermargin_dim    {  28mm }
+\dim_const:Nn \c_@@_front_matter_extra_outermargin_dim    {  7mm }
+\dim_const:Nn \c_@@_pictogram_width_dim { 23mm }%
+\dim_const:Nn \c_@@_header_xshift_dim { \c_@@_pictogram_width_dim-6mm }%
+\dim_const:Nn \c_@@_header_yshift_dim { 5mm }%
+\dim_const:Nn \c_@@_xshift_arccircle_A_dim { \c_@@_rubrics_abstract_width_dim+\c_@@_innermargin_dim+10mm+\c_@@_layoutoffset_dim }%
+\dim_const:Nn \c_@@_yshift_arccircle_A_dim { -22mm-\c_@@_layoutoffset_dim }%
+\dim_const:Nn \c_@@_xshift_arccircle_B_dim {%
+  (\c_@@_rubrics_abstract_width_dim+\c_@@_innermargin_dim)/2%
+  % \c_@@_innermargin_dim+(\c_@@_rubrics_abstract_width_dim/2)%
+  % \c_@@_xshift_arccircle_A_dim/2
+}%
+\dim_const:Nn \c_@@_yshift_arccircle_B_dim { -\c_@@_layoutoffset_dim }%
+\dim_const:Nn \c_@@_xshift_arccircle_C_dim { \c_@@_layoutoffset_dim-5mm }%
+\dim_const:Nn \c_@@_yshift_arccircle_C_dim { -19.75mm-\c_@@_layoutoffset_dim }%
+\dim_const:Nn \c_@@_book_review_frontcover_extend_dim { 12mm }%
+\dim_const:Nn \c_@@_tcb_left_dim { 4mm }%
+\dim_const:Nn \c_@@_tcb_boxsep_dim { 1mm }%
+\dim_const:Nn \c_@@_tikz_dot_diameter_dim { 0.33mm }%
+\dim_const:Nn \c_@@_tikz_dot_spacing_dim { 1.05mm }%
+\dim_const:Nn \c_@@_rubric_extra_xoffset_dim { -\c_@@_innermargin_dim/2 }%
+\dim_const:Nn \c_@@_rubric_xoffset_dim { 14.5mm }%
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\c_@@_boxed_issue_number_width_dim}
+% \begin{macro}{\c_@@_boxed_issue_number_height_dim}
+%   We declare the constant dimensions of the box containing the issue number.
+%    \begin{macrocode}
+\dim_const:Nn \c_@@_boxed_issue_number_width_dim { 30mm}
+\dim_const:Nn \c_@@_boxed_issue_number_height_dim { 8mm}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\l_thumbnail_width_dim}
+%   We declare the width of the possible thumbnail glued to the box containing
+%   the issue number.
+%    \begin{macrocode}
+\dim_new:N \l_@@_thumbnail_width_dim
+\dim_set:Nn \l_@@_thumbnail_width_dim {30mm}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\g_@@_abstract_box_width_dim}
+%    \begin{macrocode}
+\dim_new:N \g_@@_abstract_box_width_dim
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\c_@@_original_parindent_dim}
+%    \begin{macrocode}
+\dim_new:N \c_@@_original_parindent_dim
+\dim_set_eq:NN \c_@@_original_parindent_dim \parindent
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\l_@@_between_rubric_head_text_and_abstract_dim}
+%    \begin{macrocode}
+\dim_new:N \l_@@_between_rubric_head_text_and_abstract_dim
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\g_@@_minitoc_circle_diameter_dim}
+% \begin{macro}{\g_@@_minitoc_textwidth_dim}
+% \begin{macro}{\g_@@_minitoc_xshift_dim}
+% \begin{macro}{\g_@@_minitoc_yshift_dim}
+% \begin{macro}{\c_@@_minitoc_from_circle_xshift_dim}
+% \begin{macro}{\c_@@_minitoc_from_circle_yshift_dim}
+%    \begin{macrocode}
+\dim_new:N \g_@@_minitoc_circle_diameter_dim
+\dim_new:N \g_@@_minitoc_textwidth_dim
+\dim_new:N \g_@@_minitoc_xshift_dim
+\dim_new:N \g_@@_minitoc_yshift_dim
+\dim_set:Nn \g_@@_minitoc_circle_diameter_dim {142mm}
+\dim_set:Nn \g_@@_minitoc_textwidth_dim {65mm}
+\dim_set:Nn \g_@@_minitoc_xshift_dim {-22mm}
+\dim_set:Nn \g_@@_minitoc_yshift_dim {30mm}
+\dim_const:Nn \c_@@_minitoc_from_circle_xshift_dim {-15mm}
+\dim_const:Nn \c_@@_minitoc_from_circle_yshift_dim {-\c_@@_minitoc_from_circle_xshift_dim}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\c_@@_footer_height_font_dim}
+%   We declare the height of the font displayed in the footer.
+%    \begin{macrocode}
+\dim_const:Nn \c_@@_footer_height_font_dim {3mm}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\c_@@_minitoc_list_labelsep_dim}
+%    \begin{macrocode}
+\dim_const:Nn \c_@@_minitoc_list_labelsep_dim {1em}
+%    \end{macrocode}
+% \end{macro}
+%
+% We set the default geometry of the page.
+%    \begin{macrocode}
+\geometry{%
+  papersize={\c_@@_paperwidth_dim,\c_@@_paperheight_dim}
+}
+%    \end{macrocode}
+%
+% We create a constant token list that contains the geometry of the front cover.
+%    \begin{macrocode}
+\bool_if:NTF {\g_@@_cover_bool} {
+  \tl_const:Nn \c_@@_front_cover_geometry_tl {%
+    ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
+    ,layoutvoffset=\c_@@_layoutoffset_dim
+    ,bindingoffset=\c_@@_bindingoffset_dim
+    ,top=\c_@@_topmargin_frontcover_dim
+    ,headsep=\c_@@_headsep_frontcover_dim
+    ,headheight=\c_@@_layoutoffset_dim
+    ,bottom=\c_zero_dim
+    ,footskip=\c_zero_dim
+    ,outer=\c_zero_dim
+    ,inner=\c_@@_layoutoffset_dim
+    ,nomarginpar%
+  }%
+}{
+  \tl_const:Nn \c_@@_front_cover_geometry_tl {%
+    ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
+    ,layoutoffset=\c_@@_layoutoffset_dim
+    ,bindingoffset=\c_@@_bindingoffset_dim
+    ,top=\c_@@_topmargin_frontcover_dim
+    ,headsep=\c_@@_headsep_frontcover_dim
+    ,headheight=\c_zero_dim
+    ,bottom=\c_zero_dim
+    ,footskip=\c_zero_dim
+    ,hmargin=\c_@@_layoutoffset_dim
+    ,nomarginpar%
+  }%
+}
+%    \end{macrocode}
+%
+% We create a constant token list that contains the geometry of the inside front
+% cover.
+%    \begin{macrocode}
+\bool_if:NTF {\g_@@_cover_bool} {
+  \tl_const:Nn \c_@@_inside_front_cover_geometry_tl {%
+    ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
+    ,layoutvoffset=\c_@@_layoutoffset_dim
+    ,bindingoffset=\c_@@_bindingoffset_dim
+    ,top=\c_@@_topmargin_inside_frontcover_dim
+    ,headheight=\c_@@_headheight_dim
+    ,headsep=\c_@@_headsep_inside_frontcover_dim
+    ,bottom=\c_@@_botmargin_dim
+    ,footskip=\c_@@_footskip_dim
+    ,inner=\c_@@_innermargin_dim-\c_@@_layoutoffset_dim
+    ,outer=\c_@@_outermargin_dim+\c_@@_layoutoffset_dim
+    ,nomarginpar%
+  }%
+}{
+  \tl_const:Nn \c_@@_inside_front_cover_geometry_tl {%
+    ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
+    ,layoutoffset=\c_@@_layoutoffset_dim
+    ,bindingoffset=\c_@@_bindingoffset_dim
+    ,top=\c_@@_topmargin_inside_frontcover_dim
+    ,headheight=\c_@@_headheight_dim
+    ,headsep=\c_@@_headsep_dim+5mm
+    ,bottom=\c_@@_botmargin_dim
+    ,footskip=\c_@@_footskip_dim
+    ,inner=\c_@@_innermargin_dim
+    ,outer=\c_@@_outermargin_dim
+    ,nomarginpar%
+  }%
+}
+%    \end{macrocode}
+%
+% We create a constant token list that contains the geometry of the front matter.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_front_matter_geometry_tl {%
+  ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
+  ,layoutoffset=\c_@@_layoutoffset_dim
+  % ,bindingoffset=\c_@@_bindingoffset_dim
+  ,top=\c_@@_topmargin_dim+10mm%
+  ,headheight=\c_@@_headheight_dim
+  ,headsep=\c_@@_headsep_dim+5mm
+  ,bottom=\c_@@_botmargin_dim
+  ,footskip=\c_@@_footskip_dim%
+  ,inner=\c_@@_innermargin_dim+\c_@@_front_matter_extra_innermargin_dim%
+  ,outer=\c_@@_outermargin_dim+\c_@@_front_matter_extra_outermargin_dim%
+  ,nomarginpar%
+}%
+%    \end{macrocode}
+%
+% We create a constant token list that contains the geometry of the main pages.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_main_geometry_tl {%
+  ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
+  ,layoutoffset=\c_@@_layoutoffset_dim
+  % ,bindingoffset=\c_@@_bindingoffset_dim
+  ,top=\c_@@_topmargin_dim-15mm%
+  ,headheight=\c_zero_dim
+  ,headsep=\c_@@_headsep_dim-18mm
+  ,bottom=\c_@@_botmargin_dim
+  ,footskip=\c_@@_footskip_dim
+  ,inner=\c_@@_innermargin_dim
+  ,outer=\c_@@_outermargin_dim
+}%
+%    \end{macrocode}
+%
+% We create a constant token list that contains the geometry of the
+% advertisement pages.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_advertisement_geometry_tl {%
+  ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
+  ,layoutoffset=\c_@@_layoutoffset_dim
+  % ,bindingoffset=\c_@@_bindingoffset_dim
+  ,top=\c_zero_dim
+  ,headsep=\c_zero_dim
+  ,headheight=\c_zero_dim
+  ,bottom=\c_zero_dim
+  ,footskip=\c_zero_dim
+  ,hmargin=\c_zero_dim
+  ,nomarginpar%
+}%
+%    \end{macrocode}
+%
+% \subsection{Skips}
+%
+%    \begin{macrocode}
+\skip_const:Nn \c_@@_editorial_presidentmessage_parskip_skip { 12pt plus 2pt minus .8pt }%
+\skip_const:Nn \c_@@_mainmatter_parskip_skip { 2pt plus .5pt minus .2pt }%
+%    \end{macrocode}
+%
+% \section{Options}
+%
+% In this section, options used by some of the document commands defined by the
+% class are treated.
+%
+% \subsection{Issues options}
+%
+% \begin{macro}{\g_@@_issue_number_int}
+% \begin{macro}{\g_@@_issue_month_int}
+% \begin{macro}{\g_@@_issue_year_int}
+% Some variables which are involved in options are created.
+%    \begin{macrocode}
+\int_new:N \g_@@_issue_number_int
+\int_new:N \g_@@_issue_month_int
+\int_new:N \g_@@_issue_year_int
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{number}
+% \begin{macro}{month}
+% \begin{macro}{year}
+% The keys options are created.
+%    \begin{macrocode}
+\keys_define:nn { gzt/issuesetup }
+{
+  number .int_gset:N = \g_@@_issue_number_int,
+  month .int_gset:N = \g_@@_issue_month_int,
+  year .int_gset:N = \g_@@_issue_year_int,
+%    \end{macrocode}
+%
+% All these options, when used, must receive a value.
+%    \begin{macrocode}
+  number .value_required:,
+  month .value_required:,
+  year .value_required:,
+%    \end{macrocode}
+%
+% If "number" option is not used, its initial value is set to $0$.
+% number.
+%    \begin{macrocode}
+  number .initial:n = 0
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Journal options}
+%
+% \begin{macro}{\l_@@_journal_publisher_tl}
+% \begin{macro}{\l_@@_journal_address_tl}
+% \begin{macro}{\l_@@_journal_phone_tl}
+% \begin{macro}{\l_@@_journal_fax_tl}
+% \begin{macro}{\l_@@_journal_email_tl}
+% \begin{macro}{\l_@@_journal_url_tl}
+% \begin{macro}{\l_@@_journal_issn_tl}
+% \begin{macro}{\l_@@_journal_isbn_tl}
+% Some variables which are involved in options are created.
+%    \begin{macrocode}
+\tl_new:N \l_@@_journal_publisher_tl
+\tl_new:N \l_@@_journal_address_tl
+\tl_new:N \l_@@_journal_phone_tl
+\tl_new:N \l_@@_journal_fax_tl
+\tl_new:N \l_@@_journal_email_tl
+\tl_new:N \l_@@_journal_url_tl
+\tl_new:N \l_@@_journal_issn_tl
+\tl_new:N \l_@@_journal_isbn_tl
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{publisher}
+% \begin{macro}{address}
+% \begin{macro}{phone}
+% \begin{macro}{fax}
+% \begin{macro}{email}
+% \begin{macro}{url}
+% \begin{macro}{issn}
+% \begin{macro}{isbn}
+% The keys options are created.
+%    \begin{macrocode}
+\keys_define:nn { gzt/journalsetup }
+{
+  publisher .tl_set:N = \l_@@_journal_publisher_tl,
+  address .tl_set:N = \l_@@_journal_address_tl,
+  phone .tl_set:N = \l_@@_journal_phone_tl,
+  fax .tl_set:N = \l_@@_journal_fax_tl,
+  email .tl_set:N = \l_@@_journal_email_tl,
+  url .tl_set:N = \l_@@_journal_url_tl,
+  issn .tl_set:N = \l_@@_journal_issn_tl,
+  isbn .tl_set:N = \l_@@_journal_isbn_tl,
+%    \end{macrocode}
+%
+% All these options, when used, must receive a value.
+%    \begin{macrocode}
+  publisher .value_required:,
+  address .value_required:,
+  phone .value_required:,
+  fax .value_required:,
+  email .value_required:,
+  url .value_required:,
+  issn .value_required:,
+  isbn .value_required:,
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Titles options}
+%
+% \begin{macro}{shorttitle}
+% \begin{macro}{minishorttitle}
+% \begin{macro}{notintoc}
+% Some keys options for article's title are created:
+% \begin{itemize}
+% \item "shorttitle" for the possible alternative title to appear in the table
+%   of contents and in the headers,
+% \item "minishorttitle" for the possible alternative title to appear in the
+%   mini table of contents of the front cover,
+% \item "notintoc", a flag that, if true, prevents the title to appear in the
+%   table of contents.
+% \end{itemize}
+%
+%    \begin{macrocode}
+\keys_define:nn { gzt/title }
+{
+  short .tl_gset:N = \g_@@_short_title_tl,
+  minishort .tl_gset:N = \g_@@_mini_short_title_tl,
+  notintoc .bool_gset:N = \g_@@_title_not_in_toc_bool,
+%    \end{macrocode}
+%
+% The following options, when used, must receive a value.
+%    \begin{macrocode}
+  short .value_required:,
+  minishort .value_required:,
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Subtitles options}
+%
+% \begin{macro}{shortsubtitle}
+% \begin{macro}{minishortsubtitle}
+% \begin{macro}{notintoc}
+% Some keys options for article's title are created:
+% \begin{itemize}
+% \item "shorttitle" for the possible alternative title to appear in the table
+%   of contents and in the headers,
+% \item "minishorttitle" for the possible alternative title to appear in the
+%   mini table of contents of the front cover,
+% \item "notintoc", a flag that, if true, prevents the title to appear in the
+%   table of contents.
+% \end{itemize}
+%
+%    \begin{macrocode}
+\keys_define:nn { gzt/subtitle }
+{
+  short .tl_gset:N = \g_@@_short_subtitle_tl,
+  minishort .tl_gset:N = \g_@@_mini_short_subtitle_tl,
+  notintoc .bool_gset:N = \g_@@_subtitle_not_in_toc_bool,
+%    \end{macrocode}
+%
+% The following options, when used, must receive a value.
+%    \begin{macrocode}
+  short .value_required:,
+  minishort .value_required:,
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Rubrics options}
+%
+%    \begin{macrocode}
+\keys_define:nn { gzt/rubric }
+{
+  abstract .tl_gset:N = \g_@@_rubric_abstract_tl,
+  title .tl_gset:N = \g_@@_rubric_title_tl,
+  pictogram .tl_gset:N = \g_@@_rubric_pictofile_tl,
+%    \end{macrocode}
+%
+% The following options, when used, must receive a value.
+%    \begin{macrocode}
+  abstract .value_required:,
+  title .value_required:,
+  pictogram .value_required:,
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Minitoc options}
+%
+% \begin{macro}{list}
+% A "list" (boolean) key option for "minitoc" environment is created: if true,
+% "minitoc" should contains "\item" just as a list and the resulting list will be
+% typeset in a special way.
+%
+%    \begin{macrocode}
+\keys_define:nn { gzt/minitoc }
+{
+  list .bool_gset:N = \g_@@_minitoc_list_bool,
+  help .bool_gset:N = \g_@@_minitoc_help_bool,
+  diameter .dim_gset:N = \g_@@_minitoc_circle_diameter_dim,
+  textwidth .dim_gset:N = \g_@@_minitoc_textwidth_dim,
+  xshift .dim_gset:N = \g_@@_minitoc_xshift_dim,
+  yshift .dim_gset:N = \g_@@_minitoc_yshift_dim,
+%    \end{macrocode}
+%
+% The following options, when used, must receive a value.
+%    \begin{macrocode}
+  diameter .value_required:,
+  textwidth .value_required:,
+  xshift .value_required:,
+  yshift .value_required:,
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Authors options}
+%
+% \begin{macro}{affiliation}
+% \begin{macro}{email}
+% \begin{macro}{minibio}
+% \begin{macro}{photo}
+% \begin{macro}{webpage}
+% The keys options are created.
+%    \begin{macrocode}
+\keys_define:nn { gzt/authors }
+{
+  affiliation .tl_gset:N = \g_@@_people_affiliation_tl,
+  email .tl_gset:N = \g_@@_people_email_tl,
+  minibio .tl_gset:N = \g_@@_people_minibio_tl,
+  photo .tl_gset:N = \g_@@_people_photo_tl,
+  webpage .tl_gset:N = \g_@@_people_webpage_tl,
+%    \end{macrocode}
+%
+% All these options, when used, must receive a value.
+%    \begin{macrocode}
+  affiliation .value_required:,
+  email .value_required:,
+  minibio .value_required:,
+  photo .value_required:,
+  webpage .value_required:,
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Interviewee options}
+%
+% \begin{macro}{\g_@@_interviewee_minibio_tl}
+% \begin{macro}{\g_@@_interviewee_photo_tl}
+% \begin{macro}{\g_@@_interviewee_first_last_name_tl}
+% Some variables which are involved in options are created.
+%    \begin{macrocode}
+\tl_new:N \g_@@_interviewee_minibio_tl
+\tl_new:N \g_@@_interviewee_photo_tl
+\tl_new:N \g_@@_interviewee_first_last_name_tl
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{minibio}
+% \begin{macro}{photo}
+% The keys options are created.
+%    \begin{macrocode}
+\keys_define:nn { gzt/interviewees }
+{
+  minibio .tl_gset:N = \g_@@_interviewee_minibio_tl,
+  photo .tl_gset:N = \g_@@_interviewee_photo_tl,
+%    \end{macrocode}
+%
+% All these options, when used, must receive a value.
+%    \begin{macrocode}
+  minibio .value_required:,
+  photo .value_required:,
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Book review options}
+%
+% \begin{macro}{\g_@@_bookreview_frontcover_tl}
+% \begin{macro}{\g_@@_bookreview_bibkey_tl}
+% Some variables which are involved in books reviews are created.
+%    \begin{macrocode}
+\tl_new:N \g_@@_bookreview_frontcover_tl
+\tl_new:N \g_@@_bookreview_bibkey_tl
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{frontcover}
+% \begin{macro}{bibkey}
+% The keys options are created.
+%    \begin{macrocode}
+\keys_define:nn { gzt/bookreview }
+{
+  frontcover .tl_gset:N = \g_@@_bookreview_frontcover_tl,
+  bibkey .tl_gset:N = \g_@@_bookreview_bibkey_tl,
+%    \end{macrocode}
+%
+% All these options, when used, must receive a value.
+%    \begin{macrocode}
+  frontcover .value_required:,
+  bibkey .value_required:,
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Book advertisement options}
+%
+% \begin{macro}{\g_@@_bookadvertisement_frontcover_tl}
+% \begin{macro}{\g_@@_bookadvertisement_bibkey_tl}
+% Some variables which are involved in books advertisements are created.
+%    \begin{macrocode}
+\tl_new:N \g_@@_bookadvertisement_frontcover_tl
+\tl_new:N \g_@@_bookadvertisement_bibkey_tl
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{frontcover}
+% \begin{macro}{bibkey}
+% The keys options are created.
+%    \begin{macrocode}
+\keys_define:nn { gzt/bookadvertisement }
+{
+  frontcover .tl_gset:N = \g_@@_bookadvertisement_frontcover_tl,
+  bibkey .tl_gset:N = \g_@@_bookadvertisement_bibkey_tl,
+%    \end{macrocode}
+%
+% All these options, when used, must receive a value.
+%    \begin{macrocode}
+  frontcover .value_required:,
+  bibkey .value_required:,
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \section{Colors}
+%
+% In this section, we define the colors that will be used by the class and by
+% the source file of the logo.
+%
+%    \begin{macrocode}
+%</class|class-article|class-doc-package>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article|class-logo|class-doc-package>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\definecolorset{cmyk}{@@_}{_color}{
+  generic_dark,1,.60,.10,0; % kind of blue (!)
+  light_generic_dark,1,.35,0,0 % kind of blue (!), light
+}
+\colorlet{@@_generic_light_color}{black!50}
+\colorlet{@@_dark_generic_light_color}{black!60}
+\colorlet{@@_description_label_light_color}{@@_dark_generic_light_color}
+\colorlet{@@_cover_itemize_label_color}{@@_light_generic_dark_color}
+\colorlet{@@_default_text_color}{black}
+\colorlet{@@_rubric_head_text_color}{black!65}
+\colorlet{@@_bibliography_minibios_acknowledgments_bg_color}{black!10}
+\colorlet{@@_headrule_color}{@@_generic_light_color!65}
+\colorlet{@@_circlerule_color}{@@_generic_dark_color!65}
+\colorlet{@@_frontmatter_text_color}{@@_generic_light_color}
+\colorlet{@@_people_color}{@@_generic_dark_color}
+\colorlet{@@_arrayrule_color}{@@_generic_dark_color}
+\colorlet{@@_acknowledgements_color}{@@_generic_dark_color}
+\colorlet{@@_question_color}{@@_generic_dark_color}
+\colorlet{@@_boxed_issue_number_bg_color}{@@_generic_dark_color}
+\colorlet{@@_rule_in_toc_color}{@@_generic_dark_color}
+\colorlet{@@_rubric_in_toc_color}{@@_generic_dark_color}
+\colorlet{@@_article_in_toc_color}{@@_generic_light_color}
+\colorlet{@@_rubric_title_color}{@@_generic_light_color}
+\colorlet{@@_article_title_color}{@@_generic_dark_color}
+\colorlet{@@_section_color}{@@_generic_dark_color}
+\colorlet{@@_subsection_color}{@@_generic_dark_color!90}
+\colorlet{@@_subsubsection_color}{@@_generic_dark_color!80}
+\colorlet{@@_rubric_abstract_color}{@@_generic_dark_color}
+\colorlet{@@_article_abstract_color}{@@_generic_light_color}
+\colorlet{@@_dotfill_color}{@@_generic_dark_color}
+\colorlet{@@_about_front_cover_title_color}{@@_generic_dark_color}
+\colorlet{@@_reflected_text_color}{@@_generic_dark_color}
+\colorlet{@@_inside_front_cover_frame_bg_color}{@@_generic_dark_color!8}
+\colorlet{@@_inside_front_cover_frame_title_color}{@@_generic_dark_color}
+\colorlet{@@_footer_bg_color}{black!10}
+\colorlet{@@_float_title_color}{@@_generic_dark_color}
+\colorlet{@@_float_title_bg_color}{@@_generic_dark_color!10}
+\colorlet{@@_float_frame_color}{@@_generic_dark_color!20}
+\colorlet{@@_chapter_color}{@@_generic_dark_color}
+\colorlet{@@_smf_number_color}{@@_generic_dark_color}
+\colorlet{@@_date_color}{@@_generic_light_color}
+\colorlet{@@_table_head_color}{@@_generic_dark_color!25}
+\colorlet{@@_book_review_frame_bg_color}{@@_generic_dark_color!8}
+\colorlet{@@_book_advertisement_bg_color}{white}
+\colorlet{@@_book_advertisement_frame_color}{@@_generic_dark_color}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article|class-logo|class-doc-package>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article|class-doc-package>
+%    \end{macrocode}
+%
+% \section{Miscellaneous patches}
+%
+% We patch the \pkg{biblatex}'s "refsection" environment definition by adding
+% a flag hat will be used to test wheter we are inside such an environment or
+% not.
+%    \begin{macrocode}
+\AtBeginEnvironment{multicols}{
+  \bool_gset_true:N \g_@@_multicols_bool
+}
+\AtEndEnvironment{multicols}{
+  \bool_gset_false:N \g_@@_multicols_bool
+}
+\AtBeginEnvironment{refsection}{
+  \bool_gset_true:N \g_@@_refsection_bool
+}
+\AtEndEnvironment{refsection}{
+  \bool_gset_false:N \g_@@_refsection_bool
+}
+%    \end{macrocode}
+%
+% \section{Miscellaneous token lists}
+%
+% We define a token list that will display the font of footer at the right size.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_footer_size_font_tl {
+  \fontsize{\c_@@_footer_height_font_dim}{\c_zero_dim}\selectfont%
+}
+%    \end{macrocode}
+%
+% We define some token lists for the long and short forms of \acrshort*{smf}.
+%    \begin{macrocode}
+\tl_new:N \l_@@_smf_short_string_tl
+\tl_new:N \l_@@_smf_string_tl
+\tl_set:Nn \l_@@_smf_short_string_tl {
+  \cs_if_exist:cTF {texorpdfstring}
+  {
+    \texorpdfstring{\acrshort*{smf}}{\c_@@_smf_short_string_tl}
+  }{%
+    \acrshort*{smf}
+  }%
+}
+\tl_set:Nn \l_@@_smf_string_tl {
+  \cs_if_exist:cTF {texorpdfstring}
+  {
+    \texorpdfstring{\acrlong*{smf}}{\c_@@_smf_string_tl}
+  }{%
+    \acrlong*{smf}
+  }%
+}
+%    \end{macrocode}
+%
+% \section{Database for the articles' authors}
+%
+% For this, and thanks to \Pkg{datatool}, we create a database of
+% \enquote{authors} of articles.
+%    \begin{macrocode}
+\DTLnewdb{_@@_authors}
+%    \end{macrocode}
+%
+% Then we create the internal "\_@@_authors" function that let us populate the
+% "_@@_authors" database. Each people will be identified by some identifiers:
+% \begin{itemize}
+% \item firstname and lastname, that should be at the biblatex name format
+% (\enquote{lastname, firstname}),
+% \item affiliation,
+% \item email,
+% \item minibio,
+% \item photo.
+% \end{itemize}
+%
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_authors:nnnnnn
+  {
+    \DTLnewrow{_@@_authors}%
+    \DTLnewdbentry{_@@_authors}{first-last-name}{#1}%
+    \DTLnewdbentry{_@@_authors}{affiliation}{#2}%
+    \DTLnewdbentry{_@@_authors}{email}{#3}%
+    \DTLnewdbentry{_@@_authors}{minibio}{#4}%
+    \DTLnewdbentry{_@@_authors}{photo}{#5}%
+    \DTLnewdbentry{_@@_authors}{webpage}{#6}%
+  }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_email:n
+  {
+    \href{mailto:#1}{\nolinkurl{#1}}%
+  }
+%    \end{macrocode}
+%
+% We create a variant of this control sequence that passes the \emph{values} of the
+% variables involved (see \url{http://tex.stackexchange.com/a/214284/18401}).
+%    \begin{macrocode}
+\cs_generate_variant:Nn \_@@_authors:nnnnnn { nVVVVV }
+%    \end{macrocode}
+%
+% We create a function that displays the author(s) of an article with
+% a peticular layout.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_display_author:nnnnn
+{
+  \begin{tabular}[t]{p{18mm}p{0.75\linewidth}}
+    \tl_if_empty:nF {#5}
+    {%
+    \begin{adjustbox}{valign=t}
+      \includegraphics[width=16mm]{#5}
+    \end{adjustbox}%
+    }
+    &
+      \begin{description}[leftmargin=1em,style=nextline,nosep]
+      \item[\textcolor{@@_people_color}{\DeclareNameAlias{labelname}{default}\citeauthor{#1}}]
+        \tl_if_empty:nF {#2}
+        {%
+          #2%
+          \par%
+          \smallskip%
+        }
+        \tl_if_empty:nF {#3}
+        {%
+          \href{mailto:#3}{\nolinkurl{#3}}%
+          \par%
+          \smallskip%
+        }
+        \tl_if_empty:nF {#4}
+        {%
+          #4
+        }
+      \end{description}
+  \end{tabular}
+}
+%    \end{macrocode}
+%
+% We create a variant of this control sequence that passes the \emph{values} of the
+% variables involved (see \url{http://tex.stackexchange.com/a/214284/18401}).
+%    \begin{macrocode}
+\cs_generate_variant:Nn \@@_display_author:nnnnn { VVVVV }
+%    \end{macrocode}
+%
+% \section{Database for the interviewees}
+%
+% For this, and thanks to \Pkg{datatool}, we create a database of
+% \enquote{interviewees} of articles.
+%    \begin{macrocode}
+\DTLnewdb{_@@_interviewees}
+%    \end{macrocode}
+%
+% Then we create the internal "\_@@_interviewees" function that let us populate the
+% "_@@_interviewees" database. Each people will be identified by some identifiers:
+% \begin{itemize}
+% \item firstname and lastname, that should be at the biblatex name format
+% (\enquote{lastname, firstname}),
+% \item minibio,
+% \item photo.
+% \end{itemize}
+%
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_interviewees:nnn
+  {
+    \DTLnewrow{_@@_interviewees}%
+    \DTLnewdbentry{_@@_interviewees}{first-last-name}{#1}%
+    \DTLnewdbentry{_@@_interviewees}{minibio}{#2}%
+    \DTLnewdbentry{_@@_interviewees}{photo}{#3}%
+  }
+%    \end{macrocode}
+%
+% We create a variant of this control sequence that passes the \emph{values} of the
+% variables involved (see \url{http://tex.stackexchange.com/a/214284/18401}).
+%    \begin{macrocode}
+\cs_generate_variant:Nn \_@@_interviewees:nnn { nVV }
+%    \end{macrocode}
+%
+% \section{Functions for specifiying the people involved in the journal}
+%
+% For this, and thanks to \Pkg{datatool}, we create a database of
+% \enquote{people} involved in the journal.
+%    \begin{macrocode}
+\DTLnewdb{people}
+%    \end{macrocode}
+%
+% Then we create the internal "\_@@_people" function that let us populate the
+% "_@@_people" database. Each people will be identified by some identifiers:
+% speciality (optional), firstname, lastname, affiliation, email, role.
+%    \begin{macrocode}
+\tl_new:N \l_@@_crossref_tl
+\cs_new_protected:Nn \_@@_people:nnnnnnnn
+{
+  \DTLnewrow{people}%
+  \DTLnewdbentry{people}{first-last-name}{#1}%
+  \DTLnewdbentry{people}{affiliation}{#2}%
+  \DTLnewdbentry{people}{email}{#3}%
+  \DTLnewdbentry{people}{minibio}{#4}%
+  \DTLnewdbentry{people}{photo}{#5}%
+  \DTLnewdbentry{people}{speciality}{#6}%
+  \DTLnewdbentry{people}{role}{#7}%
+  \DTLnewdbentry{people}{webpage}{#8}%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+  \int_if_exist:cF {g_@@_#7_int}
+  {
+    \int_new:c {g_@@_#7_int}
+  }
+  \int_incr:c {g_@@_#7_int}
+  \tl_if_in:nnTF { #7 } { author } {
+    \tl_set:Nn \l_@@_crossref_tl {\c_@@_issue_bib_key_tl -art-\int_use:N \g_@@_articles_int}
+  } {
+    \tl_set:Nn \l_@@_crossref_tl {\c_@@_issue_bib_key_tl}
+  }
+  \tl_set:Nn \l_@@_people_first_last_name_tl {#1}
+  \iow_now:Nx \g_@@_bib_out_iow {%
+    @article{
+      \c_@@_issue_bib_key_tl -#7- \int_use:c {g_@@_#7_int},
+      \iow_newline:
+      author={\exp_not:V\l_@@_people_first_last_name_tl},
+      \iow_newline:
+      options={skipbib},
+      \iow_newline:
+      crossref  = {\l_@@_crossref_tl}
+      \iow_newline:
+    }
+    \iow_newline:
+  }%
+}
+%    \end{macrocode}
+%
+% We create a variant of this control sequence that passes the \emph{values} of
+% the variables involved (see
+% \url{http://tex.stackexchange.com/a/214284/18401}).
+%    \begin{macrocode}
+\cs_generate_variant:Nn \_@@_people:nnnnnnnn { nVVVVnxV }
+%    \end{macrocode}
+%
+% \section{Functions for displaying \enquote{academic} signatures of articles
+% without \enquote{real} author(s)}
+%
+% We create a function that displays an \enquote{academic} signature for articles
+% without \enquote{real} author(s).
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_display_academic_signature:n
+{
+  \bigskip
+    #1
+}
+%    \end{macrocode}
+%
+% \section{Functions for displaying people involved in the journal by role}
+%
+% We create the function that displays firstname and lastname of people involved
+% in the journal by role.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_display_people_by_role:n
+{
+  \DTLforeach*[\DTLiseq{\l_@@_people_role_tl}{#1}]{people}{%
+    \l_@@_firstlastname=first-last-name%
+    ,\l_@@_people_affiliation_tl=affiliation%
+    ,\l_@@_people_email_tl=email%
+    ,\l_@@_people_minibio_tl=minibio%
+    ,\l_@@_people_photo_tl=photo%
+    ,\l_@@_people_speciality=speciality%
+    ,\l_@@_people_role_tl=role%
+    ,\l_@@_people_webpage_tl=webpage%
+  }{%
+    \tl_if_in:NnTF \l_@@_people_role_tl { editor } {
+    \item[
+      \textcolor{@@_people_color}{%
+        \_@@_citeauthor_no_firstinits:n {\c_@@_issue_bib_key_tl -#1- \exp_not:V\DTLcurrentindex}%
+      }
+      \tl_if_in:NnF \l_@@_people_speciality { NoValue } { ~(\l_@@_people_speciality) }
+      ]
+      \l_@@_people_affiliation_tl%
+      \newline%
+      \href{mailto:\l_@@_people_email_tl}{\nolinkurl{\l_@@_people_email_tl}}%
+      \DTLiflastrow{%
+      }{%
+        \medskip%
+      }
+    }{
+      \tl_if_in:NnTF \l_@@_people_role_tl { author } {
+        \footnotesize%
+        \noindent%
+          \tl_if_empty:NF \l_@@_people_photo_tl
+          {%
+          \begin{adjustbox}{valign=t,minipage=18mm}
+            \includegraphics[width=16mm]{\l_@@_people_photo_tl}
+          \end{adjustbox}%
+          }
+          \quad%
+          \begin{adjustbox}{valign=t,minipage=\linewidth-18mm-1em}
+            \begin{description}[leftmargin=1em,style=nextline]
+            \item[%
+              \textcolor{@@_people_color}{%
+                \_@@_citeauthor_no_firstinits:n {\c_@@_issue_bib_key_tl -#1- \exp_not:V\DTLcurrentindex}%
+              }%
+              ]
+              \tl_if_empty:NF \l_@@_people_affiliation_tl
+              {%
+                \mbox{}%
+                \par%
+                \vspace{-2ex}%
+                \l_@@_people_affiliation_tl%
+              }
+              \tl_if_empty:NF \l_@@_people_email_tl
+              {%
+                \par%
+                \href{mailto:\l_@@_people_email_tl}{\nolinkurl{\l_@@_people_email_tl}}%
+              }
+              \tl_if_empty:NF \l_@@_people_webpage_tl
+              {%
+                \par%
+                \url{\l_@@_people_webpage_tl}%
+              }
+              \tl_if_empty:NF \l_@@_people_minibio_tl
+              {%
+                \par%
+                \smallskip%
+                \l_@@_people_minibio_tl
+              }
+            \end{description}
+          \end{adjustbox}
+        \DTLiflastrow{%
+        }{
+          \DTLpar%
+          \medskip%
+        }
+      }{
+        \_@@_citeauthor_no_firstinits:n {\c_@@_issue_bib_key_tl -#1-
+          \exp_not:V\DTLcurrentindex}%
+        \tl_if_empty:NF \l_@@_people_email_tl
+        {
+          \space(\href{mailto:\l_@@_people_email_tl}{\nolinkurl{\l_@@_people_email_tl}})
+        }
+      }
+    }
+  }
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article|class-doc-package>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
+% \section{Function for displaying a reflected text}
+%
+% We create the function that displays a reflected text.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_reflected_text:n
+{
+  \begin{tikzpicture}
+    \tikzset{@@_reflect_node/.style={%
+        anchor=base,%
+        inner~sep=0,%
+        line~width=0,%
+        font=\Huge,
+        color=@@_reflected_text_color%
+      }%
+    }%
+    \node[@@_reflect_node]{#1};
+    \node[scope~fading=south,opacity=0.2,yscale=-1,@@_reflect_node]{#1};
+  \end{tikzpicture}
+}
+%    \end{macrocode}
+%
+% \section{Displaying the front cover}
+%
+% We create the variable that displays the front cover.
+%    \begin{macrocode}
+\tl_new:N \g_@@_display_front_cover_tl%
+\tl_gset:Nn \g_@@_display_front_cover_tl {%
+  \bool_gset_true:N \g_@@_frontcovermatter_bool
+  \pagestyle{@@_cover_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_front_cover_geometry_tl}%
+  \noindent%
+  \bool_if:NTF {\g_@@_cover_bool} {
+    \hspace*{-\c_@@_layoutoffset_dim}
+  }{
+    \hspace*{-2\c_@@_layoutoffset_dim}
+  }
+  \includegraphics[
+  width=\c_@@_frontcover_image_width_dim
+  % min~width=\paperwidth
+  % width=\c_@@_layoutwidth_dim + 2\c_@@_layoutoffset_dim
+  % min~size={\paperwidth}{\c_@@_frontcover_image_height_dim+\c_@@_layoutoffset_dim},
+  % max~size={\paperwidth}{\c_@@_frontcover_image_height_dim+\c_@@_layoutoffset_dim},
+  % Clip*=0mm~40mm~211mm~160mm
+  % Clip*=0mm~{\height-\c_@@_frontcover_image_height_dim}~{\paperwidth}~{\height}
+  ]{\c_@@_issue_frontcover_image_path_string_tl}
+  \begin{tikzpicture}[remember~picture, overlay]
+    \coordinate (@@_circle_minitoc_center) at
+    ([xshift=\g_@@_minitoc_xshift_dim-\c_@@_layoutoffset_dim,yshift=\g_@@_minitoc_yshift_dim+\c_@@_layoutoffset_dim]current~page.south~east) ;
+    \node[name=@@_circle_minitoc,shape=circle,inner~sep=\c_zero_dim,fill=white,text~width=\g_@@_minitoc_circle_diameter_dim] at
+    (@@_circle_minitoc_center) {};
+    \node[text~width=\g_@@_minitoc_textwidth_dim,anchor=north~west] at
+    ([xshift=\c_@@_minitoc_from_circle_xshift_dim,yshift=\c_@@_minitoc_from_circle_yshift_dim]$ (@@_circle_minitoc.north)!.5!(@@_circle_minitoc.west) $)
+    {
+      \large
+      \color{@@_dark_generic_light_color}
+      \bool_if:NF {\g_@@_front_cover_minitoc_tl} {
+        \g_@@_front_cover_minitoc_tl
+      }
+    };
+    \bool_if:NT {\g_@@_minitoc_help_bool} {
+      \fill[red] (@@_circle_minitoc_center) circle (2pt);
+    }
+  \end{tikzpicture}
+  \bool_if:NT {\g_@@_cover_bool} {
+    \small
+    \begin{tikzpicture}[remember~picture, overlay]
+      \node[name=@@_binding_sw,inner~sep=\c_zero_dim,fill=white,rotate=90,anchor=west] at
+      ([xshift=0.45\c_@@_bindingoffset_dim,yshift=15mm+\c_@@_layoutoffset_dim]current~page.south~west) {
+        \No\int_use:N\g_@@_issue_number_int
+      };
+      \node[name=@@_binding_w,inner~sep=\c_zero_dim,fill=white,rotate=90] at
+      ([xshift=0.45\c_@@_bindingoffset_dim]current~page.west) {
+        \MakeUppercase{\c_@@_journal_title_string_tl}
+      };
+      \node[name=@@_binding_nw,inner~sep=\c_zero_dim,fill=white,rotate=90,anchor=east] at
+      ([xshift=0.45\c_@@_bindingoffset_dim,yshift=-15mm-\c_@@_layoutoffset_dim]current~page.north~west) {
+        \l_@@_uppercased_date_format\displaydate{@@_date}
+      };
+    \end{tikzpicture}
+  }
+  \vfill%
+  \noindent%
+  \hspace*{10mm}%
+  \hspace*{-\c_@@_layoutoffset_dim}
+  \includegraphics[height=22.5mm]{\c_@@_smf_logo_file_string_tl}%
+  \vfill%
+  \clearpage%
+  \bool_gset_false:N \g_@@_frontcovermatter_bool
+}
+%    \end{macrocode}
+%
+% \section{Displaying the inside front cover}
+%
+% We create the variable that displays the inside front cover.
+%    \begin{macrocode}
+\tl_new:N \g_@@_display_inside_front_cover_tl%
+\tl_gset:Nn \g_@@_display_inside_front_cover_tl {%
+  \bool_gset_true:N \g_@@_insidefrontcovermatter_bool%
+  \pagestyle{@@_insidefrontcover_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_inside_front_cover_geometry_tl}%
+  \small%
+  \setlength{\columnseprule}{2pt}
+  \renewcommand{\columnseprulecolor}{\color{white}}
+  \begin{_@@_inside_frontcover}
+    \begin{multicols}{2}
+      \setlength{\columnsep}{1mm}
+      \begin{description}[leftmargin=1em]
+      \item[\c_@@_editors_in_chief_string_tl] \
+        \begin{description}[leftmargin=1em,style=nextline]
+          \@@_display_people_by_role:n {editorinchief}
+        \end{description}
+        \bigskip
+        \par
+      \item[\c_@@_editors_string_tl] \
+        \begin{description}[leftmargin=1em,style=nextline]
+          \@@_display_people_by_role:n {editor}
+        \end{description}
+      \end{description}
+    \end{multicols}
+    \setlength{\columnseprule}{1pt}
+    \tcblower
+    \begin{tabular}{@{}m{.75\c_@@_inside_frontcover_box_width_dim}@{}m{.2\c_@@_inside_frontcover_box_width_dim-2\tabcolsep}@{}}
+      \begin{description}[leftmargin=1em]
+      \item[\c_@@_editorial_secretariat_string_tl] \ \par%
+        \l_@@_journal_publisher_tl\par%
+        \l_@@_journal_address_tl\par%
+        \c_@@_phone_string_tl{}~:~\l_@@_journal_phone_tl{} \space\textendash{}\space
+        \c_@@_fax_string_tl{}~:~\l_@@_journal_fax_tl\par%
+        \href{mailto:\l_@@_journal_email_tl}{\nolinkurl{\l_@@_journal_email_tl}}\newline%
+        \url{\l_@@_journal_url_tl}
+      \item[\c_@@_publishingdirector_string_tl{}~:]
+        \@@_display_people_by_role:n { president }
+      \item[\c_@@_issn_string_tl{}~:] \l_@@_journal_issn_tl
+        \tl_if_empty:NF \l_@@_journal_isbn_tl
+        {%
+        \item[\c_@@_isbn_string_tl{}~:] \l_@@_journal_isbn_tl
+        }
+      \item[\c_@@_latexclass_string_tl{}~:]
+        \@@_display_people_by_role:n { classdesigner }
+      \item[\c_@@_artistic_director_string_tl{}~:]
+        \@@_display_people_by_role:n { graphicdesigner }
+        % \item[\c_@@_font_string_tl{}~:]
+        %   \@@_display_people_by_role:n { fontdesigner }
+      \end{description}
+      &
+        \raggedleft%
+        \includegraphics[height=20mm]{\c_@@_smf_logo_file_string_tl}%
+    \end{tabular}
+    \\
+    \c_@@_font_string_tl
+    \bigskip
+    \tl_if_empty:NF \g_@@_about_front_cover_tl
+    {%
+      \\
+      \begin{adjustbox}{valign=t,minipage=.75\c_@@_inside_frontcover_box_width_dim+.2\c_@@_inside_frontcover_box_width_dim-2\tabcolsep}
+        \begin{description}[leftmargin=1em,font=\color{@@_about_front_cover_title_color}]
+        \item[\g_@@_about_front_cover_string_tl] \g_@@_about_front_cover_tl
+          \bool_if:NT {\g_@@_credit_front_cover_bool} {
+            \space(\c_@@_credit_front_cover_string_tl{}~:~%
+            \DTLforeach*[\DTLiseq{\l_@@_people_role_tl}{frontcovercredit}]{people}{%
+              \l_@@_firstlastname=first-last-name%
+              ,\l_@@_people_role_tl=role%
+            }{%
+              \_@@_citeauthor_no_firstinits:n
+              {\c_@@_issue_bib_key_tl -frontcovercredit- \exp_not:V\DTLcurrentindex}%
+            }%
+            ).%
+          }
+        \end{description}
+      \end{adjustbox}
+    }
+  \end{_@@_inside_frontcover}
+  \clearpage%
+  \bool_gset_false:N \g_@@_insidefrontcovermatter_bool
+}
+%    \end{macrocode}
+%
+% \section{User level commands}
+%
+% Here, we gather all the user level (public) commands.
+%
+% \subsection{Populating the people involved in the journal}
+%
+% \begin{macro}{\editorinchief}
+% \begin{macro}{\editor}
+% \begin{macro}{\president}
+% \begin{macro}{\classdesigner}
+% \begin{macro}{\fontdesigner}
+% \begin{macro}{\classmaintainer}
+% \begin{macro}{\graphicdesigner}
+%   We define some document-level commands that let the user specify
+%   respectively the editor(s) in chief, the editors, the (\gls{smf}) president,
+%   the class designer and maintainer(s), and the graphic designer.
+%
+%   For the editor(s) in chief, we increment the "\g_@@_editors_in_chief_int"
+%   counter in order to use singular or plural form of the corresponding string
+%   \enquote{Rédacteur(s) en chef}.
+%    \begin{macrocode}
+\NewDocumentCommand \editorinchief {ommm}
+{
+  \int_incr:N \g_@@_editors_in_chief_int
+  \_@@_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{editorinchief}{}
+}
+\NewDocumentCommand \editor {ommm}
+{
+  \_@@_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{editor}{}
+}
+
+\NewDocumentCommand \president {ommm}
+{
+  \_@@_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{president}{}
+}
+\NewDocumentCommand \classdesigner {ommm}
+{
+  \_@@_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{classdesigner}{}
+}
+\NewDocumentCommand \classmaintainer {ommm}
+{
+  \_@@_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{classmaintainer}{}
+}
+\NewDocumentCommand \fontdesigner {ommm}
+{
+  \_@@_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{fontdesigner}{}
+}
+\NewDocumentCommand \graphicdesigner {ommm}
+{
+  \_@@_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{graphicdesigner}{}
+}
+% \NewDocumentCommand \frontcovercredit {om}
+% {
+%   \_@@_people:nnnnnnnn {#2}{}{}{}{}{#1}{frontcovercredit}{}
+% }
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Issue setup}
+%
+% \begin{macro}{\issuesetup}
+%   We define the command that lets the user specify the issue setup.
+%    \begin{macrocode}
+\NewDocumentCommand{\issuesetup}{ m } {
+%    \end{macrocode}
+%
+% Its keys are set (only "number", "month" and "year" are relevant here).
+%    \begin{macrocode}
+  \keys_set:nn { gzt/issuesetup } { #1 }
+  \hypersetup{pdftitle=\c_@@_journal_title_string_tl\space--\space{}N°\int_use:N\g_@@_issue_number_int}
+  \hypersetup{pdfauthor=\l_@@_smf_string_tl}
+%    \end{macrocode}
+%
+% We use here the fact that, if the "number", "month" or "year" options ares not
+% used, their corresponding "\g_@@_issue_number_int", "\g_@@_issue_month_int" or
+% "\g_@@_issue_year_int" variables are equal to $0$ ($<1$).
+%
+% First, if "number" is not used, its "\g_@@_issue_number_int" variable is set
+% to "\c_@@_first_issue_number_int"\footnote{The number of the first Gazette's
+% issue using the present class.} and a warning is emitted.
+%    \begin{macrocode}
+  \int_compare:nNnT {\g_@@_issue_number_int}<{1}
+  {
+    \int_set:Nn \g_@@_issue_number_int { \c_@@_first_issue_number_int }
+    \msg_warning:nnn{gzt}{issue-number-needed}{number}
+  }
+%    \end{macrocode}
+%
+% If not specified as \refCom{issuesetup}'s key-value options, issue's month and
+% year are computed from issue number (which defaults to
+% "\c_@@_first_issue_month_int").
+%
+% \begin{macro}{\c_@@_issue_age_in_months_int}
+%   First, if "month" or "year" option is not used (one of the previous
+%   variables is $0$ hence their product is $0$ ($<1$)), we compute the issue
+%   age in months, useful for both month and year computation.
+%    \begin{macrocode}
+  \int_compare:nNnT {\g_@@_issue_month_int * \g_@@_issue_year_int}<{1}
+  {
+    \int_new:N \g_@@_issue_age_in_months_int%
+    \int_gset:Nn \g_@@_issue_age_in_months_int
+    {
+      \c_@@_first_issue_month_int
+      + \c_@@_interval_in_months_int
+      * ( \int_use:N \g_@@_issue_number_int - \c_@@_first_issue_number_int )
+    }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% If the "month" is not used, we replace "\g_@@_issue_month_int" ($=0$) by its
+% computed value from the issue number.
+%    \begin{macrocode}
+  \int_compare:nNnT {\g_@@_issue_month_int}<{1}
+  {
+    \int_gset:Nn \g_@@_issue_month_int
+    {
+      \int_mod:nn { \g_@@_issue_age_in_months_int } { 12 }
+    }
+  }
+%    \end{macrocode}
+%
+% If the "year" is not used, we replace "\g_@@_issue_year_int" ($=0$) by its
+% computed value from the issue number.
+%    \begin{macrocode}
+  \int_compare:nNnT {\g_@@_issue_year_int}<{1}
+  {
+    \int_new:N \g_@@_issue_age_in_years_int%
+    \int_gset:Nn \g_@@_issue_age_in_years_int
+    {%
+      \int_div_truncate:nn { \g_@@_issue_age_in_months_int } { 12 }
+    }%
+    \int_gset:Nn \g_@@_issue_year_int
+    {
+      \g_@@_issue_age_in_years_int + \c_@@_first_issue_year_int
+    }
+  }%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Journal setup}
+%
+% \begin{macro}{\journalsetup}
+%   We define the command that lets the user specify the
+%   journal setup. This setup is likely to be rarely changed.
+%    \begin{macrocode}
+\NewDocumentCommand{\journalsetup}{ m } {
+%    \end{macrocode}
+%
+% Its keys are set (only "publisher", "address", "phone", "fax", "email", "url"
+% and "issn" are relevant here).
+%    \begin{macrocode}
+  \keys_set:nn { gzt/journalsetup } { #1 }
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Date of the president's message}
+%
+% \begin{macro}{\date}
+%   We redefine the "\date" for the date of the president's message. It takes
+%   3 arguments, each of them being a number: the day, the month and the year.
+%    \begin{macrocode}
+\RenewDocumentCommand{\date}{ mmm } {
+  \newdate{@@_president_message_date}{#1}{#2}{#3}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
+%
+% \subsection{Interviews}
+%
+% \begin{macro}{\interviewee}
+%    \begin{macrocode}
+% \NewDocumentCommand\interviewer { o m } {
+% }
+\NewDocumentCommand\interviewee { om } {
+  \tl_if_empty:nT \g_@@_title_tl {
+    \tl_gset:Nn \g_@@_title_tl {
+      \c_@@_interview_title_string_tl
+      \DeclareNameAlias{labelname}{default}\citeauthor{\c_@@_issue_bib_key_tl -art-\int_use:N
+        \g_@@_articles_int}
+    }
+  }
+  \IfNoValueF {#1}
+  {
+    \keys_set:nn { gzt/authors } { #1 }
+  }
+  \tl_set:Nn \l_@@_people_first_last_name_tl {#2}
+  \_@@_people:nVVVVnxV
+  {#2}
+  {\g_@@_people_affiliation_tl}
+  {\g_@@_people_email_tl}
+  {\g_@@_people_minibio_tl}
+  {\g_@@_people_photo_tl}
+  {}
+  {interviewee-art-\int_use:N \g_@@_articles_int}
+  {}
+  \maketitle
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Miscellaneous}
+%
+% \begin{macro}{\academicsignature}
+%    \begin{macrocode}
+\NewDocumentCommand\academicsignature { m } {
+  \@@_display_academic_signature:n {#1}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \section{Definition of the footer of the pages}
+%
+% \begin{macro}{@@_date}
+% \begin{macro}{\l_@@_uppercased_date_format}
+%   Thanks to \Pkg{datetime}, we create the new date "@@_date" and define the
+%   date format to be used in the journal. As this date has to be displayed
+%   uppercased, we first define a function that displays uppercased months.
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_uppercased_monthname_french:n
+{
+  \@orgargctr=#1\relax
+  \ifcase\@orgargctr
+  \PackageError{datetime}{Invalid~month~number~\the\@orgargctr}{%
+    Month numbers should go from 1 (janvier) to 12 (decembre)}%
+  \or JANVIER%
+  \or F\'EVRIER%
+  \or MARS%
+  \or AVRIL%
+  \or MAI%
+  \or JUIN%
+  \or JUILLET%
+  \or AO\^UT%
+  \or SEPTEMBRE%
+  \or OCTOBRE%
+  \or NOVEMBRE%
+  \or D\'ECEMBRE%
+  \else
+  \PackageError{datetime}{Invalid~month~number~\the\@orgargctr}{%
+    Month numbers should go from 1 (janvier) to 12 (decembre)}%
+  \fi
+}
+\newdate{@@_date}
+  {1}
+  {\int_use:N \g_@@_issue_month_int}
+  {\int_use:N \g_@@_issue_year_int}
+\newdateformat{l_@@_uppercased_date_format}{
+  \_@@_uppercased_monthname_french:n {\THEMONTH}~\THEYEAR
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \section{(Re)Definition of document commands that identify the article}
+%
+% The names of the authors of the different articles will appear at several
+% places, and notably in the table of contents where first and middle names have to
+% be rendered as initials. Because automatically rendering initials is a complex task
+% already provided by \Pkg{biblatex}, we will create a \file{.bib} file
+% containing "article" entries for each article of the \gzt{} journal.
+%
+% This can be done only at the beginning of the document, in order to know the
+% characteristics of the current issue.
+%    \begin{macrocode}
+\AtBeginDocument{%
+%    \end{macrocode}
+%
+% We first create a token list containing the date of the current issue formated
+% as required by \pkg{biblatex} (the month issue needs a leading zero if it is
+% $<10$).
+%    \begin{macrocode}
+\tl_new:N \g_@@_bib_issue_date_tl
+\tl_gset:Nn \g_@@_bib_issue_date_tl {
+  \int_use:N \g_@@_issue_year_int-
+  \int_compare:nNnT {\g_@@_issue_month_int}<{10}
+  {
+    0
+  }
+  \int_use:N \g_@@_issue_month_int
+}
+%    \end{macrocode}
+%
+% We will populate the bibiliographic file of the current issue with the current
+% issue (as "@periodical" entry type).
+%    \begin{macrocode}
+  \iow_now:Nx \g_@@_bib_out_iow {%
+    @periodical{\c_@@_issue_bib_key_tl,\iow_newline:
+      issuetitle   = {\exp_not:f\c_@@_journal_title_string_tl},\iow_newline:
+      date         = {\g_@@_bib_issue_date_tl},\iow_newline:
+      number       = \int_use:N \g_@@_issue_number_int,\iow_newline:
+      % issn         = {\l_@@_journal_issn_tl},\iow_newline:
+      options      = {skipbib}\iow_newline:
+    }
+    \iow_newline:
+  }%
+}
+%    \end{macrocode}
+%
+% \begin{macro}{\title}
+% \begin{macro}{\g_@@_title_tl}
+%   The command for article's title is redefined: the full \enquote{article's
+%   title} is store in "\g_@@_title_tl" for later use.
+%    \begin{macrocode}
+\tl_new:N \g_@@_title_tl
+\RenewDocumentCommand \title { o m } {
+%    \end{macrocode}
+% We increment the "\g_@@_articles_int" integer that counts the number of
+% articles in order to provide for each of them a unique bibliographic key.
+%    \begin{macrocode}
+  \int_gincr:N \g_@@_articles_int
+  \tl_gclear:N \g_@@_short_title_tl
+  \tl_gclear:N \g_@@_short_subtitle_tl
+  \bool_gset_false:N \g_@@_title_not_in_toc_bool
+  %
+  \IfNoValueF {#1}
+  {
+    \keys_set:nn { gzt/title } { #1 }
+  }
+  \tl_gset:Nn \g_@@_title_tl {#2}
+  \bool_if:nT \g_@@_tellme_rubric_bool
+  {
+    \tl_put_left:Nx \g_@@_title_tl {\c_@@_tellme_extra_title_string_tl}
+  }
+  \tl_if_empty:NT \g_@@_short_title_tl {%
+    \tl_gset_eq:NN \g_@@_short_title_tl \g_@@_title_tl
+  }
+%<class-article>    \hypersetup{pdftitle=\g_@@_title_tl}
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\subtitle}
+% \begin{macro}{\g_@@_subtitle_tl}
+%   The command for article's subtitle is redefined: the full and short
+%   \enquote{article's subtitles} are store in "\g_@@_subtitle_tl" and
+%   "\g_@@_short_subtitle_tl" for later use.
+%    \begin{macrocode}
+\tl_new:N \g_@@_subtitle_tl
+\NewDocumentCommand \subtitle { o m } {
+  \bool_gset_false:N \g_@@_subtitle_not_in_toc_bool
+  %
+  \IfNoValueF {#1}
+  {
+    \keys_set:nn { gzt/subtitle } { #1 }
+  }
+  \tl_gset:Nn \g_@@_subtitle_tl {#2}
+  \tl_if_empty:NT \g_@@_short_subtitle_tl {%
+    \tl_gset_eq:NN \g_@@_short_subtitle_tl \g_@@_subtitle_tl
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\author}
+% The command for article's author (including its affiliation) is redefined.
+%    \begin{macrocode}
+\RenewDocumentCommand \author { o m } {
+  \IfNoValueF {#1}
+  {
+    \keys_set:nn { gzt/authors } { #1 }
+  }
+  \tl_gset:Nn \l_@@_people_first_last_name_tl {#2}
+  \_@@_people:nVVVVnxV
+  {#2}
+  {\g_@@_people_affiliation_tl}
+  {\g_@@_people_email_tl}
+  {\g_@@_people_minibio_tl}
+  {\g_@@_people_photo_tl}
+  {}
+  {author-art-\int_use:N \g_@@_articles_int}
+  {\g_@@_people_webpage_tl}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% We create a stream in order to write a bibliographic file
+%    \begin{macrocode}
+\iow_new:N \g_@@_bib_out_iow
+\ior_new:N \g_@@_bib_out_ior
+\tl_new:N \g_@@_bib_out_tl
+\file_if_exist:nTF { \c_@@_issue_bib_path_string_tl }
+{
+  \ior_open:Nn \g_@@_bib_out_ior { \c_@@_issue_bib_path_string_tl }
+  \ior_str_map_inline:Nn \g_@@_bib_out_ior
+  { \tl_gput_right:Nn \g_@@_bib_out_tl {#1 \par } }
+  \ior_close:N \g_@@_bib_out_ior
+}{
+  \typeout{no file! rerun}
+}
+\iow_open:Nn \g_@@_bib_out_iow { \c_@@_issue_bib_path_string_tl }
+%    \end{macrocode}
+%
+% \begin{environment}{abstract}
+%   The environment for article's abstract or, more precisely, for its lead
+%   paragraph (\enquote{chapô} in French typography) is (re)defined.
+%    \begin{macrocode}
+\tl_new:N \g_@@_abstract_body_tl
+\NewDocumentEnvironment{abstract}{  }
+  {\CollectAbstract}
+  {\endCollectAbstract}
+\NewEnviron{CollectAbstract}
+  {
+    \tl_gset_eq:NN \g_@@_abstract_body_tl \BODY
+  }
+%    \end{macrocode}
+% \end{environment}
+%
+% \section{Definition of a private main matter switch}
+%
+% A private "\_@@_mainmatter_switch_tl" switch is defined in order to automatically insert
+% some settings.
+%    \begin{macrocode}
+\tl_new:N \g_@@_mainmatter_switch_tl%
+\tl_gset:Nn \g_@@_mainmatter_switch_tl {
+  \bool_gset_false:N \g_@@_frontmatter_bool
+  \bool_gset_true:N \g_@@_mainmatter_bool
+  \SetParskip{\c_@@_mainmatter_parskip_skip}
+  \pagestyle{@@_mainmatter_ps}%
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\tl_new:N \g_@@_article_acknowledgements_tl%
+\cs_new_protected:Nn \@@_article_acknowledgements:n
+{
+  \tl_gset:Nn \g_@@_article_acknowledgements_tl { #1 }
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
+% \begin{macro}{\_@@_about_front_cover}
+%   We define the internal function than let us tell a few words about the front
+%   cover.
+%    \begin{macrocode}
+\tl_new:N \g_@@_about_front_cover_tl%
+\bool_new:N \g_@@_credit_front_cover_bool%
+\tl_new:N \g_@@_about_front_cover_string_tl%
+\cs_new_protected:Nn \_@@_about_front_cover:nnn
+{
+  \tl_if_empty:nF {#1}{%
+    \bool_gset_true:N \g_@@_credit_front_cover_bool
+    \_@@_people:nnnnnnnn {#1}{}{}{}{}{}{frontcovercredit}{}
+  }
+  \tl_gset:Nn \g_@@_about_front_cover_string_tl { #2 }
+  \tl_gset:Nn \g_@@_about_front_cover_tl { #3 }
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\_@@_rubric}
+% We define the internal function than defines and sets the layouts of rubrics.
+%    \begin{macrocode}
+% \tl_new:N \g_@@_rubric_title_tl%
+% \tl_new:N \g_@@_rubric_pictofile_tl%
+% \tl_new:N \g_@@_rubric_abstract_tl%
+\tl_new:N \g_@@_rubric_abstract_box_tl%
+\tl_new:N \l_@@_rubric_head_text_box_tl%
+%
+\cs_new_protected:Nn \_@@_rubric:nnn
+{
+  \g_@@_mainmatter_switch_tl
+  \bool_gset_true:N \g_@@_mainmatter_bool
+  \clearpage
+%    \end{macrocode}
+%
+% We reinitialize the items counter in this new rubric.
+%    \begin{macrocode}
+  \bool_gset_true:N \g_@@_rubric_bool%
+  \bool_gset_false:N \g_@@_interview_rubric_bool
+  \bool_gset_false:N \g_@@_tellme_rubric_bool
+  \bool_gset_false:N \g_@@_rearviewmirror_rubric_bool
+  \bool_gset_false:N \g_@@_books_rubric_bool
+  \bool_gset_false:N \g_@@_previous_article_with_bibliography_or_minibio_bool
+  \bool_if:nF { \g_@@_for_authors_bool } {
+    \int_zero:N \g_@@_item_in_rubric_int
+    \phantomsection
+    \par
+    \addcontentsline{toc}{part}{#2}
+    \thispagestyle{@@_rubric_ps}
+    \exp_after:wN\newgeometry\exp_after:wN{\c_@@_main_geometry_tl}%
+    % \tl_show:N \g_@@_rubric_abstract_tl
+    \tl_if_empty:NTF \g_@@_rubric_abstract_tl
+    {
+      \dim_set:Nn \l_@@_rubrics_head_text_width_dim { \c_@@_rubrics_head_text_no_abstract_width_dim }
+    }
+    {
+      \dim_set:Nn \l_@@_rubrics_head_text_width_dim { \c_@@_rubrics_head_text_abstract_width_dim }
+      \tl_gset:Nn \g_@@_rubric_abstract_box_tl {
+        \begin{adjustbox}{valign=t,minipage=\c_@@_rubrics_abstract_width_dim}
+          \raggedright%
+          \large%
+          \color{@@_rubric_abstract_color}%
+          \g_@@_rubric_abstract_tl%
+        \end{adjustbox}
+      }
+    }
+    \tl_set:Nn \l_@@_rubric_head_text_box_tl {
+      \begin{adjustbox}{valign=t,minipage=\l_@@_rubrics_head_text_width_dim}
+        \mbox{}%
+        \checkoddpage%
+        \ifoddpage%
+        \raggedleft%
+        \else
+        \raggedright%
+        \fi%
+        \color{@@_rubric_title_color}%
+        \fontsize{20}{20}\fontseries{bx}\fontshape{sc}\selectfont%
+        \g_@@_rubric_title_tl%
+      \end{adjustbox}
+    }
+    \noindent%
+    \mbox{}%
+    \checkoddpage%
+    \ifoddpage%
+    \hspace*{\c_@@_rubric_extra_xoffset_dim}
+    \tl_if_empty:NF \g_@@_rubric_abstract_tl
+    {
+      \g_@@_rubric_abstract_box_tl
+    }
+    \hfill%
+    \l_@@_rubric_head_text_box_tl
+    \hspace*{\c_@@_rubric_xoffset_dim}%
+    \else%
+    \hspace*{\c_@@_rubric_xoffset_dim}%
+    \l_@@_rubric_head_text_box_tl
+    \tl_if_empty:NF \g_@@_rubric_abstract_tl
+    {
+      \hfill%
+      \g_@@_rubric_abstract_box_tl
+      \hspace*{\c_@@_rubric_extra_xoffset_dim}
+    }
+    \fi%
+  }
+  \afterpage{%
+    \bool_gset_false:N \g_@@_rubric_bool%
+  }
+%    \end{macrocode}
+% We suppress any spurious space in case of lack of "%" at the end of the
+% public macros built on "\_@@_rubric":
+%    \begin{macrocode}
+  \ignorespaces
+%    \end{macrocode}
+% End of the definition of the private command "\_@@_rubric":
+%    \begin{macrocode}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
+%
+% We create two token lists that will contain:
+% \begin{enumerate}
+% \item the unique bibliographic key,
+% \item the "author" value of the bibliographic entry,
+% \end{enumerate}
+%  of the current article.
+%    \begin{macrocode}
+\tl_new:N \g_@@_article_bib_key_tl%
+\tl_new:N \l_@@_people_first_last_names_tl
+\tl_new:N \g_@@_authors_first_last_names_tl%
+\tl_new:N \l_@@_interviewees_first_last_names_tl%
+\tl_new:N \g__@@_citeauthor_no_firstinits%
+\tl_new:N \g_@@_citeauthor_tl%
+\tl_new:N \g_@@_citeinterviewee_tl%
+%
+\cs_new_protected:Nn \_@@_citeauthor_no_firstinits:n {%
+  \tl_gset:Nn \g_@@_citeauthor_tl {%
+    \DeclareNameAlias{labelname}{default}%
+    \togglefalse{blx@firstinits}%
+    \citeauthor{#1}
+  }%
+  \cs_if_exist:cTF {texorpdfstring}
+  {
+    \texorpdfstring{\g_@@_citeauthor_tl}{}
+  }{%
+    \g_@@_citeauthor_tl
+  }%
+}
+% \@ifpackageloaded{hyperref}{%
+%   \tl_gset:No \g_@@_citeauthor_tl {%
+%     \texorpdfstring{\citeauthor{\g_@@_article_bib_key_tl}}{}
+%   }
+% }{%
+%   \tl_gset:Nn \g_@@_citeauthor_tl {%
+%     \citeauthor{\g_@@_article_bib_key_tl}
+%   }%
+% }%
+% \@ifpackageloaded{hyperref}{%
+%   \tl_gset:No \g_@@_citeinterviewee_tl {%
+%     \texorpdfstring{\citeauthor{\g_@@_article_bib_key_tl}}{}
+%   }
+% }{%
+%   \tl_gset:Nn \g_@@_citeinterviewee_tl {%
+%     \citeinterviewee{\g_@@_article_bib_key_tl}
+%   }%
+% }%
+%    \end{macrocode}
+%
+% In the following "\maketitle" document level macro, we will need to display
+% the list the authors of the current article, not as a comma separated list
+% (default "\citeauthor" \pkg{biblatex}'s macro behavior), but as an itemized
+% list. For this, we create the "\_@@_itemized_citeauthor" internal function
+% that will make use of "\citeauthor" where "\multinamedelim" and
+% "\finalnamedelim" will be patched into "\item". As we don't want to globally
+% alter the behavior of these macros, we first store their original meanings in
+% some private control sequence:
+%    \begin{macrocode}
+\cs_set_eq:NN \_@@_orig_multinamedelim \multinamedelim
+\cs_set_eq:NN \_@@_orig_finalnamedelim \finalnamedelim
+\cs_new_protected:Nn \_@@_itemized_citeauthor:n
+{
+  \cs_set_eq:NN \multinamedelim \item
+  \cs_set_eq:NN \finalnamedelim \multinamedelim
+  \AtNextCitekey{\defcounter{maxnames}{100}}
+  \begin{itemize}[label=\textbullet,noitemsep]
+  \item \citeauthor{#1}
+  \end{itemize}
+  \cs_set_eq:NN \multinamedelim \_@@_orig_multinamedelim
+  \cs_set_eq:NN \finalnamedelim \_@@_orig_finalnamedelim
+}
+%    \end{macrocode}
+%
+% We declare two token list which will used in the next (re)definition.
+%    \begin{macrocode}
+\tl_new:N \l_@@_bullet_and_rule_tl
+\tl_new:N \l_@@_authors_box_tl
+\tl_new:N \l_@@_abstract_box_tl
+\tl_new:N \l_@@_bullet_and_rule_odd_tl
+\tl_new:N \l_@@_bullet_and_rule_even_tl
+\tl_new:N \l_@@_title_box_tl
+%
+%    \end{macrocode}
+%
+% \begin{macro}{\_@@_maketitle}
+%   The command that \enquote{makes} the title is redefined.
+%    \begin{macrocode}
+\RenewDocumentCommand \maketitle { s } {
+%    \end{macrocode}
+%
+% We force all the previous floats to be processed before a new article starts
+% (this is already done in "bibliography_minibiographies_acknowledgments"
+% environment but is repeated here if what is before provides floats but neither
+% bibliography, \gls{cv} nor acknowledgments).
+%    \begin{macrocode}
+  \FloatBarrier%
+%    \end{macrocode}
+%
+% We increment the item number in the current rubric.
+%    \begin{macrocode}
+\int_gincr:N \g_@@_item_in_rubric_int
+%    \end{macrocode}
+%
+% We restore the original length for "\parindent" that has been set to zero in
+% a possible previous \enquote{Interview} rubric.
+%    \begin{macrocode}
+\dim_set_eq:NN \parindent \c_@@_original_parindent_dim
+%    \end{macrocode}
+%
+% We reset to zero some counters at each new article.
+%    \begin{macrocode}
+\setcounter{section}{0}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\setcounter{footnote}{0}
+%
+\setcounter{equation}{0}
+%
+\setcounter{theorem}{0}
+\setcounter{theoreme}{0}
+\setcounter{corollary}{0}
+\setcounter{corollaire}{0}
+\setcounter{conjecture}{0}
+\setcounter{proposition}{0}
+\setcounter{lemma}{0}
+\setcounter{lemme}{0}
+\setcounter{axiom}{0}
+\setcounter{axiome}{0}
+%
+\setcounter{definition}{0}
+\setcounter{remark}{0}
+\setcounter{remarque}{0}
+\setcounter{example}{0}
+\setcounter{exemple}{0}
+\setcounter{notation}{0}
+%    \end{macrocode}
+%
+% We store the unique bibliographic key of the current article in the
+% "\g_@@_article_bib_key_tl" token list.
+%    \begin{macrocode}
+\tl_gset:Nn \g_@@_article_bib_key_tl {%
+  \c_@@_issue_bib_key_tl
+  -art-
+  \int_use:N \g_@@_articles_int
+}
+%    \end{macrocode}
+%
+% We will populate the bibiliographic file of the current issue with the current
+% article (title, author(s) and a fixed part giving by the issue number, journal
+% title and date).
+%
+% Then, we  iterate through each row of the authors database in order to get
+% a token list containing the (list of the) author(s) of the current article
+% formated as required by \pkg{biblatex} (\enquote{Last1, First1 [and Last2,
+% First2 [and ...]]}).
+%    \begin{macrocode}
+\DTLforeach*[\DTLiseq{\l_@@_people_role_tl}{author-art-\int_use:N \g_@@_articles_int}]{people}{%
+  \l_@@_people_first_last_name_tl=first-last-name%
+  ,\l_@@_people_role_tl=role%
+}{%
+  \tl_if_in:NnT \l_@@_people_role_tl { author } {
+    \DTLiffirstrow{%
+      \tl_put_right:Nx
+      \l_@@_people_first_last_names_tl
+      {\exp_not:V\l_@@_people_first_last_name_tl}
+    }{
+      \tl_put_right:Nx
+      \l_@@_people_first_last_names_tl
+      {~and~\exp_not:V\l_@@_people_first_last_name_tl}
+    }
+  }
+}
+%    \end{macrocode}
+%
+% We now populate the bibiliographic file.
+%    \begin{macrocode}
+\tl_if_empty:NF \g_@@_title_tl {%
+  \iow_now:Nx \g_@@_bib_out_iow {%
+    @article{
+      \g_@@_article_bib_key_tl,
+      \iow_newline:
+      title={\exp_not:V\g_@@_title_tl},
+      \iow_newline:
+      \tl_if_empty:NF \g_@@_subtitle_tl {%
+        subtitle={\exp_not:V\g_@@_subtitle_tl},
+        \iow_newline:
+      }
+      \tl_if_eq:NNF { \g_@@_short_title_tl } { \g_@@_title_tl } {%
+        shorttitle={\exp_not:V\g_@@_short_title_tl},
+        \iow_newline:
+      }%
+      \tl_if_empty:NF \l_@@_people_first_last_names_tl
+      {
+        author={\exp_not:V\l_@@_people_first_last_names_tl},
+        \iow_newline:
+      }
+      options={skipbib},
+      \iow_newline:
+      crossref  = {\c_@@_issue_bib_key_tl}
+    }
+    \iow_newline:
+  }%
+}%
+%
+\tl_set:Nn \l_@@_bullet_and_rule_odd_tl
+{%
+  \begin{tikzpicture}[remember~picture,overlay]
+    \draw[fill=@@_circlerule_color,draw=@@_circlerule_color,line~width=0.7mm]
+    ([xshift=-\c_@@_innermargin_dim-\c_@@_layoutoffset_dim]0,0 -| current~page.west) -- (\linewidth,0);%
+    \fill[@@_circlerule_color] (\linewidth-2\pgflinewidth,0) circle [radius=2.75mm];
+  \end{tikzpicture}%
+}%
+\tl_set:Nn \l_@@_bullet_and_rule_even_tl
+{%
+  \begin{tikzpicture}[remember~picture,overlay]
+    \draw[fill=@@_circlerule_color,draw=@@_circlerule_color,line~width=0.7mm]
+    (0,0 -| current~page.east) -- (0,0);%
+    \fill[@@_circlerule_color] (0,0) circle [radius=2.75mm];
+  \end{tikzpicture}%
+}%
+\tl_set:Nn \l_@@_title_box_tl
+{%
+  \noindent%
+  \hspace*{18mm}%
+  \begin{adjustbox}{minipage=\linewidth-18mm,valign=t}
+    \raggedright%
+    \color{@@_article_title_color}%
+    \fontsize{20}{25}\selectfont%
+    \bfseries%
+    \g_@@_title_tl
+    \tl_if_empty:NF \g_@@_subtitle_tl {%
+      \par%
+      \g_@@_subtitle_tl
+    }
+  \phantomsection
+  \par%
+  \bool_if:NTF {\g_@@_title_not_in_toc_bool} {
+    \bookmark[page=\thepage,level=chapter]{\g_@@_short_title_tl}
+  }{
+    \addcontentsline{toc}{chapter}{%
+      \tl_if_empty:NTF \g_@@_short_title_tl {%
+        \g_@@_title_tl%
+      }{
+        \g_@@_short_title_tl%
+      }
+      \bool_if:nF { \tl_if_empty_p:N \g_@@_short_subtitle_tl || \g_@@_interview_rubric_bool || \g_@@_rearviewmirror_rubric_bool }
+      {
+        \space\textendash{}\space\g_@@_short_subtitle_tl
+      }
+      \bool_if:nF { \tl_if_empty_p:N \l_@@_people_first_last_names_tl || \g_@@_interview_rubric_bool || \g_@@_rearviewmirror_rubric_bool }
+      {
+        \textsl{
+          \cs_if_exist:cTF {texorpdfstring}
+          {
+            \texorpdfstring{%
+              \space\textendash{}\space\citeauthor{\g_@@_article_bib_key_tl}
+            }{}
+          }{%
+            \space\textendash{}\space\citeauthor{\g_@@_article_bib_key_tl}
+          }%
+        }
+      }
+    }
+%<class-article>    \hypersetup{pdfauthor=\l_@@_people_first_last_names_tl}
+  }
+  \end{adjustbox}
+}
+  \dim_gset:Nn \g_@@_abstract_box_width_dim {0.75\linewidth}
+  % \bool_if:nT { \tl_if_empty_p:N \l_@@_people_first_last_names_tl }
+  % {
+  %   \dim_gset:Nn \g_@@_abstract_box_width_dim {\linewidth}
+  % }
+  \tl_set:Nn \l_@@_abstract_box_tl
+  {%
+    \begin{adjustbox}{minipage=\g_@@_abstract_box_width_dim,max~width=\g_@@_abstract_box_width_dim,valign=t}
+      \mbox{}
+      \tl_if_exist:NTF \g_@@_abstract_body_tl
+      {%
+        \raggedright%
+        \bfseries%
+        \color{@@_article_abstract_color}%
+        \g_@@_abstract_body_tl
+      }
+      {%
+      }%
+    \end{adjustbox}
+  }%
+  \tl_set:Nn \l_@@_authors_box_tl
+  {%
+    \begin{adjustbox}{minipage=0.3\linewidth,min~width=0.3\linewidth,valign=t}
+      \bool_if:nTF { \tl_if_empty_p:N \l_@@_people_first_last_names_tl || \g_@@_interview_rubric_bool }
+      {
+        \mbox{}
+      }
+      {
+        \color{@@_people_color}%
+        \_@@_itemized_citeauthor:n {\g_@@_article_bib_key_tl}
+      }
+    \end{adjustbox}
+  }
+    \bool_if:nTF {
+      \int_compare_p:nNn { \g_@@_item_in_rubric_int } = { 1 }
+    }
+    {
+      \mbox{}
+      \par
+      \bool_if:nTF {
+        \tl_if_empty_p:N \g_@@_rubric_abstract_tl
+      }{
+        \xleaders\vbox {
+          \bigskip%
+        }%
+        \vskip\bigskipamount%
+      }{
+        \xleaders\vbox {
+          \smallskip%
+        }%
+        \vskip\smallskipamount%
+      }
+    }
+    {
+      \bool_if:NTF {\g_@@_previous_article_with_bibliography_or_minibio_bool}
+      {
+        \xleaders\vbox {
+          \mbox{}
+          \par
+          \medskip%
+        }%
+        \vskip\medskipamount%
+      }
+      {
+        \xleaders\vbox {
+          \mbox{}
+          \par
+          \smallskip%
+        }%
+        \vskip\smallskipamount%
+      }
+    }
+    \bool_gset_false:N \g_@@_previous_article_with_bibliography_or_minibio_bool
+%    \end{macrocode}
+%
+% Here, we put the \pkg{TikZ}'s picture of the \enquote{bullet and rule}
+% (contained in the "\l_@@_bullet_and_rule_tl" token list) in a "\vbox" that
+% follows a "\cleaders" that makes the whole vanishes at pages boundaries
+% (cf. \url{http://tex.stackexchange.com/a/31615/18401}).
+%    \begin{macrocode}
+%<!class-article>    \bool_if:nF { \g_@@_for_authors_bool } {
+      % \xleaders\vbox {
+      %   \bigskip%
+      % }%
+      % \vskip\bigskipamount%
+      \noindent%
+      \checkoddpage%
+      \ifoddpage%
+      \l_@@_bullet_and_rule_odd_tl
+      \else%
+      \l_@@_bullet_and_rule_even_tl
+      \fi%
+      \bigskip%
+%<!class-article>    }%
+    \par
+  \nopagebreak[4]
+  \l_@@_title_box_tl
+  \normalsize%
+  \nopagebreak[3]
+  \bool_if:nF { \tl_if_empty_p:N \g_@@_abstract_body_tl && (\tl_if_empty_p:N \l_@@_people_first_last_names_tl || \g_@@_interview_rubric_bool || \g_@@_rearviewmirror_rubric_bool)}
+  {%
+    \par%
+    \bigskip
+    \bigskip
+    \large%
+    \mbox{}%
+    \checkoddpage%
+    \ifoddpage%
+    \l_@@_abstract_box_tl
+    \hspace*{11mm}%
+    \l_@@_authors_box_tl
+    \else%
+    \hspace*{-.85\c_@@_outermargin_dim}%
+    \l_@@_authors_box_tl
+    \hspace*{11mm}%
+    \l_@@_abstract_box_tl
+    \fi%
+  }
+  \tl_gclear:N \g_@@_title_tl
+  \tl_gclear:N \g_@@_subtitle_tl
+  \tl_gclear:N \g_@@_abstract_body_tl
+  \normalsize%
+  \bigskip
+  \tl_if_empty:NF \g_@@_abstract_body_tl
+  % {%
+  %   \tl_if_empty:NF \l_@@_people_first_last_names_tl
+  %   {%
+  %     \bigskip
+  %   }
+  % }
+  {
+    \bigskip
+  }
+  \bool_if:nT \g_@@_interview_rubric_bool
+  {
+%    \end{macrocode}
+%
+% We set "\parindent" to zero in \enquote{Interview} rubric.
+%    \begin{macrocode}
+    \dim_zero:N \parindent
+    \tl_if_empty:NF \g_@@_people_photo_tl
+    {
+      \begin{adjustbox}{center}
+        \includegraphics[height=50mm]{\g_@@_people_photo_tl}
+      \end{adjustbox}
+    }
+  }
+  \color{@@_default_text_color}%
+  \IfBooleanF {#1}%
+  {
+    \bool_if:nF { \g_@@_multicols_bool || \g_@@_rearviewmirror_rubric_bool}
+    {
+      \begin{multicols}{2}%
+    }
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+%</class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
+% We load the configuration file, which has to be located in the \TeX{} search
+% path: at least one such a file is provided by the class and located in the
+% same directory as the class file. This file is loaded at the end of preamble
+% instead of begin of the document in order some settings needed in preamble are
+% taken in account.
+%    \begin{macrocode}
+\AtEndPreamble{\file_input:n {\c_@@_configuration_file_string_tl}}
+%    \end{macrocode}
+%
+% We make use of \pkg{etoc} to perform the special layout of the table of
+% contents. For convenience, it is included in a (long)table (from
+% \Pkg{longtable}) and the following code mainly comes from the \pkg{etoc}'s
+% documentation.
+%    \begin{macrocode}
+\@ifpackageloaded{etoc}{%
+  \newif\ifShowPartPageInToc % used before \part{Livres}
+% cf etoc manual section Typesetting the TOC as a table
+% we use "\unexpanded" rather than more cumbersome but Knuthian "\toks" registers
+  \newtoks\toctabletok
+  \newcommand*\appendtotok[2]{% #1=toks variable, #2=macro, expands only once #2
+    #1\expandafter\expandafter\expandafter {\expandafter\the\expandafter #1#2}}
+  \newcommand*\PreparePart{%
+    \edef\toctablepiece {%
+      \ExceptFirstPart {\noexpand\\[-1.5mm]}%
+      \unexpanded{%
+        \color{@@_rubric_in_toc_color}\scshape\fontseries{bx}\selectfont%
+      }%
+      \unexpanded\expandafter{\etocthelinkedname}&
+      % \ifShowPartPageInToc
+      \unexpanded{\bfseries\color{@@_rubric_in_toc_color}}%
+      \unexpanded\expandafter{\etocthelinkedpage}%
+      % \fi
+      \noexpand\\}%
+    \gdef\ExceptFirstPart ##1{##1}%
+  }
+  \newcommand*\PrepareChapter{%
+    \edef\toctablepiece {%
+      \unexpanded{\color{@@_article_in_toc_color}\small}%
+      \unexpanded\expandafter{\etocthelinkedname}&
+      \unexpanded{\color{@@_article_in_toc_color}\small}
+      \unexpanded\expandafter{\etocthelinkedpage}%
+      \noexpand\\[1mm]}%
+  }
+  \etocsetstyle{part}{}{}
+  {\PreparePart \appendtotok\toctabletok\toctablepiece}
+  {}
+  \etocsetstyle{chapter}{}{}
+  {\PrepareChapter \appendtotok\toctabletok\toctablepiece}
+  {}
+  \etocsettocstyle
+  {%
+    \setlength\LTleft{\c_zero_dim}
+    \setlength\LTright{\c_zero_dim}
+    \gdef\ExceptFirstPart ##1{}%
+    \toctabletok {%\hypersetup{hidelinks}%
+      \begin{longtable}{@{\extracolsep{\fill}}p{115mm}@{\quad}!{\color{@@_rule_in_toc_color}\vrule width 0.2mm}@{}r@{}}}%
+        }
+        {\global\toctabletok\expandafter{%
+        \the\toctabletok\end{longtable}
+        }
+      }
+    }{}
+%    \end{macrocode}
+%
+% \section{Special tools common to the editorial, the table of contents and the
+% president message}
+%
+% We create an internal function that displays the box containing the issue
+% number, with possible image on its left, followed below by an arbitrary text
+% with a reflection effect.
+%    \begin{macrocode}
+\tl_new:N \g_@@_boxed_issue_number_tl%
+\tl_gset:Nn \g_@@_boxed_issue_number_tl {%
+  \tcbox{\Large\No\g_@@_issue_number_int}
+}
+\cs_new_protected:Nn \@@_boxed_issue_number:nn
+{
+  \noindent%
+  \raisebox{\baselineskip}{%
+    \tl_if_empty:nF {#1} {%
+      \makebox[\c_zero_dim][r]{%
+      % \hspace*{\l_@@_thumbnail_width_dim}%
+        \begin{adjustbox}{valign=t}
+          \includegraphics[width=\l_@@_thumbnail_width_dim]{#1}%
+        \end{adjustbox}%
+      }%
+    }%
+    \begin{adjustbox}{valign=t}
+      \begin{tcolorbox}[%
+        enhanced,%
+        title=\No\int_use:N \g_@@_issue_number_int,%
+        fonttitle=\Large,%
+        colback=white,%
+        sharp~corners=all,%
+        height=33mm,%
+        boxrule=\c_zero_dim,%
+        % frame~hidden,%
+        attach~boxed~title~to~top~left,%
+        tikznode~boxed~title={minimum~width=\c_@@_boxed_issue_number_width_dim},%
+        boxed~title~style={%
+          size=minimal,%
+          height=\c_@@_boxed_issue_number_height_dim,%
+          center~upper,%
+          before={},%
+          colback=@@_boxed_issue_number_bg_color,%
+          sharp~corners=all,%
+          frame~hidden,%
+          valign=center,%
+        }%
+        ]
+        \@@_reflected_text:n { #2 }%
+      \end{tcolorbox}
+    \end{adjustbox}%
+  }%
+  \par%
+}
+%    \end{macrocode}
+%
+% \section{Displaying the editorial}
+%
+% We create an internal function that displays the editorial.
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_display_editorial:
+{
+  \bool_gset_true:N \g_@@_frontmatter_bool%
+  \pagestyle{@@_frontmatter_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_front_matter_geometry_tl}%
+  \@@_boxed_issue_number:nn {}{\c_@@_editorial_string_tl}
+  \begingroup
+  \color{@@_frontmatter_text_color}%
+  \fontsize{11}{13.6}\selectfont
+  \raggedright%
+  \file_input:n { % \int_use:N \g_@@_issue_number_int/
+    \c_@@_editorial_file_string_tl}
+  \bigskip
+  \bigskip
+  \begin{flushright}
+    % \c_@@_editorinchief_message_date_string_tl\\[2.5mm]
+    \DTLforeach*[\DTLiseq{\l_@@_people_role_tl}{editorinchief}]{people}{%
+      \l_@@_firstlastname=first-last-name%
+      ,\l_@@_people_role_tl=role%
+    }{%
+      \_@@_citeauthor_no_firstinits:n {\c_@@_issue_bib_key_tl -editorinchief- \exp_not:V\DTLcurrentindex}%
+    }
+    % \\%
+    % \c_@@_editorinchief_signatory_string_tl
+  \end{flushright}
+  %
+  \endgroup
+  \normalsize%
+  \clearpage%
+  \bool_gset_false:N \g_@@_frontmatter_bool%
+}
+\NewDocumentCommand \editorial {}
+{
+  \bool_if:NF {\g_@@_for_authors_bool} {
+    \_@@_display_editorial: {}
+  }
+}
+%    \end{macrocode}
+%
+% \section{Displaying the table of contents}
+%
+% We create an internal function that displays the president's message.
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_display_toc:
+{
+  \bool_gset_true:N \g_@@_frontmatter_bool%
+  \pagestyle{@@_frontmatter_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_front_matter_geometry_tl}%
+  \@@_boxed_issue_number:nn {\c_@@_issue_frontcover_image_path_string_tl}{\c_@@_toc_string_tl}
+  \phantomsection
+  \bookmark[page=\thepage,level=part]{\c_@@_toc_string_tl}
+  \begingroup
+  \etocsettocdepth.toc{chapter}%
+  % \_@@_orig_tableofcontents
+  \tableofcontents
+  \the\toctabletok
+  \endgroup
+  \normalsize%
+  \clearpage%
+  \bool_gset_false:N \g_@@_frontmatter_bool%
+}
+\NewDocumentCommand \gzttableofcontents {}
+{
+  \bool_if:NF {\g_@@_for_authors_bool} {
+    \_@@_display_toc: {}
+  }
+}
+%    \end{macrocode}
+%
+% \section{Displaying the mini table of contents of the front cover}
+%
+% We create an internal function that displays the president's message.
+%    \begin{macrocode}
+\tl_new:N \g_@@_front_cover_minitoc_tl%
+\tl_new:N \l_@@_minitoc_label_tl%
+\cs_new_protected:Nn \_@@_front_cover_minitoc:n
+{
+  \tl_gset:Nn \g_@@_front_cover_minitoc_tl {#1}
+}
+\NewDocumentCommand \minitoc { O{} m }
+{
+  \keys_set:nn { gzt/minitoc } { #1 }
+  \_@@_front_cover_minitoc:n {#2}
+}
+%
+\newlist{@@_minitoc_list}{itemize}{1}
+\setlist[@@_minitoc_list]{itemsep=2ex,label=\textcolor{@@_cover_itemize_label_color}\textbullet}
+%
+\NewDocumentEnvironment{minitoclist}{  }
+{%
+  \cs_set_eq:NN \_@@_orig_item \item
+  \RenewDocumentCommand{\item}{ s O{} }{%
+    \tl_set:Nn \l_@@_minitoc_label_tl {##2}
+    \_@@_orig_item\textbf{##2}
+    \IfBooleanT {##1}
+    {
+      \c_@@_minitoc_rubric_title_separator_string_tl
+    }
+  }
+  \begin{@@_minitoc_list}
+}{
+  \end{@@_minitoc_list}
+  \cs_set_eq:NN \item \_@@_orig_item
+}
+%    \end{macrocode}
+%
+% \section{Displaying the president's message}
+%
+% We create an internal function that displays the president's message.
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_display_president_message:
+{
+  \bool_gset_true:N \g_@@_frontmatter_bool%
+  \pagestyle{@@_frontmatter_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_front_matter_geometry_tl}%
+  \@@_boxed_issue_number:nn {\c_@@_smf_logo_file_string_tl}{\c_@@_president_message_string_tl}
+  \phantomsection
+  \par%
+  \addcontentsline{toc}{part}{\l_@@_smf_short_string_tl}%
+  \addcontentsline{toc}{chapter}{\c_@@_president_message_string_tl}%
+  \begingroup
+  \color{@@_frontmatter_text_color}%
+  \fontsize{11}{13.6}\selectfont
+  \raggedright%
+  \file_input:n {
+    % \int_use:N \g_@@_issue_number_int/
+    \c_@@_president_message_file_string_tl
+  }
+  \bigskip
+  % \bigskip
+  \begin{flushright}
+    \c_@@_president_message_date_string_tl\\[1.5mm]
+    % \medskip
+    \@@_display_people_by_role:n { president }%
+    % \\%
+    ,\space
+    \c_@@_president_signatory_string_tl
+  \end{flushright}
+  %
+  \endgroup
+  \normalsize%
+  \clearpage%
+  \bool_gset_false:N \g_@@_frontmatter_bool%
+}
+\NewDocumentCommand \presidentmessage {}
+{
+  \bool_if:NF {\g_@@_for_authors_bool} {
+    \_@@_display_president_message: {}
+  }
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
+%
+% \section{Chapter, sections, etc. customization}
+%
+% Thanks to \Pkg{titlesec}, the chapter, section, subsection and subsubsection
+% formats are customized.
+%
+% \begin{description}
+% \item[Chapter] has a \enquote{block} shape, is typeset in huge and bold face,
+%   without any number, with a null distance between the (missing) number and
+%   the title, with a title in enforced lower case but small caps.
+%    \begin{macrocode}
+\titleformat{\chapter}%
+[block]
+{\Huge\bfseries}
+{}
+{\c_zero_dim}
+{\scshape}%
+%    \end{macrocode}
+%
+% \item[Section] has a \enquote{frame} shape, is typeset in bold face, left
+%   justified and in color, with number typeset in huge, with a negative
+%   distance between the number and the title, with a title in 12.5pt.
+%    \begin{macrocode}
+\titleformat{\section}
+% [frame]
+{\raggedright%
+  \bfseries%
+  \color{@@_section_color}
+}
+{\fontsize{20}{15}\selectfont\thesection.\enspace}
+{-3pt}
+{\fontsize{13}{15}\selectfont}
+%    \end{macrocode}
+%
+% \item[Subsection:]
+%    \begin{macrocode}
+\titleformat{\subsection}
+% [frame]
+{%
+  \fontsize{11}{16}\selectfont%
+  \bfseries%
+  \color{@@_subsection_color}%
+}
+{\thesubsection\ \textendash{}\ }
+{\c_zero_dim}
+{}
+%    \end{macrocode}
+%
+% \item[Subsubsection:]
+%    \begin{macrocode}
+\titleformat{\subsubsection}
+% [frame]
+{%
+  \fontsize{11}{16}\selectfont%
+  \bfseries%
+  \color{@@_subsubsection_color}%
+}
+{}
+{\c_zero_dim}
+{}
+%    \end{macrocode}
+% \end{description}
+%
+% \section{First pages}
+%
+% At begin of the document, we automatically :
+% \begin{itemize}
+% \item set the graphic path,
+% \item make use of the "\nocite{*}" command in order the
+% \item set the page grid if the corresponding option has been passed,
+% \item display of the front cover and the inside front cover.
+% \end{itemize}
+%
+%    \begin{macrocode}
+\AtBeginDocument{%
+  % \graphicspath{{\c_@@_issue_images_path_string_tl//}}
+  \nocite{*}
+  \g_@@_mainmatter_switch_tl
+  % \bool_gset_false:N \g_@@_frontmatter_bool
+  % \bool_gset_true:N \g_@@_mainmatter_bool
+  % \SetParskip{\c_@@_mainmatter_parskip_skip}
+  % \pagestyle{@@_mainmatter_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_main_geometry_tl}%
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \dim_if_exist:NTF \g_@@_pagegrid_dim {%
+    \pagegridsetup{%
+      enable,%
+      step=\g_@@_pagegrid_dim%
+    }
+  }{%
+    \pagegridsetup{%
+      disable%
+    }
+  }
+  \bool_if:NTF {\g_@@_for_authors_bool} {
+    \thispagestyle{empty}
+    \SetWatermarkColor{gray!10}%
+    \SetWatermarkFontSize{30mm}%
+    \SetWatermarkText{\MakeUppercase{\c_@@_draftwatermark_string_tl}}%
+    \includegraphics{gzt-logo}
+    \hfill
+    \includegraphics[height=22.5mm]{\c_@@_smf_logo_file_string_tl}%
+    \par
+    \vfill
+    \begin{adjustbox}{valign=c,minipage=\linewidth}
+      \Large%
+      \c_@@_preliminary_version_string_tl%
+    \end{adjustbox}
+    \vfill
+    \newpage
+  }{
+    \g_@@_display_front_cover_tl
+    \g_@@_display_inside_front_cover_tl
+    \bool_if:NT {\g_@@_cover_bool} {
+      \end{document}
+    }
+  }
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
+%
+% \section{Page styles}
+%
+% Thanks to \Pkg{titleps} loaded by \pkg{titlesec}'s "pagestyles" option, we define
+% some page styles.
+%
+% \subsection{Common tools}
+%
+% Here, we define some tools shared by sevral pages styles.
+%
+% The background footer:
+%    \begin{macrocode}
+\tl_new:N \g_@@_background_footer_tl
+\tl_gset:Nn \g_@@_background_footer_tl {%
+  \draw [@@_footer_bg_color,fill]
+  (current~page.south~west)
+  rectangle ([yshift=\c_@@_footer_background_height_dim]current~page.south~east)
+  ;
+}
+%    \end{macrocode}
+%
+% The frontmatter head text:
+%    \begin{macrocode}
+\tl_new:N \l_@@_frontmatter_head_text_tl
+\tl_set:Nn \l_@@_frontmatter_head_text_tl {%
+  \includegraphics{gzt-logo}
+}
+%    \end{macrocode}
+%
+% The rubric head text:
+%    \begin{macrocode}
+% \tl_new:N \l_@@_rubric_head_text_tl
+% \tl_set:Nn \l_@@_rubric_head_text_tl {%
+%   \color{@@_rubric_head_text_color}%
+%   \fontsize{20}{20}\fontseries{bx}\fontshape{sc}\selectfont%
+%   \g_@@_rubric_title_tl%
+% }
+%    \end{macrocode}
+%
+% The frontmatter page head rule:
+%    \begin{macrocode}
+\tl_new:N \g_@@_frontmatter_page_headrule_tl
+\tl_gset:Nn \g_@@_frontmatter_page_headrule_tl {%
+  \draw [@@_headrule_color,line~width=\c_@@_header_line_width_dim]
+  ([yshift=\c_@@_header_line_yshift_dim]current~page~header~area.south~west -| current~page.north~west)
+  --
+  ([yshift=\c_@@_header_line_yshift_dim]current~page~header~area.south~east -| current~page.north~east)
+  ;%
+}
+%    \end{macrocode}
+%
+% The frontmatter page head text:
+%    \begin{macrocode}
+\tl_new:N \g_@@_frontmatter_headtext_tl
+\tl_gset:Nn \g_@@_frontmatter_headtext_tl {%
+  \mbox{}%
+  \checkoddpage%
+  \ifoddpage%
+    \node[
+    anchor=north~east,%
+    align=center,%
+    fill=white,%
+    inner~xsep=3.5mm,%
+    outer~sep=\c_zero_dim,%
+    ] at
+    ([%
+    xshift=\c_@@_frontmatter_headtext_o_xshift_dim,%
+    yshift=\c_@@_frontmatter_headtext_yshift_dim%
+    ]current~page.north~east) {%
+      \l_@@_frontmatter_head_text_tl
+    }%
+    ;
+  \else%
+    \node[%
+    anchor=north~west,%
+    align=center,%
+    fill=white,%
+    inner~xsep=3.5mm,%
+    outer~sep=\c_zero_dim,%
+    ] at
+    ([%
+    xshift=\c_@@_frontmatter_headtext_e_xshift_dim,%
+    yshift=\c_@@_frontmatter_headtext_yshift_dim%
+    ]current~page.north~west) {%
+      \l_@@_frontmatter_head_text_tl
+    }%
+    ;
+  \fi%
+}
+%    \end{macrocode}
+%
+% The mainmatter odd page head rule:
+%    \begin{macrocode}
+\tl_new:N \g_@@_mainmatter_oddpage_headrule_tl
+\tl_gset:Nn \g_@@_mainmatter_oddpage_headrule_tl {%
+  \draw [@@_headrule_color,line~width=\c_@@_header_line_width_dim]
+  ([yshift=\c_@@_yshift_mainmatter_headrule_dim]current~page~header~area.south~east)
+  --
+  ([yshift=\c_@@_yshift_mainmatter_headrule_dim]current~page~header~area.south~west -| current~page.north~west)
+  ;
+}
+%    \end{macrocode}
+%
+% The mainmatter even page head rule:
+%    \begin{macrocode}
+\tl_new:N \g_@@_mainmatter_evenpage_headrule_tl
+\tl_gset:Nn \g_@@_mainmatter_evenpage_headrule_tl {%
+  \draw [@@_headrule_color,line~width=\c_@@_header_line_width_dim]
+  ([yshift=\c_@@_yshift_mainmatter_headrule_dim]current~page~header~area.south~west)
+  --
+  ([yshift=\c_@@_yshift_mainmatter_headrule_dim]current~page~header~area.south~east -| current~page.north~east)
+  ;
+}
+%    \end{macrocode}
+%
+% We momentarily switch to a \enquote{normal} category code régime in which the
+% colon (:) is treated as \enquote{letter}, which is necessary where (here
+% \pkg{TikZ} and \pkg{tcolorbox}) code makes use of colon.
+%    \begin{macrocode}
+\ExplSyntaxOff
+\tcbuselibrary{breakable,skins,hooks,xparse,theorems}
+\usetikzlibrary{babel,fadings,positioning,calc}
+%    \end{macrocode}
+%
+% We create a \pkg{tcolorbox}' skin, in order to apply (drop lifted) shadow only
+% to the last part of a breakable "tcolorbox" (see
+% \url{http://tex.stackexchange.com/a/223625/18401}):
+% The following is a temporary hack in order \pkg{tcolorbox}'s separator
+% sign for "blend into=..." floats is a dash.
+%    \begin{macrocode}
+\tcbset{%
+  new/blend into/tables/.style={%
+    use counter*=table,%
+    list inside=lot,
+    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@table\nobreakspace\textendash{}\nobreakspace}}}},%
+  new/blend into/figures/.style={%
+    use counter*=figure,%
+    list inside=lof,
+    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure\nobreakspace\textendash{}\nobreakspace}}}},%
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newcommand\gzt@arcthroughthreepoints[4][]%
+{
+  % \NoAutoSpacing%
+  \coordinate (middle1) at ($(#2)!.5!(#3)$);
+  \coordinate (middle2) at ($(#3)!.5!(#4)$);
+  \coordinate (aux1) at ($(middle1)!1!90:(#3)$);
+  \coordinate (aux2) at ($(middle2)!1!90:(#4)$);
+  \coordinate (center) at ($(intersection of middle1--aux1 and middle2--aux2)$);
+  \filldraw[fill=white,draw=@@_headrule_color,line width=0.25mm,#1]
+  let \p1=($(#2)-(center)$),
+  \p2=($(#4)-(center)$),
+  \n0={veclen(\p1)},       % Radius
+  \n1={atan2(\y1,\x1)}, % angles
+  \n2={atan2(\y2,\x2)},
+  \n3={\n2>\n1?\n2:\n2+360}
+  in (#2) arc(\n1:\n3:\n0);
+  % \foreach \p in {#2,#3,#4,center}
+  % \fill[red] (\p) circle(2pt);
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\ExplSyntaxOn
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
+% The rubric page head rule:
+%    \begin{macrocode}
+\tl_new:N \g_@@_rubric_page_head_tl
+\tl_gset:Nn \g_@@_rubric_page_head_tl {%
+  \bool_if:nF { \g_@@_for_authors_bool } {
+    \tikz[remember~picture,overlay] {
+      \path (current~page.north~west |- current~page~header~area.south~west) coordinate (_@@_pwest);
+      \path (current~page.north~east |- current~page~header~area.south~east) coordinate (_@@_peast);
+      \draw [@@_headrule_color,line~width=\c_@@_header_line_width_dim]
+      ([yshift=\c_@@_header_line_yshift_dim-2mm]_@@_pwest)
+      --
+      ([yshift=\c_@@_header_line_yshift_dim-2mm]_@@_peast)
+      ;%
+      \tl_if_empty:NF \g_@@_rubric_abstract_tl {%
+        \mbox{}%
+        \checkoddpage%
+        \ifoddpage%
+        \coordinate (@@_A) at ([xshift=\c_@@_xshift_arccircle_A_dim,yshift=\c_@@_yshift_arccircle_A_dim]current~page.north~west);
+        \coordinate (@@_B) at ([xshift=\c_@@_xshift_arccircle_B_dim,yshift=\c_@@_yshift_arccircle_B_dim]current~page.north~west) ;
+        \coordinate (@@_C) at ([xshift=\c_@@_xshift_arccircle_C_dim,yshift=\c_@@_yshift_arccircle_C_dim]current~page.north~west) ;
+        \gzt@arcthroughthreepoints{@@_A}{@@_B}{@@_C};
+        \else%
+        \coordinate (@@_A) at ([xshift=-\c_@@_xshift_arccircle_A_dim,yshift=\c_@@_yshift_arccircle_A_dim]current~page.north~east);
+        \coordinate (@@_B) at ([xshift=-\c_@@_xshift_arccircle_B_dim,yshift=\c_@@_yshift_arccircle_B_dim]current~page.north~east) ;
+        \coordinate (@@_C) at ([xshift=-\c_@@_xshift_arccircle_C_dim,yshift=\c_@@_yshift_arccircle_C_dim]current~page.north~east) ;
+        \gzt@arcthroughthreepoints{@@_C}{@@_B}{@@_A};
+        \fi%
+      }
+    }
+  }
+}
+%    \end{macrocode}
+%
+% \subsection{Cover page style}
+%
+%    \begin{macrocode}
+\newpagestyle{@@_cover_ps}[]{%
+  \sethead
+  {}%
+  {%
+    \adjustbox{stack=c}{
+      {\Large
+        \c_@@_front_cover_header_string_tl
+      }\\[7mm]
+      \adjustbox{scale=2.08}{
+        \l_@@_frontmatter_head_text_tl
+      }%
+    }%
+  }%
+  {}%
+  %
+  \setfoot%
+  {}%
+  {}%
+  {}%
+}%
+%    \end{macrocode}
+%
+% \subsection{Inside front cover page style}
+%
+%    \begin{macrocode}
+% \box_new:N
+\newpagestyle{@@_insidefrontcover_ps}[]{%
+  \sethead%
+  [
+    \tikz[remember~picture,overlay] {%
+      \g_@@_frontmatter_page_headrule_tl%
+      \g_@@_frontmatter_headtext_tl%
+    }%
+  ]%
+  []%
+  []%
+  {}%
+  {
+    \tikz[remember~picture,overlay] {%
+      \g_@@_frontmatter_page_headrule_tl%
+      \g_@@_frontmatter_headtext_tl%
+    }%
+  }%
+  {}%
+  %
+  \setfoot%
+  [\c_@@_footer_size_font_tl\thepage]%
+  [%
+    \uppercase{\c_@@_footer_string_tl}
+  ]%
+  []%
+  {}%
+  {%
+    \uppercase{\c_@@_footer_string_tl}%
+  }%
+  {\c_@@_footer_size_font_tl\thepage}%
+}%
+%    \end{macrocode}
+%
+% \subsection{Front matter page style}
+%
+%    \begin{macrocode}
+% \box_new:N
+\newpagestyle{@@_frontmatter_ps}[]{%
+  \widenhead*{\c_@@_front_matter_extra_innermargin_dim}{\c_@@_front_matter_extra_outermargin_dim}
+  \sethead%
+  [
+    \tikz[remember~picture,overlay] {%
+      \g_@@_frontmatter_page_headrule_tl%
+      \g_@@_frontmatter_headtext_tl%
+    }%
+  ]%
+  []%
+  []%
+  {}%
+  {
+    \tikz[remember~picture,overlay] {%
+      \g_@@_frontmatter_page_headrule_tl%
+      \g_@@_frontmatter_headtext_tl%
+    }%
+  }%
+  {}%
+  %
+  \setfoot%
+  [\c_@@_footer_size_font_tl\thepage]%
+  [%
+    \uppercase{\c_@@_footer_string_tl}
+  ]%
+  []%
+  {}%
+  {%
+    \uppercase{\c_@@_footer_string_tl}%
+  }%
+  {\c_@@_footer_size_font_tl\thepage}%
+}%
+%    \end{macrocode}
+%
+% \subsection{Rubric first page style}
+%
+%    \begin{macrocode}
+\newpagestyle{@@_rubric_ps}[]{%
+  \widenhead{\c_zero_dim}{\c_zero_dim}
+  \sethead%
+  [
+  ]%
+  [
+  ]%
+  [
+    \g_@@_rubric_page_head_tl%
+    \bool_if:nF { \g_@@_for_authors_bool } {
+      \adjustbox{raise={\c_@@_header_yshift_dim}{\height},lap=-\c_@@_header_xshift_dim-\linewidth}{%
+        \includegraphics[width=\c_@@_pictogram_width_dim]{\g_@@_rubric_pictofile_tl}%
+      }%
+    }%
+  ]%
+  {
+    \g_@@_rubric_page_head_tl%
+  }%
+  {}%
+  {%
+    \bool_if:nF { \g_@@_for_authors_bool } {
+      \adjustbox{raise={\c_@@_header_yshift_dim}{\height},lap=\c_@@_header_xshift_dim}{%
+        \includegraphics[width=\c_@@_pictogram_width_dim]{\g_@@_rubric_pictofile_tl}%
+      }%
+    }%
+  }%
+  %
+  \setfoot%
+  [\c_@@_footer_size_font_tl\thepage]%
+  [%
+    \uppercase{\c_@@_footer_string_tl}
+  ]%
+  []%
+  {}%
+  {%
+    \uppercase{\c_@@_footer_string_tl}%
+  }%
+  {\c_@@_footer_size_font_tl\thepage}%
+}%
+%    \end{macrocode}
+%
+% \subsection{Advertisement page style}
+%
+%    \begin{macrocode}
+\newpagestyle{@@_advertisement_ps}[]{%
+  \sethead
+  {}%
+  {}%
+  {}%
+  %
+  \setfoot%
+  {}%
+  {}%
+  {}%
+}%
+%    \end{macrocode}
+%
+% We define crop marks.
+%    \begin{macrocode}
+% \bool_if:NT {\g_@@_for_printer_bool} {%
+%   \AddEverypageHook{%
+%     \tikz[remember~picture,overlay] {%
+%       \draw ([yshift=\c_@@_layoutoffset_dim]current~page.south~west) -- +(0.25,0);
+%       \draw ([xshift=\c_@@_layoutoffset_dim]current~page.south~west) -- +(0,0.25);
+%       %% lower right
+%       \draw ([yshift=\c_@@_layoutoffset_dim]current~page.south~east) -- +(-0.25,0);
+%       \draw ([xshift=-\c_@@_layoutoffset_dim-\c_@@_bindingoffset_dim]current~page.south~east) -- +(0,0.25);
+%       %% upper left
+%       \draw ([yshift=-\c_@@_layoutoffset_dim]current~page.north~west) -- +(0.25,0);
+%       \draw ([xshift=\c_@@_layoutoffset_dim]current~page.north~west) -- +(0,-0.25);
+%       %% upper right
+%       \draw ([yshift=-\c_@@_layoutoffset_dim]current~page.north~east) -- +(-0.25,0);
+%       \draw ([xshift=-\c_@@_layoutoffset_dim-\c_@@_bindingoffset_dim]current~page.north~east) -- +(0,-0.25);
+%     }%
+%   }%
+% }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
+%
+% We draw a gray background at the bottom of each page, but the first one.
+%    \begin{macrocode}
+\AddEverypageHook{%
+%<class>  \int_compare:nNnT { \value{page} } > { 1 } {%
+    \bool_if:NF {\g_@@_advertisement_bool} {
+      \tikz[remember~picture,overlay] { \g_@@_background_footer_tl }%
+    }%
+%<class>  }%
+}
+%    \end{macrocode}
+%
+% \subsection{Main matter page style}
+%
+%    \begin{macrocode}
+\newpagestyle{@@_mainmatter_ps}[]{%
+  \widenhead{\c_zero_dim}{\c_zero_dim}
+  \sethead%
+  [
+  \tikz[remember~picture,overlay] {\g_@@_mainmatter_evenpage_headrule_tl}
+  ]%
+  [%
+  \adjustbox{raise={\c_@@_header_yshift_dim}{\height}}{%
+    \large\bfseries\scshape\color{@@_rubric_head_text_color}\g_@@_rubric_title_tl%
+    }%
+    ]%
+  []%
+  {}%
+  {%
+    \bool_if:nF {
+      \g_@@_rearviewmirror_rubric_bool || \g_@@_books_rubric_bool
+    }{
+      \adjustbox{raise={\c_@@_header_yshift_dim}{\height}}{%
+        \bfseries\color{@@_rubric_head_text_color}\g_@@_short_title_tl%
+      }
+    }
+  }%
+  {
+    \tikz[remember~picture,overlay] {\g_@@_mainmatter_oddpage_headrule_tl}
+  }%
+  %
+  \setfoot%
+  [\c_@@_footer_size_font_tl\thepage]%
+  [%
+    \uppercase{\c_@@_footer_string_tl}
+  ]%
+  []%
+  {}%
+  {%
+    \uppercase{\c_@@_footer_string_tl}%
+  }%
+  {\c_@@_footer_size_font_tl\thepage}%
+}
+%    \end{macrocode}
+%
+% We define a public macro for possible acknowledgements to be used by author(s)
+% of articles.
+%    \begin{macrocode}
+\NewDocumentCommand \acknowledgements { m } {
+  \@@_article_acknowledgements:n {#1}%
+}
+%    \end{macrocode}
+%
+% \begin{macro}{\printminibios}
+% We define the public command which displays
+% \begin{itemize}
+% \item the affiliation(s), email(s) and minibiographie(s) of the authors,
+% \item the acknowledgements if not empty.
+% \end{itemize}
+%    \begin{macrocode}
+\NewDocumentCommand \printminibios {  } {
+  \bool_if:NT {\g_@@_multicols_bool} {
+    \end{multicols}%
+  }
+%    \end{macrocode}
+% We force all the previous floats to be processed no later on the page
+% following the beginning of the bibliography, \gls{cv} or
+% acknowledgments.
+%    \begin{macrocode}
+  \FloatBarrier%
+  \begin{_@@_minibiographies_acknowledgments_tcbox}
+    \@@_display_people_by_role:n { author-art-\int_use:N \g_@@_articles_int }
+    \tl_if_empty:NF \g_@@_article_acknowledgements_tl
+    {%
+      \par%
+      \bigskip%
+      \begin{adjustbox}{valign=t,minipage=\linewidth}
+        \color{@@_acknowledgements_color}%
+        \g_@@_article_acknowledgements_tl
+      \end{adjustbox}
+  }
+  \end{_@@_minibiographies_acknowledgments_tcbox}
+  \bool_gset_true:N \g_@@_previous_article_with_bibliography_or_minibio_bool
+  %
+  \tl_gclear:N \g_@@_people_affiliation_tl
+  \tl_gclear:N \g_@@_people_email_tl
+  \tl_gclear:N \g_@@_people_minibio_tl
+  \tl_gclear:N \g_@@_people_photo_tl
+  \tl_gclear:N \g_@@_people_webpage_tl
+  \tl_gclear:N \g_@@_article_acknowledgements_tl
+%    \end{macrocode}
+%
+% We clear the authors database for this new article (XXX: to be moved to the
+% authors' minibiographies area).
+%    \begin{macrocode}
+  \DTLgcleardb{_@@_authors}
+  \DTLgcleardb{_@@_interviewees}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\printbibliography}
+% The command for bibliography printing production is redefined in order to let
+% it silently:
+% \begin{itemize}
+% \item beforehand quit the multicolumn environment and enter in the
+% "_@@_bibliography_tcbox" environment (which gives a special layout to
+% bibliographies, \glspl{cv} and acknowledgements),
+% \item afterwards quit the "bibliography_minibiographies_acknowledgments" environment and enter in
+%   the multicolumn environment.
+% \end{itemize}
+%    \begin{macrocode}
+\cs_set_eq:NN \_@@_printbibliography \printbibliography
+\RenewDocumentCommand \printbibliography { O{heading=bibassection} } {
+  \bool_if:NT {\g_@@_multicols_bool} {
+    \end{multicols}%
+  }
+%    \end{macrocode}
+% We force all the previous floats to be processed no later on the page
+% following the beginning of the bibliography, \gls{cv} or
+% acknowledgments.
+%    \begin{macrocode}
+% \afterpage{%
+  \FloatBarrier%
+% }%
+  \begin{_@@_bibliography_tcbox}
+    \_@@_printbibliography[heading=subbibliography,resetnumbers]
+  \end{_@@_bibliography_tcbox}
+  %
+  \nopagebreak[0]
+  \printminibios
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \section{Miscellaneous private commands specific to the journal}
+%
+% We create miscellaneous private commands specific to the journal.
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_century:n
+{
+  \textsc{
+    \int_to_roman:n {#1}
+  }%
+  \int_compare:nNnTF { #1 } > { 1 }{\ieme}{\ier}\nobreakspace si\`ecle%
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
+% \section{Miscellaneous public commands specific to the journal}
+%
+% We create miscellaneous public commands specific to the journal.
+% \begin{macro}{\aboutfrontcover}
+%   For a few words about the front cover.
+%    \begin{macrocode}
+\NewDocumentCommand \aboutfrontcover { O{} O{\c_@@_about_front_cover_string_tl} m }
+{
+  \_@@_about_front_cover:nnn {#1}{#2}{#3}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\rubric}
+%   For a \enquote{free} rubric.
+%    \begin{macrocode}
+\NewDocumentCommand \rubric {O{}mm}
+{
+  \_@@_rubric:nnn {#1}{#2}{#3}%
+}
+\cs_new_protected:Nn \_@@_prepare_rubric:nnn {%
+  \newpage%
+  \tl_gclear:N \g_@@_rubric_abstract_tl
+  \tl_gset:Nn \g_@@_rubric_title_tl {#2}
+  \tl_gset:Nn \g_@@_rubric_pictofile_tl {#3}
+  \IfNoValueF {#1}
+  {
+    \keys_set:nn { gzt/rubric } { #1 }
+  }
+  \_@@_rubric:nnn
+  {\g_@@_rubric_abstract_tl}{\g_@@_rubric_title_tl}{\g_@@_rubric_pictofile_tl}%
+}
+\NewDocumentCommand \mathematics {O{}}
+{
+  \_@@_prepare_rubric:nnn {#1}{\c_@@_mathematics_rubric_string_tl}{picto-mathematics}
+}
+\NewDocumentCommand \dossier {O{}}
+{
+  \_@@_prepare_rubric:nnn {#1}{\c_@@_dossier_rubric_string_tl}{picto-dossier}
+}
+\NewDocumentCommand \community {O{}}
+{
+  \_@@_prepare_rubric:nnn {#1}{\c_@@_community_rubric_string_tl}{picto-hands}
+}
+\NewDocumentCommand \interview {O{}}
+{
+  \_@@_prepare_rubric:nnn {#1}{\c_@@_interview_rubric_string_tl}{picto-interview}
+  \bool_gset_true:N \g_@@_interview_rubric_bool
+}
+\NewDocumentCommand \teaching {O{}}
+{
+  \_@@_prepare_rubric:nnn {#1}{\c_@@_teaching_rubric_string_tl}{picto-teaching}
+}
+\NewDocumentCommand \parity {O{}}
+{
+  \_@@_prepare_rubric:nnn {#1}{\c_@@_parity_rubric_string_tl}{picto-parity}
+}
+\NewDocumentCommand \tellme {O{}}
+{
+  \_@@_prepare_rubric:nnn {#1}{\c_@@_tellme_rubric_string_tl}{picto-tellme}
+  \bool_gset_true:N \g_@@_tellme_rubric_bool
+}
+\NewDocumentCommand \information {O{}}
+{
+  \_@@_prepare_rubric:nnn {#1}{\c_@@_information_rubric_string_tl}{picto-information}
+}
+\NewDocumentCommand \rearviewmirror {O{}}
+{
+  \_@@_prepare_rubric:nnn {#1}{\c_@@_rearviewmirror_rubric_string_tl}{picto-rearviewmirror}
+  \bool_gset_true:N \g_@@_rearviewmirror_rubric_bool
+}
+\NewDocumentCommand \tribute {O{}}
+{
+  \_@@_prepare_rubric:nnn {#1}{\c_@@_tribute_rubric_string_tl}{picto-tribute}
+}
+\NewDocumentCommand \books {O{}}
+{
+  \_@@_prepare_rubric:nnn {#1}{\c_@@_books_rubric_string_tl}{picto-books}
+  \bool_gset_true:N \g_@@_books_rubric_bool
+  \vspace{1.5\c_@@_book_review_frontcover_extend_dim}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
+%
+% \begin{macro}{\email}
+%    \begin{macrocode}
+\DeclareCiteCommand{\citeinterviewee}{}{%
+  \printnames{interviewee}%
+}
+{}{}
+\DeclareCiteCommand{\citereviewer}{}{%
+  \togglefalse{blx@firstinits}%
+  \printnames{reviewer}%
+}
+{}{}
+\DeclareCiteCommand{\citereviewerinstitution}{}{%
+  \printlist{reviewerinstitution}%
+}
+{}{}
+\DeclareCiteCommand{\_@@_cite_public_price}{}{%
+  \printfield{publicprice}%
+}
+{}{}
+\DeclareCiteCommand{\_@@_cite_smf_price}{}{%
+  \printfield{smfprice}%
+}
+{}{}
+\DeclareCiteCommand{\citecopublisher}{}{%
+  \printlist{copublisher}%
+}
+{}{}
+\DeclareCiteCommand{\citefrenchabstract}{}{%
+  \printfield{frenchabstract}%
+}
+{}{}
+\DeclareCiteCommand{\_@@_cite_englishabstract}{}{%
+  \printfield{englishabstract}%
+}
+{}{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\email}
+%   For typesetting an email.
+%    \begin{macrocode}
+\NewDocumentCommand \email {m}
+{
+  \_@@_email:n {#1}%
+}
+% \end{macro}
+%
+% \begin{macro}{\question}
+%   We define a private function for the questions/answers of interviews.
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_question:n
+{
+  \int_incr:N \g_@@_question_int
+  {%
+    \par%
+    \bigskip%
+    \color{@@_question_color}
+    #1%
+    \par%
+  }%
+}
+\NewDocumentCommand \question {m}
+{
+  \_@@_question:n {#1}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\smf}
+%    \begin{macrocode}
+\NewDocumentCommand \smf { s } {
+  \IfBooleanTF {#1}
+  {
+    \l_@@_smf_string_tl
+  }
+  {
+    \l_@@_smf_short_string_tl
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\surname}
+%    \begin{macrocode}
+\DeclareExpandableDocumentCommand \surname { s m } {
+  \IfBooleanTF {#1}
+  {
+    \textsc{#2}
+  }
+  {
+    #2
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\cad}
+% \begin{macro}{\Cad}
+%    \begin{macrocode}
+\NewDocumentCommand \cad { s } {
+  \IfBooleanTF {#1}
+  {
+    \c_@@_cad_string_tl
+  }
+  {
+    \c_@@_cad_short_string_tl
+  }
+}
+\NewDocumentCommand \Cad { s } {
+  \IfBooleanTF {#1}
+  {
+    \c_@@_Cad_string_tl
+  }
+  {
+    \c_@@_Cad_short_string_tl
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\gzt}
+%    \begin{macrocode}
+\NewDocumentCommand \gzt { s } {
+  \IfBooleanTF {#1}
+  {
+    \textit{\c_@@_journal_title_string_tl}
+  }
+  {
+    \textit{\c_@@_journal_short_title_string_tl}
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\century}
+%    \begin{macrocode}
+\NewDocumentCommand \century { m } {%
+  \_@@_century:n {#1}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\aside}
+%    \begin{macrocode}
+\NewDocumentCommand \aside { s m } {%
+  \IfBooleanTF {#1}
+  {
+    \c_@@_aside_string_tl{}~#2
+  }
+  {
+    \c_@@_aside_string_tl{}~#2~\c_@@_aside_string_tl
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% We provide two public environments "gztfigure" and "gzttable" for the usual
+% floats. Their layout is based upon \pkg{tcolorbox} features.
+%    \begin{macrocode}
+\DeclareTColorBox[blend~into=figures]{gztfigure}{ O{} }
+{
+  #1%
+  % ,title={#2}%
+  ,width=\linewidth%
+  ,_@@_tcb_floats_style%
+}
+\DeclareTColorBox[blend~into=figures]{gztfigure*}{ O{} }
+{
+  #1%
+  ,float*
+  % ,title={#2}%
+  ,width=\textwidth%
+  ,_@@_tcb_floats_style%
+}
+\DeclareTColorBox[blend~into=tables]{gzttable}{ O{} }
+{
+  #1%
+  % ,title={#2}%
+  ,width=\linewidth%
+  ,_@@_tcb_floats_style%
+}
+\DeclareTColorBox[blend~into=tables]{gzttable*}{ O{} }
+{
+  #1%
+  ,float*
+  % ,title={#2}%
+  ,width=\textwidth%
+  ,_@@_tcb_floats_style%
+}
+\DeclareTColorBox{gztscan}{ O{} }
+{
+  #1%
+  % ,title={#2}%
+  ,width=\textwidth%
+  ,_@@_tcb_floats_style%
+  ,size=tight%
+}
+\DeclareTColorBox{_@@_book_review}{ O{} }
+{
+  overlay~unbroken~and~first={%
+    \node at (frame.north~west) {
+      {
+        \makebox[\c_zero_dim][l]{%
+          \adjustbox{raise={-2\height+\c_@@_book_review_frontcover_extend_dim}{\c_zero_dim}}{%
+            \includegraphics[width=20mm]{\g_@@_bookreview_frontcover_tl}%
+          }%
+        }
+      }
+    };
+  },
+  _@@_tcb_book_review_box_style,
+  #1
+}
+\DeclareTColorBox{_@@_bibliography_tcbox}{ O{} }
+{
+  _@@_tcb_bibliography_style,
+  #1
+}
+\DeclareTColorBox{_@@_minibiographies_acknowledgments_tcbox}{ O{} }
+{
+  _@@_tcb_minibiographies_acknowledgments_style,
+  #1
+}
+%    \end{macrocode}
+%
+% We create a "bookreview" environment for the book reviews.
+%    \begin{macrocode}
+\NewDocumentEnvironment{bookreview}{ O{} m }
+{
+  \keys_set:nn { gzt/bookreview } { #2 }
+  \begin{_@@_book_review}[#1]
+    \xpatchfieldformat{title}{mkbibemph}{textbf}{}{}%
+    \xpretonameformat{author}{\color{@@_people_color}}{}{}%
+    \togglefalse{blx@firstinits}%
+    \noindent\fullcite{\g_@@_bookreview_bibkey_tl}
+    \vspace{10mm}
+    \tcblower
+}{
+  \begin{flushright}
+    % \g_@@_reviewer_tl
+    \bigskip
+    \citereviewer{\g_@@_bookreview_bibkey_tl}\\
+    \citereviewerinstitution{\g_@@_bookreview_bibkey_tl}
+  \end{flushright}
+    % \vspace*{10mm}
+    \mbox{}
+  \end{_@@_book_review}
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareTColorBox{_@@_book_advertisement}{ O{} }
+{
+  _@@_tcb_book_advertisement_box_style,
+  #1
+}
+\DeclareTColorBox{_@@_inside_frontcover}{ O{} }
+{
+  _@@_tcb_inside_frontcover_style,
+  #1
+}
+%    \end{macrocode}
+%
+% We create a "bookadvertisement" environment for the book advertisements.
+%    \begin{macrocode}
+\NewDocumentEnvironment{bookadvertisement}{ O{} m }
+{%
+  \keys_set:nn { gzt/bookadvertisement } { #2 }%
+  \newpage{}
+  \mbox{}
+  \vfill
+  \begin{_@@_book_advertisement}[#1]
+    \begin{tcolorbox}[
+      lefthand~width=47.5mm
+      ,sidebyside
+      ,colback=@@_book_advertisement_bg_color
+      % ,sharp~corners=all
+      ,fontlower=\large
+      ,flushleft~lower
+      ,boxrule=\c_zero_dim
+      ,frame~hidden%
+      ,leftright~skip=\c_zero_dim
+      ,before~skip=\c_zero_dim
+      ,lower~separated=false
+      ]
+      \fbox{\includegraphics[width=45mm]{\g_@@_bookadvertisement_frontcover_tl}}%
+      \tcblower
+      \xpatchfieldformat{title}{mkbibemph}{textbf}{}{}%
+      \def\abx@str{abx@lstr}%
+      \noindent\fullcite{\g_@@_bookadvertisement_bibkey_tl}
+      \def\abx@str{abx@sstr}%
+    \end{tcolorbox}
+    \bigskip
+    Publi\'e~avec~le~concours~de~:~\citecopublisher{\g_@@_bookadvertisement_bibkey_tl}.
+    \par
+    \bigskip
+    \citefrenchabstract{\g_@@_bookadvertisement_bibkey_tl}
+    \par
+    \medskip
+    %
+    \begin{center}
+      Prix~public~:\space
+      \EUR{\_@@_cite_public_price{\g_@@_bookadvertisement_bibkey_tl}}
+      \space\textendash\space Prix~membre~\smf{}~:\space
+      \EUR{\_@@_cite_smf_price{\g_@@_bookadvertisement_bibkey_tl}}
+      \space\textendash\space Frais~de~port~non~compris
+    \end{center}
+    %
+    \par
+    \bigskip
+    \begin{otherlanguage}{english}
+      \itshape
+      \_@@_cite_englishabstract{\g_@@_bookadvertisement_bibkey_tl}
+      %
+      \par
+      \medskip
+      %
+      \begin{center}
+        Public~price~:\space
+        \EUR{\_@@_cite_public_price{\g_@@_bookadvertisement_bibkey_tl}}
+        \space\textendash\space \smf{}~member~price~:\space
+        \EUR{\_@@_cite_smf_price{\g_@@_bookadvertisement_bibkey_tl}}
+        \space\textendash\space Shipping~costs~not~included
+      \end{center}
+    \end{otherlanguage}
+    \par
+    \bigskip
+  }{
+    \tcblower
+      \includegraphics[height=22.5mm]{\c_@@_smf_logo_file_string_tl}%
+      % \newline
+      % \smallskip
+      % % \begin{adjustbox}{valign=t,minipage=60mm}
+      % \l_@@_journal_address_tl
+      % % \end{adjustbox}
+      % \newline
+      \par{}
+      \smallskip%
+      \url{\l_@@_journal_url_tl}
+  \end{_@@_book_advertisement}
+  \vfill
+  \newpage
+  \bool_gset_false:N \g_@@_advertisement_bool
+  \bool_gset_true:N \g_@@_mainmatter_bool
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
+% We create a variant of the "\input" macro which cleans the local
+% customizations if any and, if necessary open and close the "refsection" and
+% "multicols" environments.
+%    \begin{macrocode}
+\NewDocumentCommand \gztinput { m m } {%
+  \startcustomization%
+  \bool_if:NF {\g_@@_refsection_bool} {
+    \begin{refsection}
+    }
+    \inputfrom{#1}{#2}
+    \bool_if:NT {\g_@@_multicols_bool} {
+      \end{multicols}%
+    }
+    \bool_if:NT {\g_@@_refsection_bool} {
+      \end{refsection}
+    }
+    \cleancustomization%
+}
+%    \end{macrocode}
+%
+% We automatically include the third and fourth cover pages at the end of the
+% document, the former containing some condensed instructions to authors.
+%    \begin{macrocode}
+\AtEndDocument{%
+  % \newpage
+  % \bool_if:NF {\g_@@_multicols_bool} {
+  %   % \begin{multicols}{2}[\section*{Instruction aux auteurs}]%
+  % }
+  % \lipsum[1-5]
+  % \newpage
+  % \section*{Publicité}
+  % \bool_if:NT {\g_@@_multicols_bool} {
+  %   % \end{multicols}%
+  % }
+}%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\cs_set_eq:NN \_@@_orig_endinput \endinput
+\RenewDocumentCommand{\endinput}{ }{%
+  \_@@_orig_endinput
+  % \IfStandalone{}{\end{multicols}}
+}
+% \AfterEndDocument{%
+%   \bool_if:NT {\g_@@_multicols_bool} {
+%     \end{multicols}%
+%   }
+%   \bool_if:NT {\g_@@_refsection_bool} {
+%     \end{refsection}
+%   }
+% }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
+%
+% \section{Miscellaneous settings}
+%
+% We gather here miscellaneous settings.
+%
+% \subsection{Related to \Pkg{pgfplots}}
+%
+% (French) Numbers format:
+%    \begin{macrocode}
+\pgfplotsset{%
+  /pgf/number~format/.cd,
+  use~comma,
+  1000~sep={\,},
+  min~exponent~for~1000~sep=4
+}%
+%    \end{macrocode}
+%
+% \subsection{Related to \Pkg{biblatex}}
+%
+%    \begin{macrocode}
+\defbibheading{bibassection}[\bibname]{\section*{#1}}%
+\renewcommand{\bibfont}{\normalfont\footnotesize}
+%    \end{macrocode}
+%
+% As bibiliographic resource, we add the file of the current issue.
+%    \begin{macrocode}
+\exp_after:wN\addbibresource\exp_after:wN{\c_@@_issue_bib_path_string_tl}
+%    \end{macrocode}
+%
+% We create a name format that prints the initial(s) of the first name(s) before
+% last name of a cited author.
+%    \begin{macrocode}
+\DeclareNameFormat{firstinits-last}{%
+  \usebibmacro{name:first-last}{#1}{#4}{#5}{#7}%
+  \usebibmacro{name:andothers}%
+}
+\DeclareNameAlias{labelname}{firstinits-last}
+%    \end{macrocode}
+%
+% We ensure the space between initial(s) and last name is unbreakable.
+%    \begin{macrocode}
+\renewcommand*\bibnamedelimc{\addnbspace}
+\renewcommand*\bibnamedelimd{\addnbspace}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\renewbibmacro{in:}{%
+  \ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
+\renewbibmacro*{journal}{%
+  \iffieldundef{shortjournal}%
+    {%
+      \iffieldundef{journaltitle}
+        {}
+        {%
+          \printtext[journaltitle]%
+            {%
+              \printfield[titlecase]{journaltitle}%
+              \setunit{\subtitlepunct}%
+              \printfield[titlecase]{journalsubtitle}%
+             }%
+         }%
+    }%
+    {\printtext[journaltitle]{\printfield[titlecase]{shortjournal}}}%
+}
+\renewbibmacro*{volume+number+eid}{%
+  \printfield{volume}%
+  \setunit{\addcomma\space}%
+  \printfield{number}%
+  \setunit{\addcomma\space}%
+  \printfield{eid}}
+\DeclareFieldFormat[article]{volume}{\mkbibbold{#1}}
+\DeclareFieldFormat[book]{volume}{\mkbibbold{#1}}
+\DeclareFieldFormat[article]{number}{\bibstring{number}#1}
+\DeclareLanguageMapping{french}{gzt}% use the new abbreviations
+%    \end{macrocode}
+%
+% \subsection{Related to \Pkg{kpfonts}}
+%
+% We robustify the "\itshape" redefinition (in case of "easyscsl" option), that
+% is not robust in \pkg{kpfonts} code
+% (cf. \url{https://groups.google.com/d/msg/fr.comp.text.tex/hIi97ipK5qA/WJoPwvH-p1UJ}).
+%    \begin{macrocode}
+\ifkp@easyscsl
+\DeclareRobustCommand{\itshape}{\not@math@alphabet\itshape\mathit%
+  \ifthenelse{\equal{\f@shape}{\scdefault}}{\fontshape{scsl}}{%
+    \fontshape\itdefault}\selectfont}
+\fi
+%    \end{macrocode}
+%
+% We replace the \pkg{kpfonts}' \enquote{mathfrak} by the one from
+% \enquote{eufrak}, as the former doesn't provide Euler Fraktur digits.
+%    \begin{macrocode}
+\DeclareMathAlphabet\mathfrak{U}{euf}{m}{n}
+\SetMathAlphabet\mathfrak{bold}{U}{euf}{b}{n}
+%    \end{macrocode}
+%
+% \subsection{Related to \Pkg{TikZ}}
+%
+%    \begin{macrocode}
+\tikzset{
+  _@@_dots/.style={
+    line~width=\c_@@_tikz_dot_diameter_dim,
+    line~cap=round,
+    dash~pattern=on~0pt~off~\c_@@_tikz_dot_spacing_dim
+  },
+  _@@_tcb_segmentation_style/.style={
+    _@@_dots,
+    draw=@@_dotfill_color,
+    shorten~>=~\c_@@_tcb_left_dim+\c_@@_tcb_boxsep_dim,
+    shorten~<=~\c_@@_tcb_left_dim+\c_@@_tcb_boxsep_dim,
+  }
+}
+%    \end{macrocode}
+%
+% \subsection{Related to \Pkg{tcolorbox}}
+%
+% We set some styles for
+% \begin{itemize}
+% \item the two public environments "gztfigure(*)" and "gzttable(*)" for the
+%   usual floats,
+% \item the book reviews,
+% \item the book advertisements,
+% \item the inside frontcover,
+% \end{itemize}
+% whom layout is based upon \pkg{tcolorbox} features.
+%    \begin{macrocode}
+\tcbset{%
+  _@@_tcb_floats_style/.style={%
+    enhanced%
+    ,every~float=\centering%
+    ,coltitle=@@_generic_dark_color%
+    ,colbacktitle=@@_float_title_bg_color%
+    ,colback=white%
+    ,colframe=@@_float_frame_color%
+    ,center~upper%
+    ,sharp~corners=all%
+    ,boxrule=0.3mm%
+    ,separator~sign~dash
+    % ,attach~boxed~title~to~bottom~center
+    % ,minipage~boxed~title*=-6mm
+    % ,boxed~title~style={
+    % enhanced
+    % ,boxrule=0mm%
+    % ,sharp~corners=all%
+  }%
+}
+\tcbset{%
+  _@@_tcb_book_review_box_style/.style={%
+    enhanced,%
+    colback=@@_book_review_frame_bg_color,%
+    breakable,%
+    height=50mm,%
+    boxrule=\c_zero_dim,
+    sharp~corners=all,%
+    skin=enhancedlast,
+    leftupper=25mm,
+    enlarge~bottom~finally~by=-1mm,
+    middle=4mm,
+    segmentation~style={_@@_tcb_segmentation_style}%
+  }
+}
+\tcbset{%
+  _@@_tcb_book_advertisement_box_style/.style={%
+    enhanced,%
+    colframe=@@_book_advertisement_frame_color,%
+    colback=@@_book_advertisement_bg_color,%
+    center~lower,
+    sharp~corners=all,%
+    % skin=enhancedlast,
+    % middle=4mm,
+    lower~separated=false,
+    % segmentation~style={_@@_tcb_segmentation_style}%
+  }
+}
+\tcbset{%
+  _@@_tcb_inside_frontcover_style/.style={%
+    % split=0.6,%
+    colback=@@_inside_front_cover_frame_bg_color,%
+    colbacktitle=@@_inside_front_cover_frame_bg_color,%
+    title=\c_@@_editorial_board_string_tl,%
+    sharp~corners=all,%
+    center~title,%
+    coltitle=@@_inside_front_cover_frame_title_color,%
+    fonttitle=\bfseries\large,%
+    boxrule=\c_zero_dim,%
+    toptitle=3mm,%
+    bottomtitle=4mm,%
+    frame~hidden,%
+    enhanced,%
+    enlarge~left~by=-7.5mm,
+    height=\c_@@_layoutheight_dim-\c_@@_topmargin_inside_frontcover_dim-\c_@@_botmargin_dim,
+    width=\c_@@_inside_frontcover_box_width_dim,
+    middle=4mm,
+    segmentation~style={_@@_tcb_segmentation_style}%
+  }
+}
+\tcbset{%
+  _@@_tcb_bibliography_style/.style={%
+    colback=@@_bibliography_minibios_acknowledgments_bg_color,
+    breakable,
+    boxrule=\c_zero_dim,
+    sharp~corners=all,%
+    enhanced
+  }
+}
+\tcbset{%
+  _@@_tcb_minibiographies_acknowledgments_style/.style={%
+    colback=@@_bibliography_minibios_acknowledgments_bg_color,
+    breakable,
+    boxrule=\c_zero_dim,
+    drop~lifted~shadow=black,
+    sharp~corners=all,%
+    skin=enhancedlast,
+    skin~first~is~subskin~of={enhancedmiddle}{no~shadow},
+    skin~middle~is~subskin~of={enhancedmiddle}{no~shadow},
+    skin~last~is~subskin~of={enhancedlast}{drop~lifted~shadow}
+  }
+}
+\tcbset{%
+  enlargepage~flexible=\baselineskip,
+  left=\c_@@_tcb_left_dim,
+  boxsep=\c_@@_tcb_boxsep_dim,
+}
+%    \end{macrocode}
+%
+% \subsection{Lists}
+%
+% We now set the lists layout in order to benefit from \Pkg{enumitem}'s features
+% and preserve the layout from \pkg{frenchb}.
+%    \begin{macrocode}
+\setlist[1]{labelindent=\parindent}
+\setlist[itemize]{label=\textendash{}, nosep}
+\setlist{%
+  labelwidth=\widthof{\textendash},
+  itemsep=0.4ex plus 0.2ex minus 0.2ex,
+  parsep=0.4ex plus 0.2ex minus 0.2ex,
+  topsep=0.8ex plus 0.4ex minus 0.4ex,
+  partopsep=0.4ex plus 0.2ex minus 0.2ex,
+  leftmargin=!%
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\setlist[description]{
+  font=
+  \bool_if:nTF { \g_@@_books_rubric_bool || \g_@@_insidefrontcovermatter_bool }
+  {
+    \color{black}
+  }{
+    \color{@@_description_label_light_color}
+  }
+  \bfseries
+}
+%    \end{macrocode}
+%
+% \subsection{Miscellaneous}
+%
+% We fix the \pkg{csquotes}' quotes for PDF strings.
+%    \begin{macrocode}
+\DeclarePlainStyle{«~}{~»}{`}{'}
+%    \end{macrocode}
+%
+% We change the default settings of the floats placement.
+%    \begin{macrocode}
+\setcounter{topnumber}{3}
+\renewcommand{\topfraction}{0.8}
+%    \end{macrocode}
+%
+% We change the default vertical space between text and footnotes.
+%    \begin{macrocode}
+\addtolength{\skip\footins}{.25\baselineskip}
+%    \end{macrocode}
+%
+% We change the default horizontal space between coloumns in multicolumn mode.
+%    \begin{macrocode}
+\setlength{\columnsep}{7mm}%
+%    \end{macrocode}
+%
+% We change the way the section counter is displayed (the chapter should not appear).
+%    \begin{macrocode}
+\renewcommand{\thesection}{\arabic{section}}%
+%    \end{macrocode}
+%
+% In case \Pkg{siunitx} is loaded, we make it follow the French rules.
+%    \begin{macrocode}
+\@ifpackageloaded{siunitx}{%
+  \sisetup{locale=FR}
+}
+%    \end{macrocode}
+%
+% We change the color of the table rules.
+%    \begin{macrocode}
+\arrayrulecolor{@@_arrayrule_color}%
+%    \end{macrocode}
+%
+% We change the floating table name (as translated by the \pkg{frenchb}
+% module from \Pkg{babel}) from \enquote{Table} to \enquote{Tableau}.
+%    \begin{macrocode}
+\addto\captionsfrench{\def\tablename{{\scshape Tableau}}}%
+%    \end{macrocode}
+%
+% \section{Miscellaneous (re)definitions}
+%
+% We gather here miscellaneous redefinitions.
+%
+% \subsection{Vectors}
+%
+% Vectors, even written with "\vec", are typeset with \pkg{esvect}'s "\vv":
+%    \begin{macrocode}
+\RenewDocumentCommand \vec { m } {
+  \vv{#1}
+}
+%    \end{macrocode}
+%
+% \begin{macro}{\usetikzlibrary}
+% The "\usetikzlibrary" swith is redefined in order to get rid of the bug
+% reported here: \url{https://sourceforge.net/p/pgf/bugs/353/}.
+%    \begin{macrocode}
+\cs_set_eq:NN \_@@_orig_usetikzlibrary \usetikzlibrary
+\RenewDocumentCommand \usetikzlibrary { m } {
+  \shorthandoff{:}%
+  \_@@_orig_usetikzlibrary{#1}
+  \shorthandon{:}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Usual theorems and the like}
+%
+% Some usual theorems and the like are defined, thanks to \Pkg{thmtools}. First,
+% we define a private function "\_@@_new_theorem" that defines:
+% \begin{enumerate}
+% \item a new (private, \pkg{thmtools}) theorem with 4 arguments:
+%   \begin{enumerate}
+%   \item possible additional options to the style "_@@_tcb_alltheorems_style"
+%     defined earlier for all \enquote{theorems},
+%   \item name of the (private) \pkg{thmtools} theorem,
+%   \item French title for this theorem,
+%   \item English title for this theorem.
+%   \end{enumerate}
+% \item a public environment based on this private theorem with a the usual
+%   syntax of \pkg{amsthm} theorems, except it has an optional argument for
+%   possible additional options to the default styles ("_@@_theorem" or
+%   "_@@_definition").
+% \end{enumerate}
+%
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_new_theorem:nnnn
+{
+  \declaretheorem[%
+  #1,%
+  name=
+  \IfLanguageName{french}{#3}{}%
+  \IfLanguageName{english}{#4}{}%
+  ]{#2}
+}
+\declaretheoremstyle[spaceabove=3pt,bodyfont=\itshape]{_@@_theorem}
+\declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont]{_@@_definition}
+%    \end{macrocode}
+%
+% Then, we define a public command, similar to "\newtheorem", based on
+% "\_@@_new_theorem", that lets the user define its personal theorems:
+%    \begin{macrocode}
+\NewDocumentCommand \gztnewtheorem {O{}mmm}
+{
+  \_@@_new_theorem:nnnn {#1}{#2}{#3}{#4}
+}
+%    \end{macrocode}
+%
+% Finally, we define some usual theorems:
+%    \begin{macrocode}
+\gztnewtheorem[style=_@@_theorem]{theorem}{Th\'eor\`eme}{Theorem}
+\gztnewtheorem[style=_@@_theorem]{theoreme}{Th\'eor\`eme}{Theorem}
+\gztnewtheorem[style=_@@_theorem]{corollary}{Corollaire}{Corollary}
+\gztnewtheorem[style=_@@_theorem]{corollaire}{Corollaire}{Corollary}
+\gztnewtheorem[style=_@@_theorem]{conjecture}{Conjecture}{Conjecture}
+\gztnewtheorem[style=_@@_theorem]{proposition}{Proposition}{Proposition}
+\gztnewtheorem[style=_@@_theorem]{lemma}{Lemme}{Lemma}
+\gztnewtheorem[style=_@@_theorem]{lemme}{Lemme}{Lemma}
+\gztnewtheorem[style=_@@_theorem]{axiom}{Axiome}{Axiom}
+\gztnewtheorem[style=_@@_theorem]{axiome}{Axiome}{Axiom}
+%
+\gztnewtheorem[style=_@@_definition]{definition}{D\'efinition}{Definition}
+\gztnewtheorem[style=_@@_definition]{remark}{Remarque}{Remark}
+\gztnewtheorem[style=_@@_definition]{remarque}{Remarque}{Remark}
+\gztnewtheorem[style=_@@_definition]{example}{Exemple}{Example}
+\gztnewtheorem[style=_@@_definition]{exemple}{Exemple}{Example}
+\gztnewtheorem[style=_@@_definition]{notation}{Notation}{Notation}
+%    \end{macrocode}
+%
+% \subsection{(Reciprocal) Trigonometric and hyperbolic functions}
+%
+% Reciprocal trigonometric functions, even written with usual "\arccos",
+% "\arcsin", "\arctan", etc. are typeset with an uppercase \enquote{A}:
+%    \begin{macrocode}
+\DeclareMathOperator{\cotan}{cotan}
+\DeclareMathOperator{\Arccos}{Arccos}
+\DeclareMathOperator{\Arcsin}{Arcsin}
+\DeclareMathOperator{\Arctan}{Arctan}
+\DeclareMathOperator{\Argch}{Argch}
+\DeclareMathOperator{\Argsh}{Argsh}
+\DeclareMathOperator{\Argth}{Argth}
+\DeclareMathOperator{\ch}{ch}
+\DeclareMathOperator{\sh}{sh}
+\RenewDocumentCommand  {\arccos} { } {\Arccos}
+\RenewDocumentCommand  {\arcsin} { } {\Arcsin}
+\RenewDocumentCommand  {\arctan} { } {\Arctan}
+\RenewDocumentCommand \log { } {\ln}
+\RenewDocumentCommand \lg { } {\ln}
+\cs_set_eq:NN \_@@_orig_leq \leq
+\cs_set_eq:NN \_@@_orig_geq \geq
+\RenewDocumentCommand \le { } {%
+  \IfLanguageName {french}{\leqslant}{\_@@_orig_leq}%
+}
+\RenewDocumentCommand \leq { } {%
+  \IfLanguageName {french}{\leqslant}{\_@@_orig_leq}%
+}
+\RenewDocumentCommand \ge { } {%
+  \IfLanguageName {french}{\geqslant}{\_@@_orig_geq}%
+}
+\RenewDocumentCommand \geq { } {%
+  \IfLanguageName {french}{\geqslant}{\_@@_orig_geq}%
+}
+\NewDocumentCommand \N { } {\mathbb{N}}
+\NewDocumentCommand \Z { } {\mathbb{Z}}
+\NewDocumentCommand \D { } {\mathbb{D}}
+\NewDocumentCommand \Q { } {\mathbb{Q}}
+\NewDocumentCommand \R { } {\mathbb{R}}
+\NewDocumentCommand \C { } {\mathbb{C}}
+\NewDocumentCommand \K { } {\mathbb{K}}
+%    \end{macrocode}
+%
+% We define a token list variable that contains the color of the description
+% labels because it won't be constant but will be:
+% \begin{itemize}
+% \item black in the front matter and in the books rubric
+% \end{itemize}
+%
+% We now leave the \LaTeX3{} programming environment.
+%    \begin{macrocode}
+\ExplSyntaxOff
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article>
+%    \end{macrocode}
+%
+% We now give the rest of the code of the source file of the Gazette's logo.
+%    \begin{macrocode}
+%<*class-logo>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\ExplSyntaxOff
+%
+\begin{document}
+\frontmatterheadtext
+\end{document}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class-logo>
+%    \end{macrocode}
+%
+% \subsection{Local language definitions for \Package{listings}}
+%
+% Now, we create some \file{lstlang0.sty} files where are extended
+% some (or defined new) languages.
+%
+% \subsubsection{Extension of the \enquote{LaTeX} TeX dialect}
+%
+%    \begin{macrocode}
+%<*class-lstlang0>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\lst@definelanguage[extLaTeX]{TeX}[LaTeX]{TeX}{%
+  moretexcs={%
+    footnotesize,huge,Huge,large,Large,LARGE,large,Large,scriptsize,tiny,%
+    includegraphics,cite,ttwplink,vref,LTXtable,tableofcontents,frontmatter,mainmatter,%
+    part,chapter,section,subsection,subsubsection,paragraph,subparagraph,RequirePackage,%
+    listoftables,listoffigures,lstlistingname,si,SI,ohm,num,space,shorthandon,shorthandoff,%
+    abstractname,appendixname,contentsname,listfigurename,listtablename,indexname,%
+    figurename,tablename,chaptername,pagename,seename,alsoname,proofname,bibname,glossaryname,%
+    addto,captionsenglish,captionsfrench,lipsum,href,url,partname,refname,renewcommand*,%
+    appendix,lstlistoflistings,graphicpath,loadglsentries,hypersetup,detect-all,SetWatermarkColor,%
+    @pnumwidth,bookmarksetup,DeclareTextCommand%
+  },%
+  morekeywords=[1]{% Environments' names
+    tabular,tabulary,math%
+  },%
+  morekeywords=[2]{% Keys of key-value lists and packages' names
+    bookmarksdepth,see,babel,colorlinks,linktoc%
+  },%
+  morekeywords=[3]{% Values of key-value lists
+    german,ngerman,french,english,spanish%
+  },
+  alsoletter={-*@1234560}%
+}%
+%    \end{macrocode}
+%
+% \subsubsection{Definition of the \enquote{gzt} \TeX{} dialect}
+%
+%    \begin{macrocode}
+\lst@definelanguage[gzt]{TeX}[LaTeX]{TeX}{%
+  % yathesis% TODO : à mettre ailleurs
+  moretexcs={% Control sequences' names
+    author,title,subtitle,acknowledgements,%
+  },%
+  % Environments' names
+  morekeywords={%
+  },%
+  morekeywords=[1]{% Environments' names
+    abstract,dedicationspage,epigraphspage,epigraphs,%
+    glossaries,otherlanguage%
+  },%
+  morekeywords=[2]{% Keys of key-value lists
+    short,affiliation,photo,email,webpage,minibio%
+  },%
+  morekeywords=[3]{% Values of key-value lists
+    %
+  },%
+  morekeywords=[4]{% Class and packages options
+    %
+  },%
+  morekeywords=[5]{% Translation labels
+    %
+  },%
+  alsoletter={!-*1234560}%
+}%
+\lst@definelanguage[glossaries]{TeX}[LaTeX]{TeX}%
+{%
+  % Séquences de contrôles (communément appelées commandes ou macros)
+  moretexcs={%
+    makeglossaries,printglossaries,printglossary,newglossaryentry,gls,Gls,GLS,glspl,Glspl,GLSpl,newacronym,%
+    glsuseri,glsuserii,glsuseriii,glsuseriv,glsuserv,glsuservi,glsshortpluralkey,glslongpluralkey,loadglsentries,%
+    glsadd,glstextformat,glsnamefont,glossarypreamble,glossarypostamble,acrshort,acrshort*,acrlong,acrfull,%
+    Acrshort,ACRshort,Acrlong,ACRlong,Acrfull,ACRfull,acrshortpl,Acrshortpl,acrlongpl,Acrlongpl,acrfullpl,Acrfullpl,%
+    Acrlong*,acronymtype,printacronyms,printsymbols%
+  },%
+  % Environments' names
+  morekeywords={%
+  },%
+  % Mots-clés de niveau 2 : arguments obligatoires et environnements
+  morekeywords=[2]{%
+    first,firstplural,plural,sort,nonumberlist,name,acronym,acronyms,symbols,%
+    user1,user2,user3,user4,user5,user6,hyper,style,xindy,toc,%
+    useri,userii,useriii,useriv,userv,uservi%
+  },%
+  % Mots-clés de niveau 3 : arguments optionnels valeurs de clés dans clé=valeur
+  morekeywords=[3]{%
+    listgroup,listhypergroup,%
+    % textrm,textit,textsf,textsl,texttt,textup,textbf,textsc,textmd,emph,%
+    hyperrm,hyperit,hypersf,hypersl,hypertt,hyperup,hyperbf,hypersc,hypermd,hyperemph%
+  },%
+  sensitive%
+}[keywords,tex,comments]%
+%
+\lst@definelanguage[biblatex]{TeX}[LaTeX]{TeX}%
+{%
+  % Séquences de contrôles (communément appelées commandes ou macros)
+  moretexcs={%
+    printbibliography,SetCiteCommand,autocite%
+  },%
+  % Mots-clés de niveau 1 : arguments optionnels
+  morekeywords={%
+  },%
+  % Mots-clés de niveau 2 : arguments obligatoires et environnements
+  morekeywords=[2]{%
+    heading%
+  },%
+  % Mots-clés de niveau 3 : arguments optionnels valeurs de clés dans clé=valeur
+  morekeywords=[3]{%
+    bibintoc%
+  },%
+  sensitive%
+}[keywords,tex,comments]%
+%
+\lst@definelanguage[tcolorbox]{TeX}[LaTeX]{TeX}%
+{%
+  % Séquences de contrôles (communément appelées commandes ou macros)
+  moretexcs={%
+    tcbset,tcbuselibrary%
+  },%
+  % Mots-clés de niveau 1 : arguments optionnels
+  morekeywords={%
+  },%
+  % Mots-clés de niveau 2 : arguments obligatoires et environnements
+  morekeywords=[2]{%
+    colback,beamer,skins%
+  },%
+  % Mots-clés de niveau 3 : arguments optionnels valeurs de clés dans clé=valeur
+  morekeywords=[3]{%
+    lightgray,red!50!white%
+  },%
+  sensitive,%
+}[keywords,tex,comments]%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class-lstlang0>
+%    \end{macrocode}
+%
+% \include{gzt-doc.dtx}
+%
+% \endinput
+
+% Local Variables:
+% mode: doctex
+% ispell-local-dictionary: "english"
+% TeX-command-default: "TeX"
+% TeX-master: t
+% End:

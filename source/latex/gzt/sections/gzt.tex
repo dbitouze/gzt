@@ -1,0 +1,96 @@
+
+\chapter{Documentation}
+\label{cha:documentation}
+
+\section{Configuration de la classe}
+
+Pour configurer la classe, on dispose de la commande semi-globale
+\refCom{issuesetup}, à utiliser autant de fois que souhaité, de préférence en
+préambule mais également au fil du document. Elle permet d'apporter des
+modifications :
+\begin{itemize}
+\item ordinaires, par exemple pour spécifier divers aspects de l'édition en
+  cours (notamment son numéro) ;
+\item extraordinaires, par exemple pour modifier une de ses expressions clés.
+\end{itemize}
+
+\begin{docCommand}{issuesetup}{\marg{configuration}}
+  Cette commande permet de configurer la classe, la \meta{configuration} se
+  faisant au moyen de clés/valeurs.
+\end{docCommand}
+
+\section{Configuration de l'édition en cours}
+
+Pour configurer l'édition en cours, on dispose des clés \refKey{number}
+(obligatoire) et \refKey{month} et \refKey{year} (facultatives), à passer à la
+commande \refCom{issuesetup}.
+
+\begin{docKey}{number}{=\meta{nombre}}{pas de valeur par défaut,
+    initialement vide}
+\end{docKey}
+
+\begin{docKey}{month}{=\meta{nombre}}{pas de valeur par défaut,
+    initialement vide}
+\end{docKey}
+
+\begin{docKey}{year}{=\meta{nombre}}{pas de valeur par défaut,
+    initialement vide}
+\end{docKey}
+
+\section{Personnes impliquées dans le journal}
+\label{sec:pers-impl-dans}
+
+On liste ici les commandes permettant de spécifier les personnes impliquées dans
+le journal.
+
+Les commandes \refCom{editorinchief}, \refCom{editor} et \refCom{president}
+suivantes permettent de spécifier respectivement un (ou plusieurs) rédacteur en
+chef, un (ou plusieurs) rédacteur et le président de la \gls{smf} au moyen de
+leurs :
+\begin{itemize}
+\item \meta{prénom} ;
+\item \meta{nom} ;
+\item \meta{institut} ;
+\item \meta{courriel} ;
+\end{itemize}
+et, le cas échéant, de leur \meta{spécialité}.
+
+\begin{docCommand}{editorinchief}{\oarg{specialité}\marg{prénom}\marg{nom}\marg{institut}\marg{courriel}}
+  Cette commande permet de spécifier un rédacteur en chef.
+\end{docCommand}
+
+\begin{docCommand}{editor}{\oarg{specialité}\marg{prénom}\marg{nom}\marg{institut}\marg{courriel}}
+  Cette commande permet de spécifier un rédacteur.
+\end{docCommand}
+
+\begin{docCommand}{president}{\oarg{specialité}\marg{prénom}\marg{nom}\marg{institut}\marg{courriel}}
+  Cette commande permet de spécifier le président de la \gls{smf}.
+\end{docCommand}
+
+Les commandes \refCom{classdesigner}, \refCom{classmaintainer} et
+\refCom{graphicdesigner} suivantes, permettant de spécifier respectivement le
+concepteur de la classe \LaTeX, le ou les maintaineurs de la classe \LaTeX et le
+concepteur de la maquette, sont similaires aux commandes précédentes, sauf
+qu'aucune spécialité ne peut être spécifiée.
+
+\begin{docCommand}{classdesigner}{\marg{prénom}\marg{nom}\marg{institut}\marg{courriel}}
+  Cette commande permet de spécifier le concepteur de la classe \LaTeX.
+\end{docCommand}
+
+\begin{docCommand}{classmaintainer}{\marg{prénom}\marg{nom}\marg{institut}\marg{courriel}}
+  Cette commande permet de spécifier le ou les mainteneurs de la classe \LaTeX.
+\end{docCommand}
+
+\begin{docCommand}{graphicdesigner}{\marg{prénom}\marg{nom}\marg{institut}\marg{courriel}}
+  Cette commande permet de spécifier le concepteur de la maquette.
+\end{docCommand}
+
+
+\iffalse
+%%% Local Variables:
+%%% mode: latex
+%%% eval: (latex-mode)
+%%% ispell-local-dictionary: "fr_FR"
+%%% TeX-master: "../gazette.dtx"
+%%% End:
+\fi
