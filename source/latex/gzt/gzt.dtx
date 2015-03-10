@@ -821,7 +821,7 @@ This work consists of the file  gzt.dtx
 % \begin{enumerate}
 % \item Compile \TeX{} pictures stand-alone or as part of a document:
 %    \begin{macrocode}
-\RequirePackage{standalone}%
+\RequirePackage[group=false]{standalone}%
 %    \end{macrocode}
 %
 % \item Extending \pkg{etoolbox}'s patching commands:
@@ -5426,19 +5426,14 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\cs_set_eq:NN \_@@_orig_endinput \endinput
-\RenewDocumentCommand{\endinput}{ }{%
-  \_@@_orig_endinput
-  % \IfStandalone{}{\end{multicols}}
+\AtEndDocument{%
+  \bool_if:NT {\g_@@_multicols_bool} {
+    \end{multicols}%
+  }
+  \bool_if:NT {\g_@@_refsection_bool} {
+    \end{refsection}
+  }
 }
-% \AfterEndDocument{%
-%   \bool_if:NT {\g_@@_multicols_bool} {
-%     \end{multicols}%
-%   }
-%   \bool_if:NT {\g_@@_refsection_bool} {
-%     \end{refsection}
-%   }
-% }
 %    \end{macrocode}
 %
 %    \begin{macrocode}
