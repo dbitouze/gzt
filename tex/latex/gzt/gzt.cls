@@ -108,7 +108,7 @@
 \PassOptionsToPackage{english,french}{babel}
 \PassOptionsToPackage{english,french}{varioref}
 \PassOptionsToPackage{english,french}{cleveref}
-\RequirePackage{standalone}%
+\RequirePackage[group=false]{standalone}%
 \RequirePackage{xpatch}%
 \RequirePackage{datatool}%
 \pdftex_if_engine:TF
