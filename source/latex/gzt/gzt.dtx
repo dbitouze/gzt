@@ -98,7 +98,6 @@ This work consists of the file  gzt.dtx
 \endpostamble
 %
 \def\GZT@classname{\jobname}
-\def\GZT@packagename{\GZT@classname-doc}
 \def\GZT@logo{\GZT@classname-logo}
 \def\GZT@addons{addons}
 \usedir{/}
@@ -120,8 +119,6 @@ This work consists of the file  gzt.dtx
 \usedir{source/latex/\GZT@classname}
 \generate{
   \file{\GZT@classname.ins}{\from{\jobname.dtx}{install}}
-  \file{\GZT@packagename.sty}{\from{\GZT@packagename.dtx}{class-doc-package}}
-  % \file{\GZT@packagename.sty}{\from{\jobname.dtx}{class-doc-package}}
   \file{\GZT@classname.drv}{\from{\jobname.dtx}{driver}}%
   \nopreamble\nopostamble
   \file{\GZT@logo.tex}{\from{\jobname.dtx}{class-logo}}%
@@ -161,7 +158,6 @@ This work consists of the file  gzt.dtx
 \begin{document}
 \tableofcontents
 \DocInput{\jobname.dtx}
-% \DocInput{\jobname-doc.dtx}
 \end{document}
 %</driver>
 % \fi
@@ -621,7 +617,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<*class|class-article|class-doc-package>
+%<*class|class-article>
 %    \end{macrocode}
 %
 % Selective filtering of error messages and warnings:
@@ -636,7 +632,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%</class|class-article|class-doc-package>
+%</class|class-article>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -694,7 +690,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<*class|class-article|class-doc-package>
+%<*class|class-article>
 %    \end{macrocode}
 %
 % In order to avoid "__gzt" in the name of each internal (i.e. private) function
@@ -729,16 +725,13 @@ This work consists of the file  gzt.dtx
 %
 % The \gztcl{} is declared in the \LaTeX3{}'s way.
 %    \begin{macrocode}
-%<class-doc-package>\ProvidesExplPackage
-%<class|class-article>\ProvidesExplClass
+\ProvidesExplClass
 %<class>  {gzt}
 %<class-article>  {gztarticle}
   {2015/02/27}
   {0.9}
   {
-%<class|class-article>    SMF class for the French journal^^J
-%<class-doc-package>    SMF package for the documentation^^J
-%<class-doc-package>    of the classes for the French journal^^J
+    SMF class for the French journal^^J
     "La Gazette des Math'ematiciens".
 %<class-article>^^J    (Author version.)
   }
@@ -752,7 +745,7 @@ This work consists of the file  gzt.dtx
 % \section{Class loading}
 %
 %    \begin{macrocode}
-%</class|class-article|class-doc-package>
+%</class|class-article>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -795,7 +788,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<*class|class-article|class-doc-package>
+%<*class|class-article>
 %    \end{macrocode}
 %
 % As subsequent class, the \Cls{book} is loaded, with "openany", "english" and
@@ -851,8 +844,7 @@ This work consists of the file  gzt.dtx
 %
 % Load of main font to be used:
 %    \begin{macrocode}
-%<class|class-article>      \RequirePackage[sfmath,easyscsl,noDcommand]{kpfonts}
-%<class-doc-package>\RequirePackage[lining]{libertine}%
+\RequirePackage[sfmath,easyscsl,noDcommand]{kpfonts}
 %    \end{macrocode}
 %
 % \item Formatting both header and footers (pagestyle), and sections headers:
@@ -872,7 +864,7 @@ This work consists of the file  gzt.dtx
 %
 % \item Establish input relative to a directory:
 %    \begin{macrocode}
-%<class|class-doc-package>\RequirePackage{import}%
+%<class>\RequirePackage{import}%
 %    \end{macrocode}
 %
 % \item Allow tables to flow over page boundaries:
@@ -1108,7 +1100,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%</class|class-article|class-doc-package>
+%</class|class-article>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -1217,7 +1209,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<*class|class-article|class-doc-package>
+%<*class|class-article>
 %    \end{macrocode}
 %
 % \subsection{Strings and keywords}
@@ -1258,11 +1250,11 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%</class|class-article|class-doc-package>
+%</class|class-article>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<*class|class-doc-package>
+%<*class>
 %    \end{macrocode}
 %
 % For the editor(s) in chief.
@@ -1463,11 +1455,11 @@ This work consists of the file  gzt.dtx
 % \end{macro}
 %
 %    \begin{macrocode}
-%</class|class-doc-package>
+%</class>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<*class|class-article|class-doc-package>
+%<*class|class-article>
 %    \end{macrocode}
 %
 % For the long and short forms of \acrshort*{smf}.
@@ -2334,11 +2326,11 @@ This work consists of the file  gzt.dtx
 % the source file of the logo.
 %
 %    \begin{macrocode}
-%</class|class-article|class-doc-package>
+%</class|class-article>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<*class|class-article|class-logo|class-doc-package>
+%<*class|class-article|class-logo>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -2390,11 +2382,11 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%</class|class-article|class-logo|class-doc-package>
+%</class|class-article|class-logo>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<*class|class-article|class-doc-package>
+%<*class|class-article>
 %    \end{macrocode}
 %
 % \section{Miscellaneous patches}
@@ -2735,7 +2727,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%</class|class-article|class-doc-package>
+%</class|class-article>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -6045,8 +6037,6 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 %</class-lstlang0>
 %    \end{macrocode}
-%
-% \include{gzt-doc.dtx}
 %
 % \endinput
 
