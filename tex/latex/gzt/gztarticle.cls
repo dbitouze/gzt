@@ -6,7 +6,7 @@
 %%
 %% gzt.dtx  (with options: `class-article')
 %% -----------------------------------------------------------------------------
-%% gzt --- SMF class for the French journal "La gazette des math'ematiciens",
+%% gzt --- SMF class for the French journal "La Gazette des Math'ematiciens",
 %%             version 0.1
 %% E-mail: denis.bitouze@lmpa.univ-littoral.fr
 %% Released under the LaTeX Project Public License v1.3c or later
@@ -64,7 +64,7 @@
   {0.9}
   {
     SMF class for the French journal^^J
-    "La gazette des math'ematiciens".
+    "La Gazette des Math'ematiciens".
 ^^J    (Author version.)
   }
 \NeedsTeXFormat{LaTeX2e}
@@ -85,7 +85,7 @@
   }{
     \RequirePackage{fontspec}
   }
-      \RequirePackage[sfmath,easyscsl,noDcommand]{kpfonts}
+\RequirePackage[sfmath,easyscsl,noDcommand]{kpfonts}
 \RequirePackage[pagestyles]{titlesec}%
 \RequirePackage{multicol}%
 \RequirePackage{graphicx}%
@@ -1728,7 +1728,7 @@
       ,before~skip=\c_zero_dim
       ,lower~separated=false
       ]
-      \fbox{\includegraphics[width=45mm]{\g__gzt_bookadvertisement_frontcover_tl}}%
+      \adjustbox{frame}{\includegraphics[width=45mm]{\g__gzt_bookadvertisement_frontcover_tl}}%
       \tcblower
       \xpatchfieldformat{title}{mkbibemph}{textbf}{}{}%
       \def\abx@str{abx@lstr}%
