@@ -149,14 +149,18 @@ This work consists of the file  gzt.dtx
 \ReplaceClass{article}{report}
 \BeforePackage{doc}{\let\oldmaketitle\maketitle}
 \documentclass[english,french]{ltxdoc}
-\usepackage{gzt-doc}
+% A new (personal) documentation package is used.
+\usepackage{dbdoc}
 %
-\includeall
-\includeonly{%
-  % sections/introduction,
-}%
 \begin{document}
-\DocInput{\jobname.dtx}
+% The (personal) documentation \Package{dbdoc} used relies on \hologo{pdfLaTeX}
+% and not on \hologo{xeLaTeX} anymore. Because of this, a strange error
+% (\url|http://tex.stackexchange.com/q/232791/18401|) appeared and needs for the
+% documentation (slave files) to be included directly and not anymore \emph{via}
+% "\DocInput".
+%
+% \DocInput{\jobname.dtx}
+\include{sections/gztarticle}
 \end{document}
 %</driver>
 % \fi
