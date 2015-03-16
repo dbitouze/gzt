@@ -19,11 +19,12 @@ but :
 
 Nous commençons par décrire les éléments caractéristiques d'un article standard.
 
-\subsection{Préparation du titre de l'article}
+\subsection{Préparation du \enquote{titre} de l'article}
 \label{sec-prep-de-lart}
 
 Cette section liste les commandes, options et environnement permettant de
-\emph{préparer} le titre de l'article ainsi que son éventuelle partie finale.
+\emph{préparer} le \enquote{titre} de l'article ainsi que son éventuelle partie
+finale.
 
 \subsubsection{Titre, sous-titre}
 \label{sec-titre}
@@ -90,13 +91,15 @@ occurrences de cette commande.
 \end{dbwarning}
 
 \begin{dbremark}{Affichage des prénoms et noms du ou des auteurs}{}
-  Pour que les prénoms\footnote{Les prénoms sont alors abrégés au moyen de leurs
-    initiales.} et noms du ou des auteurs soient affichés, il est nécessaire de
-  recourir à la commande habituelle \refCom{maketitle}.
+  Pour que les prénoms et noms du ou des auteurs soient affichés, il est
+  nécessaire de recourir à la commande habituelle \refCom{maketitle}.
 \end{dbremark}
 
+\subsubsection{Auteur(s) : détails}
+\label{sec-auteurs-details}
+
 La commande \refCom{author} admet un argument optionnel permettant, pour chaque
-auteur, de spécifier des renseignements complémentaires : son affiliation, sa
+auteur, de spécifier un certain nombre de détails complémentaires : son affiliation, sa
 photo, son email, sa page Web, sa biographie express au moyen des clés
 respectives %^^A (à séparer par des virgules)
 \refKey{affiliation}, \refKey{photo}, \refKey{email}, \refKey{webpage} et
@@ -157,21 +160,28 @@ respectives %^^A (à séparer par des virgules)
   \package{url} ou \package{hyperref}.
 \end{dbwarning}
 
-\begin{dbremark}{Affichage des renseignements complémentaires}{}
-  Pour que les renseignements complémentaires précédents soient affichés, il est
-  nécessaire de recourir aux commandes \refCom{printminibios} ou
-  \refCom{printbibliography}.
+\begin{dbremark}{Affichage des détails complémentaires sur les auteurs}{}
+  Pour que les détails complémentaires précédents soient affichés, il est
+  nécessaire de recourir aux commandes \refCom{printauthorsdetails} ou
+  \refCom{printbibliography}, destinées à être utilisées en fin d'article.
+
+  Ces commandes affichent également d'éventuels remerciements à spécifier au
+  moyen de la commande \refCom{acknowledgements} suivante.
 \end{dbremark}
 
-\subsubsection{Affichage des renseignements complémentaires}
-
-
-\subsubsection{Remerciements}
-\label{sec-remerciements}
-
 \begin{docCommand}{acknowledgements}{\marg{remerciements}}
-  Cette commande, facultative, permet de spécifier des remerciements pour un article.
+  Cette commande, facultative, permet de spécifier des \meta{remerciements} pour
+  un article.
 \end{docCommand}
+
+\begin{bodycode}
+\acknowledgements{%
+  L'auteur remercie Frédéric Patras, pour les nombreuses discussions qu'il
+  a eues avec lui sur le sujet. Il remercie également le relecteur anonyme,
+  qui a lu le texte avec un très grand soin, et dont les commentaires et
+  suggestions ont été très utiles.%
+}
+\end{bodycode}
 
 \subsubsection{Résumé}
 \label{sec-resume}
@@ -188,8 +198,138 @@ Le titre proprement dit de l'article, regroupant tous les éléments saisis à l
 \refCom{maketitle}.
 
 \begin{docCommand}[doc description=\mandatory]{maketitle}{}
-  Cette commande \emph{produit} le titre de l'article.
+  Cette commande \emph{produit} l'affichage du \enquote{titre} de l'article,
+  c'est-à-dire :
+  \begin{itemize}
+  \item son titre et son éventuel sous-titre (commandes \refCom{title} et
+    \refCom{subtitle}) ;
+  \item son ou ses éventuels auteurs, sous la forme de leurs noms et
+    prénoms\footnote{Les prénoms sont alors abrégés au moyen de leurs
+      initiales.} (commande(s) \refCom{author}) ;
+  \item son éventuel résumé (environnement \refEnv{abstract}).
+  \end{itemize}
 \end{docCommand}
+
+L'exemple suivant illustre la plupart des commandes et options vues jusqu'ici.
+
+\begin{bodycode}
+\title[short=Les travaux de Manjul \textsc{Bhargava}]{Manjul \textsc{Bhargava},
+  anneaux de petit rang et courbes elliptiques}
+%
+\author[%
+affiliation={%
+  Univ. Bordeaux, IMB, UMR 5251, F-33400 Talence, France\newline CNRS, IMB, UMR
+  5251, F-33400 Talence, France\newline INRIA, F-33400 Talence, France%
+},%
+photo=Belabas,%
+email=Karim.Belabas@math.u-bordeaux.fr,%
+minibio={%
+  Karim Belabas est professeur à l'université de Bordeaux.  Ses centres
+  d'intérêts sont la théorie des nombres sous toutes ses formes et le calcul
+  formel.  Il développe le système libre PARI/GP.%
+}%
+]{Belabas, Karim}
+%
+\author[%
+affiliation={%
+  Laboratoire de Mathématiques de Besançon, Facultés des sciences et techniques,
+  CNRS, UMR 6623, 16 route de Gray, 25030 Besançon, France%
+},%
+photo=Delaunay,%
+email=Christophe.Delaunay@univ-fcomte.fr,%
+minibio={%
+  Christophe Delaunay est professeur à l'université de Franche-Comté et membre
+  du laboratoire de mathématiques de Besançon. Il est spécialiste de théorie des
+  nombres.%
+}%
+]{Delaunay, Christophe}
+%
+\begin{abstract}
+  Manjul Bhargava a reçu la médaille Fields au congrès international de Séoul
+  \enquote{pour avoir développé de nouvelles méthodes en géométrie des nombres,
+    qu'il a appliquées au comptage des anneaux de petit rang et pour borner le
+    rang moyen de courbes elliptiques}. Cet article est un survol d'une partie
+  de ses travaux.
+\end{abstract}
+%
+\maketitle
+\end{bodycode}
+
+\subsection{Affichage des détails complémentaires sur les auteurs}
+
+\begin{docCommand}{printauthorsdetails}{}
+  Cette commande, facultative, \emph{produit} l'affichage :
+  \begin{itemize}
+  \item des détails complémentaires sur les auteurs (options
+    \refKey{affiliation}, \refKey{photo}, \refKey{email}, \refKey{webpage} et
+    \refKey{minibio}) ;
+  \item des éventuels remerciements (commande \refCom{acknowledgements}) ;
+  \end{itemize}
+  tels que définis à la \vref{sec-auteurs-details}.
+\end{docCommand}
+
+\begin{dbwarning}{Commande \protect\docAuxCommand*{printauthorsdetails} inutile
+    en cas de bibliographie}{}
+  En cas de bibliographie (cf. commande \refCom{printbibliography}), l'usage de
+  la commande \refCom{printauthorsdetails} est inutile car l'affichage des
+  détails complémentaires sur les auteurs est alors automatique.
+\end{dbwarning}
+
+\section{Article sans auteur mais avec signature \enquote{académique}}
+\label{sec:article-sans-auteur}
+
+Les articles standard précédents sont écrits par une ou plusieurs personnes
+physiques clairement identifiées en tant qu'auteurs.
+
+D'autres types d'articles n'ont pas véritablement d'auteurs mais sont plutôt
+\enquote{signés} par, par exemple, un comité. Pour ce type d'article, on ne
+recourra pas à la commande \refCom{author}, mais plutôt à la commande
+\refCom{academicsignature} suivante.
+
+\begin{docCommand}{academicsignature}{\marg{signature}}
+  Cette commande permet de spécifier une \meta{signature} académique.
+\end{docCommand}
+
+\begin{bodycode}
+\academicsignature{%
+  Au nom du comité éditorial, Serge Nicaise (éditeur en chef) et Nicolas
+  Wicker (directeur technique).%
+}
+\end{bodycode}
+
+\begin{dbwarning}{}{}
+  La commande \refCom{author} \enquote{prépare} un auteur qui n'est affiché que
+  là où est employée la commande \refCom{maketitle}. Au contraire, la commande
+  \refCom{academicsignature} affiche \enquote{immédiatement} la \meta{signature}
+  passée en argument.
+\end{dbwarning}
+
+\section{Entretiens}
+\label{sec:entretiens}
+
+Les entretiens sont des articles en général sans auteur mais les personnes ayant
+recueilli les propos peuvent être signalées dans le résumé (cf. environnement
+\refEnv{abstract}) :
+
+\begin{bodycode}
+\begin{abstract}
+  Propos recueillis à Séoul, pendant l'ICM, par Boris \surname{Adamczewski} et
+  Gaël \surname{Octavia}.
+\end{abstract}
+\end{bodycode}
+
+Les questions
+
+\begin{docCommand}{academicsignature}{\marg{signature}}
+  Cette commande permet de spécifier une \meta{signature} académique.
+\end{docCommand}
+
+\begin{dbwarning}{}{}
+  La commande \refCom{author} \enquote{prépare} un auteur qui n'est affiché que
+  là où est employée la commande \refCom{maketitle}. Au contraire, la commande
+  \refCom{academicsignature} affiche \enquote{immédiatement} la \meta{signature}
+  passée en argument.
+\end{dbwarning}
 
 \iffalse
 %%% Local Variables:
