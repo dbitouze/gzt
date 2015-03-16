@@ -210,7 +210,9 @@ Le titre proprement dit de l'article, regroupant tous les éléments saisis à l
   \end{itemize}
 \end{docCommand}
 
-L'exemple suivant illustre la plupart des commandes et options vues jusqu'ici.
+L'exemple suivant\footnote{La commande \refCom{enquote} qui y figure est
+  documentée plus loin.} illustre la plupart des commandes et options vues
+jusqu'ici.
 
 \begin{bodycode}
 \title[short=Les travaux de Manjul \textsc{Bhargava}]{Manjul \textsc{Bhargava},
@@ -297,7 +299,7 @@ recourra pas à la commande \refCom{author}, mais plutôt à la commande
 }
 \end{bodycode}
 
-\begin{dbwarning}{}{}
+\begin{dbwarning}{Commande \protect\docAuxCommand*{academicsignature} à effet \enquote{immédiat}}{}
   La commande \refCom{author} \enquote{prépare} un auteur qui n'est affiché que
   là où est employée la commande \refCom{maketitle}. Au contraire, la commande
   \refCom{academicsignature} affiche \enquote{immédiatement} la \meta{signature}
@@ -307,29 +309,55 @@ recourra pas à la commande \refCom{author}, mais plutôt à la commande
 \section{Entretiens}
 \label{sec:entretiens}
 
-Les entretiens sont des articles en général sans auteur mais les personnes ayant
-recueilli les propos peuvent être signalées dans le résumé (cf. environnement
-\refEnv{abstract}) :
+Les entretiens sont caractérisés par l'alternance de questions et de
+réponses. Les questions, qui doivent être composées de façon spécifique, sont
+à passer en argument de la commande \refCom{question} suivante.
 
-\begin{bodycode}
-\begin{abstract}
-  Propos recueillis à Séoul, pendant l'ICM, par Boris \surname{Adamczewski} et
-  Gaël \surname{Octavia}.
-\end{abstract}
-\end{bodycode}
-
-Les questions
-
-\begin{docCommand}{academicsignature}{\marg{signature}}
-  Cette commande permet de spécifier une \meta{signature} académique.
+\begin{docCommand}{question}{\marg{question}}
+  Cette commande permet de spécifier une \meta{question}.
 \end{docCommand}
 
-\begin{dbwarning}{}{}
-  La commande \refCom{author} \enquote{prépare} un auteur qui n'est affiché que
-  là où est employée la commande \refCom{maketitle}. Au contraire, la commande
-  \refCom{academicsignature} affiche \enquote{immédiatement} la \meta{signature}
-  passée en argument.
+\begin{dbremark}{Composition des réponses aux questions}{}
+  Les réponses aux questions ne nécessitant pas de mise en page particulière,
+  elles seront insérées telles quelles.
+\end{dbremark}
+
+\begin{bodycode}
+\question{Ton sujet principal est celui des systèmes dynamiques, mais quels sont
+  les autres thèmes qui t'intéressent ?}
+
+L'étude des systèmes dynamiques est un sujet qui peut être abordé de façon les
+plus diverses.  Certains les considèrent d'un point de vue combinatoire,
+d'autres sont plus axés sur les probabilités ou encore sur l'analyse. [...]
+Mais si mes capacités d'analystes n'avaient pu se réaliser dans les systèmes
+dynamiques j'aurais fait autre chose.
+
+\question{Parmi ses lauréats de cette édition, on compte deux dynamiciens :
+  Maryam Mirzakhani et toi.  Quelles sont les différences entre vos
+  approches ?}
+
+Ces travaux sont principalement concentrés sur un objet lié aux échanges
+d'intervalles : le flot de Teichmüller. [...]
+\end{bodycode}
+
+\begin{dbwarning}{Insertion manuelle d'espacements inutile}{}
+  On évitera de modifier l'agencement les questions et réponses en insérant
+  manuellement des espacements horizontaux ou verticaux (\docAuxCommand{hspace},
+  \docAuxCommand{hskip}, \docAuxCommand{vspace}, \docAuxCommand{vskip}, etc.).
 \end{dbwarning}
+
+Les entretiens sont des articles en général sans auteur mais les personnes ayant
+recueilli les propos peuvent être signalées dans le résumé (cf. environnement
+\refEnv{abstract}), par exemple ainsi\footnote{La commande \refCom{surname} qui
+  y figure est documentée plus loin.} :
+
+\begin{bodycode}
+\title{Entretien avec Artur \surname{Avila}}
+\begin{abstract}
+  Propos recueillis à Séoul, pendant l'ICM, par Boris Adamczewski et Gaël  Octavia.
+\end{abstract}
+\maketitle
+\end{bodycode}
 
 \iffalse
 %%% Local Variables:
