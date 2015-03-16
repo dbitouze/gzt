@@ -2084,7 +2084,7 @@
   ;
 }
 \ExplSyntaxOff
-\tcbuselibrary{breakable,skins,hooks,xparse,theorems}
+\tcbuselibrary{breakable,skins,hooks,xparse,theorems,listingsutf8}
 \usetikzlibrary{babel,fadings,positioning,calc}
 \tcbset{%
   new/blend into/tables/.style={%
@@ -2506,7 +2506,7 @@
   }
 }
 \DeclareExpandableDocumentCommand \surname { m } {
-  \textsc{#2}
+  \textsc{#1}
 }
 \NewDocumentCommand \cad { s } {
   \IfBooleanTF {#1}
@@ -2546,6 +2546,20 @@
   {
     \c__gzt_aside_string_tl{}~#2~\c__gzt_aside_string_tl
   }
+}
+\lstdefinestyle{__gzt_lst_style}{%
+  escapechar=+,
+  language=[LaTeX]TeX,
+  texcsstyle=*\bfseries,
+  breaklines=true,
+  basicstyle=\normalfont\ttfamily,
+  columns=flexible,
+  inputencoding=utf8/latin1
+}%
+\DeclareTotalTCBox{\gztverb}{ v }{verbatim}{#1}
+\NewTCBListing{gztcode}{ O{} }{%
+  listing~style=__gzt_lst_style,
+  #1%
 }
 \DeclareTColorBox[blend~into=figures]{gztfigure}{ O{} }
 {
