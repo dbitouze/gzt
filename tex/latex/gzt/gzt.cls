@@ -2511,7 +2511,7 @@
     \textsc{#2}
   }
   {
-    #2
+    \textsc{#2}
   }
 }
 \NewDocumentCommand \cad { s } {
