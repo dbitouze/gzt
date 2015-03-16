@@ -5119,14 +5119,8 @@ This work consists of the file  gzt.dtx
 %
 % \begin{macro}{\surname}
 %    \begin{macrocode}
-\DeclareExpandableDocumentCommand \surname { s m } {
-  \IfBooleanTF {#1}
-  {
-    \textsc{#2}
-  }
-  {
-    \textsc{#2}
-  }
+\DeclareExpandableDocumentCommand \surname { m } {
+  \textsc{#2}
 }
 %    \end{macrocode}
 % \end{macro}
