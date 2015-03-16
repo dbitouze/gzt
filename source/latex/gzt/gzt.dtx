@@ -4478,7 +4478,7 @@ This work consists of the file  gzt.dtx
 % \pkg{TikZ} and \pkg{tcolorbox}) code makes use of colon.
 %    \begin{macrocode}
 \ExplSyntaxOff
-\tcbuselibrary{breakable,skins,hooks,xparse,theorems}
+\tcbuselibrary{breakable,skins,hooks,xparse,theorems,listingsutf8}
 \usetikzlibrary{babel,fadings,positioning,calc}
 %    \end{macrocode}
 %
@@ -5185,6 +5185,25 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 % \end{macro}
+%
+% We provide some public commands and environments to be used for displaying
+% (mainly \LaTeX{}) code.
+%    \begin{macrocode}
+\lstdefinestyle{@@_lst_style}{%
+  escapechar=+,
+  language=[LaTeX]TeX,
+  texcsstyle=*\bfseries,
+  breaklines=true,
+  basicstyle=\normalfont\ttfamily,
+  columns=flexible,
+  inputencoding=utf8/latin1
+}%
+\DeclareTotalTCBox{\gztverb}{ v }{verbatim}{#1}
+\NewTCBListing{gztcode}{ O{} }{%
+  listing~style=@@_lst_style,
+  #1%
+}
+%    \end{macrocode}
 %
 % We provide two public environments "gztfigure" and "gzttable" for the usual
 % floats. Their layout is based upon \pkg{tcolorbox} features.
