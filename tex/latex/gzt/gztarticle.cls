@@ -804,7 +804,7 @@
     }
   }
 }
-\NewDocumentCommand\interviewee { om } {
+\NewDocumentCommand \interviewee { om } {
   \tl_if_empty:nT \g__gzt_title_tl {
     \tl_gset:Nn \g__gzt_title_tl {
       \c__gzt_interview_title_string_tl
@@ -828,7 +828,7 @@
   {}
   \maketitle
 }
-\NewDocumentCommand\academicsignature { m } {
+\NewDocumentCommand \academicsignature { m } {
   \__gzt_display_academic_signature:n {#1}
 }
 \cs_new_protected:Nn \__gzt_uppercased_monthname_french:n
@@ -1484,6 +1484,7 @@
   \DTLgcleardb{__gzt_authors}
   \DTLgcleardb{__gzt_interviewees}
 }
+\let\printauthorsdetails\printminibios
 \cs_set_eq:NN \__gzt_printbibliography \printbibliography
 \RenewDocumentCommand \printbibliography { O{heading=bibassection} } {
   \bool_if:NT {\g__gzt_multicols_bool} {
@@ -1495,7 +1496,7 @@
   \end{__gzt_bibliography_tcbox}
   %
   \nopagebreak[0]
-  \printminibios
+  \printauthorsdetails
 }
 \cs_new_protected:Nn \__gzt_century:n
 {
@@ -2037,9 +2038,9 @@
 \DeclareMathOperator{\Argth}{Argth}
 \DeclareMathOperator{\ch}{ch}
 \DeclareMathOperator{\sh}{sh}
-\RenewDocumentCommand  {\arccos} { } {\Arccos}
-\RenewDocumentCommand  {\arcsin} { } {\Arcsin}
-\RenewDocumentCommand  {\arctan} { } {\Arctan}
+\RenewDocumentCommand \arccos { } {\Arccos}
+\RenewDocumentCommand \arcsin { } {\Arcsin}
+\RenewDocumentCommand \arctan { } {\Arctan}
 \RenewDocumentCommand \log { } {\ln}
 \RenewDocumentCommand \lg { } {\ln}
 \cs_set_eq:NN \__gzt_orig_leq \leq

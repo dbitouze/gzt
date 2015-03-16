@@ -93,7 +93,6 @@
   pagegrid .dim_gset:N = \g__gzt_pagegrid_dim,
   pagegrid .default:n = {\c__gzt_pagegrid_dim},
   forprinter .bool_gset:N = \g__gzt_for_printer_bool,
-  % cover .bool_gset:N = \g__gzt_cover_bool,
   cover .code:n = {%
     \bool_gset_true:N \g__gzt_for_printer_bool%
     \bool_gset_true:N \g__gzt_cover_bool%
@@ -1100,7 +1099,7 @@
 {
   \__gzt_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{graphicdesigner}{}
 }
-\NewDocumentCommand{\issuesetup}{ m } {
+\NewDocumentCommand \issuesetup { m } {
   \keys_set:nn { gzt/issuesetup } { #1 }
   \hypersetup{pdftitle=\c__gzt_journal_title_string_tl\space--\space{}N°\int_use:N\g__gzt_issue_number_int}
   \hypersetup{pdfauthor=\l__gzt_smf_string_tl}
@@ -1139,13 +1138,13 @@
     }
   }%
 }
-\NewDocumentCommand{\journalsetup}{ m } {
+\NewDocumentCommand \journalsetup { m } {
   \keys_set:nn { gzt/journalsetup } { #1 }
 }
-\RenewDocumentCommand{\date}{ mmm } {
+\RenewDocumentCommand \date { mmm } {
   \newdate{__gzt_president_message_date}{#1}{#2}{#3}%
 }
-\NewDocumentCommand\interviewee { om } {
+\NewDocumentCommand \interviewee { om } {
   \tl_if_empty:nT \g__gzt_title_tl {
     \tl_gset:Nn \g__gzt_title_tl {
       \c__gzt_interview_title_string_tl
@@ -1169,7 +1168,7 @@
   {}
   \maketitle
 }
-\NewDocumentCommand\academicsignature { m } {
+\NewDocumentCommand \academicsignature { m } {
   \__gzt_display_academic_signature:n {#1}
 }
 \cs_new_protected:Nn \__gzt_uppercased_monthname_french:n
@@ -1883,7 +1882,7 @@
 \NewDocumentEnvironment{minitoclist}{  }
 {%
   \cs_set_eq:NN \__gzt_orig_item \item
-  \RenewDocumentCommand{\item}{ s O{} }{%
+  \RenewDocumentCommand \item { s O{} }{%
     \tl_set:Nn \l__gzt_minitoc_label_tl {##2}
     \__gzt_orig_item\textbf{##2}
     \IfBooleanT {##1}
@@ -2355,6 +2354,7 @@
   \DTLgcleardb{__gzt_authors}
   \DTLgcleardb{__gzt_interviewees}
 }
+\let\printauthorsdetails\printminibios
 \cs_set_eq:NN \__gzt_printbibliography \printbibliography
 \RenewDocumentCommand \printbibliography { O{heading=bibassection} } {
   \bool_if:NT {\g__gzt_multicols_bool} {
@@ -2366,7 +2366,7 @@
   \end{__gzt_bibliography_tcbox}
   %
   \nopagebreak[0]
-  \printminibios
+  \printauthorsdetails
 }
 \cs_new_protected:Nn \__gzt_century:n
 {
@@ -2995,9 +2995,9 @@
 \DeclareMathOperator{\Argth}{Argth}
 \DeclareMathOperator{\ch}{ch}
 \DeclareMathOperator{\sh}{sh}
-\RenewDocumentCommand  {\arccos} { } {\Arccos}
-\RenewDocumentCommand  {\arcsin} { } {\Arcsin}
-\RenewDocumentCommand  {\arctan} { } {\Arctan}
+\RenewDocumentCommand \arccos { } {\Arccos}
+\RenewDocumentCommand \arcsin { } {\Arcsin}
+\RenewDocumentCommand \arctan { } {\Arctan}
 \RenewDocumentCommand \log { } {\ln}
 \RenewDocumentCommand \lg { } {\ln}
 \cs_set_eq:NN \__gzt_orig_leq \leq
