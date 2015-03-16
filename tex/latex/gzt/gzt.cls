@@ -2505,14 +2505,8 @@
     \l__gzt_smf_short_string_tl
   }
 }
-\DeclareExpandableDocumentCommand \surname { s m } {
-  \IfBooleanTF {#1}
-  {
-    \textsc{#2}
-  }
-  {
-    \textsc{#2}
-  }
+\DeclareExpandableDocumentCommand \surname { m } {
+  \textsc{#2}
 }
 \NewDocumentCommand \cad { s } {
   \IfBooleanTF {#1}
