@@ -1,8 +1,10 @@
 \chapter{Documentation de la classe destinée aux auteurs}
 \label{cha:documentation-auteurs}
 
-La \gls{smf} fournit la \Cls{gztarticle} destinée aux auteurs souhaitant publier
-un article dans la revue \gzt*{}. Cette classe a pour but :
+La \gls{smf} fournit la \gztauthorcl{} destinée aux auteurs souhaitant publier
+un article dans la
+\href{http://smf4.emath.fr/Publications/Gazette/}{\gzt*{}}. Cette classe a pour
+but :
 \begin{enumerate}
 \item de reproduire fidèlement la maquette de la \gzt{}, permettant ainsi
   aux auteurs de pouvoir travailler la mise en page de leur document dans des
@@ -13,20 +15,20 @@ un article dans la revue \gzt*{}. Cette classe a pour but :
 \end{enumerate}
 
 \section{Article standard}
-\label{sec:article-standard}
+\label{sec-article-standard}
 
 Nous commençons par décrire les éléments caractéristiques d'un article standard.
 
 \subsection{Préparation du titre de l'article}
-\label{sec:prep-de-lart}
+\label{sec-prep-de-lart}
 
 Cette section liste les commandes, options et environnement permettant de
 \emph{préparer} le titre de l'article ainsi que son éventuelle partie finale.
 
 \subsubsection{Titre, sous-titre}
-\label{sec:titre}
+\label{sec-titre}
 
-\begin{docCommand}[doc description=\string!]{title}{\oarg{options}}
+\begin{docCommand}[doc description=\mandatory]{title}{\oarg{options}}
   Cette commande définit le \meta{titre} de l'article. Celui-ci apparaît alors
   en début d'article et aussi comme métadonnée \enquote{Titre} du fichier
   \acrshort{pdf} correspondant.
@@ -49,105 +51,145 @@ optionnel permettant de spécifier un (sous-)titre court au moyen de la clé
 \end{docKey}
 
 \begin{bodycode}
-\title[short=Les travaux de Martin \textsc{Hairer}]{Martin \textsc{Hairer}, l'équation de KPZ et les structures de régularité}
+\title[short=Les travaux de Martin \textsc{Hairer}]{Martin \textsc{Hairer},
+  l'équation de KPZ et les structures de régularité}
 \end{bodycode}
 
+\begin{dbremark}{Affichage des titre et sous-titre}{}
+  Pour que les titre et sous-titre soient affichés, il est nécessaire de
+  recourir à la commande habituelle \refCom{maketitle}.
+\end{dbremark}
+
 \subsubsection{Auteur(s)}
-\label{sec:auteurs}
+\label{sec-auteurs}
 
 Un auteur d'article est spécifié au moyen de la commande \refCom{author}
 suivante. En cas d'auteurs multiples, il  suffit de recourir à plusieurs
 occurrences de cette commande.
 
-\begin{docCommand}{author}{\oarg{options}\marg{auteur}}
-  Cette commande, facultative, définit un \meta{auteur} de l'article. La saisie
-  des prénom et nom de l'auteur doit se faire selon la syntaxe obligatoire
-  suivante, identique à celle de \hologo{BibTeX} et \pkg{biblatex} :
-  %
-\begin{bodycode}[listing options={showspaces}]
-~\meta{auteur}~=~\meta{Nom}~, ~\meta{Prénom}~
-\end{bodycode}
+\begin{docCommand}{author}{\oarg{options}\brackets{\meta{Nom}, \meta{Prénom}}}
+  Cette commande, facultative, définit un auteur d'article.
 \end{docCommand}
 %
-Les prénom et nom du ou des auteurs figurent en début d'article, les prénoms
-étant abrégés au moyen de leurs initiales.
+\begin{dbwarning}{Format des prénom et nom de l'auteur}{}
+  On veillera à ce que :
+  \begin{enumerate}
+  \item la saisie des prénom et nom de l'auteur soit conforme à la syntaxe
+    (identique à celle de \hologo{BibTeX} et \package{biblatex}) :
+    %
+\begin{bodycode}[listing options={showspaces}]
++\meta{Nom}+, +\meta{Prénom}+
+\end{bodycode}
+    %
+  \item les éventuels accents figurent dans les \meta{Prénom} et
+    \meta{Nom} ;
+  \item le \meta{Nom} \emph{ne} soit \emph{pas} saisi en capitales
+    (sauf pour la ou les majuscules) car il sera automatiquement
+    composé en petites capitales.
+  \end{enumerate}
+\end{dbwarning}
+
+\begin{dbremark}{Affichage des prénoms et noms du ou des auteurs}{}
+  Pour que les prénoms\footnote{Les prénoms sont alors abrégés au moyen de leurs
+    initiales.} et noms du ou des auteurs soient affichés, il est nécessaire de
+  recourir à la commande habituelle \refCom{maketitle}.
+\end{dbremark}
 
 La commande \refCom{author} admet un argument optionnel permettant, pour chaque
-auteur, de spécifier des renseignements complémentaires figurant en fin
-d'article : son affiliation, sa photo, son email, sa page Web, sa biographie
-express au moyen des clés \refKey{affiliation}, \refKey{photo}, \refKey{email},
-\refKey{webpage} et \refKey{minibio} à séparer par des virgules :
+auteur, de spécifier des renseignements complémentaires : son affiliation, sa
+photo, son email, sa page Web, sa biographie express au moyen des clés
+respectives %^^A (à séparer par des virgules)
+\refKey{affiliation}, \refKey{photo}, \refKey{email}, \refKey{webpage} et
+\refKey{minibio} :
 \begin{bodycode}
 \author[%
-  affiliation=~\marg{affiliation(s)}~,%
-  photo=~\meta{photo}~,%
-  email=~\meta{email}~,%
-  webpage=~\meta{page Web}~,%
-  minibio=~\marg{biographie express}~%
-]{~\meta{Nom}~, ~\meta{Prénom}~}
+  affiliation=+\marg{affiliation(s)}+,%
+  photo=+\meta{photo}+,%
+  email=+\meta{email}+,%
+  webpage=+\meta{page Web}+,%
+  minibio=+\marg{biographie express}+%
+]{+\meta{Nom}+, +\meta{Prénom}+}
 \end{bodycode}
 
 \begin{docKey}{affiliation}{={\marg{affiliation(s)}}}{pas de valeur par défaut,
     initialement vide}
   Cette clé permet de spécifier une ou plusieurs affiliations. En cas
   d'affiliations multiples, celles-ci peuvent être séparées par la commande
-  "\newline". La paire d'accolades n'est obligatoire qu'en cas (probable) de
-  présence de virgule(s) dans la ou les \meta{affiliation(s)}.
+  \docAuxCommand{newline}.
 \end{docKey}
 
 \begin{docKey}{photo}{={\meta{photo}}}{pas de valeur par défaut,
     initialement vide}
   Cette clé permet de spécifier la photographie de l'auteur au moyen d'un
-  fichier image. Les formats d'images acceptés sont ceux de \hologo{pdfLaTeX},
-  à savoir \file{.jpg}, \file{.png} et \file{.pdf}.
+  fichier image\footnote{Si ce fichier ne figure pas dans le dossier courant, il
+    faut faire figurer le chemin (relatif) y menant.}. % Les formats d'images
+  % acceptés sont ceux de \hologo{pdfLaTeX}, à savoir \file{.jpg}, \file{.png} et
+  % \file{.pdf}.
 \end{docKey}
 
 \begin{docKey}{email}{={\meta{email}}}{pas de valeur par défaut,
     initialement vide}
-  Cette clé permet de spécifier l'adresse courriel de l'auteur. Celle-ci doit
-  être saisie telle quelle, sans recours aucun aux commandes "\url", "\href" ou
-  assimilées du \Pkg{hyperref}.
+  Cette clé permet de spécifier l'adresse courriel de l'auteur.
 \end{docKey}
 
 \begin{docKey}{webpage}{={\meta{page Web}}}{pas de valeur par défaut,
     initialement vide}
-  Cette clé permet de spécifier la page Web de l'auteur. Celle-ci doit être
-  saisie telle quelle, sans recours aucun aux commandes "\url", "\href" ou
-  assimilées du \Pkg{hyperref}.
+  Cette clé permet de spécifier la page Web de l'auteur.
 \end{docKey}
 
 \begin{docKey}{minibio}{={\marg{biographie express}}}{pas de valeur par défaut,
     initialement vide}
-  Cette clé permet de spécifier la biographie express de l'auteur. La paire
-  d'accolades n'est obligatoire qu'en cas (probable) de présence de virgule(s)
-  dans la \meta{biographie express}.
+  Cette clé permet de spécifier la biographie express de l'auteur.
 \end{docKey}
 
+\begin{dbwarning}{Paires d'accolades
+    % des clés \refKey{affiliation} et \refKey{minibio}
+    (relativement) obligatoires}{}
+  Au cas (probable) où les valeurs \meta{affiliation(s)} et \meta{biographie
+    express} des clés \refKey{affiliation} et \refKey{minibio} contiennent des
+  virgules, les paires d'accolades les entourant sont obligatoires.
+\end{dbwarning}
+
+\begin{dbwarning}{Courriels et pages Web à saisir tels quels}{}
+  Les valeurs \meta{email} et \meta{webpage} des clés \refKey{email} et
+  \refKey{webpage} doivent être saisies telles quelles, sans recours aucun aux
+  commandes \docAuxCommand{url}, \docAuxCommand{href} ou assimilées des packages
+  \package{url} ou \package{hyperref}.
+\end{dbwarning}
+
+\begin{dbremark}{Affichage des renseignements complémentaires}{}
+  Pour que les renseignements complémentaires précédents soient affichés, il est
+  nécessaire de recourir aux commandes \refCom{printminibios} ou
+  \refCom{printbibliography}.
+\end{dbremark}
+
+\subsubsection{Affichage des renseignements complémentaires}
+
+
 \subsubsection{Remerciements}
-\label{sec:remerciements}
+\label{sec-remerciements}
 
 \begin{docCommand}{acknowledgements}{\marg{remerciements}}
   Cette commande, facultative, permet de spécifier des remerciements pour un article.
 \end{docCommand}
 
 \subsubsection{Résumé}
-\label{sec:resume}
+\label{sec-resume}
 
 \begin{docEnvironment}[doclang/environment content=résumé]{abstract}{}
   Cet environnement, facultatif, est destiné à recevoir le résumé de l'article.
 \end{docEnvironment}
 
 \subsection{Production du titre de l'article}
-\label{sec:creation-du-titre}
+\label{sec-creation-du-titre}
 
 Le titre proprement dit de l'article, regroupant tous les éléments saisis à la
-\vref{sec:prep-de-lart}, est produit par la commande standard
+\vref{sec-prep-de-lart}, est produit par la commande standard
 \refCom{maketitle}.
 
-\begin{docCommand}[doc description=\string!]{maketitle}{}
+\begin{docCommand}[doc description=\mandatory]{maketitle}{}
   Cette commande \emph{produit} le titre de l'article.
 \end{docCommand}
-
 
 \iffalse
 %%% Local Variables:
