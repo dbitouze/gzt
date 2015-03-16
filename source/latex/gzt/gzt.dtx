@@ -4834,6 +4834,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 % \begin{macro}{\printminibios}
+% \begin{macro}{\printauthorsdetails}
 % We define the public command which displays
 % \begin{itemize}
 % \item the affiliation(s), email(s) and minibiographie(s) of the authors,
@@ -4880,6 +4881,11 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 % \end{macro}
+% We define "\printauthorsdetails" as an alias of "\printminibios".
+%    \begin{macrocode}
+\let\printauthorsdetails\printminibios
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\printbibliography}
 % The command for bibliography printing production is redefined in order to let
@@ -4910,7 +4916,7 @@ This work consists of the file  gzt.dtx
   \end{_@@_bibliography_tcbox}
   %
   \nopagebreak[0]
-  \printminibios
+  \printauthorsdetails
 }
 %    \end{macrocode}
 % \end{macro}
