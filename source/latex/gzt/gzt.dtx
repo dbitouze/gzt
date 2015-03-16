@@ -149,6 +149,15 @@ This work consists of the file  gzt.dtx
 \ReplaceClass{article}{report}
 \BeforePackage{doc}{\let\oldmaketitle\maketitle}
 \documentclass[english,french]{ltxdoc}
+% It is useless for the inclusion/exclusion modifications
+% ("\includeall"/"\includeonly") of documentation's slave files to be
+% versioned. Hence these modifications are not performed in the present main
+% file, but in the non-versioned \File{includeall-includeonly.tex}. This file is
+% included only if it does exist and, otherwise, all the slave files are
+% included.
+%
+\InputIfFileExists{includeall-includeonly}{}{}
+%
 % A new (personal) documentation package is used.
 \usepackage{dbdoc}
 %
@@ -776,7 +785,6 @@ This work consists of the file  gzt.dtx
   pagegrid .dim_gset:N = \g_@@_pagegrid_dim,
   pagegrid .default:n = {\c_@@_pagegrid_dim},
   forprinter .bool_gset:N = \g_@@_for_printer_bool,
-  % cover .bool_gset:N = \g_@@_cover_bool,
   cover .code:n = {%
     \bool_gset_true:N \g_@@_for_printer_bool%
     \bool_gset_true:N \g_@@_cover_bool%
@@ -2984,7 +2992,7 @@ This work consists of the file  gzt.dtx
 % \begin{macro}{\issuesetup}
 %   We define the command that lets the user specify the issue setup.
 %    \begin{macrocode}
-\NewDocumentCommand{\issuesetup}{ m } {
+\NewDocumentCommand \issuesetup { m } {
 %    \end{macrocode}
 %
 % Its keys are set (only "number", "month" and "year" are relevant here).
@@ -3068,7 +3076,7 @@ This work consists of the file  gzt.dtx
 %   We define the command that lets the user specify the
 %   journal setup. This setup is likely to be rarely changed.
 %    \begin{macrocode}
-\NewDocumentCommand{\journalsetup}{ m } {
+\NewDocumentCommand \journalsetup { m } {
 %    \end{macrocode}
 %
 % Its keys are set (only "publisher", "address", "phone", "fax", "email", "url"
@@ -3085,7 +3093,7 @@ This work consists of the file  gzt.dtx
 %   We redefine the "\date" for the date of the president's message. It takes
 %   3 arguments, each of them being a number: the day, the month and the year.
 %    \begin{macrocode}
-\RenewDocumentCommand{\date}{ mmm } {
+\RenewDocumentCommand \date { mmm } {
   \newdate{@@_president_message_date}{#1}{#2}{#3}%
 }
 %    \end{macrocode}
@@ -3105,7 +3113,7 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 % \NewDocumentCommand\interviewer { o m } {
 % }
-\NewDocumentCommand\interviewee { om } {
+\NewDocumentCommand \interviewee { om } {
   \tl_if_empty:nT \g_@@_title_tl {
     \tl_gset:Nn \g_@@_title_tl {
       \c_@@_interview_title_string_tl
@@ -3136,7 +3144,7 @@ This work consists of the file  gzt.dtx
 %
 % \begin{macro}{\academicsignature}
 %    \begin{macrocode}
-\NewDocumentCommand\academicsignature { m } {
+\NewDocumentCommand \academicsignature { m } {
   \@@_display_academic_signature:n {#1}
 }
 %    \end{macrocode}
@@ -4142,7 +4150,7 @@ This work consists of the file  gzt.dtx
 \NewDocumentEnvironment{minitoclist}{  }
 {%
   \cs_set_eq:NN \_@@_orig_item \item
-  \RenewDocumentCommand{\item}{ s O{} }{%
+  \RenewDocumentCommand \item { s O{} }{%
     \tl_set:Nn \l_@@_minitoc_label_tl {##2}
     \_@@_orig_item\textbf{##2}
     \IfBooleanT {##1}
@@ -5843,9 +5851,9 @@ This work consists of the file  gzt.dtx
 \DeclareMathOperator{\Argth}{Argth}
 \DeclareMathOperator{\ch}{ch}
 \DeclareMathOperator{\sh}{sh}
-\RenewDocumentCommand  {\arccos} { } {\Arccos}
-\RenewDocumentCommand  {\arcsin} { } {\Arcsin}
-\RenewDocumentCommand  {\arctan} { } {\Arctan}
+\RenewDocumentCommand \arccos { } {\Arccos}
+\RenewDocumentCommand \arcsin { } {\Arcsin}
+\RenewDocumentCommand \arctan { } {\Arctan}
 \RenewDocumentCommand \log { } {\ln}
 \RenewDocumentCommand \lg { } {\ln}
 \cs_set_eq:NN \_@@_orig_leq \leq
