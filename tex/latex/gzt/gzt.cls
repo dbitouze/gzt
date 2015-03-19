@@ -130,6 +130,7 @@
 \RequirePackage[autostyle]{csquotes}%
 \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
 \RequirePackage{array}
+\RequirePackage{booktabs}
 \RequirePackage{tabularx}
 \RequirePackage{nccparskip}
 \RequirePackage{multirow}
@@ -259,6 +260,7 @@
 \tl_const:Nn \c__gzt_rearviewmirror_rubric_string_tl {R\'etroviseur}
 \tl_const:Nn \c__gzt_tribute_rubric_string_tl {Carnet}
 \tl_const:Nn \c__gzt_books_rubric_string_tl {Livres}
+\tl_const:Nn \c__gzt_latex_rubric_string_tl {Astuces~\LaTeX{}}
 \tl_const:Nn \c__gzt_smf_short_string_tl {SMF}
 \tl_const:Nn \c__gzt_smf_string_tl {Soci\'et\'e~Math\'ematique~de~France}
 \tl_const:Nn \c__gzt_cad_short_string_tl {c.-\`a-d.}
@@ -287,7 +289,7 @@
 \tl_const:Nn \c__gzt_issue_bib_path_string_tl {\c__gzt_issue_bib_file_string_tl}
 \tl_const:Nn \c__gzt_issue_bib_key_tl {\int_use:N \g__gzt_issue_number_int}
 \tl_const:Nn \c__gzt_interview_title_string_tl {En~apart\'e~avec~}
-\tl_const:Nn \c__gzt_aside_string_tl {---}
+\tl_const:Nn \c__gzt_aside_string_tl {--}
 \tl_const:Nn \c__gzt_draftwatermark_string_tl {draft}
 \newacronym{smf}{smf}{\c__gzt_smf_string_tl}%
 \newacronym{issn}{issn}{International Standard Serial Number}%
@@ -1641,11 +1643,11 @@
       }
     }
     \bool_gset_false:N \g__gzt_previous_article_with_bibliography_or_minibio_bool
-    \bool_if:nF { \g__gzt_for_authors_bool } {
-      % \xleaders\vbox {
+  \bool_if:nF { \g__gzt_for_authors_bool } {
+    % \xleaders\vbox {
       %   \bigskip%
       % }%
-      % \vskip\bigskipamount%
+      %   \vskip\bigskipamount%
       \noindent%
       \checkoddpage%
       \ifoddpage%
@@ -1656,7 +1658,7 @@
       \bigskip%
     }%
     \par
-  \nopagebreak[4]
+    \nopagebreak[4]
   \l__gzt_title_box_tl
   \normalsize%
   \nopagebreak[3]
@@ -2444,6 +2446,10 @@
   \bool_gset_true:N \g__gzt_books_rubric_bool
   \vspace{1.5\c__gzt_book_review_frontcover_extend_dim}
 }
+\NewDocumentCommand \latextips {O{}}
+{
+  \__gzt_prepare_rubric:nnn {#1}{\c__gzt_latex_rubric_string_tl}{}
+}
 \DeclareCiteCommand{\citeinterviewee}{}{%
   \printnames{interviewee}%
 }
@@ -2556,9 +2562,11 @@
   columns=flexible,
   inputencoding=utf8/latin1
 }%
-\DeclareTotalTCBox{\gztverb}{ v }{verbatim}{#1}
+\DeclareTotalTCBox{\gztverb}{ v }{verbatim,blank,fuzzy~halo=0pt~with~__gzt_light_generic_dark_color!8}{#1}
 \NewTCBListing{gztcode}{ O{} }{%
   listing~style=__gzt_lst_style,
+  listing~only,
+  breakable,
   #1%
 }
 \DeclareTColorBox[blend~into=figures]{gztfigure}{ O{} }
@@ -3001,13 +3009,44 @@
 \DeclareMathOperator{\Argch}{Argch}
 \DeclareMathOperator{\Argsh}{Argsh}
 \DeclareMathOperator{\Argth}{Argth}
+\cs_set_eq:NN \__gzt_orig_arccos \arccos
+\cs_set_eq:NN \__gzt_orig_arcsin \arcsin
+\cs_set_eq:NN \__gzt_orig_arctan \arctan
+\RenewDocumentCommand \arccos { } {
+  \IfLanguageName {french}{\Arccos}{\__gzt_orig_arccos}%
+}
+\RenewDocumentCommand \arcsin { } {
+  \IfLanguageName {french}{\Arcsin}{\__gzt_orig_arcsin}%
+}
+\RenewDocumentCommand \arctan { } {
+  \IfLanguageName {french}{\Arctan}{\__gzt_orig_arctan}%
+}
 \DeclareMathOperator{\ch}{ch}
 \DeclareMathOperator{\sh}{sh}
-\RenewDocumentCommand \arccos { } {\Arccos}
-\RenewDocumentCommand \arcsin { } {\Arcsin}
-\RenewDocumentCommand \arctan { } {\Arctan}
-\RenewDocumentCommand \log { } {\ln}
-\RenewDocumentCommand \lg { } {\ln}
+\cs_set_eq:NN \__gzt_orig_tanh \tanh
+\RenewDocumentCommand \tanh { } {
+  \IfLanguageName {french}{\operatorname{th}}{\__gzt_orig_tanh}%
+}
+\cs_set_eq:NN \__gzt_orig_log \log
+\cs_set_eq:NN \__gzt_orig_lg \lg
+\RenewDocumentCommand \log { s } {
+    \IfBooleanTF {#1}
+  {
+    \__gzt_orig_log
+  }
+  {
+    \ln
+  }
+}
+\RenewDocumentCommand \lg { s } {
+    \IfBooleanTF {#1}
+  {
+    \__gzt_orig_lg
+  }
+  {
+    \ln
+  }
+}
 \cs_set_eq:NN \__gzt_orig_leq \leq
 \cs_set_eq:NN \__gzt_orig_geq \geq
 \RenewDocumentCommand \le { } {%
