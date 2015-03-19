@@ -1396,6 +1396,7 @@ This work consists of the file  gzt.dtx
 \tl_const:Nn \c_@@_tribute_rubric_string_tl {Carnet}
 % \tl_const:Nn \c_@@_books_rubric_string_tl {Recension}
 \tl_const:Nn \c_@@_books_rubric_string_tl {Livres}
+\tl_const:Nn \c_@@_latex_rubric_string_tl {Astuces~\LaTeX{}}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -4976,6 +4977,10 @@ This work consists of the file  gzt.dtx
   \_@@_prepare_rubric:nnn {#1}{\c_@@_books_rubric_string_tl}{picto-books}
   \bool_gset_true:N \g_@@_books_rubric_bool
   \vspace{1.5\c_@@_book_review_frontcover_extend_dim}
+}
+\NewDocumentCommand \latextips {O{}}
+{
+  \_@@_prepare_rubric:nnn {#1}{\c_@@_latex_rubric_string_tl}{}
 }
 %    \end{macrocode}
 % \end{macro}
