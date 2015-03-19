@@ -5848,13 +5848,44 @@ This work consists of the file  gzt.dtx
 \DeclareMathOperator{\Argch}{Argch}
 \DeclareMathOperator{\Argsh}{Argsh}
 \DeclareMathOperator{\Argth}{Argth}
+\cs_set_eq:NN \_@@_orig_arccos \arccos
+\cs_set_eq:NN \_@@_orig_arcsin \arcsin
+\cs_set_eq:NN \_@@_orig_arctan \arctan
+\RenewDocumentCommand \arccos { } {
+  \IfLanguageName {french}{\Arccos}{\_@@_orig_arccos}%
+}
+\RenewDocumentCommand \arcsin { } {
+  \IfLanguageName {french}{\Arcsin}{\_@@_orig_arcsin}%
+}
+\RenewDocumentCommand \arctan { } {
+  \IfLanguageName {french}{\Arctan}{\_@@_orig_arctan}%
+}
 \DeclareMathOperator{\ch}{ch}
 \DeclareMathOperator{\sh}{sh}
-\RenewDocumentCommand \arccos { } {\Arccos}
-\RenewDocumentCommand \arcsin { } {\Arcsin}
-\RenewDocumentCommand \arctan { } {\Arctan}
-\RenewDocumentCommand \log { } {\ln}
-\RenewDocumentCommand \lg { } {\ln}
+\cs_set_eq:NN \_@@_orig_tanh \tanh
+\RenewDocumentCommand \tanh { } {
+  \IfLanguageName {french}{\operatorname{th}}{\_@@_orig_tanh}%
+}
+\cs_set_eq:NN \_@@_orig_log \log
+\cs_set_eq:NN \_@@_orig_lg \lg
+\RenewDocumentCommand \log { s } {
+    \IfBooleanTF {#1}
+  {
+    \_@@_orig_log
+  }
+  {
+    \ln
+  }
+}
+\RenewDocumentCommand \lg { s } {
+    \IfBooleanTF {#1}
+  {
+    \_@@_orig_lg
+  }
+  {
+    \ln
+  }
+}
 \cs_set_eq:NN \_@@_orig_leq \leq
 \cs_set_eq:NN \_@@_orig_geq \geq
 \RenewDocumentCommand \le { } {%
