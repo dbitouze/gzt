@@ -1,0 +1,46 @@
+\documentclass{gztarticle}
+\usepackage{dbdoc}
+%
+\etocsettocstyle
+{\section*{\contentsname}}{}%
+%
+\lstMakeShortInline[style=dbtex]|
+%
+\addbibresource{gztdoc.bib}
+%
+\SetWatermarkColor{gray!10}%
+\SetWatermarkFontSize{30mm}%
+\SetWatermarkText{\MakeUppercase{travail en cours}}%
+\begin{document}
+% \latextips
+\title{Documentation de la classe \LaTeX{} destinée aux auteurs de\newline la
+  \gzt*{}}
+%
+\author[%
+affiliation={%
+  Université du Littoral Côte d'Opale, Laboratoire de mathématiques pures et
+  appliquées%
+},%
+photo=Denis,%
+email=denis.bitouze@lmpa.univ-littoral.fr,%
+webpage=http://gte.univ-littoral.fr/members/dbitouze/pub/latex/,%
+]{Bitouzé, Denis}
+%
+\maketitle*
+%
+\localtableofcontents
+%
+\input{sections/fixed-footnotes}
+\input{sections/gztarticle}
+\input{sections/notations}
+\input{sections/packages-charges}
+%
+\printindex
+%
+\printbibliography
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
