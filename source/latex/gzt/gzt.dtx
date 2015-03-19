@@ -896,7 +896,7 @@ This work consists of the file  gzt.dtx
 %
 % \item Extension to \Pkg{amsmath}: correct various bugs/defeciencies in amsmath
 %   and useful tools for mathematical typesetting\footnote{The \Pkg{mathtools}
-%   loads \pkg{amsmath}, hence it's not nescessary to load the latter.}:
+%   loads \pkg{amsmath}, hence it's not necessary to load the latter.}:
 %    \begin{macrocode}
 \RequirePackage{mathtools}
 %    \end{macrocode}
@@ -3800,16 +3800,24 @@ This work consists of the file  gzt.dtx
     \bool_gset_false:N \g_@@_previous_article_with_bibliography_or_minibio_bool
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+%</class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
 % Here, we put the \pkg{TikZ}'s picture of the \enquote{bullet and rule}
 % (contained in the "\l_@@_bullet_and_rule_tl" token list) in a "\vbox" that
 % follows a "\cleaders" that makes the whole vanishes at pages boundaries
 % (cf. \url{http://tex.stackexchange.com/a/31615/18401}).
 %    \begin{macrocode}
-%<!class-article>    \bool_if:nF { \g_@@_for_authors_bool } {
-      % \xleaders\vbox {
+  \bool_if:nF { \g_@@_for_authors_bool } {
+    % \xleaders\vbox {
       %   \bigskip%
       % }%
-      % \vskip\bigskipamount%
+      %   \vskip\bigskipamount%
       \noindent%
       \checkoddpage%
       \ifoddpage%
@@ -3818,9 +3826,20 @@ This work consists of the file  gzt.dtx
       \l_@@_bullet_and_rule_even_tl
       \fi%
       \bigskip%
-%<!class-article>    }%
+    }%
     \par
-  \nopagebreak[4]
+    \nopagebreak[4]
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
   \l_@@_title_box_tl
   \normalsize%
   \nopagebreak[3]
