@@ -5175,9 +5175,11 @@ This work consists of the file  gzt.dtx
   columns=flexible,
   inputencoding=utf8/latin1
 }%
-\DeclareTotalTCBox{\gztverb}{ v }{verbatim}{#1}
+\DeclareTotalTCBox{\gztverb}{ v }{verbatim,blank,fuzzy~halo=0pt~with~@@_light_generic_dark_color!8}{#1}
 \NewTCBListing{gztcode}{ O{} }{%
   listing~style=@@_lst_style,
+  listing~only,
+  breakable,
   #1%
 }
 %    \end{macrocode}
