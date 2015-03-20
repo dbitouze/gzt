@@ -20,7 +20,7 @@ but :
   formules de mathématiques.
 \end{enumerate}
 
-\section{Avertissement préliminaires}
+\section{Avertissements préliminaires}
 \label{sec:avert-prel}
 
 \begin{dbwarning}{Codage d'entrée \protect\lstinline+UTF-8+ obligatoire}{}
@@ -235,7 +235,8 @@ respectives %^^A (à séparer par des virgules)
 \label{sec-resume}
 
 \begin{docEnvironment}[doclang/environment content=résumé]{abstract}{}
-  Cet environnement, facultatif, est destiné à recevoir le résumé de l'article.
+  Cet environnement, facultatif, est destiné à recevoir le \meta{résumé} de
+  l'article.
 \end{docEnvironment}
 
 \subsection{Production du titre de l'article}
@@ -930,7 +931,7 @@ L'environnement \refEnv{gztcode} admet en argument optionnel la plupart des
   Cette clé permet de donner un titre au listing.
 \end{docKey}
 
-\begin{bodycode}[listing and text]
+\begin{bodycode}[listing and text,listing options={morekeywords={[2]title}}]
   \begin{gztcode}[title=Alignement d'équations]
     Utilisons l'environnement \verb|align*| :
     \begin{align*}
