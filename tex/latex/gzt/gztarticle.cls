@@ -90,7 +90,6 @@
 \RequirePackage{multicol}%
 \RequirePackage{graphicx}%
 \RequirePackage{longtable}%
-  \RequirePackage{draftwatermark}[2006/06/30]%
 \RequirePackage{adjustbox}%
 \RequirePackage[autostyle]{csquotes}%
 \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
@@ -621,6 +620,24 @@
     \acrlong*{smf}
   }%
 }
+\tl_new:N \l__gzt_gzt_short_string_tl
+\tl_new:N \l__gzt_gzt_string_tl
+\tl_set:Nn \l__gzt_gzt_short_string_tl {
+  \cs_if_exist:cTF {texorpdfstring}
+  {
+    \texorpdfstring{\emph{\c__gzt_journal_short_title_string_tl}}{\c__gzt_journal_short_title_string_tl}
+  }{%
+    \emph{\c__gzt_journal_short_title_string_tl}
+  }%
+}
+\tl_set:Nn \l__gzt_gzt_string_tl {
+  \cs_if_exist:cTF {texorpdfstring}
+  {
+    \texorpdfstring{\emph{\c__gzt_journal_title_string_tl}}{\c__gzt_journal_title_string_tl}
+  }{%
+    \emph{\c__gzt_journal_title_string_tl}
+  }%
+}
 \DTLnewdb{__gzt_authors}
 \cs_new_protected:Nn \__gzt_authors:nnnnnn
   {
@@ -904,7 +921,7 @@
   \tl_if_empty:NT \g__gzt_short_title_tl {%
     \tl_gset_eq:NN \g__gzt_short_title_tl \g__gzt_title_tl
   }
-    \hypersetup{pdftitle=\g__gzt_title_tl}
+    \hypersetup{pdftitle=\g__gzt_short_title_tl}
 }
 \tl_new:N \g__gzt_subtitle_tl
 \NewDocumentCommand \subtitle { o m } {
@@ -1580,10 +1597,10 @@
 \NewDocumentCommand \gzt { s } {
   \IfBooleanTF {#1}
   {
-    \textit{\c__gzt_journal_title_string_tl}
+    \l__gzt_gzt_string_tl
   }
   {
-    \textit{\c__gzt_journal_short_title_string_tl}
+    \l__gzt_gzt_short_string_tl
   }
 }
 \NewDocumentCommand \century { m } {%
@@ -1848,6 +1865,11 @@
 \fi
 \DeclareMathAlphabet\mathfrak{U}{euf}{m}{n}
 \SetMathAlphabet\mathfrak{bold}{U}{euf}{b}{n}
+\@ifpackageloaded{draftwatermark}{%
+  \SetWatermarkColor{gray!10}%
+  \SetWatermarkFontSize{30mm}%
+  \SetWatermarkText{\MakeUppercase{\c__gzt_draftwatermark_string_tl}}%
+}
 \tikzset{
   __gzt_dots/.style={
     line~width=\c__gzt_tikz_dot_diameter_dim,
