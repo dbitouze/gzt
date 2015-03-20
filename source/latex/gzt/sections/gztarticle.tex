@@ -20,8 +20,8 @@ but :
   formules de mathématiques.
 \end{enumerate}
 
-Sauf cas particuliers, tous les articles de la \gzt{} sont composés en mode
-bi-colonne.
+\section{Avertissement préliminaires}
+\label{sec:avert-prel}
 
 \begin{dbwarning}{Codage d'entrée \protect\lstinline+UTF-8+ obligatoire}{}
   La \gztauthorcl{} de la \gzt{} repose de façon cruciale sur un codage
@@ -33,11 +33,36 @@ bi-colonne.
       destiné à la \gzt{} et notamment pour un préambule typique.%
       %
     } avec l'option \docAuxKey{utf8} ;
-  \item elle suppose que les fichiers source \file{.tex} sont effectivement
+  \item elle suppose que les fichiers sources \file{.tex} sont effectivement
     codés en |UTF-8| : on veillera donc à ce que l'éditeur utilisé soit réglé
     sur ce codage d'entrée.
   \end{itemize}
 \end{dbwarning}
+
+\begin{dbwarning}{Format et compilation \hologo{pdfLaTeX}}{}
+  La composition des numéros de la \gzt*{} met en œuvre :
+  \begin{itemize}
+  \item le format \hologo{LaTeX}\footnote{Sous sa version \hologo{LaTeXe}, la
+      plus courante de nos jours.}. On évitera donc les commandes des autres
+    formats tels que \hologo{plainTeX} ;
+  \item le compilateur \hologo{pdfLaTeX}. En particulier, le compilateur
+    \hologo{LaTeX} n'étant pas utilisé :
+    \begin{enumerate}
+    \item les formats d'images acceptés sont \format{jpg}, \format{png} et
+      \format{pdf}\footnote{Le format recommandé est \format{pdf} car il est
+        vectoriel si bien que la qualité des images n'est pas dégradée en cas de
+        redimensionnement.}. Le \Format{eps}, quoique indirectement
+      supporté, est déconseillé ;
+    \item l'usage de code \program{PostScript}, notamment via
+      \program{PSTricks}, n'est pas pris en charge.
+    \end{enumerate}
+  \end{itemize}
+\end{dbwarning}
+
+\begin{dbremark}{Composition par défaut en bi-colonne}{}
+  Sauf cas particuliers, tous les articles de la \gzt{} sont composés en mode
+  bi-colonne.
+\end{dbremark}
 
 \section{Article standard}
 \label{sec-article-standard}
@@ -150,9 +175,7 @@ respectives %^^A (à séparer par des virgules)
     initialement vide}
   Cette clé permet de spécifier la photographie de l'auteur au moyen d'un
   fichier image\footnote{Si ce fichier ne figure pas dans le dossier courant, il
-    faut faire figurer le chemin (relatif) y menant.}. % Les formats d'images
-  % acceptés sont ceux de \hologo{pdfLaTeX}, à savoir \file{.jpg}, \file{.png} et
-  % \file{.pdf}.
+    faut faire figurer le chemin (relatif) y menant.}.
 \end{docKey}
 
 \begin{docKey}{email}{={\meta{email}}}{pas de valeur par défaut,
@@ -181,7 +204,7 @@ respectives %^^A (à séparer par des virgules)
 \begin{dbwarning}{Courriels et pages Web à saisir tels quels}{}
   Les valeurs \meta{email} et \meta{webpage} des clés \refKey{email} et
   \refKey{webpage} doivent être saisies telles quelles, sans recours aucun aux
-  commandes \docAuxCommand{url}, \docAuxCommand{href} ou assimilées des packages
+  commandes \refCom{url}, \docAuxCommand{href} ou assimilées des packages
   \package{url} ou \package{hyperref}.
 \end{dbwarning}
 
@@ -349,27 +372,28 @@ réponses. Les questions, qui doivent être composées de façon spécifique, so
 \end{dbremark}
 
 \begin{bodycode}
-\question{Ton sujet principal est celui des systèmes dynamiques, mais quels sont
-  les autres thèmes qui t'intéressent ?}
+  \question{Ton sujet principal est celui des systèmes dynamiques, mais quels
+    sont les autres thèmes qui t'intéressent ?}
 
-L'étude des systèmes dynamiques est un sujet qui peut être abordé de façon les
-plus diverses.  Certains les considèrent d'un point de vue combinatoire,
-d'autres sont plus axés sur les probabilités ou encore sur l'analyse. [...]
-Mais si mes capacités d'analystes n'avaient pu se réaliser dans les systèmes
-dynamiques j'aurais fait autre chose.
+  L'étude des systèmes dynamiques est un sujet qui peut être abordé de façon les
+  plus diverses.  Certains les considèrent d'un point de vue combinatoire,
+  d'autres sont plus axés sur les probabilités ou encore sur l'analyse. [...]
+  Mais si mes capacités d'analystes n'avaient pu se réaliser dans les systèmes
+  dynamiques j'aurais fait autre chose.
 
-\question{Parmi ses lauréats de cette édition, on compte deux dynamiciens :
-  Maryam Mirzakhani et toi.  Quelles sont les différences entre vos
-  approches ?}
+  \question{Parmi ses lauréats de cette édition, on compte deux dynamiciens :
+    Maryam Mirzakhani et toi.  Quelles sont les différences entre vos
+    approches ?}
 
-Ces travaux sont principalement concentrés sur un objet lié aux échanges
-d'intervalles : le flot de Teichmüller. [...]
+  Ces travaux sont principalement concentrés sur un objet lié aux échanges
+  d'intervalles : le flot de Teichmüller. [...]
 \end{bodycode}
 
 \begin{dbwarning}{Insertion manuelle d'espacements inutile}{}
   On évitera de modifier l'agencement les questions et réponses en insérant
-  manuellement des espacements horizontaux ou verticaux (\docAuxCommand*{hspace},
-  \docAuxCommand*{hskip}, \docAuxCommand*{vspace}, \docAuxCommand*{vskip}, etc.).
+  manuellement des espacements horizontaux ou verticaux
+  (\docAuxCommand*{hspace}, \docAuxCommand*{hskip}, \docAuxCommand*{vspace},
+  \docAuxCommand*{vskip}, etc.).
 \end{dbwarning}
 
 Les entretiens sont des articles en général sans auteur mais les personnes ayant
@@ -377,15 +401,19 @@ recueilli les propos peuvent être signalées dans le résumé (cf. environnemen
 \refEnv{abstract}), par exemple ainsi :
 
 \begin{bodycode}
-\title{Entretien avec Artur \surname{Avila}}
-\begin{abstract}
-  Propos recueillis à Séoul, pendant l'ICM, par Boris Adamczewski et Gaël  Octavia.
-\end{abstract}
-\maketitle
+  \title{Entretien avec Artur \surname{Avila}}
+  \begin{abstract}
+    Propos recueillis à Séoul, pendant l'ICM, par Boris Adamczewski et Gaël
+    Octavia.
+  \end{abstract}
+  \maketitle
 \end{bodycode}
 
-\section{Outils communs à tous types d'articles}
-\label{sec-outils-communs-tout}
+\section{Outils communs à tous types d'articles, fournis par \gztauthor}
+\label{sec:outils-communs-tous}
+
+Cette section donne une liste exhaustive des outils (commandes et
+environnements) fournis par la \gztauthorcl.
 
 \subsection{Images et tableaux}
 \label{sec-images-tableaux}
@@ -428,7 +456,7 @@ doit être employée dans l'un des deux environnements \refEnv{gztfigure} et
 
 Un tableau est créé au moyen de l'environnement standard
 \docAuxEnvironment{tabular}\footnote{Il est recommandé de faire usage du
-  \Package{booktabs} pour produire des tableaux plus lisibles.} mais celui-ci
+  \Package*{booktabs} pour produire des tableaux plus lisibles.} mais celui-ci
 doit être employé dans l'un des deux environnements \refEnv{gzttable} et
 \refEnv{gzttable*} suivants.
 
@@ -458,18 +486,17 @@ doit être employé dans l'un des deux environnements \refEnv{gzttable} et
 Les environnements \refEnv{gztfigure}, \refEnv{gztfigure*}, \refEnv{gzttable} et
 \refEnv{gzttable*} admettent en argument optionnel la plupart des (très
 nombreuses) options de l'environnement \docAuxEnvironment{tcolorbox} du
-\Package{tcolorbox}. On retiendra notamment les options \refKey{title} et
+\Package*{tcolorbox}. On retiendra notamment les options \refKey{title} et
 \refKey{label} suivantes :
 
 \begin{docKey}{title}{=\meta{titre de l'image}}{pas de valeur par défaut,
     initialement vide}
   Cette clé permet de spécifier l'éventuel \meta{titre} (ou légende) de l'image.
 \end{docKey}
-\begin{docKey}{label}{=\meta{label}}{pas de valeur par défaut,
-    initialement vide}
+\begin{docKey}{label}{=\meta{label}}{pas de valeur par défaut, initialement
+    vide}
   Cette clé permet de spécifier l'éventuel \meta{label} de l'image, de sorte
-  à y faire référence, notamment au moyen de la commande \docAuxCommand*{vref} du
-  \Package{varioref}.
+  à y faire référence, notamment au moyen de la commande \refCom{vref}.
 \end{docKey}
 
 Les exemples suivants illustrent les environnements et options qui viennent
@@ -477,40 +504,43 @@ d'être vus.
 
 % \tcbset{listing options={morekeywords=[2]{title,label}}}
 \begin{bodycode}[listing options={morekeywords={[2]title,label}}]
-L'exemple avec $a=-1$ et $b=0$ donne la courbe de la \vref{elliptique}.
+  L'exemple avec $a=-1$ et $b=0$ donne la courbe de la \vref{elliptique}.
 %
-\begin{gztfigure}[title=Courbe elliptique correspondant à l'équation $y^2=x^3-x$,label=elliptique]
-  \includegraphics[width=\linewidth]{courbe-elliptique}
-\end{gztfigure}
+  \begin{gztfigure}[title=Courbe elliptique correspondant à l'équation
+    $y^2=x^3-x$,label=elliptique]
+    \includegraphics[width=\linewidth]{courbe-elliptique}
+  \end{gztfigure}
 \end{bodycode}
 
 \begin{bodycode}[listing options={morekeywords={[2]title,label},deletekeywords={[3]section}}]
-En analysant les chiffres des \vref{recru-mc-25,recru-mc-26} correspondant au
-recrutement des maîtres de conférences, on voit que la proportion des femmes
-recrutées est [...]
+  En analysant les chiffres des \vref{recru-mc-25,recru-mc-26} correspondant au
+  recrutement des maîtres de conférences, on voit que la proportion des femmes
+  recrutées est [...]
 %
-\begin{gzttable*}[label=recru-mc-25,title=Recrutement des maîtres de conférences section 25]
-\begin{tabular}{|l|cccccc|}
-  \hline
-  & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 \\ \hline
-  [...]
-\end{tabular}
-\end{gzttable*}
+  \begin{gzttable*}[label=recru-mc-25,title=Recrutement des maîtres de
+    conférences section 25]
+    \begin{tabular}{|l|cccccc|}
+      \hline
+      & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 \\ \hline
+      [...]
+    \end{tabular}
+  \end{gzttable*}
 %
-\begin{gzttable*}[label=recru-mc-26,title=Recrutement des maîtres de conférences section 26]
-\begin{tabular}{|l|cccccc|}
-  \hline
-  & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 \\ \hline
-  [...]
-\end{tabular}
-\end{gzttable*}
+  \begin{gzttable*}[label=recru-mc-26,title=Recrutement des maîtres de
+    conférences section 26]
+    \begin{tabular}{|l|cccccc|}
+      \hline
+      & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 \\ \hline
+      [...]
+    \end{tabular}
+  \end{gzttable*}
 \end{bodycode}
 
 \subsection{Bibliographie}
 \label{sec-bibliographie}
 
 Pour composer les bibliographies, la \gzt{} recourt aux outils modernes que sont
-le \Package{biblatex} et le moteur \hologo{biber}. Leur usage est détaillé dans
+le \Package*{biblatex} et le moteur \hologo{biber}. Leur usage est détaillé dans
 \autocite{Bitouze} et peut être brièvement résumé comme suit.
 \begin{enumerate}
 \item Construire, dans un \meta{fichier bibliographique}\footnote{De tels
@@ -534,18 +564,19 @@ le \Package{biblatex} et le moteur \hologo{biber}. Leur usage est détaillé dan
   \begin{enumerate}
   \item \emph{En préambule}, utiliser la commande \docAuxCommand{addbibresource}
     pour indiquer le \meta{fichier bibliographique} à considérer :
-\begin{preamblecode}
-\addbibresource{+\meta{fichier bibliographique}+.bib}
-\end{preamblecode}
-\item Dans le corps du document, utiliser la commande
-  \docAuxCommand{autocite}\footnote{De préférence à la commande
-    \docAuxCommand{cite}.} du \Package{biblatex} pour citer les références
-  bibliographiques (pourvue d'une \meta{clé}) :
-\begin{bodycode}
-\autocite{+\meta{clé}+}
-\end{bodycode}
-\item À la fin du document, faire figurer la liste des références
-  bibliographiques au moyen de la commande \refCom{printbibliography} suivante.
+    \begin{preamblecode}
+      \addbibresource{+\meta{fichier bibliographique}+.bib}
+    \end{preamblecode}
+  \item Dans le corps du document, utiliser la commande
+    \docAuxCommand{autocite}\footnote{De préférence à la commande
+      \docAuxCommand{cite}.} du \Package*{biblatex} pour citer les références
+    bibliographiques (pourvue d'une \meta{clé}) :
+    \begin{bodycode}
+      \autocite{+\meta{clé}+}
+    \end{bodycode}
+  \item À la fin du document, faire figurer la liste des références
+    bibliographiques au moyen de la commande \refCom{printbibliography}
+    suivante.
   \end{enumerate}
 \item Procéder à une suite de compilations \hologo{pdfLaTeX}, \hologo{biber} et
   \hologo{pdfLaTeX}\footnote{Pour automatiser ces compilations, on pourra
@@ -556,7 +587,7 @@ le \Package{biblatex} et le moteur \hologo{biber}. Leur usage est détaillé dan
 
 \begin{docCommand}{printbibliography}{}
   Cette commande produit la liste des références bibliographiques saisies selon
-  la syntaxe du \Package{biblatex}. Elle a été redéfinie de sorte
+  la syntaxe du \Package*{biblatex}. Elle a été redéfinie de sorte
   à automatiquement afficher, en sus de la bibliographie, les détails
   complémentaires sur les auteurs (s'ils ont été renseignés).
 \end{docCommand}
@@ -580,8 +611,7 @@ mathématiques destinées à faciliter la saisie d'un article à paraître dans 
   Cette commande :
   \begin{description}
   \item[sous sa forme non étoilée :] produit l'abréviation \enquote{\gzt}.
-  \item[sous sa forme étoilée :] produit la forme complète
-    \enquote{\gzt*}.
+  \item[sous sa forme étoilée :] produit la forme complète \enquote{\gzt*}.
   \end{description}
 \end{docCommand}
 
@@ -637,19 +667,19 @@ Au \century{1}, [...]. Plus tard, au \century{8}, [...]
   \item[Sous sa forme étoilée,] elle fait (seulement) précéder le \meta{texte}
     d'un tiret, ce qui est à utiliser en fin de phrase.
   \end{description}
- Ainsi :
+  Ainsi :
 \begin{bodycode}[listing and text]
 Des expériences \aside{dans le monde \enquote{réel}} ont même été suscitées
 par des expériences numériques.
 \end{bodycode}
-et :
+  et :
 \begin{bodycode}[listing and text]
 On soupçonne que non \aside*{par exemple on s'attend à ce que $1/\pi$ ne
 soit pas une période}.
 \end{bodycode}
 \end{docCommand}
 
-%^^A smf,cad,Cad,gzt,century,aside
+% ^^A smf,cad,Cad,gzt,century,aside
 
 \subsubsection{Commandes propres aux mathématiques}
 \label{sec:comm-propr-aux}
@@ -660,9 +690,9 @@ La \gztauthorcl{} :
   \begin{itemize}
   \item \package*{kpfonts} qui fournit tous les symboles standard, y compris
     ceux du \Package{amssymb}, mais en propose également de nombreux autres ;
-  \item \package*{mathtools} qui lui-même charge \package*{amsmath}
-    (mais en l'étendant et en corrigeant certains de ses défauts), si bien que
-    toutes les commandes de ces deux packages sont disponibles ;
+  \item \package*{mathtools} qui lui-même charge \package*{amsmath} (mais en
+    l'étendant et en corrigeant certains de ses défauts), si bien que toutes les
+    commandes de ces deux packages sont disponibles ;
   \item \package*{mathrsfs} qui fournit de jolies lettres calligraphiques (via
     la commande \docAuxCommand{mathscr}) ;
   \end{itemize}
@@ -709,11 +739,11 @@ La \gztauthorcl{} :
   affiche \enquote{$\mathbb{K}$}.
 \end{docCommand}
 
-\paragraph{Fonctions trigonométriques circulaires et hyperboliques, directes et réciproques}
+\paragraph{Fonctions trigonométriques circulaires et hyperboliques, directes et
+  réciproques}
 
 \begin{docCommand}{cotan}{}
-  Cette commande affiche la cotangente :
-  \enquote{$\cotan$}.
+  Cette commande affiche la cotangente : \enquote{$\cotan$}.
 \end{docCommand}
 
 \begin{docCommand}{arccos}{}
@@ -738,23 +768,22 @@ La \gztauthorcl{} :
 \end{docCommand}
 
 \begin{docCommand}{ch}{}
-  Cette commande affiche le cosinus hyperbolique :
-  \enquote{$\ch$}.
+  Cette commande affiche le cosinus hyperbolique : \enquote{$\ch$}.
 \end{docCommand}
 
 \begin{docCommand}{sh}{}
-  Cette commande affiche le sinus hyperbolique :
-  \enquote{$\sh$}.
+  Cette commande affiche le sinus hyperbolique : \enquote{$\sh$}.
 \end{docCommand}
 
 \begin{docCommand}{tanh}{}
   Cette commande affiche la tangente hyperbolique : \enquote{$\tanh$} ou
   \enquote{\selectlanguage{english}$\tanh$\selectlanguage{french}} selon que la
   langue en cours est le français ou l'anglais.
-  \begin{dbremark}{Pas de commande \protect\lstinline+\\th+ pour la tangente hyperbolique}{}
+  \begin{dbremark}{Pas de commande \protect\lstinline+\\th+ pour la tangente
+      hyperbolique}{}
     La commande |\th| est déjà définie dans \LaTeX{} et ne peut donc pas être
     utilisée pour la tangente hyperbolique.
-\end{dbremark}
+  \end{dbremark}
 \end{docCommand}
 
 \paragraph{Fonctions diverses}
@@ -812,8 +841,8 @@ conditions que l'environnement \refEnv{theoreme}.
   %
 \item[Propositions] \
   \begin{docEnvironment}{proposition}{}
-    Cet environnement permet de composer une proposition. Son titre récurrent est
-    \enquote{Proposition}.
+    Cet environnement permet de composer une proposition. Son titre récurrent
+    est \enquote{Proposition}.
   \end{docEnvironment}
   %
 \item[Lemmes] \
@@ -883,18 +912,18 @@ code informatique, notamment du code \LaTeX{} :
 \end{docEnvironment}
 
 \begin{bodycode}[listing and text]
-\begin{gztcode}
-Utilisons l'environnement \verb|align*| :
-\begin{align*}
-  a & = a\\
-  b & = b
-\end{align*}
-\end{gztcode}
+  \begin{gztcode}
+    Utilisons l'environnement \verb|align*| :
+    \begin{align*}
+      a & = a\\
+      b & = b
+    \end{align*}
+  \end{gztcode}
 \end{bodycode}
 
 L'environnement \refEnv{gztcode} admet en argument optionnel la plupart des
 (très nombreuses) options de l'environnement \docAuxEnvironment{tcblisting} du
-\Package{tcolorbox}. On retiendra notamment les options \refKey{title},
+\Package*{tcolorbox}. On retiendra notamment les options \refKey{title},
 \refKey{listing and text} et \refKey{listing options} suivantes.
 
 \begin{docKey}{title}{}{}
@@ -902,13 +931,13 @@ L'environnement \refEnv{gztcode} admet en argument optionnel la plupart des
 \end{docKey}
 
 \begin{bodycode}[listing and text]
-\begin{gztcode}[title=Alignement d'équations]
-Utilisons l'environnement \verb|align*| :
-\begin{align*}
-  a & = a\\
-  b & = b
-\end{align*}
-\end{gztcode}
+  \begin{gztcode}[title=Alignement d'équations]
+    Utilisons l'environnement \verb|align*| :
+    \begin{align*}
+      a & = a\\
+      b & = b
+    \end{align*}
+  \end{gztcode}
 \end{bodycode}
 
 \begin{docKey}{listing and text}{}{}
@@ -917,9 +946,9 @@ Utilisons l'environnement \verb|align*| :
   \item haute, le listing ;
   \item basse, son résultat compilé par \LaTeX{}.
   \end{itemize}
-  %^^A
-  \begin{dbwarning}{Option \protect\refKey*{listing and text} : seulement pour du
-      code \LaTeX{}}{}
+  % ^^A
+  \begin{dbwarning}{Option \protect\refKey*{listing and text} : seulement pour
+      du code \LaTeX{}}{}
     L'option \refKey{listing and text} n'a de sens que pour un listing de code
     \LaTeX{}.
   \end{dbwarning}
@@ -927,7 +956,8 @@ Utilisons l'environnement \verb|align*| :
 
 \begin{tcboutputlisting}
 \begin{gztcode}[listing and text]
-L'environnement \verb|eqnarray| est obsolète et on utilisera plutôt \verb|align| :
+L'environnement \verb|eqnarray| est obsolète et on utilisera plutôt
+\verb|align| :
 
 \begin{minipage}[t]{0.4\linewidth}
   Avec l'environnement \verb|eqnarray*| :
@@ -947,7 +977,8 @@ L'environnement \verb|eqnarray| est obsolète et on utilisera plutôt \verb|alig
 \end{gztcode}
 \end{tcboutputlisting}
 
-L'exemple suivant illustre l'usage de cet environnement\conseilslatex{}. Le code :
+L'exemple suivant illustre l'usage de cet environnement\conseilslatex{}. Le
+code :
 
 \tcbinputlisting{codes,listing only}
 
@@ -972,27 +1003,23 @@ pris en charge.
 
 \begin{docKey}{listing options}{}{}
   Cette clé de l'environnement \refEnv{gztcode} permet de passer au listing
-  toute option connue du \Package*{listings}, notamment le langage sous-jacent au
-  moyen de l'option \docAuxKey{language}.
+  toute option connue du \Package*{listings}, notamment le langage sous-jacent
+  au moyen de l'option \docAuxKey{language}.
 \end{docKey}
 
 \begin{bodycode}[listing and text,listing options={deletekeywords={listing,[2]style}}]
-\lstdefinestyle{mon-style}{%
-  language=Python,%
-  basicstyle=\ttfamily,%
-  keywordstyle=\color{magenta},%
-  commentstyle=\color{gray}\itshape,%
-  stringstyle=\color{cyan}%
-}
+  \lstdefinestyle{mon-style}{%
+    language=Python,%
+    basicstyle=\ttfamily,%
+    keywordstyle=\color{magenta},%
+    commentstyle=\color{gray}\itshape,%
+    stringstyle=\color{cyan}%
+  }
 %
-\begin{gztcode}[listing options={style=mon-style}]
-"""Calcul de la factorielle""" # En python
-def factorielle(x):
-    if x < 2:
-         return 1
-    else:
-         return x * factorielle(x-1)
-\end{gztcode}
+  \begin{gztcode}[listing options={style=mon-style}]
+    """Calcul de la factorielle""" # En python def factorielle(x): if x < 2:
+    return 1 else: return x * factorielle(x-1)
+  \end{gztcode}
 \end{bodycode}
 
 \begin{docCommand}{gztverb}{\marg{code}}
@@ -1003,12 +1030,151 @@ def factorielle(x):
 L'exemple suivant illustre l'usage de cette commande\conseilslatex.
 
 \begin{bodycode}[listing and text,colback=white,listing options={deletekeywords={[2]style}}]
-Dans le cas de \LaTeX, les commandes de style de caractères \gztverb{\bf},
-\gztverb{\it}, \gztverb{\sf}, \gztverb{\tt}, \gztverb{\sc}, \gztverb{\sl},
-\gztverb{\rm} sont désormais à proscrire. Elles doivent être remplacées par les
-commutateurs, respectivement \gztverb{\bfseries}, \gztverb {\itshape},
-\gztverb{\sffamily}, \gztverb{\ttfamily}, \gztverb{\scshape},
-\gztverb{\slshape}, \gztverb{\rmfamily}.
+  Dans le cas de \LaTeX, les commandes de style de caractères \gztverb{\bf},
+  \gztverb{\it}, \gztverb{\sf}, \gztverb{\tt}, \gztverb{\sc}, \gztverb{\sl},
+  \gztverb{\rm} sont désormais à proscrire. Elles doivent être remplacées par
+  les commutateurs, respectivement \gztverb{\bfseries}, \gztverb {\itshape},
+  \gztverb{\sffamily}, \gztverb{\ttfamily}, \gztverb{\scshape},
+  \gztverb{\slshape}, \gztverb{\rmfamily}.
+\end{bodycode}
+
+\section{Autre outils communs à tous types d'articles}
+\label{sec:outils-communs-tous-1}
+
+Cette section donne une liste d'outils (commandes et environnements) fournis par
+des packages automatiquement chargés par la \gztauthorcl\footnote{La
+  \vref{sec-packages-charges-par} liste ceux dont les fonctionnalités peuvent
+  être utiles aux auteurs.}.
+
+\begin{dbwarning}{Liste des fonctionnalités des packages tiers non exhaustive}{}
+  Cette liste est \emph{non exhaustive} :
+  \begin{itemize}
+  \item tous les packages chargés ne sont pas cités ;
+  \item seules certaines fonctionnalités des packages cités sont décrites. Le
+    lecteur souhaitant en savoir davantage est invité à lire la documentation de
+    ces packages pour en savoir davantage.
+  \end{itemize}
+\end{dbwarning}
+
+\subsection{Guillemets, citations}
+\label{sec:guillemets-citations}
+
+Le \Package*{csquotes} est dédié aux citations, formelles et informelles,
+d'extraits de textes. Il propose notamment la commande \refCom{enquote}
+suivante, simple d'emploi.
+
+\begin{docCommand}{enquote}{\marg{texte}}
+  Cette commande compose le \meta{texte} entre guillemets, automatiquement
+  adaptés :
+  \begin{itemize}
+  \item aux standards typographiques de la langue en cours. On pourra donc
+    l'utiliser dès que du texte est à mettre entre guillemets ;
+  \item au niveau (1 ou 2) de \enquote{citation} en cas d'emboîtement. On
+    pourra donc également l'utiliser dès que du texte est à citer de façon
+    informelle.
+  \end{itemize}
+\begin{bodycode}[listing and text]
+Il lui répondit: \enquote{Courteline disait: \enquote{Passer pour un idiot aux
+    yeux d'un imbécile est une volupté de fin gourmet.}}
+\end{bodycode}
+\end{docCommand}
+
+(\textsc{À suivre...})
+
+\subsection{Adresses Web (\enquote{\textsc{url}})}
+\label{sec:url}
+
+Le \Package*{hyperref} fournit (entre autres) la commande \refCom{url} qui permet
+de facilement afficher des adresses Web (aussi appelées \enquote{\textsc{url}}),
+même si elles comportent des caractères spéciaux de \TeX{} (|#|, |_|, |~|,
+\lstinline[commentstyle={}]+%+, |&|, etc.).
+
+\begin{docCommand}{url}{\marg{adresse Web}}
+  Cette commande affiche l'\meta{adresse Web} saisie \emph{telle
+    quelle}\footnote{Notamment sans faire précéder les éventuels caractères
+    spéciaux qu'elle contient de la commande d'échappement
+    \protect\lstinline+\\+.} et fait d'elle un lien hypertexte.
+\begin{bodycode}[listing and text,listing options={deletekeywords={[2]url,[1]math}}]
+Pour plus d'information, nous renvoyons à notre site Web
+\url{http://math.univ-lille1.fr/~nwejm/}.
+\end{bodycode}
+\begin{bodycode}[listing and text,listing options={deletekeywords={[2]url,[1]exemple}}]
+Par exemple, \url{www.cnrs.fr/insmi/IMG/pdf/Parite_ReunionDU290312.pdf}.
+\end{bodycode}
+\end{docCommand}
+
+\subsection{Graphiques de très haute qualité}
+\label{sec:graphiques-de-tres}
+
+Le \Package*{pgfplots} permet de créer aisément des graphiques (de dimensions
+$2$ ou $3$) de très haute qualité, que ce soit pour représenter des fonctions ou
+des jeux de données.
+
+(\textsc{À suivre...})
+
+\subsection{Références croisées}
+\label{sec:references-croisees}
+
+Le \Package*{cleveref}, utilisé conjointement avec le \Package*{varioref}, rend la
+commande \refCom{vref} de ce dernier très puissante.
+
+\begin{docCommand}{vref}{\marg{label}}
+  Cette commande affiche le numéro de la référence labellisée par \meta{label}
+  et :
+  \begin{itemize}
+  \item affiche (ou pas selon le contexte) la page où se situe cette
+    référence\footnote{Fonctionnalité fournie par le \Package{varioref}.} ;
+  \item détecte automatiquement la nature de la référence (section, tableau,
+    figure, équation, théorème, etc.) et fait précéder le numéro de celle-ci du
+    mot clé correspondant\footnote{Fonctionnalité fournie par le
+      \Package{cleveref}.} ;
+  \item fait de la référence un lien hypertexte\footnote{Fonctionnalité fournie
+      par le \Package{hyperref}.}.
+  \end{itemize}
+\begin{bodycode}[listing and text,listing options={deletekeywords={[2]url,[1]math}}]
+[...] on se reportera à la \vref{sec-canevas-de-fichier} pour un canevas de
+fichier source [...]
+\end{bodycode}
+\end{docCommand}
+
+\subsection{Listes en ligne}
+\label{sec:listes-en-ligne}
+
+Le lecteur est certainement familier des environnements
+\docAuxEnvironment{itemize}, \docAuxEnvironment{enumerate} et
+\docAuxEnvironment{description} permettant de créer des listes respectivement
+\enquote{à puces}, \enquote{numérotées} et \enquote{de description}. Le
+\Package*{enumitem} fournit des versions étoilées de ces environnements qui
+composent ces listes \enquote{en ligne}, \cad*{} au sein d'un même
+paragraphe\footnote{Le but premier de ce package est de personnaliser les listes
+  mais cela est déconseillé dans le cadre de la \gzt{} car cela pourrait
+  contrevenir à la marche typographique qu'elle a adoptée.}.
+
+\begin{docEnvironment}[doclang/environment content=liste]{itemize*}{}
+  Cet environnement compose une liste \enquote{à puces} en ligne.
+\end{docEnvironment}
+
+\begin{docEnvironment}[doclang/environment content=liste]{enumerate*}{}
+  Cet environnement compose une liste \enquote{numérotée} en ligne.
+\end{docEnvironment}
+
+\begin{docEnvironment}[doclang/environment content=liste]{description*}{}
+  Cet environnement compose une liste \enquote{de description} en ligne.
+\end{docEnvironment}
+
+\begin{bodycode}[listing and text,listing options={deletekeywords={[1]math,[2]url}}]
+\begin{enumerate}
+\item Les données que j’ai rassemblées [...]
+\item Les données que j’ai recueillies sont
+  \begin{enumerate*}
+  \item disponibles publiquement sur internet : pages Web et CV des
+    conférenciers ;
+  \item accessibles par Wikipédia, par le précieux \enquote{mathematics
+      genealogy project} (\url{http://genealogy.math.ndsu.nodak.edu/}) ;
+  \item pour 60 des conférenciers pour lesquelles mes informations étaient trop
+    lacunaires, [...].
+  \end{enumerate*}
+\end{enumerate}
 \end{bodycode}
 
 \section{Canevas de fichier source typique}
@@ -1059,6 +1225,6 @@ et environnement moins fréquents ont été mis en commentaire.
 %%% mode: latex
 %%% eval: (latex-mode)
 %%% ispell-local-dictionary: "fr_FR"
-%%% TeX-master: "../gztdoc.tex"
+%%% TeX-master: "../gzt.tex"
 %%% End:
 \fi
