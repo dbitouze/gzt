@@ -2407,6 +2407,28 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 %
+% We define some token lists for the long and short forms of \gzt.
+%    \begin{macrocode}
+\tl_new:N \l_@@_gzt_short_string_tl
+\tl_new:N \l_@@_gzt_string_tl
+\tl_set:Nn \l_@@_gzt_short_string_tl {
+  \cs_if_exist:cTF {texorpdfstring}
+  {
+    \texorpdfstring{\emph{\c_@@_journal_short_title_string_tl}}{\c_@@_journal_short_title_string_tl}
+  }{%
+    \emph{\c_@@_journal_short_title_string_tl}
+  }%
+}
+\tl_set:Nn \l_@@_gzt_string_tl {
+  \cs_if_exist:cTF {texorpdfstring}
+  {
+    \texorpdfstring{\emph{\c_@@_journal_title_string_tl}}{\c_@@_journal_title_string_tl}
+  }{%
+    \emph{\c_@@_journal_title_string_tl}
+  }%
+}
+%    \end{macrocode}
+%
 % \section{Database for the articles' authors}
 %
 % For this, and thanks to \Pkg{datatool}, we create a database of
@@ -5130,10 +5152,10 @@ This work consists of the file  gzt.dtx
 \NewDocumentCommand \gzt { s } {
   \IfBooleanTF {#1}
   {
-    \textit{\c_@@_journal_title_string_tl}
+    \l_@@_gzt_string_tl
   }
   {
-    \textit{\c_@@_journal_short_title_string_tl}
+    \l_@@_gzt_short_string_tl
   }
 }
 %    \end{macrocode}
