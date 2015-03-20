@@ -837,7 +837,7 @@ This work consists of the file  gzt.dtx
 % "forauthors" \gzt{}'s option is on):
 %    \begin{macrocode}
 %<class>\bool_if:nT { \g_@@_for_authors_bool } {
-  \RequirePackage{draftwatermark}[2006/06/30]%
+%<class>  \RequirePackage{draftwatermark}[2006/06/30]%
 %<class>}
 %    \end{macrocode}
 %
@@ -4301,9 +4301,6 @@ This work consists of the file  gzt.dtx
   }
   \bool_if:NTF {\g_@@_for_authors_bool} {
     \thispagestyle{empty}
-    \SetWatermarkColor{gray!10}%
-    \SetWatermarkFontSize{30mm}%
-    \SetWatermarkText{\MakeUppercase{\c_@@_draftwatermark_string_tl}}%
     \includegraphics{gzt-logo}
     \hfill
     \includegraphics[height=22.5mm]{\c_@@_smf_logo_file_string_tl}%
@@ -5541,6 +5538,16 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \DeclareMathAlphabet\mathfrak{U}{euf}{m}{n}
 \SetMathAlphabet\mathfrak{bold}{U}{euf}{b}{n}
+%    \end{macrocode}
+%
+% \subsection{Related to \Pkg{draftwatermark}}
+%
+%    \begin{macrocode}
+\@ifpackageloaded{draftwatermark}{%
+  \SetWatermarkColor{gray!10}%
+  \SetWatermarkFontSize{30mm}%
+  \SetWatermarkText{\MakeUppercase{\c_@@_draftwatermark_string_tl}}%
+}
 %    \end{macrocode}
 %
 % \subsection{Related to \Pkg{TikZ}}
