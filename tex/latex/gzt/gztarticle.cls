@@ -1869,6 +1869,7 @@
   \SetWatermarkColor{gray!10}%
   \SetWatermarkFontSize{30mm}%
   \SetWatermarkText{\MakeUppercase{\c__gzt_draftwatermark_string_tl}}%
+}{%
 }
 \tikzset{
   __gzt_dots/.style={
