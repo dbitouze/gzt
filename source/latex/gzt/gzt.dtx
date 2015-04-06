@@ -3385,6 +3385,14 @@ This work consists of the file  gzt.dtx
 %
 \cs_new_protected:Nn \_@@_rubric:nnn
 {
+  \newpage%
+  \tl_gclear:N \g_@@_rubric_abstract_tl
+  \tl_gset:Nn \g_@@_rubric_title_tl {#2}
+  \tl_gset:Nn \g_@@_rubric_pictofile_tl {#3}
+  \IfNoValueF {#1}
+  {
+    \keys_set:nn { gzt/rubric } { #1 }
+  }
   \g_@@_mainmatter_switch_tl
   \bool_gset_true:N \g_@@_mainmatter_bool
   \clearpage
@@ -3402,7 +3410,7 @@ This work consists of the file  gzt.dtx
     \int_zero:N \g_@@_item_in_rubric_int
     \phantomsection
     \par
-    \addcontentsline{toc}{part}{#2}
+    \addcontentsline{toc}{part}{\g_@@_rubric_title_tl}
     \thispagestyle{@@_rubric_ps}
     \exp_after:wN\newgeometry\exp_after:wN{\c_@@_main_geometry_tl}%
     % \tl_show:N \g_@@_rubric_abstract_tl
@@ -4949,16 +4957,6 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\rubric}
-%   For a \enquote{free} rubric.
-%    \begin{macrocode}
-\NewDocumentCommand \rubric {O{}mm}
-{
-  \_@@_rubric:nnn {#1}{#2}{#3}%
-}
-%    \end{macrocode}
-% \end{macro}
-%
 %    \begin{macrocode}
 \cs_new_protected:Nn \_@@_prepare_rubric:nnn {%
   \newpage%
@@ -4972,58 +4970,71 @@ This work consists of the file  gzt.dtx
   \_@@_rubric:nnn
   {\g_@@_rubric_abstract_tl}{\g_@@_rubric_title_tl}{\g_@@_rubric_pictofile_tl}%
 }
+%    \end{macrocode}
+%
+% \begin{macro}{\rubric}
+%   For a \enquote{free} rubric.
+%    \begin{macrocode}
+\NewDocumentCommand \rubric {O{}mm}
+{
+  \_@@_rubric:nnn {#1}{#2}{#3}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
 \NewDocumentCommand \mathematics {O{}}
 {
-  \_@@_prepare_rubric:nnn {#1}{\c_@@_mathematics_rubric_string_tl}{picto-mathematics}
+  \_@@_rubric:nnn {#1}{\c_@@_mathematics_rubric_string_tl}{picto-mathematics}
 }
 \NewDocumentCommand \dossier {O{}}
 {
-  \_@@_prepare_rubric:nnn {#1}{\c_@@_dossier_rubric_string_tl}{picto-dossier}
+  \_@@_rubric:nnn {#1}{\c_@@_dossier_rubric_string_tl}{picto-dossier}
 }
 \NewDocumentCommand \community {O{}}
 {
-  \_@@_prepare_rubric:nnn {#1}{\c_@@_community_rubric_string_tl}{picto-hands}
+  \_@@_rubric:nnn {#1}{\c_@@_community_rubric_string_tl}{picto-hands}
 }
 \NewDocumentCommand \interview {O{}}
 {
-  \_@@_prepare_rubric:nnn {#1}{\c_@@_interview_rubric_string_tl}{picto-interview}
+  \_@@_rubric:nnn {#1}{\c_@@_interview_rubric_string_tl}{picto-interview}
   \bool_gset_true:N \g_@@_interview_rubric_bool
 }
 \NewDocumentCommand \teaching {O{}}
 {
-  \_@@_prepare_rubric:nnn {#1}{\c_@@_teaching_rubric_string_tl}{picto-teaching}
+  \_@@_rubric:nnn {#1}{\c_@@_teaching_rubric_string_tl}{picto-teaching}
 }
 \NewDocumentCommand \parity {O{}}
 {
-  \_@@_prepare_rubric:nnn {#1}{\c_@@_parity_rubric_string_tl}{picto-parity}
+  \_@@_rubric:nnn {#1}{\c_@@_parity_rubric_string_tl}{picto-parity}
 }
 \NewDocumentCommand \tellme {O{}}
 {
-  \_@@_prepare_rubric:nnn {#1}{\c_@@_tellme_rubric_string_tl}{picto-tellme}
+  \_@@_rubric:nnn {#1}{\c_@@_tellme_rubric_string_tl}{picto-tellme}
   \bool_gset_true:N \g_@@_tellme_rubric_bool
 }
 \NewDocumentCommand \information {O{}}
 {
-  \_@@_prepare_rubric:nnn {#1}{\c_@@_information_rubric_string_tl}{picto-information}
+  \_@@_rubric:nnn {#1}{\c_@@_information_rubric_string_tl}{picto-information}
 }
 \NewDocumentCommand \rearviewmirror {O{}}
 {
-  \_@@_prepare_rubric:nnn {#1}{\c_@@_rearviewmirror_rubric_string_tl}{picto-rearviewmirror}
+  \_@@_rubric:nnn {#1}{\c_@@_rearviewmirror_rubric_string_tl}{picto-rearviewmirror}
   \bool_gset_true:N \g_@@_rearviewmirror_rubric_bool
 }
 \NewDocumentCommand \tribute {O{}}
 {
-  \_@@_prepare_rubric:nnn {#1}{\c_@@_tribute_rubric_string_tl}{picto-tribute}
+  \_@@_rubric:nnn {#1}{\c_@@_tribute_rubric_string_tl}{picto-tribute}
 }
 \NewDocumentCommand \books {O{}}
 {
-  \_@@_prepare_rubric:nnn {#1}{\c_@@_books_rubric_string_tl}{picto-books}
+  \_@@_rubric:nnn {#1}{\c_@@_books_rubric_string_tl}{picto-books}
   \bool_gset_true:N \g_@@_books_rubric_bool
   \vspace{1.5\c_@@_book_review_frontcover_extend_dim}
 }
 \NewDocumentCommand \latextips {O{}}
 {
-  \_@@_prepare_rubric:nnn {#1}{\c_@@_latex_rubric_string_tl}{}
+  \_@@_rubric:nnn {#1}{\c_@@_latex_rubric_string_tl}{}
 }
 %    \end{macrocode}
 % \end{macro}
