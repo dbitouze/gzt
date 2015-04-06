@@ -4899,7 +4899,7 @@ This work consists of the file  gzt.dtx
 % \end{itemize}
 %    \begin{macrocode}
 \cs_set_eq:NN \_@@_printbibliography \printbibliography
-\RenewDocumentCommand \printbibliography { O{heading=bibassection} } {
+\RenewDocumentCommand \printbibliography { O{} } {
   \bool_if:NT {\g_@@_multicols_bool} {
     \end{multicols}%
   }
@@ -4912,7 +4912,7 @@ This work consists of the file  gzt.dtx
   \FloatBarrier%
 % }%
   \begin{_@@_bibliography_tcbox}
-    \_@@_printbibliography[heading=subbibliography,resetnumbers]
+    \_@@_printbibliography[heading=subbibliography,resetnumbers,#1]
   \end{_@@_bibliography_tcbox}
   %
   \nopagebreak[0]
