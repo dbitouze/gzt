@@ -1340,6 +1340,14 @@
 \tl_new:N \l__gzt_rubric_head_text_box_tl%
 \cs_new_protected:Nn \__gzt_rubric:nnn
 {
+  \newpage%
+  \tl_gclear:N \g__gzt_rubric_abstract_tl
+  \tl_gset:Nn \g__gzt_rubric_title_tl {#2}
+  \tl_gset:Nn \g__gzt_rubric_pictofile_tl {#3}
+  \IfNoValueF {#1}
+  {
+    \keys_set:nn { gzt/rubric } { #1 }
+  }
   \g__gzt_mainmatter_switch_tl
   \bool_gset_true:N \g__gzt_mainmatter_bool
   \clearpage
@@ -1353,7 +1361,7 @@
     \int_zero:N \g__gzt_item_in_rubric_int
     \phantomsection
     \par
-    \addcontentsline{toc}{part}{#2}
+    \addcontentsline{toc}{part}{\g__gzt_rubric_title_tl}
     \thispagestyle{__gzt_rubric_ps}
     \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_main_geometry_tl}%
     % \tl_show:N \g__gzt_rubric_abstract_tl
@@ -1989,7 +1997,6 @@
 {}
 \AtBeginDocument{%
   % \graphicspath{{\c__gzt_issue_images_path_string_tl//}}
-  \nocite{*}
   \glsdisablehyper
   \g__gzt_mainmatter_switch_tl
   % \bool_gset_false:N \g__gzt_frontmatter_bool
@@ -2397,10 +2404,6 @@
 {
   \__gzt_about_front_cover:nnn {#1}{#2}{#3}%
 }
-\NewDocumentCommand \rubric {O{}mm}
-{
-  \__gzt_rubric:nnn {#1}{#2}{#3}%
-}
 \cs_new_protected:Nn \__gzt_prepare_rubric:nnn {%
   \newpage%
   \tl_gclear:N \g__gzt_rubric_abstract_tl
@@ -2413,58 +2416,62 @@
   \__gzt_rubric:nnn
   {\g__gzt_rubric_abstract_tl}{\g__gzt_rubric_title_tl}{\g__gzt_rubric_pictofile_tl}%
 }
+\NewDocumentCommand \rubric {O{}mm}
+{
+  \__gzt_rubric:nnn {#1}{#2}{#3}%
+}
 \NewDocumentCommand \mathematics {O{}}
 {
-  \__gzt_prepare_rubric:nnn {#1}{\c__gzt_mathematics_rubric_string_tl}{picto-mathematics}
+  \__gzt_rubric:nnn {#1}{\c__gzt_mathematics_rubric_string_tl}{picto-mathematics}
 }
 \NewDocumentCommand \dossier {O{}}
 {
-  \__gzt_prepare_rubric:nnn {#1}{\c__gzt_dossier_rubric_string_tl}{picto-dossier}
+  \__gzt_rubric:nnn {#1}{\c__gzt_dossier_rubric_string_tl}{picto-dossier}
 }
 \NewDocumentCommand \community {O{}}
 {
-  \__gzt_prepare_rubric:nnn {#1}{\c__gzt_community_rubric_string_tl}{picto-hands}
+  \__gzt_rubric:nnn {#1}{\c__gzt_community_rubric_string_tl}{picto-hands}
 }
 \NewDocumentCommand \interview {O{}}
 {
-  \__gzt_prepare_rubric:nnn {#1}{\c__gzt_interview_rubric_string_tl}{picto-interview}
+  \__gzt_rubric:nnn {#1}{\c__gzt_interview_rubric_string_tl}{picto-interview}
   \bool_gset_true:N \g__gzt_interview_rubric_bool
 }
 \NewDocumentCommand \teaching {O{}}
 {
-  \__gzt_prepare_rubric:nnn {#1}{\c__gzt_teaching_rubric_string_tl}{picto-teaching}
+  \__gzt_rubric:nnn {#1}{\c__gzt_teaching_rubric_string_tl}{picto-teaching}
 }
 \NewDocumentCommand \parity {O{}}
 {
-  \__gzt_prepare_rubric:nnn {#1}{\c__gzt_parity_rubric_string_tl}{picto-parity}
+  \__gzt_rubric:nnn {#1}{\c__gzt_parity_rubric_string_tl}{picto-parity}
 }
 \NewDocumentCommand \tellme {O{}}
 {
-  \__gzt_prepare_rubric:nnn {#1}{\c__gzt_tellme_rubric_string_tl}{picto-tellme}
+  \__gzt_rubric:nnn {#1}{\c__gzt_tellme_rubric_string_tl}{picto-tellme}
   \bool_gset_true:N \g__gzt_tellme_rubric_bool
 }
 \NewDocumentCommand \information {O{}}
 {
-  \__gzt_prepare_rubric:nnn {#1}{\c__gzt_information_rubric_string_tl}{picto-information}
+  \__gzt_rubric:nnn {#1}{\c__gzt_information_rubric_string_tl}{picto-information}
 }
 \NewDocumentCommand \rearviewmirror {O{}}
 {
-  \__gzt_prepare_rubric:nnn {#1}{\c__gzt_rearviewmirror_rubric_string_tl}{picto-rearviewmirror}
+  \__gzt_rubric:nnn {#1}{\c__gzt_rearviewmirror_rubric_string_tl}{picto-rearviewmirror}
   \bool_gset_true:N \g__gzt_rearviewmirror_rubric_bool
 }
 \NewDocumentCommand \tribute {O{}}
 {
-  \__gzt_prepare_rubric:nnn {#1}{\c__gzt_tribute_rubric_string_tl}{picto-tribute}
+  \__gzt_rubric:nnn {#1}{\c__gzt_tribute_rubric_string_tl}{picto-tribute}
 }
 \NewDocumentCommand \books {O{}}
 {
-  \__gzt_prepare_rubric:nnn {#1}{\c__gzt_books_rubric_string_tl}{picto-books}
+  \__gzt_rubric:nnn {#1}{\c__gzt_books_rubric_string_tl}{picto-books}
   \bool_gset_true:N \g__gzt_books_rubric_bool
   \vspace{1.5\c__gzt_book_review_frontcover_extend_dim}
 }
 \NewDocumentCommand \latextips {O{}}
 {
-  \__gzt_prepare_rubric:nnn {#1}{\c__gzt_latex_rubric_string_tl}{}
+  \__gzt_rubric:nnn {#1}{\c__gzt_latex_rubric_string_tl}{}
 }
 \DeclareCiteCommand{\citeinterviewee}{}{%
   \printnames{interviewee}%

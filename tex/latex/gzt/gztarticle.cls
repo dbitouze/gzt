@@ -1323,7 +1323,6 @@
 {}
 \AtBeginDocument{%
   % \graphicspath{{\c__gzt_issue_images_path_string_tl//}}
-  \nocite{*}
   \glsdisablehyper
   \g__gzt_mainmatter_switch_tl
   % \bool_gset_false:N \g__gzt_frontmatter_bool
