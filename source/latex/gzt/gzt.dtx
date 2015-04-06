@@ -4290,7 +4290,6 @@ This work consists of the file  gzt.dtx
 % At begin of the document, we automatically :
 % \begin{itemize}
 % \item set the graphic path,
-% \item make use of the "\nocite{*}" command in order the
 % \item set the page grid if the corresponding option has been passed,
 % \item display of the front cover and the inside front cover.
 % \end{itemize}
@@ -4298,7 +4297,6 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \AtBeginDocument{%
   % \graphicspath{{\c_@@_issue_images_path_string_tl//}}
-  \nocite{*}
   \glsdisablehyper
   \g_@@_mainmatter_switch_tl
   % \bool_gset_false:N \g_@@_frontmatter_bool
