@@ -1492,13 +1492,13 @@
 }
 \let\printauthorsdetails\printminibios
 \cs_set_eq:NN \__gzt_printbibliography \printbibliography
-\RenewDocumentCommand \printbibliography { O{heading=bibassection} } {
+\RenewDocumentCommand \printbibliography { O{} } {
   \bool_if:NT {\g__gzt_multicols_bool} {
     \end{multicols}%
   }
   \FloatBarrier%
   \begin{__gzt_bibliography_tcbox}
-    \__gzt_printbibliography[heading=subbibliography,resetnumbers]
+    \__gzt_printbibliography[heading=subbibliography,resetnumbers,#1]
   \end{__gzt_bibliography_tcbox}
   %
   \nopagebreak[0]
