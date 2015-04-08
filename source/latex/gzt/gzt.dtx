@@ -5848,6 +5848,9 @@ This work consists of the file  gzt.dtx
 }
 \declaretheoremstyle[spaceabove=3pt,bodyfont=\itshape]{_@@_theorem}
 \declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont]{_@@_definition}
+%
+\declaretheoremstyle[spaceabove=3pt,bodyfont=\itshape,numbered=no]{_@@_unumbered_theorem}
+\declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont,numbered=no]{_@@_unumbered_definition}
 %    \end{macrocode}
 %
 % Then, we define a public command, similar to "\newtheorem", based on
@@ -5878,6 +5881,24 @@ This work consists of the file  gzt.dtx
 \gztnewtheorem[style=_@@_definition]{example}{Exemple}{Example}
 \gztnewtheorem[style=_@@_definition]{exemple}{Exemple}{Example}
 \gztnewtheorem[style=_@@_definition]{notation}{Notation}{Notation}
+%
+\gztnewtheorem[style=_@@_unumbered_theorem]{theorem*}{Th\'eor\`eme}{Theorem}
+\gztnewtheorem[style=_@@_unumbered_theorem]{theoreme*}{Th\'eor\`eme}{Theorem}
+\gztnewtheorem[style=_@@_unumbered_theorem]{corollary*}{Corollaire}{Corollary}
+\gztnewtheorem[style=_@@_unumbered_theorem]{corollaire*}{Corollaire}{Corollary}
+\gztnewtheorem[style=_@@_unumbered_theorem]{conjecture*}{Conjecture}{Conjecture}
+\gztnewtheorem[style=_@@_unumbered_theorem]{proposition*}{Proposition}{Proposition}
+\gztnewtheorem[style=_@@_unumbered_theorem]{lemma*}{Lemme}{Lemma}
+\gztnewtheorem[style=_@@_unumbered_theorem]{lemme*}{Lemme}{Lemma}
+\gztnewtheorem[style=_@@_unumbered_theorem]{axiom*}{Axiome}{Axiom}
+\gztnewtheorem[style=_@@_unumbered_theorem]{axiome*}{Axiome}{Axiom}
+%
+\gztnewtheorem[style=_@@_unumbered_definition]{definition*}{D\'efinition}{Definition}
+\gztnewtheorem[style=_@@_unumbered_definition]{remark*}{Remarque}{Remark}
+\gztnewtheorem[style=_@@_unumbered_definition]{remarque*}{Remarque}{Remark}
+\gztnewtheorem[style=_@@_unumbered_definition]{example*}{Exemple}{Example}
+\gztnewtheorem[style=_@@_unumbered_definition]{exemple*}{Exemple}{Example}
+\gztnewtheorem[style=_@@_unumbered_definition]{notation*}{Notation}{Notation}
 %    \end{macrocode}
 %
 % \subsection{(Reciprocal) Trigonometric and hyperbolic functions}
