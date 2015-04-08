@@ -373,21 +373,21 @@ réponses. Les questions, qui doivent être composées de façon spécifique, so
 \end{dbremark}
 
 \begin{bodycode}
-  \question{Ton sujet principal est celui des systèmes dynamiques, mais quels
-    sont les autres thèmes qui t'intéressent ?}
+\question{Ton sujet principal est celui des systèmes dynamiques, mais quels
+  sont les autres thèmes qui t'intéressent ?}
 
-  L'étude des systèmes dynamiques est un sujet qui peut être abordé de façon les
-  plus diverses.  Certains les considèrent d'un point de vue combinatoire,
-  d'autres sont plus axés sur les probabilités ou encore sur l'analyse. [...]
-  Mais si mes capacités d'analystes n'avaient pu se réaliser dans les systèmes
-  dynamiques j'aurais fait autre chose.
+L'étude des systèmes dynamiques est un sujet qui peut être abordé de façon les
+plus diverses.  Certains les considèrent d'un point de vue combinatoire,
+d'autres sont plus axés sur les probabilités ou encore sur l'analyse. [...]
+Mais si mes capacités d'analystes n'avaient pu se réaliser dans les systèmes
+dynamiques j'aurais fait autre chose.
 
-  \question{Parmi ses lauréats de cette édition, on compte deux dynamiciens :
-    Maryam Mirzakhani et toi.  Quelles sont les différences entre vos
-    approches ?}
+\question{Parmi ses lauréats de cette édition, on compte deux dynamiciens :
+  Maryam Mirzakhani et toi.  Quelles sont les différences entre vos
+  approches ?}
 
-  Ces travaux sont principalement concentrés sur un objet lié aux échanges
-  d'intervalles : le flot de Teichmüller. [...]
+Ces travaux sont principalement concentrés sur un objet lié aux échanges
+d'intervalles : le flot de Teichmüller. [...]
 \end{bodycode}
 
 \begin{dbwarning}{Insertion manuelle d'espacements inutile}{}
@@ -402,12 +402,12 @@ recueilli les propos peuvent être signalées dans le résumé (cf. environnemen
 \refEnv{abstract}), par exemple ainsi :
 
 \begin{bodycode}
-  \title{Entretien avec Artur \surname{Avila}}
-  \begin{abstract}
-    Propos recueillis à Séoul, pendant l'ICM, par Boris Adamczewski et Gaël
-    Octavia.
-  \end{abstract}
-  \maketitle
+\title{Entretien avec Artur \surname{Avila}}
+\begin{abstract}
+  Propos recueillis à Séoul, pendant l'ICM, par Boris Adamczewski et Gaël
+  Octavia.
+\end{abstract}
+\maketitle
 \end{bodycode}
 
 \section{Outils communs à tous types d'articles, fournis par \gztauthor}
@@ -505,36 +505,36 @@ d'être vus.
 
 % \tcbset{listing options={morekeywords=[2]{title,label}}}
 \begin{bodycode}[listing options={morekeywords={[2]title,label}}]
-  L'exemple avec $a=-1$ et $b=0$ donne la courbe de la \vref{elliptique}.
+L'exemple avec $a=-1$ et $b=0$ donne la courbe de la \vref{elliptique}.
 %
-  \begin{gztfigure}[title=Courbe elliptique correspondant à l'équation
-    $y^2=x^3-x$,label=elliptique]
-    \includegraphics[width=\linewidth]{courbe-elliptique}
-  \end{gztfigure}
+\begin{gztfigure}[title=Courbe elliptique correspondant à l'équation
+  $y^2=x^3-x$,label=elliptique]
+  \includegraphics[width=\linewidth]{courbe-elliptique}
+\end{gztfigure}
 \end{bodycode}
 
 \begin{bodycode}[listing options={morekeywords={[2]title,label},deletekeywords={[3]section}}]
-  En analysant les chiffres des \vref{recru-mc-25,recru-mc-26} correspondant au
-  recrutement des maîtres de conférences, on voit que la proportion des femmes
-  recrutées est [...]
+En analysant les chiffres des \vref{recru-mc-25,recru-mc-26} correspondant au
+recrutement des maîtres de conférences, on voit que la proportion des femmes
+recrutées est [...]
 %
-  \begin{gzttable*}[label=recru-mc-25,title=Recrutement des maîtres de
-    conférences section 25]
-    \begin{tabular}{|l|cccccc|}
-      \hline
-      & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 \\ \hline
-      [...]
-    \end{tabular}
-  \end{gzttable*}
+\begin{gzttable*}[label=recru-mc-25,title=Recrutement des maîtres de
+  conférences section 25]
+  \begin{tabular}{|l|cccccc|}
+    \hline
+    & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 \\ \hline
+    [...]
+  \end{tabular}
+\end{gzttable*}
 %
-  \begin{gzttable*}[label=recru-mc-26,title=Recrutement des maîtres de
-    conférences section 26]
-    \begin{tabular}{|l|cccccc|}
-      \hline
-      & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 \\ \hline
-      [...]
-    \end{tabular}
-  \end{gzttable*}
+\begin{gzttable*}[label=recru-mc-26,title=Recrutement des maîtres de
+  conférences section 26]
+  \begin{tabular}{|l|cccccc|}
+    \hline
+    & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 \\ \hline
+    [...]
+  \end{tabular}
+\end{gzttable*}
 \end{bodycode}
 
 \subsection{Bibliographie}
@@ -565,16 +565,16 @@ le \Package*{biblatex} et le moteur \hologo{biber}. Leur usage est détaillé da
   \begin{enumerate}
   \item \emph{En préambule}, utiliser la commande \docAuxCommand{addbibresource}
     pour indiquer le \meta{fichier bibliographique} à considérer :
-    \begin{preamblecode}
-      \addbibresource{+\meta{fichier bibliographique}+.bib}
-    \end{preamblecode}
+\begin{preamblecode}
+\addbibresource{+\meta{fichier bibliographique}+.bib}
+\end{preamblecode}
   \item Dans le corps du document, utiliser la commande
     \docAuxCommand{autocite}\footnote{De préférence à la commande
       \docAuxCommand{cite}.} du \Package*{biblatex} pour citer les références
     bibliographiques (pourvue d'une \meta{clé}) :
-    \begin{bodycode}
-      \autocite{+\meta{clé}+}
-    \end{bodycode}
+\begin{bodycode}
+\autocite{+\meta{clé}+}
+\end{bodycode}
   \item À la fin du document, faire figurer la liste des références
     bibliographiques au moyen de la commande \refCom{printbibliography}
     suivante.
@@ -913,13 +913,13 @@ code informatique, notamment du code \LaTeX{} :
 \end{docEnvironment}
 
 \begin{bodycode}[listing and text]
-  \begin{gztcode}
-    Utilisons l'environnement \verb|align*| :
-    \begin{align*}
-      a & = a\\
-      b & = b
-    \end{align*}
-  \end{gztcode}
+\begin{gztcode}
+  Utilisons l'environnement \verb|align*| :
+  \begin{align*}
+    a & = a\\
+    b & = b
+  \end{align*}
+\end{gztcode}
 \end{bodycode}
 
 L'environnement \refEnv{gztcode} admet en argument optionnel la plupart des
@@ -932,13 +932,13 @@ L'environnement \refEnv{gztcode} admet en argument optionnel la plupart des
 \end{docKey}
 
 \begin{bodycode}[listing and text,listing options={morekeywords={[2]title}}]
-  \begin{gztcode}[title=Alignement d'équations]
-    Utilisons l'environnement \verb|align*| :
-    \begin{align*}
-      a & = a\\
-      b & = b
-    \end{align*}
-  \end{gztcode}
+\begin{gztcode}[title=Alignement d'équations]
+  Utilisons l'environnement \verb|align*| :
+  \begin{align*}
+    a & = a\\
+    b & = b
+  \end{align*}
+\end{gztcode}
 \end{bodycode}
 
 \begin{docKey}{listing and text}{}{}
@@ -1009,18 +1009,18 @@ pris en charge.
 \end{docKey}
 
 \begin{bodycode}[listing and text,listing options={deletekeywords={listing,[2]style}}]
-  \lstdefinestyle{mon-style}{%
-    language=Python,%
-    basicstyle=\ttfamily,%
-    keywordstyle=\color{magenta},%
-    commentstyle=\color{gray}\itshape,%
-    stringstyle=\color{cyan}%
-  }
+\lstdefinestyle{mon-style}{%
+  language=Python,%
+  basicstyle=\ttfamily,%
+  keywordstyle=\color{magenta},%
+  commentstyle=\color{gray}\itshape,%
+  stringstyle=\color{cyan}%
+}
 %
-  \begin{gztcode}[listing options={style=mon-style}]
-    """Calcul de la factorielle""" # En python def factorielle(x): if x < 2:
-    return 1 else: return x * factorielle(x-1)
-  \end{gztcode}
+\begin{gztcode}[listing options={style=mon-style}]
+  """Calcul de la factorielle""" # En python def factorielle(x): if x < 2:
+  return 1 else: return x * factorielle(x-1)
+\end{gztcode}
 \end{bodycode}
 
 \begin{docCommand}{gztverb}{\marg{code}}
@@ -1031,12 +1031,12 @@ pris en charge.
 L'exemple suivant illustre l'usage de cette commande\conseilslatex.
 
 \begin{bodycode}[listing and text,colback=white,listing options={deletekeywords={[2]style}}]
-  Dans le cas de \LaTeX, les commandes de style de caractères \gztverb{\bf},
-  \gztverb{\it}, \gztverb{\sf}, \gztverb{\tt}, \gztverb{\sc}, \gztverb{\sl},
-  \gztverb{\rm} sont désormais à proscrire. Elles doivent être remplacées par
-  les commutateurs, respectivement \gztverb{\bfseries}, \gztverb {\itshape},
-  \gztverb{\sffamily}, \gztverb{\ttfamily}, \gztverb{\scshape},
-  \gztverb{\slshape}, \gztverb{\rmfamily}.
+Dans le cas de \LaTeX, les commandes de style de caractères \gztverb{\bf},
+\gztverb{\it}, \gztverb{\sf}, \gztverb{\tt}, \gztverb{\sc}, \gztverb{\sl},
+\gztverb{\rm} sont désormais à proscrire. Elles doivent être remplacées par
+les commutateurs, respectivement \gztverb{\bfseries}, \gztverb {\itshape},
+\gztverb{\sffamily}, \gztverb{\ttfamily}, \gztverb{\scshape},
+\gztverb{\slshape}, \gztverb{\rmfamily}.
 \end{bodycode}
 
 \section{Autre outils communs à tous types d'articles}
