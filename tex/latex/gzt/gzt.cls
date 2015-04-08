@@ -253,7 +253,7 @@
 \tl_const:Nn \c__gzt_dossier_rubric_string_tl {Dossier}
 \tl_const:Nn \c__gzt_community_rubric_string_tl {Vie~de~la~communaut\'e}
 \tl_const:Nn \c__gzt_interview_rubric_string_tl {Entretien}
-\tl_const:Nn \c__gzt_teaching_rubric_string_tl {Enseignement}
+\tl_const:Nn \c__gzt_teaching_rubric_string_tl {Diffusion~des~savoirs}
 \tl_const:Nn \c__gzt_parity_rubric_string_tl {Parit\'e}
 \tl_const:Nn \c__gzt_tellme_rubric_string_tl {Raconte-moi}
 \tl_const:Nn \c__gzt_information_rubric_string_tl {Information}
