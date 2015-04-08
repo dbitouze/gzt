@@ -2031,6 +2031,8 @@
 }
 \declaretheoremstyle[spaceabove=3pt,bodyfont=\itshape]{__gzt_theorem}
 \declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont]{__gzt_definition}
+\declaretheoremstyle[spaceabove=3pt,bodyfont=\itshape,numbered=no]{__gzt_unumbered_theorem}
+\declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont,numbered=no]{__gzt_unumbered_definition}
 \NewDocumentCommand \gztnewtheorem {O{}mmm}
 {
   \__gzt_new_theorem:nnnn {#1}{#2}{#3}{#4}
@@ -2051,6 +2053,22 @@
 \gztnewtheorem[style=__gzt_definition]{example}{Exemple}{Example}
 \gztnewtheorem[style=__gzt_definition]{exemple}{Exemple}{Example}
 \gztnewtheorem[style=__gzt_definition]{notation}{Notation}{Notation}
+\gztnewtheorem[style=__gzt_unumbered_theorem]{theorem*}{Th\'eor\`eme}{Theorem}
+\gztnewtheorem[style=__gzt_unumbered_theorem]{theoreme*}{Th\'eor\`eme}{Theorem}
+\gztnewtheorem[style=__gzt_unumbered_theorem]{corollary*}{Corollaire}{Corollary}
+\gztnewtheorem[style=__gzt_unumbered_theorem]{corollaire*}{Corollaire}{Corollary}
+\gztnewtheorem[style=__gzt_unumbered_theorem]{conjecture*}{Conjecture}{Conjecture}
+\gztnewtheorem[style=__gzt_unumbered_theorem]{proposition*}{Proposition}{Proposition}
+\gztnewtheorem[style=__gzt_unumbered_theorem]{lemma*}{Lemme}{Lemma}
+\gztnewtheorem[style=__gzt_unumbered_theorem]{lemme*}{Lemme}{Lemma}
+\gztnewtheorem[style=__gzt_unumbered_theorem]{axiom*}{Axiome}{Axiom}
+\gztnewtheorem[style=__gzt_unumbered_theorem]{axiome*}{Axiome}{Axiom}
+\gztnewtheorem[style=__gzt_unumbered_definition]{definition*}{D\'efinition}{Definition}
+\gztnewtheorem[style=__gzt_unumbered_definition]{remark*}{Remarque}{Remark}
+\gztnewtheorem[style=__gzt_unumbered_definition]{remarque*}{Remarque}{Remark}
+\gztnewtheorem[style=__gzt_unumbered_definition]{example*}{Exemple}{Example}
+\gztnewtheorem[style=__gzt_unumbered_definition]{exemple*}{Exemple}{Example}
+\gztnewtheorem[style=__gzt_unumbered_definition]{notation*}{Notation}{Notation}
 \DeclareMathOperator{\cotan}{cotan}
 \DeclareMathOperator{\Arccos}{Arccos}
 \DeclareMathOperator{\Arcsin}{Arcsin}
