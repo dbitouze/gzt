@@ -1046,11 +1046,11 @@ pris en charge.
 \end{docCommand}
 L'exemple suivant illustre l'usage de cette commande\conseilslatex.
 
-\begin{bodycode}[listing and text,colback=white,listing options={deletekeywords={[2]style}}]
+\begin{bodycode}[listing and text,colback=white,listing options={deletekeywords={[3]style}}]
 Dans le cas de \LaTeX, les commandes de style de caractères \gztverb{\bf},
 \gztverb{\it}, \gztverb{\sf}, \gztverb{\tt}, \gztverb{\sc}, \gztverb{\sl},
 \gztverb{\rm} sont désormais à proscrire. Elles doivent être remplacées par
-les commutateurs, respectivement \gztverb{\bfseries}, \gztverb {\itshape},
+les commutateurs, respectivement \gztverb{\bfseries}, \gztverb{\itshape},
 \gztverb{\sffamily}, \gztverb{\ttfamily}, \gztverb{\scshape},
 \gztverb{\slshape}, \gztverb{\rmfamily}.
 \end{bodycode}
@@ -1071,7 +1071,7 @@ des packages automatiquement chargés par la \gztauthorcl\footnote{La
   \item seuls certains packages chargés par la classe sont cités ;
   \item seules certaines fonctionnalités des packages cités sont décrites. Le
     lecteur souhaitant en savoir davantage est invité à lire la documentation de
-    ces packages pour en savoir davantage.
+    ces packages.
   \end{itemize}
 \end{dbwarning}
 
@@ -1113,10 +1113,11 @@ même si elles comportent des caractères spéciaux de \TeX{} (|#|, |_|, |~|,
     quelle}\footnote{Notamment sans faire précéder les éventuels caractères
     spéciaux qu'elle contient de la commande d'échappement
     \protect\lstinline+\\+.} et fait d'elle un lien hypertexte.
-\begin{bodycode}[listing and text,listing options={deletekeywords={[2]url,[1]math}}]
+\begin{bodycode}[listing and text,listing options={deletekeywords={[2]url,math}}]
 Pour plus d'information, nous renvoyons à notre site Web
 \url{http://math.univ-lille1.fr/~nwejm/}.
 \end{bodycode}
+  \lstset{deletekeywords={[2]url,[1]exemple}}%
 \begin{bodycode}[listing and text,listing options={deletekeywords={[2]url,[1]exemple}}]
 Par exemple, \url{www.cnrs.fr/insmi/IMG/pdf/Parite_ReunionDU290312.pdf}.
 \end{bodycode}
