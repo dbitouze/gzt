@@ -129,7 +129,7 @@ occurrences de cette commande.
     (identique à celle de \hologo{BibTeX} et \package{biblatex}) :
     %
 \begin{bodycode}[listing options={showspaces}]
-+\meta{Nom}+, +\meta{Prénom}+
+"\meta{Nom}", "\meta{Prénom}"
 \end{bodycode}
     %
   \item les éventuels accents figurent dans les \meta{Prénom} et
@@ -156,12 +156,12 @@ respectives %^^A (à séparer par des virgules)
 \refKey{minibio} :
 \begin{bodycode}
 \author[%
-  affiliation=+\marg{affiliation(s)}+,%
-  photo=+\meta{photo}+,%
-  email=+\meta{email}+,%
-  webpage=+\meta{page Web}+,%
-  minibio=+\marg{biographie express}+%
-]{+\meta{Nom}+, +\meta{Prénom}+}
+  affiliation="\marg{affiliation(s)}",%
+  photo="\meta{photo}",%
+  email="\meta{email}",%
+  webpage="\meta{page Web}",%
+  minibio="\marg{biographie express}"%
+]{"\meta{Nom}", "\meta{Prénom}"}
 \end{bodycode}
 
 \begin{docKey}{affiliation}{={\marg{affiliation(s)}}}{pas de valeur par défaut,
@@ -566,14 +566,14 @@ le \Package*{biblatex} et le moteur \hologo{biber}. Leur usage est détaillé da
   \item \emph{En préambule}, utiliser la commande \docAuxCommand{addbibresource}
     pour indiquer le \meta{fichier bibliographique} à considérer :
 \begin{preamblecode}
-\addbibresource{+\meta{fichier bibliographique}+.bib}
+\addbibresource{"\meta{fichier bibliographique}".bib}
 \end{preamblecode}
   \item Dans le corps du document, utiliser la commande
     \docAuxCommand{autocite}\footnote{De préférence à la commande
       \docAuxCommand{cite}.} du \Package*{biblatex} pour citer les références
     bibliographiques (pourvue d'une \meta{clé}) :
 \begin{bodycode}
-\autocite{+\meta{clé}+}
+\autocite{"\meta{clé}"}
 \end{bodycode}
   \item À la fin du document, faire figurer la liste des références
     bibliographiques au moyen de la commande \refCom{printbibliography}
@@ -1024,6 +1024,7 @@ pris en charge.
   au moyen de l'option \docAuxKey{language}.
 \end{docKey}
 
+\lstset{escapechar={},escapeinside={}}
 \begin{bodycode}[listing and text,listing options={deletekeywords={listing,[2]style}}]
 \lstdefinestyle{mon-style}{%
   language=Python,%
@@ -1038,6 +1039,7 @@ pris en charge.
   return 1 else: return x * factorielle(x-1)
 \end{gztcode}
 \end{bodycode}
+\lstset{escapechar="}
 
 \begin{docCommand}{gztverb}{\marg{code}}
   Cette commande permet d'afficher \emph{verbatim}\footnote{\Cad*{} tel quel,
