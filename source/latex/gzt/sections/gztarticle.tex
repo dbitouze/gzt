@@ -1035,8 +1035,12 @@ pris en charge.
 }
 %
 \begin{gztcode}[listing options={style=mon-style}]
-  """Calcul de la factorielle""" # En python def factorielle(x): if x < 2:
-  return 1 else: return x * factorielle(x-1)
+"""Calcul de la factorielle""" # En python
+def factorielle(x):
+  if x < 2:
+    return 1
+  else:
+    return x * factorielle(x-1)
 \end{gztcode}
 \end{bodycode}
 \lstset{escapechar="}
