@@ -846,6 +846,11 @@ This work consists of the file  gzt.dtx
 \RequirePackage{adjustbox}%
 %    \end{macrocode}
 %
+% \item :
+%    \begin{macrocode}
+\RequirePackage{zref-lastpage}%
+%    \end{macrocode}
+%
 % \item Alternative versions of "ragged"-type commands:
 %    \begin{macrocode}
 \RequirePackage[newcommands]{ragged2e}%
@@ -1601,6 +1606,18 @@ This work consists of the file  gzt.dtx
 }{
   \dim_const:Nn \c_@@_layoutoffset_dim {\c_zero_dim}
 }
+%    \end{macrocode}
+%
+% The "\c_@@_adjustmargin_dim" is added to the inner margin and substracted to
+% the outer margin. It is non-zero if (and only if) the total pages number is
+% greater or equal than 98 (thresold for an adhesive square-back binding).
+%    \begin{macrocode}
+% \ifnum\zref@extractdefault{LastPage}{page}{0}<98
+% \dim_const:Nn \c_@@_adjustmargin_dim {\c_zero_dim}
+% \else
+\dim_const:Nn \c_@@_adjustmargin_dim { 5mm }
+% \fi
+%
 \dim_const:Nn \c_@@_future_bindingoffset_dim { 4.1mm}
 % \dim_const:Nn \c_@@_future_bindingoffset_dim { 65mm}
 \bool_if:NTF {\g_@@_cover_bool} {
@@ -1652,8 +1669,8 @@ This work consists of the file  gzt.dtx
 \dim_const:Nn \c_@@_headheight_dim  {  7mm}
 \dim_const:Nn \c_@@_botmargin_dim   {  30mm}
 \dim_const:Nn \c_@@_footskip_dim    {  26mm}
-\dim_const:Nn \c_@@_innermargin_dim  { 15mm - \c_@@_bindingoffset_dim}
-\dim_const:Nn \c_@@_outermargin_dim {  30mm}
+\dim_const:Nn \c_@@_innermargin_dim { 15mm - \c_@@_bindingoffset_dim + \c_@@_adjustmargin_dim}
+\dim_const:Nn \c_@@_outermargin_dim { 30mm - \c_@@_adjustmargin_dim }
 \dim_const:Nn \c_@@_frontcover_image_height_dim {  160mm}
 \dim_const:Nn \c_@@_radius_arc_dim { 85mm }%
 \dim_const:Nn \c_@@_inside_frontcover_box_width_dim { 165mm }%
