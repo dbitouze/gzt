@@ -386,7 +386,7 @@ This work consists of the file  gzt.dtx
   \usebibmacro{begentry}%
   \textbf{\printfield{series}}%
   % \usebibmacro{series+number}%
-  \newline\newline\nopunct\newblock
+  \newline\bigskip\nopunct\newblock
   {%
     \Large%
     \printfield{title}%
@@ -846,6 +846,11 @@ This work consists of the file  gzt.dtx
 \RequirePackage{adjustbox}%
 %    \end{macrocode}
 %
+% \item Alternative versions of "ragged"-type commands:
+%    \begin{macrocode}
+\RequirePackage[newcommands]{ragged2e}%
+%    \end{macrocode}
+%
 % \item Context sensitive quotation facilities:
 %    \begin{macrocode}
 \RequirePackage[autostyle]{csquotes}%
@@ -1118,7 +1123,7 @@ This work consists of the file  gzt.dtx
 %   chief in order to use singular or plural form of the corresponding string
 %   \enquote{Rédacteur(s) en chef}.
 %    \begin{macrocode}
-%<class>\int_new:N \g_@@_editors_in_chief_int
+\int_new:N \g_@@_editors_in_chief_int
 %    \end{macrocode}
 %
 % The integer "\g_@@_item_in_rubric_int" will count the number of item in
@@ -1213,14 +1218,6 @@ This work consists of the file  gzt.dtx
 \tl_const:Nn \c_@@_journal_title_string_tl {
   \c_@@_journal_short_title_string_tl{}~des~Math\'ematiciens%
 }
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%</class|class-article>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*class>
 %    \end{macrocode}
 %
 % For the editor(s) in chief.
@@ -1318,7 +1315,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % For the date of the president's message.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_president_message_date_string_tl {Le~\displaydate{@@_president_message_date}}
+\tl_const:Nn \c_@@_president_message_date_string_tl {Le~}
 %    \end{macrocode}
 % For the front cover header text.
 %    \begin{macrocode}
@@ -1420,14 +1417,6 @@ This work consists of the file  gzt.dtx
 % \end{macro}
 % \end{macro}
 % \end{macro}
-%
-%    \begin{macrocode}
-%</class>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*class|class-article>
-%    \end{macrocode}
 %
 % For the long and short forms of \acrshort*{smf}.
 %    \begin{macrocode}
@@ -2715,14 +2704,6 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 %
-%    \begin{macrocode}
-%</class|class-article>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*class>
-%    \end{macrocode}
-%
 % \section{Function for displaying a reflected text}
 %
 % We create the function that displays a reflected text.
@@ -3075,14 +3056,6 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 % \end{macro}
-%
-%    \begin{macrocode}
-%</class>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*class|class-article>
-%    \end{macrocode}
 %
 % \subsection{Interviews}
 %
@@ -3933,14 +3906,6 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % \end{macro}
 %
-%    \begin{macrocode}
-%</class|class-article>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*class>
-%    \end{macrocode}
-%
 % We load the configuration file, which has to be located in the \TeX{} search
 % path: at least one such a file is provided by the class and located in the
 % same directory as the class file. This file is loaded at the end of preamble
@@ -4059,40 +4024,65 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 %
-% \section{Displaying the editorial}
-%
-% We create an internal function that displays the editorial.
 %    \begin{macrocode}
-\cs_new_protected:Nn \_@@_display_editorial:
+\cs_new_protected:Nn \_@@_before_frontmatter_stuff:
 {
   \bool_gset_true:N \g_@@_frontmatter_bool%
   \pagestyle{@@_frontmatter_ps}%
   \exp_after:wN\newgeometry\exp_after:wN{\c_@@_front_matter_geometry_tl}%
-  \@@_boxed_issue_number:nn {}{\c_@@_editorial_string_tl}
-  \begingroup
-  \color{@@_frontmatter_text_color}%
-  \fontsize{11}{13.6}\selectfont
-  \raggedright%
-  \file_input:n { % \int_use:N \g_@@_issue_number_int/
-    \c_@@_editorial_file_string_tl}
-  \bigskip
-  \bigskip
-  \begin{flushright}
-    % \c_@@_editorinchief_message_date_string_tl\\[2.5mm]
-    \DTLforeach*[\DTLiseq{\l_@@_people_role_tl}{editorinchief}]{people}{%
-      \l_@@_firstlastname=first-last-name%
-      ,\l_@@_people_role_tl=role%
-    }{%
-      \_@@_citeauthor_no_firstinits:n {\c_@@_issue_bib_key_tl -editorinchief- \exp_not:V\DTLcurrentindex}%
-    }
-    % \\%
-    % \c_@@_editorinchief_signatory_string_tl
-  \end{flushright}
-  %
-  \endgroup
+}
+\cs_new_protected:Nn \_@@_after_frontmatter_stuff:
+{
+  \color{@@_default_text_color}
   \normalsize%
   \clearpage%
   \bool_gset_false:N \g_@@_frontmatter_bool%
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_before_editorial_presidentmessage:nn
+{
+  \_@@_before_frontmatter_stuff: {}
+  \@@_boxed_issue_number:nn {#1}{#2}
+  \color{@@_frontmatter_text_color}%
+  \fontsize{11}{13.6}\selectfont
+  \raggedright
+}
+\cs_new_protected:Nn \_@@_after_editorial_presidentmessage:
+{
+  \justifying
+  \bigskip
+  \par
+}
+%    \end{macrocode}
+%
+% \section{Displaying the editorial}
+%
+% We create an internal function that displays the editorial.
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_before_display_editorial:
+{
+  \_@@_before_editorial_presidentmessage:nn {}{\c_@@_editorial_string_tl}
+}
+\cs_new_protected:Nn \_@@_after_display_editorial:
+{
+  \_@@_after_editorial_presidentmessage: {}
+  \hspace*{\fill}%
+  \DTLforeach*[\DTLiseq{\l_@@_people_role_tl}{editorinchief}]{people}{%
+    \l_@@_firstlastname=first-last-name%
+    ,\l_@@_people_role_tl=role%
+  }{%
+    \_@@_citeauthor_no_firstinits:n {\c_@@_issue_bib_key_tl -editorinchief- \exp_not:V\DTLcurrentindex}%
+  }
+  %
+  \_@@_after_frontmatter_stuff: {}
+}
+\cs_new_protected:Nn \_@@_display_editorial:
+{
+  \_@@_before_display_editorial: {}
+  \file_input:n {\c_@@_editorial_file_string_tl}
+  \_@@_after_display_editorial: {}
 }
 \NewDocumentCommand \editorial {}
 {
@@ -4108,21 +4098,14 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \cs_new_protected:Nn \_@@_display_toc:
 {
-  \bool_gset_true:N \g_@@_frontmatter_bool%
-  \pagestyle{@@_frontmatter_ps}%
-  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_front_matter_geometry_tl}%
+  \_@@_before_frontmatter_stuff: {}
   \@@_boxed_issue_number:nn {\c_@@_issue_frontcover_image_path_string_tl}{\c_@@_toc_string_tl}
   \phantomsection
   \bookmark[page=\thepage,level=part]{\c_@@_toc_string_tl}
-  \begingroup
   \etocsettocdepth.toc{chapter}%
-  % \_@@_orig_tableofcontents
   \tableofcontents
   \the\toctabletok
-  \endgroup
-  \normalsize%
-  \clearpage%
-  \bool_gset_false:N \g_@@_frontmatter_bool%
+  \_@@_after_frontmatter_stuff: {}
 }
 \NewDocumentCommand \gzttableofcontents {}
 {
@@ -4173,54 +4156,75 @@ This work consists of the file  gzt.dtx
 %
 % We create an internal function that displays the president's message.
 %    \begin{macrocode}
-\cs_new_protected:Nn \_@@_display_president_message:
+\cs_new_protected:Nn \_@@_before_display_presidentmessage:
 {
-  \bool_gset_true:N \g_@@_frontmatter_bool%
-  \pagestyle{@@_frontmatter_ps}%
-  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_front_matter_geometry_tl}%
-  \@@_boxed_issue_number:nn {\c_@@_smf_logo_file_string_tl}{\c_@@_president_message_string_tl}
+  \_@@_before_editorial_presidentmessage:nn {\c_@@_smf_logo_file_string_tl}{\c_@@_president_message_string_tl}
   \phantomsection
   \par%
   \addcontentsline{toc}{part}{\l_@@_smf_short_string_tl}%
   \addcontentsline{toc}{chapter}{\c_@@_president_message_string_tl}%
-  \begingroup
-  \color{@@_frontmatter_text_color}%
-  \fontsize{11}{13.6}\selectfont
-  \raggedright%
-  \file_input:n {
-    % \int_use:N \g_@@_issue_number_int/
-    \c_@@_president_message_file_string_tl
-  }
-  \bigskip
-  % \bigskip
-  \begin{flushright}
-    \c_@@_president_message_date_string_tl\\[1.5mm]
-    % \medskip
-    \@@_display_people_by_role:n { president }%
-    % \\%
-    ,\space
-    \c_@@_president_signatory_string_tl
-  \end{flushright}
-  %
-  \endgroup
-  \normalsize%
-  \clearpage%
-  \bool_gset_false:N \g_@@_frontmatter_bool%
 }
+\cs_new_protected:Nn \_@@_after_display_presidentmessage:
+{
+  \_@@_after_editorial_presidentmessage: {}
+  %
+  \hspace*{\fill}%
+  \c_@@_president_message_date_string_tl%
+  \displaydate{@@_president_message_date}%
+  \\[1.5mm]
+  \hspace*{\fill}%
+  \@@_display_people_by_role:n { president }%
+  ,\space
+  \c_@@_president_signatory_string_tl
+  %
+  \_@@_after_frontmatter_stuff: {}
+}
+\cs_new_protected:Nn \_@@_display_president_message:
+{
+  \_@@_before_display_presidentmessage: {}
+  \file_input:n {\c_@@_president_message_file_string_tl}
+  \_@@_after_display_presidentmessage: {}
+}
+% \cs_new_protected:Nn \_@@_display_president_message:
+% {
+%   \bool_gset_true:N \g_@@_frontmatter_bool%
+%   \pagestyle{@@_frontmatter_ps}%
+%   \exp_after:wN\newgeometry\exp_after:wN{\c_@@_front_matter_geometry_tl}%
+%   \@@_boxed_issue_number:nn {\c_@@_smf_logo_file_string_tl}{\c_@@_president_message_string_tl}
+%   \begingroup
+%   \color{@@_frontmatter_text_color}%
+%   \fontsize{11}{13.6}\selectfont
+%   \raggedright%
+%   \phantomsection
+%   \par%
+%   \addcontentsline{toc}{part}{\l_@@_smf_short_string_tl}%
+%   \addcontentsline{toc}{chapter}{\c_@@_president_message_string_tl}%
+%   \file_input:n {
+%     % \int_use:N \g_@@_issue_number_int/
+%     \c_@@_president_message_file_string_tl
+%   }
+%   \bigskip
+%   % \bigskip
+%   \begin{flushright}
+%     \c_@@_president_message_date_string_tl
+%     \displaydate{@@_president_message_date}
+%     \\[1.5mm]
+%     \@@_display_people_by_role:n { president }%
+%     ,\space
+%     \c_@@_president_signatory_string_tl
+%   \end{flushright}
+%   %
+%   \endgroup
+%   \normalsize%
+%   \clearpage%
+%   \bool_gset_false:N \g_@@_frontmatter_bool%
+% }
 \NewDocumentCommand \presidentmessage {}
 {
   \bool_if:NF {\g_@@_for_authors_bool} {
     \_@@_display_president_message: {}
   }
 }
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%</class>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*class|class-article>
 %    \end{macrocode}
 %
 % \section{Chapter, sections, etc. customization}
@@ -4582,6 +4586,14 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
+%
 % \subsection{Cover page style}
 %
 %    \begin{macrocode}
@@ -4761,14 +4773,6 @@ This work consists of the file  gzt.dtx
 %     }%
 %   }%
 % }
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%</class>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*class|class-article>
 %    \end{macrocode}
 %
 % We draw a gray background at the bottom of each page, but the first one.
@@ -5459,6 +5463,30 @@ This work consists of the file  gzt.dtx
 %
 %    \begin{macrocode}
 %<*class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\keys_define:nn { gztarticle }
+{
+  editorial .code:n = {%
+    \AtBeginDocument{%
+      \_@@_before_display_editorial: {}%
+    }
+    \AtEndDocument{%
+      \_@@_after_display_editorial: {}%
+    }
+  },%
+  presidentmessage .code:n = {%
+    \AtBeginDocument{%
+      \_@@_before_display_presidentmessage: {}%
+    }
+    \AtEndDocument{%
+      \_@@_after_display_presidentmessage: {}%
+    }
+  },%
+}%
+%
+\ProcessKeysOptions { gztarticle }
 %    \end{macrocode}
 %
 %    \begin{macrocode}
