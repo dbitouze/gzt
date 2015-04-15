@@ -1048,6 +1048,7 @@
       \end{adjustbox}
     }
   \end{__gzt_inside_frontcover}
+  \setcounter{page}{0}
   \clearpage%
   \bool_gset_false:N \g__gzt_insidefrontcovermatter_bool
 }
@@ -1746,7 +1747,8 @@
   \__gzt_before_frontmatter_stuff: {}
   \__gzt_boxed_issue_number:nn {\c__gzt_issue_frontcover_image_path_string_tl}{\c__gzt_toc_string_tl}
   \phantomsection
-  \bookmark[page=\thepage,level=part]{\c__gzt_toc_string_tl}
+  \hypertarget{__gzt_toc}{}
+  \bookmark[dest=__gzt_toc,level=part]{\c__gzt_toc_string_tl}
   \etocsettocdepth.toc{chapter}%
   \tableofcontents
   \the\toctabletok
@@ -1989,7 +1991,7 @@
   {}%
   %
   \setfoot%
-  [\c__gzt_footer_size_font_tl\thepage]%
+  []%
   [%
     \uppercase{\c__gzt_footer_string_tl}
   ]%
@@ -2083,6 +2085,7 @@
   {}%
 }%
 \AddEverypageHook{%
+%%<class> \int_compare:nNnT { \value{page} } > { 0 } {%
     \bool_if:NF {\g__gzt_advertisement_bool} {
       \tikz[remember~picture,overlay] { \g__gzt_background_footer_tl }%
     }%
