@@ -2876,6 +2876,7 @@ This work consists of the file  gzt.dtx
       \end{adjustbox}
     }
   \end{_@@_inside_frontcover}
+  \setcounter{page}{0}
   \clearpage%
   \bool_gset_false:N \g_@@_insidefrontcovermatter_bool
 }
@@ -4103,7 +4104,8 @@ This work consists of the file  gzt.dtx
   \_@@_before_frontmatter_stuff: {}
   \@@_boxed_issue_number:nn {\c_@@_issue_frontcover_image_path_string_tl}{\c_@@_toc_string_tl}
   \phantomsection
-  \bookmark[page=\thepage,level=part]{\c_@@_toc_string_tl}
+  \hypertarget{@@_toc}{}
+  \bookmark[dest=@@_toc,level=part]{\c_@@_toc_string_tl}
   \etocsettocdepth.toc{chapter}%
   \tableofcontents
   \the\toctabletok
@@ -4611,7 +4613,7 @@ This work consists of the file  gzt.dtx
   {}%
   %
   \setfoot%
-  [\c_@@_footer_size_font_tl\thepage]%
+  []%
   [%
     \uppercase{\c_@@_footer_string_tl}
   ]%
@@ -4746,7 +4748,8 @@ This work consists of the file  gzt.dtx
 % We draw a gray background at the bottom of each page, but the first one.
 %    \begin{macrocode}
 \AddEverypageHook{%
-%<class>  \int_compare:nNnT { \value{page} } > { 1 } {%
+%%<class> \int_compare:nNnT { \value{page} } > { 0 } {%
+%<class> \bool_if:nF { \g_@@_frontcovermatter_bool  }{
     \bool_if:NF {\g_@@_advertisement_bool} {
       \tikz[remember~picture,overlay] { \g_@@_background_footer_tl }%
     }%
