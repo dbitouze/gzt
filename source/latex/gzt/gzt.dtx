@@ -3480,8 +3480,10 @@ This work consists of the file  gzt.dtx
 \cs_new_protected:Nn \_@@_citeauthor_no_firstinits:n {%
   \tl_gset:Nn \g_@@_citeauthor_tl {%
     \DeclareNameAlias{labelname}{default}%
+    \group_begin:
     \togglefalse{blx@firstinits}%
     \citeauthor{#1}
+    \group_end:
   }%
   \cs_if_exist:cTF {texorpdfstring}
   {
