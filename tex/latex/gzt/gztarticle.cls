@@ -91,6 +91,7 @@
 \RequirePackage{graphicx}%
 \RequirePackage{longtable}%
 \RequirePackage{adjustbox}%
+\RequirePackage[newcommands]{ragged2e}%
 \RequirePackage[autostyle]{csquotes}%
 \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
 \RequirePackage{array}
@@ -144,6 +145,7 @@
   {Please~specify~`#1=<number>',
     ~otherwise~`<number>'~will~be~set~to
     ~`\int_use:N\c__gzt_first_issue_number_int'.}
+\int_new:N \g__gzt_editors_in_chief_int
 \int_new:N \g__gzt_item_in_rubric_int
 \int_new:N \g__gzt_articles_int
 \int_new:N \g__gzt_question_int
@@ -155,6 +157,72 @@
 \tl_const:Nn \c__gzt_journal_title_string_tl {
   \c__gzt_journal_short_title_string_tl{}~des~Math\'ematiciens%
 }
+\tl_const:Nn \c__gzt_editors_in_chief_string_tl
+{
+  \int_compare:nNnTF { \g__gzt_editors_in_chief_int } > { 1 }
+  { \c__gzt_editorsinchief_string_tl }
+  { \c__gzt_editorinchief_string_tl }
+}
+\tl_const:Nn \c__gzt_editorinchief_string_tl {R\'edacteur~en~chef }
+\tl_const:Nn \c__gzt_editorsinchief_string_tl {R\'edacteurs~en~chef }
+\tl_const:Nn \c__gzt_editors_string_tl {R\'edacteurs }
+\tl_const:Nn \c__gzt_editorial_board_string_tl {Comit\'e~de~r\'edaction}
+\tl_const:Nn \c__gzt_editorial_secretariat_string_tl {Secr\'etariat~de~r\'edaction}
+\tl_const:Nn \c__gzt_phone_string_tl {T\'el.}
+\tl_const:Nn \c__gzt_fax_string_tl {Fax}
+\tl_const:Nn \c__gzt_informations_string_tl {Renseignements}
+\tl_const:Nn \c__gzt_publishingdirector_string_tl {Directeur~de~la~publication}
+\tl_const:Nn \c__gzt_issn_string_tl {\textsc{issn}}
+\tl_const:Nn \c__gzt_isbn_string_tl {\textsc{isbn}}
+\tl_const:Nn \c__gzt_latexclass_string_tl {Classe~\LaTeX{}}
+\tl_const:Nn \c__gzt_font_string_tl {Nous~utilisons~la~police~Kp-Fonts~cr{\'e}{\'e}e~par~Christophe~\textsc{Caignaert}.}
+\tl_const:Nn \c__gzt_configuration_file_string_tl {gzt.cfg}
+\tl_const:Nn \c__gzt_artistic_director_string_tl {Conception~graphique}
+\tl_const:Nn \c__gzt_editorial_string_tl {\'Editorial}
+\tl_const:Nn \c__gzt_editorinchief_signatory_string_tl {\c__gzt_editorinchief_string_tl~de~la~\c__gzt_journal_title_string_tl}
+\tl_const:Nn \c__gzt_toc_string_tl {Sommaire}
+\tl_const:Nn \c__gzt_president_message_string_tl {Mot~du~pr\'esident}
+\tl_const:Nn \c__gzt_president_signatory_string_tl {pr\'esident~de~la~\l__gzt_smf_short_string_tl}
+\tl_const:Nn \c__gzt_editorinchief_message_date_string_tl {Le~\displaydate{__gzt_editorinchief_message_date}}
+\tl_const:Nn \c__gzt_president_message_date_string_tl {Le~}
+\tl_const:Nn \c__gzt_front_cover_header_string_tl {
+  \l__gzt_uppercased_date_format\displaydate{__gzt_date}
+  \nobreakspace
+  \textendash{}\nobreakspace
+  \No\int_use:N\g__gzt_issue_number_int%
+}
+\tl_const:Nn \c__gzt_frontmatter_directory_string_tl {frontmatter}
+\tl_const:Nn \c__gzt_editorial_file_string_tl {\c__gzt_frontmatter_directory_string_tl/editorial}
+\tl_const:Nn \c__gzt_president_message_file_string_tl {\c__gzt_frontmatter_directory_string_tl/presidentmessage}
+\tl_const:Nn \c__gzt_issue_path_string_tl {\int_use:N \g__gzt_issue_number_int}
+\tl_const:Nn \c__gzt_images_directory_string_tl {images}
+\tl_const:Nn \c__gzt_issue_images_path_string_tl {% \c__gzt_issue_path_string_tl/
+  \c__gzt_images_directory_string_tl}
+\tl_const:Nn \c__gzt_issue_frontcover_image_file_string_tl {frontcover}
+\tl_const:Nn \c__gzt_issue_frontcover_image_path_string_tl {\c__gzt_issue_images_path_string_tl/\c__gzt_issue_frontcover_image_file_string_tl}
+\tl_const:Nn \c__gzt_about_front_cover_string_tl {\`A~propos~de~la~couverture.}
+\tl_const:Nn \c__gzt_credit_front_cover_string_tl {cr\'edit}
+\tl_const:Nn \c__gzt_preliminary_version_string_tl {%
+  Ce~document~est~une~{\'e}preuve~vous~permettant~de~contr{\^o}ler~l'int{\'e}grit{\'e}~du~
+  texte~d'origine~(et~de~la~bibliographie~s'il~y~en~a~une)~de~votre~article~
+  {\`a}~para{\^\i}tre~dans~le~prochain~num{\'e}ro~de~la~\gzt*{}.~La~mise~en~page~
+  actuelle~n'est~pas~d{\'e}finitive\,:~votre~article~pourra~en~particulier~ne~pas~
+  d{\'e}buter~en~haut~d'une~page.%
+}
+\tl_const:Nn \c__gzt_tellme_extra_title_string_tl {...\space}
+\tl_const:Nn \c__gzt_minitoc_rubric_title_separator_string_tl {\space\textendash}
+\tl_const:Nn \c__gzt_mathematics_rubric_string_tl {Math\'ematiques}
+\tl_const:Nn \c__gzt_dossier_rubric_string_tl {Dossier}
+\tl_const:Nn \c__gzt_community_rubric_string_tl {Vie~de~la~communaut\'e}
+\tl_const:Nn \c__gzt_interview_rubric_string_tl {Entretien}
+\tl_const:Nn \c__gzt_teaching_rubric_string_tl {Diffusion~des~savoirs}
+\tl_const:Nn \c__gzt_parity_rubric_string_tl {Parit\'e}
+\tl_const:Nn \c__gzt_tellme_rubric_string_tl {Raconte-moi}
+\tl_const:Nn \c__gzt_information_rubric_string_tl {Information}
+\tl_const:Nn \c__gzt_rearviewmirror_rubric_string_tl {R\'etroviseur}
+\tl_const:Nn \c__gzt_tribute_rubric_string_tl {Carnet}
+\tl_const:Nn \c__gzt_books_rubric_string_tl {Livres}
+\tl_const:Nn \c__gzt_latex_rubric_string_tl {Astuces~\LaTeX{}}
 \tl_const:Nn \c__gzt_smf_short_string_tl {SMF}
 \tl_const:Nn \c__gzt_smf_string_tl {Soci\'et\'e~Math\'ematique~de~France}
 \tl_const:Nn \c__gzt_cad_short_string_tl {c.-\`a-d.}
@@ -824,6 +892,240 @@
     }
   }
 }
+\cs_new_protected:Nn \__gzt_reflected_text:n
+{
+  \begin{tikzpicture}
+    \tikzset{__gzt_reflect_node/.style={%
+        anchor=base,%
+        inner~sep=0,%
+        line~width=0,%
+        font=\Huge,
+        color=__gzt_reflected_text_color%
+      }%
+    }%
+    \node[__gzt_reflect_node]{#1};
+    \node[scope~fading=south,opacity=0.2,yscale=-1,__gzt_reflect_node]{#1};
+  \end{tikzpicture}
+}
+\tl_new:N \g__gzt_display_front_cover_tl%
+\tl_gset:Nn \g__gzt_display_front_cover_tl {%
+  \bool_gset_true:N \g__gzt_frontcovermatter_bool
+  \pagestyle{__gzt_cover_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_front_cover_geometry_tl}%
+  \noindent%
+  \bool_if:NTF {\g__gzt_cover_bool} {
+    \hspace*{-\c__gzt_layoutoffset_dim}
+  }{
+    \hspace*{-2\c__gzt_layoutoffset_dim}
+  }
+  \includegraphics[
+  width=\c__gzt_frontcover_image_width_dim
+  % min~width=\paperwidth
+  % width=\c__gzt_layoutwidth_dim + 2\c__gzt_layoutoffset_dim
+  % min~size={\paperwidth}{\c__gzt_frontcover_image_height_dim+\c__gzt_layoutoffset_dim},
+  % max~size={\paperwidth}{\c__gzt_frontcover_image_height_dim+\c__gzt_layoutoffset_dim},
+  % Clip*=0mm~40mm~211mm~160mm
+  % Clip*=0mm~{\height-\c__gzt_frontcover_image_height_dim}~{\paperwidth}~{\height}
+  ]{\c__gzt_issue_frontcover_image_path_string_tl}
+  \begin{tikzpicture}[remember~picture, overlay]
+    \coordinate (__gzt_circle_minitoc_center) at
+    ([xshift=\g__gzt_minitoc_xshift_dim-\c__gzt_layoutoffset_dim,yshift=\g__gzt_minitoc_yshift_dim+\c__gzt_layoutoffset_dim]current~page.south~east) ;
+    \node[name=__gzt_circle_minitoc,shape=circle,inner~sep=\c_zero_dim,fill=white,text~width=\g__gzt_minitoc_circle_diameter_dim] at
+    (__gzt_circle_minitoc_center) {};
+    \node[text~width=\g__gzt_minitoc_textwidth_dim,anchor=north~west] at
+    ([xshift=\c__gzt_minitoc_from_circle_xshift_dim,yshift=\c__gzt_minitoc_from_circle_yshift_dim]$ (__gzt_circle_minitoc.north)!.5!(__gzt_circle_minitoc.west) $)
+    {
+      \large
+      \color{__gzt_dark_generic_light_color}
+      \bool_if:NF {\g__gzt_front_cover_minitoc_tl} {
+        \g__gzt_front_cover_minitoc_tl
+      }
+    };
+    \bool_if:NT {\g__gzt_minitoc_help_bool} {
+      \fill[red] (__gzt_circle_minitoc_center) circle (2pt);
+    }
+  \end{tikzpicture}
+  \bool_if:NT {\g__gzt_cover_bool} {
+    \small
+    \begin{tikzpicture}[remember~picture, overlay]
+      \node[name=__gzt_binding_sw,inner~sep=\c_zero_dim,fill=white,rotate=90,anchor=west] at
+      ([xshift=0.45\c__gzt_bindingoffset_dim,yshift=15mm+\c__gzt_layoutoffset_dim]current~page.south~west) {
+        \No\int_use:N\g__gzt_issue_number_int
+      };
+      \node[name=__gzt_binding_w,inner~sep=\c_zero_dim,fill=white,rotate=90] at
+      ([xshift=0.45\c__gzt_bindingoffset_dim]current~page.west) {
+        \MakeUppercase{\c__gzt_journal_title_string_tl}
+      };
+      \node[name=__gzt_binding_nw,inner~sep=\c_zero_dim,fill=white,rotate=90,anchor=east] at
+      ([xshift=0.45\c__gzt_bindingoffset_dim,yshift=-15mm-\c__gzt_layoutoffset_dim]current~page.north~west) {
+        \l__gzt_uppercased_date_format\displaydate{__gzt_date}
+      };
+    \end{tikzpicture}
+  }
+  \vfill%
+  \noindent%
+  \hspace*{10mm}%
+  \hspace*{-\c__gzt_layoutoffset_dim}
+  \includegraphics[height=22.5mm]{\c__gzt_smf_logo_file_string_tl}%
+  \vfill%
+  \clearpage%
+  \bool_gset_false:N \g__gzt_frontcovermatter_bool
+}
+\tl_new:N \g__gzt_display_inside_front_cover_tl%
+\tl_gset:Nn \g__gzt_display_inside_front_cover_tl {%
+  \bool_gset_true:N \g__gzt_insidefrontcovermatter_bool%
+  \pagestyle{__gzt_insidefrontcover_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_inside_front_cover_geometry_tl}%
+  \small%
+  \setlength{\columnseprule}{2pt}
+  \renewcommand{\columnseprulecolor}{\color{white}}
+  \begin{__gzt_inside_frontcover}
+    \begin{multicols}{2}
+      \setlength{\columnsep}{1mm}
+      \begin{description}[leftmargin=1em]
+      \item[\c__gzt_editors_in_chief_string_tl] \
+        \begin{description}[leftmargin=1em,style=nextline]
+          \__gzt_display_people_by_role:n {editorinchief}
+        \end{description}
+        \bigskip
+        \par
+      \item[\c__gzt_editors_string_tl] \
+        \begin{description}[leftmargin=1em,style=nextline]
+          \__gzt_display_people_by_role:n {editor}
+        \end{description}
+      \end{description}
+    \end{multicols}
+    \setlength{\columnseprule}{1pt}
+    \tcblower
+    \begin{tabular}{@{}m{.75\c__gzt_inside_frontcover_box_width_dim}@{}m{.2\c__gzt_inside_frontcover_box_width_dim-2\tabcolsep}@{}}
+      \begin{description}[leftmargin=1em]
+      \item[\c__gzt_editorial_secretariat_string_tl] \ \par%
+        \l__gzt_journal_publisher_tl\par%
+        \l__gzt_journal_address_tl\par%
+        \c__gzt_phone_string_tl{}~:~\l__gzt_journal_phone_tl{} \space\textendash{}\space
+        \c__gzt_fax_string_tl{}~:~\l__gzt_journal_fax_tl\par%
+        \href{mailto:\l__gzt_journal_email_tl}{\nolinkurl{\l__gzt_journal_email_tl}}\newline%
+        \url{\l__gzt_journal_url_tl}
+      \item[\c__gzt_publishingdirector_string_tl{}~:]
+        \__gzt_display_people_by_role:n { president }
+      \item[\c__gzt_issn_string_tl{}~:] \l__gzt_journal_issn_tl
+        \tl_if_empty:NF \l__gzt_journal_isbn_tl
+        {%
+        \item[\c__gzt_isbn_string_tl{}~:] \l__gzt_journal_isbn_tl
+        }
+      \item[\c__gzt_latexclass_string_tl{}~:]
+        \__gzt_display_people_by_role:n { classdesigner }
+      \item[\c__gzt_artistic_director_string_tl{}~:]
+        \__gzt_display_people_by_role:n { graphicdesigner }
+        % \item[\c__gzt_font_string_tl{}~:]
+        %   \__gzt_display_people_by_role:n { fontdesigner }
+      \end{description}
+      &
+        \raggedleft%
+        \includegraphics[height=20mm]{\c__gzt_smf_logo_file_string_tl}%
+    \end{tabular}
+    \\
+    \c__gzt_font_string_tl
+    \bigskip
+    \tl_if_empty:NF \g__gzt_about_front_cover_tl
+    {%
+      \\
+      \begin{adjustbox}{valign=t,minipage=.75\c__gzt_inside_frontcover_box_width_dim+.2\c__gzt_inside_frontcover_box_width_dim-2\tabcolsep}
+        \begin{description}[leftmargin=1em,font=\color{__gzt_about_front_cover_title_color}]
+        \item[\g__gzt_about_front_cover_string_tl] \g__gzt_about_front_cover_tl
+          \bool_if:NT {\g__gzt_credit_front_cover_bool} {
+            \space(\c__gzt_credit_front_cover_string_tl{}~:~%
+            \DTLforeach*[\DTLiseq{\l__gzt_people_role_tl}{frontcovercredit}]{people}{%
+              \l__gzt_firstlastname=first-last-name%
+              ,\l__gzt_people_role_tl=role%
+            }{%
+              \__gzt_citeauthor_no_firstinits:n
+              {\c__gzt_issue_bib_key_tl -frontcovercredit- \exp_not:V\DTLcurrentindex}%
+            }%
+            ).%
+          }
+        \end{description}
+      \end{adjustbox}
+    }
+  \end{__gzt_inside_frontcover}
+  \clearpage%
+  \bool_gset_false:N \g__gzt_insidefrontcovermatter_bool
+}
+\NewDocumentCommand \editorinchief {ommm}
+{
+  \int_incr:N \g__gzt_editors_in_chief_int
+  \__gzt_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{editorinchief}{}
+}
+\NewDocumentCommand \editor {ommm}
+{
+  \__gzt_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{editor}{}
+}
+
+\NewDocumentCommand \president {ommm}
+{
+  \__gzt_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{president}{}
+}
+\NewDocumentCommand \classdesigner {ommm}
+{
+  \__gzt_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{classdesigner}{}
+}
+\NewDocumentCommand \classmaintainer {ommm}
+{
+  \__gzt_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{classmaintainer}{}
+}
+\NewDocumentCommand \fontdesigner {ommm}
+{
+  \__gzt_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{fontdesigner}{}
+}
+\NewDocumentCommand \graphicdesigner {ommm}
+{
+  \__gzt_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{graphicdesigner}{}
+}
+\NewDocumentCommand \issuesetup { m } {
+  \keys_set:nn { gzt/issuesetup } { #1 }
+  \hypersetup{pdftitle=\c__gzt_journal_title_string_tl\space--\space{}N°\int_use:N\g__gzt_issue_number_int}
+  \hypersetup{pdfauthor=\l__gzt_smf_string_tl}
+  \int_compare:nNnT {\g__gzt_issue_number_int}<{1}
+  {
+    \int_set:Nn \g__gzt_issue_number_int { \c__gzt_first_issue_number_int }
+    \msg_warning:nnn{gzt}{issue-number-needed}{number}
+  }
+  \int_compare:nNnT {\g__gzt_issue_month_int * \g__gzt_issue_year_int}<{1}
+  {
+    \int_new:N \g__gzt_issue_age_in_months_int%
+    \int_gset:Nn \g__gzt_issue_age_in_months_int
+    {
+      \c__gzt_first_issue_month_int
+      + \c__gzt_interval_in_months_int
+      * ( \int_use:N \g__gzt_issue_number_int - \c__gzt_first_issue_number_int )
+    }
+  }
+  \int_compare:nNnT {\g__gzt_issue_month_int}<{1}
+  {
+    \int_gset:Nn \g__gzt_issue_month_int
+    {
+      \int_mod:nn { \g__gzt_issue_age_in_months_int } { 12 }
+    }
+  }
+  \int_compare:nNnT {\g__gzt_issue_year_int}<{1}
+  {
+    \int_new:N \g__gzt_issue_age_in_years_int%
+    \int_gset:Nn \g__gzt_issue_age_in_years_int
+    {%
+      \int_div_truncate:nn { \g__gzt_issue_age_in_months_int } { 12 }
+    }%
+    \int_gset:Nn \g__gzt_issue_year_int
+    {
+      \g__gzt_issue_age_in_years_int + \c__gzt_first_issue_year_int
+    }
+  }%
+}
+\NewDocumentCommand \journalsetup { m } {
+  \keys_set:nn { gzt/journalsetup } { #1 }
+}
+\RenewDocumentCommand \date { mmm } {
+  \newdate{__gzt_president_message_date}{#1}{#2}{#3}%
+}
 \NewDocumentCommand \interviewee { om } {
   \tl_if_empty:nT \g__gzt_title_tl {
     \tl_gset:Nn \g__gzt_title_tl {
@@ -995,8 +1297,10 @@
 \cs_new_protected:Nn \__gzt_citeauthor_no_firstinits:n {%
   \tl_gset:Nn \g__gzt_citeauthor_tl {%
     \DeclareNameAlias{labelname}{default}%
+    \group_begin:
     \togglefalse{blx@firstinits}%
     \citeauthor{#1}
+    \group_end:
   }%
   \cs_if_exist:cTF {texorpdfstring}
   {
@@ -1289,6 +1593,235 @@
     }
   }
 }
+\AtEndPreamble{\file_input:n {\c__gzt_configuration_file_string_tl}}
+\@ifpackageloaded{etoc}{%
+  \newif\ifShowPartPageInToc % used before \part{Livres}
+  \newtoks\toctabletok
+  \newcommand*\appendtotok[2]{% #1=toks variable, #2=macro, expands only once #2
+    #1\expandafter\expandafter\expandafter {\expandafter\the\expandafter #1#2}}
+  \newcommand*\PreparePart{%
+    \edef\toctablepiece {%
+      \ExceptFirstPart {\noexpand\\[-1.5mm]}%
+      \unexpanded{%
+        \color{__gzt_rubric_in_toc_color}\scshape\fontseries{bx}\selectfont%
+      }%
+      \unexpanded\expandafter{\etocthelinkedname}&
+      % \ifShowPartPageInToc
+      \unexpanded{\bfseries\color{__gzt_rubric_in_toc_color}}%
+      \unexpanded\expandafter{\etocthelinkedpage}%
+      % \fi
+      \noexpand\\}%
+    \gdef\ExceptFirstPart ##1{##1}%
+  }
+  \newcommand*\PrepareChapter{%
+    \edef\toctablepiece {%
+      \unexpanded{\color{__gzt_article_in_toc_color}\small}%
+      \unexpanded\expandafter{\etocthelinkedname}&
+      \unexpanded{\color{__gzt_article_in_toc_color}\small}
+      \unexpanded\expandafter{\etocthelinkedpage}%
+      \noexpand\\[1mm]}%
+  }
+  \etocsetstyle{part}{}{}
+  {\PreparePart \appendtotok\toctabletok\toctablepiece}
+  {}
+  \etocsetstyle{chapter}{}{}
+  {\PrepareChapter \appendtotok\toctabletok\toctablepiece}
+  {}
+  \etocsettocstyle
+  {%
+    \setlength\LTleft{\c_zero_dim}
+    \setlength\LTright{\c_zero_dim}
+    \gdef\ExceptFirstPart ##1{}%
+    \toctabletok {%\hypersetup{hidelinks}%
+      \begin{longtable}{@{\extracolsep{\fill}}p{115mm}@{\quad}!{\color{__gzt_rule_in_toc_color}\vrule width 0.2mm}@{}r@{}}}%
+        }
+        {\global\toctabletok\expandafter{%
+        \the\toctabletok\end{longtable}
+        }
+      }
+    }{}
+\tl_new:N \g__gzt_boxed_issue_number_tl%
+\tl_gset:Nn \g__gzt_boxed_issue_number_tl {%
+  \tcbox{\Large\No\g__gzt_issue_number_int}
+}
+\cs_new_protected:Nn \__gzt_boxed_issue_number:nn
+{
+  \noindent%
+  \raisebox{\baselineskip}{%
+    \tl_if_empty:nF {#1} {%
+      \makebox[\c_zero_dim][r]{%
+      % \hspace*{\l__gzt_thumbnail_width_dim}%
+        \begin{adjustbox}{valign=t}
+          \includegraphics[width=\l__gzt_thumbnail_width_dim]{#1}%
+        \end{adjustbox}%
+      }%
+    }%
+    \begin{adjustbox}{valign=t}
+      \begin{tcolorbox}[%
+        enhanced,%
+        title=\No\int_use:N \g__gzt_issue_number_int,%
+        fonttitle=\Large,%
+        colback=white,%
+        sharp~corners=all,%
+        height=33mm,%
+        boxrule=\c_zero_dim,%
+        % frame~hidden,%
+        attach~boxed~title~to~top~left,%
+        tikznode~boxed~title={minimum~width=\c__gzt_boxed_issue_number_width_dim},%
+        boxed~title~style={%
+          size=minimal,%
+          height=\c__gzt_boxed_issue_number_height_dim,%
+          center~upper,%
+          before={},%
+          colback=__gzt_boxed_issue_number_bg_color,%
+          sharp~corners=all,%
+          frame~hidden,%
+          valign=center,%
+        }%
+        ]
+        \__gzt_reflected_text:n { #2 }%
+      \end{tcolorbox}
+    \end{adjustbox}%
+  }%
+  \par%
+}
+\cs_new_protected:Nn \__gzt_before_frontmatter_stuff:
+{
+  \bool_gset_true:N \g__gzt_frontmatter_bool%
+  \pagestyle{__gzt_frontmatter_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_front_matter_geometry_tl}%
+}
+\cs_new_protected:Nn \__gzt_after_frontmatter_stuff:
+{
+  \color{__gzt_default_text_color}
+  \normalsize%
+  \clearpage%
+  \bool_gset_false:N \g__gzt_frontmatter_bool%
+}
+\cs_new_protected:Nn \__gzt_before_editorial_presidentmessage:nn
+{
+  \__gzt_before_frontmatter_stuff: {}
+  \__gzt_boxed_issue_number:nn {#1}{#2}
+  \color{__gzt_frontmatter_text_color}%
+  \fontsize{11}{13.6}\selectfont
+  \raggedright
+}
+\cs_new_protected:Nn \__gzt_after_editorial_presidentmessage:
+{
+  \justifying
+  \bigskip
+  \par
+}
+\cs_new_protected:Nn \__gzt_before_display_editorial:
+{
+  \__gzt_before_editorial_presidentmessage:nn {}{\c__gzt_editorial_string_tl}
+}
+\cs_new_protected:Nn \__gzt_after_display_editorial:
+{
+  \__gzt_after_editorial_presidentmessage: {}
+  \hspace*{\fill}%
+  \DTLforeach*[\DTLiseq{\l__gzt_people_role_tl}{editorinchief}]{people}{%
+    \l__gzt_firstlastname=first-last-name%
+    ,\l__gzt_people_role_tl=role%
+  }{%
+    \__gzt_citeauthor_no_firstinits:n {\c__gzt_issue_bib_key_tl -editorinchief- \exp_not:V\DTLcurrentindex}%
+  }
+  %
+  \__gzt_after_frontmatter_stuff: {}
+}
+\cs_new_protected:Nn \__gzt_display_editorial:
+{
+  \__gzt_before_display_editorial: {}
+  \file_input:n {\c__gzt_editorial_file_string_tl}
+  \__gzt_after_display_editorial: {}
+}
+\NewDocumentCommand \editorial {}
+{
+  \bool_if:NF {\g__gzt_for_authors_bool} {
+    \__gzt_display_editorial: {}
+  }
+}
+\cs_new_protected:Nn \__gzt_display_toc:
+{
+  \__gzt_before_frontmatter_stuff: {}
+  \__gzt_boxed_issue_number:nn {\c__gzt_issue_frontcover_image_path_string_tl}{\c__gzt_toc_string_tl}
+  \phantomsection
+  \bookmark[page=\thepage,level=part]{\c__gzt_toc_string_tl}
+  \etocsettocdepth.toc{chapter}%
+  \tableofcontents
+  \the\toctabletok
+  \__gzt_after_frontmatter_stuff: {}
+}
+\NewDocumentCommand \gzttableofcontents {}
+{
+  \bool_if:NF {\g__gzt_for_authors_bool} {
+    \__gzt_display_toc: {}
+  }
+}
+\tl_new:N \g__gzt_front_cover_minitoc_tl%
+\tl_new:N \l__gzt_minitoc_label_tl%
+\cs_new_protected:Nn \__gzt_front_cover_minitoc:n
+{
+  \tl_gset:Nn \g__gzt_front_cover_minitoc_tl {#1}
+}
+\NewDocumentCommand \minitoc { O{} m }
+{
+  \keys_set:nn { gzt/minitoc } { #1 }
+  \__gzt_front_cover_minitoc:n {#2}
+}
+\newlist{__gzt_minitoc_list}{itemize}{1}
+\setlist[__gzt_minitoc_list]{itemsep=2ex,label=\textcolor{__gzt_cover_itemize_label_color}\textbullet}
+\NewDocumentEnvironment{minitoclist}{  }
+{%
+  \cs_set_eq:NN \__gzt_orig_item \item
+  \RenewDocumentCommand \item { s O{} }{%
+    \tl_set:Nn \l__gzt_minitoc_label_tl {##2}
+    \__gzt_orig_item\textbf{##2}
+    \IfBooleanT {##1}
+    {
+      \c__gzt_minitoc_rubric_title_separator_string_tl
+    }
+  }
+  \begin{__gzt_minitoc_list}
+}{
+  \end{__gzt_minitoc_list}
+  \cs_set_eq:NN \item \__gzt_orig_item
+}
+\cs_new_protected:Nn \__gzt_before_display_presidentmessage:
+{
+  \__gzt_before_editorial_presidentmessage:nn {\c__gzt_smf_logo_file_string_tl}{\c__gzt_president_message_string_tl}
+  \phantomsection
+  \par%
+  \addcontentsline{toc}{part}{\l__gzt_smf_short_string_tl}%
+  \addcontentsline{toc}{chapter}{\c__gzt_president_message_string_tl}%
+}
+\cs_new_protected:Nn \__gzt_after_display_presidentmessage:
+{
+  \__gzt_after_editorial_presidentmessage: {}
+  %
+  \hspace*{\fill}%
+  \c__gzt_president_message_date_string_tl%
+  \displaydate{__gzt_president_message_date}%
+  \\[1.5mm]
+  \hspace*{\fill}%
+  \__gzt_display_people_by_role:n { president }%
+  ,\space
+  \c__gzt_president_signatory_string_tl
+  %
+  \__gzt_after_frontmatter_stuff: {}
+}
+\cs_new_protected:Nn \__gzt_display_president_message:
+{
+  \__gzt_before_display_presidentmessage: {}
+  \file_input:n {\c__gzt_president_message_file_string_tl}
+  \__gzt_after_display_presidentmessage: {}
+}
+\NewDocumentCommand \presidentmessage {}
+{
+  \bool_if:NF {\g__gzt_for_authors_bool} {
+    \__gzt_display_president_message: {}
+  }
+}
 \titleformat{\chapter}%
 [block]
 {\Huge\bfseries}
@@ -1416,6 +1949,139 @@
     /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure\nobreakspace\textendash{}\nobreakspace}}}},%
 }
 \ExplSyntaxOn
+\newpagestyle{__gzt_cover_ps}[]{%
+  \sethead
+  {}%
+  {%
+    \adjustbox{stack=c}{
+      {\Large
+        \c__gzt_front_cover_header_string_tl
+      }\\[7mm]
+      \adjustbox{scale=2.08}{
+        \l__gzt_frontmatter_head_text_tl
+      }%
+    }%
+  }%
+  {}%
+  %
+  \setfoot%
+  {}%
+  {}%
+  {}%
+}%
+\newpagestyle{__gzt_insidefrontcover_ps}[]{%
+  \sethead%
+  [
+    \tikz[remember~picture,overlay] {%
+      \g__gzt_frontmatter_page_headrule_tl%
+      \g__gzt_frontmatter_headtext_tl%
+    }%
+  ]%
+  []%
+  []%
+  {}%
+  {
+    \tikz[remember~picture,overlay] {%
+      \g__gzt_frontmatter_page_headrule_tl%
+      \g__gzt_frontmatter_headtext_tl%
+    }%
+  }%
+  {}%
+  %
+  \setfoot%
+  [\c__gzt_footer_size_font_tl\thepage]%
+  [%
+    \uppercase{\c__gzt_footer_string_tl}
+  ]%
+  []%
+  {}%
+  {%
+    \uppercase{\c__gzt_footer_string_tl}%
+  }%
+  {\c__gzt_footer_size_font_tl\thepage}%
+}%
+\newpagestyle{__gzt_frontmatter_ps}[]{%
+  \widenhead*{\c__gzt_front_matter_extra_innermargin_dim}{\c__gzt_front_matter_extra_outermargin_dim}
+  \sethead%
+  [
+    \tikz[remember~picture,overlay] {%
+      \g__gzt_frontmatter_page_headrule_tl%
+      \g__gzt_frontmatter_headtext_tl%
+    }%
+  ]%
+  []%
+  []%
+  {}%
+  {
+    \tikz[remember~picture,overlay] {%
+      \g__gzt_frontmatter_page_headrule_tl%
+      \g__gzt_frontmatter_headtext_tl%
+    }%
+  }%
+  {}%
+  %
+  \setfoot%
+  [\c__gzt_footer_size_font_tl\thepage]%
+  [%
+    \uppercase{\c__gzt_footer_string_tl}
+  ]%
+  []%
+  {}%
+  {%
+    \uppercase{\c__gzt_footer_string_tl}%
+  }%
+  {\c__gzt_footer_size_font_tl\thepage}%
+}%
+\newpagestyle{__gzt_rubric_ps}[]{%
+  \widenhead{\c_zero_dim}{\c_zero_dim}
+  \sethead%
+  [
+  ]%
+  [
+  ]%
+  [
+    \g__gzt_rubric_page_head_tl%
+    \bool_if:nF { \g__gzt_for_authors_bool } {
+      \adjustbox{raise={\c__gzt_header_yshift_dim}{\height},lap=-\c__gzt_header_xshift_dim-\linewidth}{%
+        \includegraphics[width=\c__gzt_pictogram_width_dim]{\g__gzt_rubric_pictofile_tl}%
+      }%
+    }%
+  ]%
+  {
+    \g__gzt_rubric_page_head_tl%
+  }%
+  {}%
+  {%
+    \bool_if:nF { \g__gzt_for_authors_bool } {
+      \adjustbox{raise={\c__gzt_header_yshift_dim}{\height},lap=\c__gzt_header_xshift_dim}{%
+        \includegraphics[width=\c__gzt_pictogram_width_dim]{\g__gzt_rubric_pictofile_tl}%
+      }%
+    }%
+  }%
+  %
+  \setfoot%
+  [\c__gzt_footer_size_font_tl\thepage]%
+  [%
+    \uppercase{\c__gzt_footer_string_tl}
+  ]%
+  []%
+  {}%
+  {%
+    \uppercase{\c__gzt_footer_string_tl}%
+  }%
+  {\c__gzt_footer_size_font_tl\thepage}%
+}%
+\newpagestyle{__gzt_advertisement_ps}[]{%
+  \sethead
+  {}%
+  {}%
+  {}%
+  %
+  \setfoot%
+  {}%
+  {}%
+  {}%
+}%
 \AddEverypageHook{%
     \bool_if:NF {\g__gzt_advertisement_bool} {
       \tikz[remember~picture,overlay] { \g__gzt_background_footer_tl }%
@@ -1778,9 +2444,9 @@
       \medskip
       %
       \begin{center}
-        Public~price~:\space
+        Public~price:\space
         \EUR{\__gzt_cite_public_price{\g__gzt_bookadvertisement_bibkey_tl}}
-        \space\textendash\space \smf{}~member~price~:\space
+        \space\textendash\space \smf{}~member~price:\space
         \EUR{\__gzt_cite_smf_price{\g__gzt_bookadvertisement_bibkey_tl}}
         \space\textendash\space Shipping~costs~not~included
       \end{center}
@@ -1805,6 +2471,26 @@
   \bool_gset_false:N \g__gzt_advertisement_bool
   \bool_gset_true:N \g__gzt_mainmatter_bool
 }
+\keys_define:nn { gztarticle }
+{
+  editorial .code:n = {%
+    \AtBeginDocument{%
+      \__gzt_before_display_editorial: {}%
+    }
+    \AtEndDocument{%
+      \__gzt_after_display_editorial: {}%
+    }
+  },%
+  presidentmessage .code:n = {%
+    \AtBeginDocument{%
+      \__gzt_before_display_presidentmessage: {}%
+    }
+    \AtEndDocument{%
+      \__gzt_after_display_presidentmessage: {}%
+    }
+  },%
+}%
+\ProcessKeysOptions { gztarticle }
 \AtEndDocument{%
   \bool_if:NT {\g__gzt_multicols_bool} {
     \end{multicols}%

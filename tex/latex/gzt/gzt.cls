@@ -127,6 +127,7 @@
   \RequirePackage{draftwatermark}[2006/06/30]%
 }
 \RequirePackage{adjustbox}%
+\RequirePackage[newcommands]{ragged2e}%
 \RequirePackage[autostyle]{csquotes}%
 \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
 \RequirePackage{array}
@@ -222,7 +223,7 @@
 \tl_const:Nn \c__gzt_president_message_string_tl {Mot~du~pr\'esident}
 \tl_const:Nn \c__gzt_president_signatory_string_tl {pr\'esident~de~la~\l__gzt_smf_short_string_tl}
 \tl_const:Nn \c__gzt_editorinchief_message_date_string_tl {Le~\displaydate{__gzt_editorinchief_message_date}}
-\tl_const:Nn \c__gzt_president_message_date_string_tl {Le~\displaydate{__gzt_president_message_date}}
+\tl_const:Nn \c__gzt_president_message_date_string_tl {Le~}
 \tl_const:Nn \c__gzt_front_cover_header_string_tl {
   \l__gzt_uppercased_date_format\displaydate{__gzt_date}
   \nobreakspace
@@ -1432,8 +1433,10 @@
 \cs_new_protected:Nn \__gzt_citeauthor_no_firstinits:n {%
   \tl_gset:Nn \g__gzt_citeauthor_tl {%
     \DeclareNameAlias{labelname}{default}%
+    \group_begin:
     \togglefalse{blx@firstinits}%
     \citeauthor{#1}
+    \group_end:
   }%
   \cs_if_exist:cTF {texorpdfstring}
   {
@@ -1833,36 +1836,55 @@
   }%
   \par%
 }
-\cs_new_protected:Nn \__gzt_display_editorial:
+\cs_new_protected:Nn \__gzt_before_frontmatter_stuff:
 {
   \bool_gset_true:N \g__gzt_frontmatter_bool%
   \pagestyle{__gzt_frontmatter_ps}%
   \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_front_matter_geometry_tl}%
-  \__gzt_boxed_issue_number:nn {}{\c__gzt_editorial_string_tl}
-  \begingroup
-  \color{__gzt_frontmatter_text_color}%
-  \fontsize{11}{13.6}\selectfont
-  \raggedright%
-  \file_input:n { % \int_use:N \g__gzt_issue_number_int/
-    \c__gzt_editorial_file_string_tl}
-  \bigskip
-  \bigskip
-  \begin{flushright}
-    % \c__gzt_editorinchief_message_date_string_tl\\[2.5mm]
-    \DTLforeach*[\DTLiseq{\l__gzt_people_role_tl}{editorinchief}]{people}{%
-      \l__gzt_firstlastname=first-last-name%
-      ,\l__gzt_people_role_tl=role%
-    }{%
-      \__gzt_citeauthor_no_firstinits:n {\c__gzt_issue_bib_key_tl -editorinchief- \exp_not:V\DTLcurrentindex}%
-    }
-    % \\%
-    % \c__gzt_editorinchief_signatory_string_tl
-  \end{flushright}
-  %
-  \endgroup
+}
+\cs_new_protected:Nn \__gzt_after_frontmatter_stuff:
+{
+  \color{__gzt_default_text_color}
   \normalsize%
   \clearpage%
   \bool_gset_false:N \g__gzt_frontmatter_bool%
+}
+\cs_new_protected:Nn \__gzt_before_editorial_presidentmessage:nn
+{
+  \__gzt_before_frontmatter_stuff: {}
+  \__gzt_boxed_issue_number:nn {#1}{#2}
+  \color{__gzt_frontmatter_text_color}%
+  \fontsize{11}{13.6}\selectfont
+  \raggedright
+}
+\cs_new_protected:Nn \__gzt_after_editorial_presidentmessage:
+{
+  \justifying
+  \bigskip
+  \par
+}
+\cs_new_protected:Nn \__gzt_before_display_editorial:
+{
+  \__gzt_before_editorial_presidentmessage:nn {}{\c__gzt_editorial_string_tl}
+}
+\cs_new_protected:Nn \__gzt_after_display_editorial:
+{
+  \__gzt_after_editorial_presidentmessage: {}
+  \hspace*{\fill}%
+  \DTLforeach*[\DTLiseq{\l__gzt_people_role_tl}{editorinchief}]{people}{%
+    \l__gzt_firstlastname=first-last-name%
+    ,\l__gzt_people_role_tl=role%
+  }{%
+    \__gzt_citeauthor_no_firstinits:n {\c__gzt_issue_bib_key_tl -editorinchief- \exp_not:V\DTLcurrentindex}%
+  }
+  %
+  \__gzt_after_frontmatter_stuff: {}
+}
+\cs_new_protected:Nn \__gzt_display_editorial:
+{
+  \__gzt_before_display_editorial: {}
+  \file_input:n {\c__gzt_editorial_file_string_tl}
+  \__gzt_after_display_editorial: {}
 }
 \NewDocumentCommand \editorial {}
 {
@@ -1872,21 +1894,14 @@
 }
 \cs_new_protected:Nn \__gzt_display_toc:
 {
-  \bool_gset_true:N \g__gzt_frontmatter_bool%
-  \pagestyle{__gzt_frontmatter_ps}%
-  \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_front_matter_geometry_tl}%
+  \__gzt_before_frontmatter_stuff: {}
   \__gzt_boxed_issue_number:nn {\c__gzt_issue_frontcover_image_path_string_tl}{\c__gzt_toc_string_tl}
   \phantomsection
   \bookmark[page=\thepage,level=part]{\c__gzt_toc_string_tl}
-  \begingroup
   \etocsettocdepth.toc{chapter}%
-  % \__gzt_orig_tableofcontents
   \tableofcontents
   \the\toctabletok
-  \endgroup
-  \normalsize%
-  \clearpage%
-  \bool_gset_false:N \g__gzt_frontmatter_bool%
+  \__gzt_after_frontmatter_stuff: {}
 }
 \NewDocumentCommand \gzttableofcontents {}
 {
@@ -1923,39 +1938,34 @@
   \end{__gzt_minitoc_list}
   \cs_set_eq:NN \item \__gzt_orig_item
 }
-\cs_new_protected:Nn \__gzt_display_president_message:
+\cs_new_protected:Nn \__gzt_before_display_presidentmessage:
 {
-  \bool_gset_true:N \g__gzt_frontmatter_bool%
-  \pagestyle{__gzt_frontmatter_ps}%
-  \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_front_matter_geometry_tl}%
-  \__gzt_boxed_issue_number:nn {\c__gzt_smf_logo_file_string_tl}{\c__gzt_president_message_string_tl}
+  \__gzt_before_editorial_presidentmessage:nn {\c__gzt_smf_logo_file_string_tl}{\c__gzt_president_message_string_tl}
   \phantomsection
   \par%
   \addcontentsline{toc}{part}{\l__gzt_smf_short_string_tl}%
   \addcontentsline{toc}{chapter}{\c__gzt_president_message_string_tl}%
-  \begingroup
-  \color{__gzt_frontmatter_text_color}%
-  \fontsize{11}{13.6}\selectfont
-  \raggedright%
-  \file_input:n {
-    % \int_use:N \g__gzt_issue_number_int/
-    \c__gzt_president_message_file_string_tl
-  }
-  \bigskip
-  % \bigskip
-  \begin{flushright}
-    \c__gzt_president_message_date_string_tl\\[1.5mm]
-    % \medskip
-    \__gzt_display_people_by_role:n { president }%
-    % \\%
-    ,\space
-    \c__gzt_president_signatory_string_tl
-  \end{flushright}
+}
+\cs_new_protected:Nn \__gzt_after_display_presidentmessage:
+{
+  \__gzt_after_editorial_presidentmessage: {}
   %
-  \endgroup
-  \normalsize%
-  \clearpage%
-  \bool_gset_false:N \g__gzt_frontmatter_bool%
+  \hspace*{\fill}%
+  \c__gzt_president_message_date_string_tl%
+  \displaydate{__gzt_president_message_date}%
+  \\[1.5mm]
+  \hspace*{\fill}%
+  \__gzt_display_people_by_role:n { president }%
+  ,\space
+  \c__gzt_president_signatory_string_tl
+  %
+  \__gzt_after_frontmatter_stuff: {}
+}
+\cs_new_protected:Nn \__gzt_display_president_message:
+{
+  \__gzt_before_display_presidentmessage: {}
+  \file_input:n {\c__gzt_president_message_file_string_tl}
+  \__gzt_after_display_presidentmessage: {}
 }
 \NewDocumentCommand \presidentmessage {}
 {
@@ -2740,9 +2750,9 @@
       \medskip
       %
       \begin{center}
-        Public~price~:\space
+        Public~price:\space
         \EUR{\__gzt_cite_public_price{\g__gzt_bookadvertisement_bibkey_tl}}
-        \space\textendash\space \smf{}~member~price~:\space
+        \space\textendash\space \smf{}~member~price:\space
         \EUR{\__gzt_cite_smf_price{\g__gzt_bookadvertisement_bibkey_tl}}
         \space\textendash\space Shipping~costs~not~included
       \end{center}
