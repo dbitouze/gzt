@@ -127,6 +127,7 @@
   \RequirePackage{draftwatermark}[2006/06/30]%
 }
 \RequirePackage{adjustbox}%
+\RequirePackage{zref-lastpage}%
 \RequirePackage[newcommands]{ragged2e}%
 \RequirePackage[autostyle]{csquotes}%
 \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
@@ -322,6 +323,7 @@
 }{
   \dim_const:Nn \c__gzt_layoutoffset_dim {\c_zero_dim}
 }
+\dim_const:Nn \c__gzt_adjustmargin_dim { 5mm }
 \dim_const:Nn \c__gzt_future_bindingoffset_dim { 4.1mm}
 \bool_if:NTF {\g__gzt_cover_bool} {
   \dim_const:Nn \c__gzt_bindingoffset_dim { \c__gzt_future_bindingoffset_dim }
@@ -372,8 +374,8 @@
 \dim_const:Nn \c__gzt_headheight_dim  {  7mm}
 \dim_const:Nn \c__gzt_botmargin_dim   {  30mm}
 \dim_const:Nn \c__gzt_footskip_dim    {  26mm}
-\dim_const:Nn \c__gzt_innermargin_dim  { 15mm - \c__gzt_bindingoffset_dim}
-\dim_const:Nn \c__gzt_outermargin_dim {  30mm}
+\dim_const:Nn \c__gzt_innermargin_dim { 15mm - \c__gzt_bindingoffset_dim + \c__gzt_adjustmargin_dim}
+\dim_const:Nn \c__gzt_outermargin_dim { 30mm - \c__gzt_adjustmargin_dim }
 \dim_const:Nn \c__gzt_frontcover_image_height_dim {  160mm}
 \dim_const:Nn \c__gzt_radius_arc_dim { 85mm }%
 \dim_const:Nn \c__gzt_inside_frontcover_box_width_dim { 165mm }%
