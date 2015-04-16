@@ -5647,6 +5647,10 @@ This work consists of the file  gzt.dtx
 % \end{itemize}
 % whom layout is based upon \pkg{tcolorbox} features.
 %    \begin{macrocode}
+\tcbset{
+  copyright/.style={overlay={\node[rotate=90,anchor=south~west,font=\tiny]
+      at (frame.south~east) {\copyright{}~#1};}}
+}
 \tcbset{%
   _@@_tcb_floats_style/.style={%
     enhanced%
