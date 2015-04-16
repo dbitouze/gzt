@@ -327,7 +327,7 @@
 \zexternaldocument[self]{\jobname}%
 \int_new:N \g__gzt_total_page_number_int%
 \int_gset:Nn \g__gzt_total_page_number_int { \zref@extractdefault{selfLastPage}{abspage}{0} }
-\int_compare:nNnTF {\g__gzt_total_page_number_int}<{98}
+\int_compare:nNnTF {\g__gzt_total_page_number_int}<{72}
 {
   \dim_const:Nn \c__gzt_adjustmargin_dim {\c_zero_dim}
 }
