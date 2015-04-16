@@ -91,7 +91,8 @@
 \RequirePackage{graphicx}%
 \RequirePackage{longtable}%
 \RequirePackage{adjustbox}%
-\RequirePackage{zref-lastpage}%
+\RequirePackage{zref-totpages}
+\RequirePackage{zref-xr}%
 \RequirePackage[newcommands]{ragged2e}%
 \RequirePackage[autostyle]{csquotes}%
 \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
@@ -284,7 +285,16 @@
 }{
   \dim_const:Nn \c__gzt_layoutoffset_dim {\c_zero_dim}
 }
-\dim_const:Nn \c__gzt_adjustmargin_dim { 5mm }
+\zexternaldocument[self]{\jobname}%
+\int_new:N \g__gzt_total_page_number_int%
+\int_gset:Nn \g__gzt_total_page_number_int { \zref@extractdefault{selfLastPage}{abspage}{0} }
+\int_compare:nNnTF {\g__gzt_total_page_number_int}<{98}
+{
+  \dim_const:Nn \c__gzt_adjustmargin_dim {\c_zero_dim}
+}
+{
+  \dim_const:Nn \c__gzt_adjustmargin_dim { 5mm }
+}
 \dim_const:Nn \c__gzt_future_bindingoffset_dim { 4.1mm}
 \bool_if:NTF {\g__gzt_cover_bool} {
   \dim_const:Nn \c__gzt_bindingoffset_dim { \c__gzt_future_bindingoffset_dim }
