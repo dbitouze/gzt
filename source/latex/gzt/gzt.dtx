@@ -1617,7 +1617,7 @@ This work consists of the file  gzt.dtx
 %
 % The "\c_@@_adjustmargin_dim" is added to the inner margin and substracted to
 % the outer margin. It is non-zero if (and only if) the total pages number is
-% greater or equal than 98 (thresold for an adhesive square-back binding). For
+% greater or equal than 72 (thresold for an adhesive square-back binding). For
 % this, we need first to specify the external document whom \File{.aux} file
 % will be read.
 %    \begin{macrocode}
@@ -1625,7 +1625,7 @@ This work consists of the file  gzt.dtx
 %
 \int_new:N \g_@@_total_page_number_int%
 \int_gset:Nn \g_@@_total_page_number_int { \zref@extractdefault{selfLastPage}{abspage}{0} }
-\int_compare:nNnTF {\g_@@_total_page_number_int}<{98}
+\int_compare:nNnTF {\g_@@_total_page_number_int}<{72}
 {
   \dim_const:Nn \c_@@_adjustmargin_dim {\c_zero_dim}
 }
