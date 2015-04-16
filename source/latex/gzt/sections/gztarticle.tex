@@ -220,8 +220,6 @@ respectives %^^A (à séparer par des virgules)
 \begin{docCommand}{acknowledgements}{\marg{remerciements}}
   Cette commande, facultative, permet de spécifier des \meta{remerciements} pour
   un article.
-\end{docCommand}
-
 \begin{bodycode}
 \acknowledgements{%
   L'auteur remercie Frédéric Patras, pour les nombreuses discussions qu'il
@@ -230,6 +228,7 @@ respectives %^^A (à séparer par des virgules)
   suggestions ont été très utiles.%
 }
 \end{bodycode}
+\end{docCommand}
 
 \subsubsection{Résumé}
 \label{sec-resume}
@@ -340,14 +339,13 @@ recourra pas à la commande \refCom{author}, mais plutôt à la commande
 
 \begin{docCommand}{academicsignature}{\marg{signature}}
   Cette commande permet de spécifier une \meta{signature} académique.
-\end{docCommand}
-
 \begin{bodycode}
 \academicsignature{%
   Au nom du comité éditorial, Serge Nicaise (éditeur en chef) et Nicolas
   Wicker (directeur technique).%
 }
 \end{bodycode}
+\end{docCommand}
 
 \begin{dbwarning}{Commande \protect\docAuxCommand*{academicsignature} à effet \enquote{immédiat}}{}
   La commande \refCom{author} \enquote{prépare} un auteur qui n'est affiché que
@@ -1023,8 +1021,6 @@ pris en charge.
   Cette clé de l'environnement \refEnv{gztcode} permet de passer au listing
   toute option connue du \Package*{listings}, notamment le langage sous-jacent
   au moyen de l'option \docAuxKey{language}.
-\end{docKey}
-
 \lstset{escapechar={},escapeinside={}}
 \begin{bodycode}[listing and text,listing options={deletekeywords={listing,[2]style}}]
 \lstdefinestyle{mon-style}{%
@@ -1045,14 +1041,14 @@ def factorielle(x):
 \end{gztcode}
 \end{bodycode}
 \lstset{escapechar="}
+\end{docKey}
 
 \begin{docCommand}{gztverb}{\marg{code}}
   Cette commande permet d'afficher \emph{verbatim}\footnote{\Cad*{} tel quel,
     sans être compilé par \LaTeX{}.} un (court) extrait de \meta{code} passé en
   argument.
-\end{docCommand}
-L'exemple suivant illustre l'usage de cette commande\conseilslatex.
 
+  L'exemple suivant illustre l'usage de cette commande\conseilslatex.
 \begin{bodycode}[listing and text,colback=white,listing options={deletekeywords={[3]style}}]
 Dans le cas de \LaTeX, les commandes de style de caractères \gztverb{\bf},
 \gztverb{\it}, \gztverb{\sf}, \gztverb{\tt}, \gztverb{\sc}, \gztverb{\sl},
@@ -1061,6 +1057,7 @@ les commutateurs, respectivement \gztverb{\bfseries}, \gztverb{\itshape},
 \gztverb{\sffamily}, \gztverb{\ttfamily}, \gztverb{\scshape},
 \gztverb{\slshape}, \gztverb{\rmfamily}.
 \end{bodycode}
+\end{docCommand}
 
 \section{Autres outils communs à tous types d'articles}
 \label{sec:outils-communs-tous-1}
