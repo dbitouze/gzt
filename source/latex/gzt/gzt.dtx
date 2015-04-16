@@ -846,9 +846,16 @@ This work consists of the file  gzt.dtx
 \RequirePackage{adjustbox}%
 %    \end{macrocode}
 %
-% \item :
+% \item A new reference scheme for \LaTeX{}, giving the total number of pages in
+%   the document:
 %    \begin{macrocode}
-\RequirePackage{zref-lastpage}%
+\RequirePackage{zref-totpages}
+%    \end{macrocode}
+%
+% \item A new reference scheme for \LaTeX{}, providing the facilities of the
+%   \package{xr} and \package{xr-hyper} packages:
+%    \begin{macrocode}
+\RequirePackage{zref-xr}%
 %    \end{macrocode}
 %
 % \item Alternative versions of "ragged"-type commands:
@@ -1610,13 +1617,21 @@ This work consists of the file  gzt.dtx
 %
 % The "\c_@@_adjustmargin_dim" is added to the inner margin and substracted to
 % the outer margin. It is non-zero if (and only if) the total pages number is
-% greater or equal than 98 (thresold for an adhesive square-back binding).
+% greater or equal than 98 (thresold for an adhesive square-back binding). For
+% this, we need first to specify the external document whom \File{.aux} file
+% will be read.
 %    \begin{macrocode}
-% \ifnum\zref@extractdefault{LastPage}{page}{0}<98
-% \dim_const:Nn \c_@@_adjustmargin_dim {\c_zero_dim}
-% \else
-\dim_const:Nn \c_@@_adjustmargin_dim { 5mm }
-% \fi
+\zexternaldocument[self]{\jobname}%
+%
+\int_new:N \g_@@_total_page_number_int%
+\int_gset:Nn \g_@@_total_page_number_int { \zref@extractdefault{selfLastPage}{abspage}{0} }
+\int_compare:nNnTF {\g_@@_total_page_number_int}<{98}
+{
+  \dim_const:Nn \c_@@_adjustmargin_dim {\c_zero_dim}
+}
+{
+  \dim_const:Nn \c_@@_adjustmargin_dim { 5mm }
+}
 %
 \dim_const:Nn \c_@@_future_bindingoffset_dim { 4.1mm}
 % \dim_const:Nn \c_@@_future_bindingoffset_dim { 65mm}
