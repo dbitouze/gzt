@@ -490,9 +490,9 @@ Les environnements \refEnv{gztfigure}, \refEnv{gztfigure*}, \refEnv{gzttable} et
 \item la plupart des (très nombreuses) options de l'environnement
   \docAuxEnvironment{tcolorbox} du \Package*{tcolorbox}. On retiendra notamment
   les options suivantes :
-\begin{docKey}{title}{=\meta{titre de l'image}}{pas de valeur par défaut,
+\begin{docKey}{title}{=\meta{titre}}{pas de valeur par défaut,
     initialement vide}
-  Cette clé permet de spécifier l'éventuel \meta{titre} (ou légende) de l'image.
+  Cette clé permet de spécifier l'éventuel \meta{titre} (ou légende).
 \end{docKey}
 \begin{docKey}{label}{=\meta{label}}{pas de valeur par défaut, initialement
     vide}
@@ -934,8 +934,6 @@ code informatique, notamment du code \LaTeX{} :
 \begin{docEnvironment}[doclang/environment content=listing]{gztcode}{\oarg{option(s)}}
   Cet environnement permet de faire figurer un listing de code informatique dans
   une boîte colorée.
-\end{docEnvironment}
-
 \begin{bodycode}[listing and text]
 Nous préconisons l'environnement \verb|align*| :
 \begin{gztcode}
@@ -945,16 +943,15 @@ Nous préconisons l'environnement \verb|align*| :
 \end{align*}
 \end{gztcode}
 \end{bodycode}
+\end{docEnvironment}
 
 L'environnement \refEnv{gztcode} admet en argument optionnel la plupart des
 (très nombreuses) options de l'environnement \docAuxEnvironment{tcblisting} du
 \Package*{tcolorbox}. On retiendra notamment les options suivantes.
 
-\begin{docKey}{title}{=\meta{titre du listing}}{pas de valeur par défaut,
+\begin{docKey}{title}{=\meta{titre}}{pas de valeur par défaut,
     initialement vide}
-  Cette clé permet de donner un titre au listing.
-\end{docKey}
-
+  Cette clé permet de donner un \meta{titre} au listing.
 \begin{bodycode}[listing and text,listing options={morekeywords={[2]title}}]
 Nous préconisons l'environnement \verb|align*| :
 \begin{gztcode}[title=Alignement d'équations]
@@ -964,6 +961,7 @@ Nous préconisons l'environnement \verb|align*| :
 \end{align*}
 \end{gztcode}
 \end{bodycode}
+\end{docKey}
 
 \begin{docKey}{listing and text}{}{}
   Cette clé permet de, dans la boîte colorée, faire figurer en partie :
@@ -977,8 +975,6 @@ Nous préconisons l'environnement \verb|align*| :
     L'option \refKey{listing and text} n'a de sens que pour un listing de code
     \LaTeX{}.
   \end{dbwarning}
-\end{docKey}
-
 \begin{tcboutputlisting}
 \begin{gztcode}[listing and text]
 L'environnement \verb|eqnarray| est obsolète et nous préconisons plutôt
@@ -1001,15 +997,12 @@ L'environnement \verb|eqnarray| est obsolète et nous préconisons plutôt
 \end{minipage}
 \end{gztcode}
 \end{tcboutputlisting}
-
-L'exemple suivant illustre l'usage de cet environnement\conseilslatex{}. Le
+L'exemple suivant illustre l'usage de cette option\conseilslatex{}. Le
 code :
-
 \tcbinputlisting{codes,listing only}
-
 donne :
-
 \input{\jobname.listing}
+\end{docKey}
 
 L'environnement \refEnv{gztcode} permet d'afficher du code informatique
 arbitraire.  Mais, dans les listings précédents, on constate que certaines
@@ -1198,8 +1191,8 @@ paragraphe\footnote{Le but premier de ce package est de personnaliser les listes
 
 \begin{bodycode}[listing and text,listing options={deletekeywords={[1]math,[2]url}}]
 \begin{enumerate}
-\item Les données que j’ai rassemblées [...]
-\item Les données que j’ai recueillies sont
+\item Les données que j'ai rassemblées [...]
+\item Les données que j'ai recueillies sont
   \begin{enumerate*}
   \item disponibles publiquement sur internet : pages Web et CV des
     conférenciers ;
