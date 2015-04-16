@@ -2308,6 +2308,7 @@
 \NewTCBListing{gztcode}{ O{} }{%
   listing~style=__gzt_lst_style,
   listing~only,
+  enlarge~top~by=\medskipamount,
   breakable,
   #1%
 }
@@ -2583,6 +2584,10 @@
     shorten~>=~\c__gzt_tcb_left_dim+\c__gzt_tcb_boxsep_dim,
     shorten~<=~\c__gzt_tcb_left_dim+\c__gzt_tcb_boxsep_dim,
   }
+}
+\tcbset{
+  copyright/.style={overlay={\node[rotate=90,anchor=south~west,font=\tiny]
+      at (frame.south~east) {\copyright{}~#1};}}
 }
 \tcbset{%
   __gzt_tcb_floats_style/.style={%
