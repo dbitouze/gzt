@@ -485,11 +485,11 @@ doit être employé dans l'un des deux environnements \refEnv{gzttable} et
 \label{sec-options-gzt}
 
 Les environnements \refEnv{gztfigure}, \refEnv{gztfigure*}, \refEnv{gzttable} et
-\refEnv{gzttable*} admettent en argument optionnel la plupart des (très
-nombreuses) options de l'environnement \docAuxEnvironment{tcolorbox} du
-\Package*{tcolorbox}. On retiendra notamment les options \refKey{title} et
-\refKey{label} suivantes :
-
+\refEnv{gzttable*} admettent en argument optionnel :
+\begin{itemize}
+\item la plupart des (très nombreuses) options de l'environnement
+  \docAuxEnvironment{tcolorbox} du \Package*{tcolorbox}. On retiendra notamment
+  les options suivantes :
 \begin{docKey}{title}{=\meta{titre de l'image}}{pas de valeur par défaut,
     initialement vide}
   Cette clé permet de spécifier l'éventuel \meta{titre} (ou légende) de l'image.
@@ -499,6 +499,12 @@ nombreuses) options de l'environnement \docAuxEnvironment{tcolorbox} du
   Cette clé permet de spécifier l'éventuel \meta{label} de l'image, de sorte
   à y faire référence, notamment au moyen de la commande \refCom{vref}.
 \end{docKey}
+\item la clé \refKey{copyright} suivante :\begin{docKey}{copyright}{=\meta{titulaire}}{pas de valeur par défaut, initialement
+    vide}
+  Cette clé permet de spécifier un éventuel \meta{titulaire} de
+  \emph{copyright}.
+\end{docKey}
+\end{itemize}
 
 Les exemples suivants illustrent les environnements et options qui viennent
 d'être vus.
@@ -931,31 +937,31 @@ code informatique, notamment du code \LaTeX{} :
 \end{docEnvironment}
 
 \begin{bodycode}[listing and text]
+Nous préconisons l'environnement \verb|align*| :
 \begin{gztcode}
-  Utilisons l'environnement \verb|align*| :
-  \begin{align*}
-    a & = a\\
-    b & = b
-  \end{align*}
+\begin{align*}
+  a & = a\\
+  b & = b
+\end{align*}
 \end{gztcode}
 \end{bodycode}
 
 L'environnement \refEnv{gztcode} admet en argument optionnel la plupart des
 (très nombreuses) options de l'environnement \docAuxEnvironment{tcblisting} du
-\Package*{tcolorbox}. On retiendra notamment les options \refKey{title},
-\refKey{listing and text} et \refKey{listing options} suivantes.
+\Package*{tcolorbox}. On retiendra notamment les options suivantes.
 
-\begin{docKey}{title}{}{}
+\begin{docKey}{title}{=\meta{titre du listing}}{pas de valeur par défaut,
+    initialement vide}
   Cette clé permet de donner un titre au listing.
 \end{docKey}
 
 \begin{bodycode}[listing and text,listing options={morekeywords={[2]title}}]
+Nous préconisons l'environnement \verb|align*| :
 \begin{gztcode}[title=Alignement d'équations]
-  Utilisons l'environnement \verb|align*| :
-  \begin{align*}
-    a & = a\\
-    b & = b
-  \end{align*}
+\begin{align*}
+  a & = a\\
+  b & = b
+\end{align*}
 \end{gztcode}
 \end{bodycode}
 
@@ -975,7 +981,7 @@ L'environnement \refEnv{gztcode} admet en argument optionnel la plupart des
 
 \begin{tcboutputlisting}
 \begin{gztcode}[listing and text]
-L'environnement \verb|eqnarray| est obsolète et on utilisera plutôt
+L'environnement \verb|eqnarray| est obsolète et nous préconisons plutôt
 \verb|align| :
 
 \begin{minipage}[t]{0.4\linewidth}
