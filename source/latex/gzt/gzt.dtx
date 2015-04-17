@@ -386,7 +386,7 @@ This work consists of the file  gzt.dtx
   \usebibmacro{begentry}%
   \textbf{\printfield{series}}%
   % \usebibmacro{series+number}%
-  \newline\bigskip\nopunct\newblock
+  \bigskip\newline\nopunct\newblock
   {%
     \Large%
     \printfield{title}%
@@ -4253,7 +4253,8 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \titleformat{\section}
 % [frame]
-{\raggedright%
+{%
+  \raggedright%
   \bfseries%
   \color{@@_section_color}
 }
