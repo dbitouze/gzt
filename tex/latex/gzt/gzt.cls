@@ -129,7 +129,7 @@
 \RequirePackage{adjustbox}%
 \RequirePackage{zref-totpages}
 \RequirePackage{zref-xr}%
-\RequirePackage[newcommands]{ragged2e}%
+\RequirePackage{ragged2e}%
 \RequirePackage[autostyle]{csquotes}%
 \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
 \RequirePackage{array}
@@ -1072,7 +1072,8 @@
         %   \__gzt_display_people_by_role:n { fontdesigner }
       \end{description}
       &
-        \raggedleft%
+        % \raggedleft%
+        \hspace*{\fill}%
         \includegraphics[height=20mm]{\c__gzt_smf_logo_file_string_tl}%
     \end{tabular}
     \\
@@ -1868,7 +1869,7 @@
   \__gzt_boxed_issue_number:nn {#1}{#2}
   \color{__gzt_frontmatter_text_color}%
   \fontsize{11}{13.6}\selectfont
-  \raggedright
+  \RaggedRight
 }
 \cs_new_protected:Nn \__gzt_after_editorial_presidentmessage:
 {
@@ -1994,7 +1995,8 @@
 {\c_zero_dim}
 {\scshape}%
 \titleformat{\section}
-{\raggedright%
+{%
+  \raggedright%
   \bfseries%
   \color{__gzt_section_color}
 }

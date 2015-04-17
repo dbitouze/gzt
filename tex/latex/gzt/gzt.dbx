@@ -80,7 +80,7 @@
   \usebibmacro{begentry}%
   \textbf{\printfield{series}}%
   % \usebibmacro{series+number}%
-  \newline\bigskip\nopunct\newblock
+  \bigskip\newline\nopunct\newblock
   {%
     \Large%
     \printfield{title}%
