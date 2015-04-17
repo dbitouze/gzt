@@ -1222,8 +1222,8 @@ This work consists of the file  gzt.dtx
 % \begin{macro}{\c_@@_president_signatory_string_tl}
 % \begin{macro}{\c_@@_editorinchief_signatory_string_tl}
 % \begin{macro}{\c_@@_issue_bib_file_tl}
-% \begin{macro}{\c_@@_about_front_cover_string_tl}
-% \begin{macro}{\c_@@_credit_front_cover_string_tl}
+% \begin{macro}{\c_@@_about_frontcover_string_tl}
+% \begin{macro}{\c_@@_credit_frontcover_string_tl}
 % For the journal's short and long titles.
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_journal_short_title_string_tl {Gazette}
@@ -1331,7 +1331,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % For the front cover header text.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_front_cover_header_string_tl {
+\tl_const:Nn \c_@@_frontcover_header_string_tl {
   \l_@@_uppercased_date_format\displaydate{@@_date}
   \nobreakspace
   \textendash{}\nobreakspace
@@ -1367,11 +1367,11 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % For the few words about the front cover.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_about_front_cover_string_tl {\`A~propos~de~la~couverture.}
+\tl_const:Nn \c_@@_about_frontcover_string_tl {\`A~propos~de~la~couverture.}
 %    \end{macrocode}
 % For the credit of the front cover.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_credit_front_cover_string_tl {cr\'edit}
+\tl_const:Nn \c_@@_credit_frontcover_string_tl {cr\'edit}
 %    \end{macrocode}
 % For the preliminary versions sent to authors for checking.
 %    \begin{macrocode}
@@ -1509,8 +1509,8 @@ This work consists of the file  gzt.dtx
 %
 % We now declare the booleans that will be used.
 %
-% \begin{macro}{\g_@@_frontcovermatter_bool}
-% \begin{macro}{\g_@@_insidefrontcovermatter_bool}
+% \begin{macro}{\g_@@_frontcover_bool}
+% \begin{macro}{\g_@@_inside_frontcover_bool}
 % \begin{macro}{\g_@@_frontmatter_bool}
 % \begin{macro}{\g_@@_rubric_bool}
 % \begin{macro}{\g_@@_interview_rubric_bool}
@@ -1519,8 +1519,8 @@ This work consists of the file  gzt.dtx
 %   front cover, in the inside front cover, in the frontmatter, in (first page
 %   of) a rubric, in the mainmatter.
 %    \begin{macrocode}
-\bool_new:N \g_@@_frontcovermatter_bool
-\bool_new:N \g_@@_insidefrontcovermatter_bool
+\bool_new:N \g_@@_frontcover_bool
+\bool_new:N \g_@@_inside_frontcover_bool
 \bool_new:N \g_@@_frontmatter_bool
 \bool_new:N \g_@@_rubric_bool
 \bool_new:N \g_@@_interview_rubric_bool
@@ -1822,7 +1822,7 @@ This work consists of the file  gzt.dtx
 % We create a constant token list that contains the geometry of the front cover.
 %    \begin{macrocode}
 \bool_if:NTF {\g_@@_cover_bool} {
-  \tl_const:Nn \c_@@_front_cover_geometry_tl {%
+  \tl_const:Nn \c_@@_frontcover_geometry_tl {%
     ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
     ,layoutvoffset=\c_@@_layoutoffset_dim
     ,bindingoffset=\c_@@_bindingoffset_dim
@@ -1836,7 +1836,7 @@ This work consists of the file  gzt.dtx
     ,nomarginpar%
   }%
 }{
-  \tl_const:Nn \c_@@_front_cover_geometry_tl {%
+  \tl_const:Nn \c_@@_frontcover_geometry_tl {%
     ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
     ,layoutoffset=\c_@@_layoutoffset_dim
     ,bindingoffset=\c_@@_bindingoffset_dim
@@ -2352,10 +2352,10 @@ This work consists of the file  gzt.dtx
 \colorlet{@@_rubric_abstract_color}{@@_generic_dark_color}
 \colorlet{@@_article_abstract_color}{@@_generic_light_color}
 \colorlet{@@_dotfill_color}{@@_generic_dark_color}
-\colorlet{@@_about_front_cover_title_color}{@@_generic_dark_color}
+\colorlet{@@_about_frontcover_title_color}{@@_generic_dark_color}
 \colorlet{@@_reflected_text_color}{@@_generic_dark_color}
-\colorlet{@@_inside_front_cover_frame_bg_color}{@@_generic_dark_color!8}
-\colorlet{@@_inside_front_cover_frame_title_color}{@@_generic_dark_color}
+\colorlet{@@_inside_frontcover_frame_bg_color}{@@_generic_dark_color!8}
+\colorlet{@@_inside_frontcover_frame_title_color}{@@_generic_dark_color}
 \colorlet{@@_footer_bg_color}{black!10}
 \colorlet{@@_float_title_color}{@@_generic_dark_color}
 \colorlet{@@_float_title_bg_color}{@@_generic_dark_color!10}
@@ -2761,11 +2761,11 @@ This work consists of the file  gzt.dtx
 %
 % We create the variable that displays the front cover.
 %    \begin{macrocode}
-\tl_new:N \g_@@_display_front_cover_tl%
-\tl_gset:Nn \g_@@_display_front_cover_tl {%
-  \bool_gset_true:N \g_@@_frontcovermatter_bool
-  \pagestyle{@@_cover_ps}%
-  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_front_cover_geometry_tl}%
+\tl_new:N \g_@@_display_frontcover_tl%
+\tl_gset:Nn \g_@@_display_frontcover_tl {%
+  \bool_gset_true:N \g_@@_frontcover_bool
+  \pagestyle{@@_frontcover_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_frontcover_geometry_tl}%
   \noindent%
   \bool_if:NTF {\g_@@_cover_bool} {
     \hspace*{-\c_@@_layoutoffset_dim}
@@ -2791,8 +2791,8 @@ This work consists of the file  gzt.dtx
     {
       \large
       \color{@@_dark_generic_light_color}
-      \bool_if:NF {\g_@@_front_cover_minitoc_tl} {
-        \g_@@_front_cover_minitoc_tl
+      \bool_if:NF {\g_@@_frontcover_minitoc_tl} {
+        \g_@@_frontcover_minitoc_tl
       }
     };
     \bool_if:NT {\g_@@_minitoc_help_bool} {
@@ -2823,7 +2823,7 @@ This work consists of the file  gzt.dtx
   \includegraphics[height=22.5mm]{\c_@@_smf_logo_file_string_tl}%
   \vfill%
   \clearpage%
-  \bool_gset_false:N \g_@@_frontcovermatter_bool
+  \bool_gset_false:N \g_@@_frontcover_bool
 }
 %    \end{macrocode}
 %
@@ -2831,11 +2831,11 @@ This work consists of the file  gzt.dtx
 %
 % We create the variable that displays the inside front cover.
 %    \begin{macrocode}
-\tl_new:N \g_@@_display_inside_front_cover_tl%
-\tl_gset:Nn \g_@@_display_inside_front_cover_tl {%
-  \bool_gset_true:N \g_@@_insidefrontcovermatter_bool%
-  \pagestyle{@@_insidefrontcover_ps}%
-  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_inside_front_cover_geometry_tl}%
+\tl_new:N \g_@@_display_inside_frontcover_tl%
+\tl_gset:Nn \g_@@_display_inside_frontcover_tl {%
+  \bool_gset_true:N \g_@@_inside_frontcover_bool%
+  \pagestyle{@@_inside_frontcover_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_inside_cover_geometry_tl}%
   \small%
   \setlength{\columnseprule}{2pt}
   \renewcommand{\columnseprulecolor}{\color{white}}
@@ -2887,14 +2887,14 @@ This work consists of the file  gzt.dtx
     \\
     \c_@@_font_string_tl
     \bigskip
-    \tl_if_empty:NF \g_@@_about_front_cover_tl
+    \tl_if_empty:NF \g_@@_about_frontcover_tl
     {%
       \\
       \begin{adjustbox}{valign=t,minipage=.75\c_@@_inside_frontcover_box_width_dim+.2\c_@@_inside_frontcover_box_width_dim-2\tabcolsep}
-        \begin{description}[leftmargin=1em,font=\color{@@_about_front_cover_title_color}]
-        \item[\g_@@_about_front_cover_string_tl] \g_@@_about_front_cover_tl
-          \bool_if:NT {\g_@@_credit_front_cover_bool} {
-            \space(\c_@@_credit_front_cover_string_tl{}~:~%
+        \begin{description}[leftmargin=1em,font=\color{@@_about_frontcover_title_color}]
+        \item[\g_@@_about_frontcover_string_tl] \g_@@_about_frontcover_tl
+          \bool_if:NT {\g_@@_credit_frontcover_bool} {
+            \space(\c_@@_credit_frontcover_string_tl{}~:~%
             \DTLforeach*[\DTLiseq{\l_@@_people_role_tl}{frontcovercredit}]{people}{%
               \l_@@_firstlastname=first-last-name%
               ,\l_@@_people_role_tl=role%
@@ -2910,7 +2910,7 @@ This work consists of the file  gzt.dtx
   \end{_@@_inside_frontcover}
   \setcounter{page}{0}
   \clearpage%
-  \bool_gset_false:N \g_@@_insidefrontcovermatter_bool
+  \bool_gset_false:N \g_@@_inside_frontcover_bool
 }
 %    \end{macrocode}
 %
@@ -3361,21 +3361,21 @@ This work consists of the file  gzt.dtx
 %<*class>
 %    \end{macrocode}
 %
-% \begin{macro}{\_@@_about_front_cover}
+% \begin{macro}{\_@@_about_frontcover}
 %   We define the internal function than let us tell a few words about the front
 %   cover.
 %    \begin{macrocode}
-\tl_new:N \g_@@_about_front_cover_tl%
-\bool_new:N \g_@@_credit_front_cover_bool%
-\tl_new:N \g_@@_about_front_cover_string_tl%
-\cs_new_protected:Nn \_@@_about_front_cover:nnn
+\tl_new:N \g_@@_about_frontcover_tl%
+\bool_new:N \g_@@_credit_frontcover_bool%
+\tl_new:N \g_@@_about_frontcover_string_tl%
+\cs_new_protected:Nn \_@@_about_frontcover:nnn
 {
   \tl_if_empty:nF {#1}{%
-    \bool_gset_true:N \g_@@_credit_front_cover_bool
+    \bool_gset_true:N \g_@@_credit_frontcover_bool
     \_@@_people:nnnnnnnn {#1}{}{}{}{}{}{frontcovercredit}{}
   }
-  \tl_gset:Nn \g_@@_about_front_cover_string_tl { #2 }
-  \tl_gset:Nn \g_@@_about_front_cover_tl { #3 }
+  \tl_gset:Nn \g_@@_about_frontcover_string_tl { #2 }
+  \tl_gset:Nn \g_@@_about_frontcover_tl { #3 }
 }
 %    \end{macrocode}
 % \end{macro}
@@ -4155,16 +4155,16 @@ This work consists of the file  gzt.dtx
 %
 % We create an internal function that displays the president's message.
 %    \begin{macrocode}
-\tl_new:N \g_@@_front_cover_minitoc_tl%
+\tl_new:N \g_@@_frontcover_minitoc_tl%
 \tl_new:N \l_@@_minitoc_label_tl%
-\cs_new_protected:Nn \_@@_front_cover_minitoc:n
+\cs_new_protected:Nn \_@@_frontcover_minitoc:n
 {
-  \tl_gset:Nn \g_@@_front_cover_minitoc_tl {#1}
+  \tl_gset:Nn \g_@@_frontcover_minitoc_tl {#1}
 }
 \NewDocumentCommand \minitoc { O{} m }
 {
   \keys_set:nn { gzt/minitoc } { #1 }
-  \_@@_front_cover_minitoc:n {#2}
+  \_@@_frontcover_minitoc:n {#2}
 }
 %
 \newlist{@@_minitoc_list}{itemize}{1}
@@ -4348,8 +4348,8 @@ This work consists of the file  gzt.dtx
     \vfill
     \newpage
   }{
-    \g_@@_display_front_cover_tl
-    \g_@@_display_inside_front_cover_tl
+    \g_@@_display_frontcover_tl
+    \g_@@_display_inside_frontcover_tl
     \bool_if:NT {\g_@@_cover_bool} {
       \end{document}
     }
@@ -4597,16 +4597,16 @@ This work consists of the file  gzt.dtx
 %<*class|class-article>
 %    \end{macrocode}
 %
-% \subsection{Cover page style}
+% \subsection{Front cover page style}
 %
 %    \begin{macrocode}
-\newpagestyle{@@_cover_ps}[]{%
+\newpagestyle{@@_frontcover_ps}[]{%
   \sethead
   {}%
   {%
     \adjustbox{stack=c}{
       {\Large
-        \c_@@_front_cover_header_string_tl
+        \c_@@_frontcover_header_string_tl
       }\\[7mm]
       \adjustbox{scale=2.08}{
         \l_@@_frontmatter_head_text_tl
@@ -4625,8 +4625,7 @@ This work consists of the file  gzt.dtx
 % \subsection{Inside front cover page style}
 %
 %    \begin{macrocode}
-% \box_new:N
-\newpagestyle{@@_insidefrontcover_ps}[]{%
+\newpagestyle{@@_inside_frontcover_ps}[]{%
   \sethead%
   [
     \tikz[remember~picture,overlay] {%
@@ -4662,7 +4661,6 @@ This work consists of the file  gzt.dtx
 % \subsection{Front matter page style}
 %
 %    \begin{macrocode}
-% \box_new:N
 \newpagestyle{@@_frontmatter_ps}[]{%
   \widenhead*{\c_@@_front_matter_extra_innermargin_dim}{\c_@@_front_matter_extra_outermargin_dim}
   \sethead%
@@ -4956,9 +4954,9 @@ This work consists of the file  gzt.dtx
 % \begin{macro}{\aboutfrontcover}
 %   For a few words about the front cover.
 %    \begin{macrocode}
-\NewDocumentCommand \aboutfrontcover { O{} O{\c_@@_about_front_cover_string_tl} m }
+\NewDocumentCommand \aboutfrontcover { O{} O{\c_@@_about_frontcover_string_tl} m }
 {
-  \_@@_about_front_cover:nnn {#1}{#2}{#3}%
+  \_@@_about_frontcover:nnn {#1}{#2}{#3}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -5704,12 +5702,12 @@ This work consists of the file  gzt.dtx
 \tcbset{%
   _@@_tcb_inside_frontcover_style/.style={%
     % split=0.6,%
-    colback=@@_inside_front_cover_frame_bg_color,%
-    colbacktitle=@@_inside_front_cover_frame_bg_color,%
+    colback=@@_inside_frontcover_frame_bg_color,%
+    colbacktitle=@@_inside_frontcover_frame_bg_color,%
     title=\c_@@_editorial_board_string_tl,%
     sharp~corners=all,%
     center~title,%
-    coltitle=@@_inside_front_cover_frame_title_color,%
+    coltitle=@@_inside_frontcover_frame_title_color,%
     fonttitle=\bfseries\large,%
     boxrule=\c_zero_dim,%
     toptitle=3mm,%
@@ -5772,7 +5770,7 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \setlist[description]{
   font=
-  \bool_if:nTF { \g_@@_books_rubric_bool || \g_@@_insidefrontcovermatter_bool }
+  \bool_if:nTF { \g_@@_books_rubric_bool || \g_@@_inside_frontcover_bool }
   {
     \color{black}
   }{
