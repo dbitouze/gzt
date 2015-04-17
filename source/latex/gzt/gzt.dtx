@@ -1342,6 +1342,10 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_frontmatter_directory_string_tl {frontmatter}
 %    \end{macrocode}
+% For the name of the directory containing the 3rd and 4th cover pages.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_backmatter_directory_string_tl {backmatter}
+%    \end{macrocode}
 % For the name of the file containing the editorial.
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_editorial_file_string_tl {\c_@@_frontmatter_directory_string_tl/editorial}
@@ -1364,6 +1368,14 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_issue_frontcover_image_file_string_tl {frontcover}
 \tl_const:Nn \c_@@_issue_frontcover_image_path_string_tl {\c_@@_issue_images_path_string_tl/\c_@@_issue_frontcover_image_file_string_tl}
+%    \end{macrocode}
+% For the name of the file containing the inside back cover page.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_inside_back_cover_page_file_string_tl {\c_@@_backmatter_directory_string_tl/inside-back-cover}
+%    \end{macrocode}
+% For the name of the file containing the back cover page.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_back_cover_page_file_string_tl {\c_@@_backmatter_directory_string_tl/back-cover}
 %    \end{macrocode}
 % For the few words about the front cover.
 %    \begin{macrocode}
@@ -1452,7 +1464,8 @@ This work consists of the file  gzt.dtx
   \textcolor{@@_date_color}{
     \textendash{}\nobreakspace
     \MakeTextUppercase{\c_@@_journal_short_title_string_tl}
-    \int_compare:nNnF {\g_@@_issue_number_int}<{1}
+    % \int_compare:nNnF {\g_@@_issue_number_int}<{1}
+    \bool_if:nF { \g_@@_inside_frontcover_bool || \g_@@_backmatter_bool }
     {
       \nobreakspace\textendash{}\nobreakspace
       \l_@@_uppercased_date_format\displaydate{@@_date}
@@ -1515,6 +1528,8 @@ This work consists of the file  gzt.dtx
 % \begin{macro}{\g_@@_rubric_bool}
 % \begin{macro}{\g_@@_interview_rubric_bool}
 % \begin{macro}{\g_@@_mainmatter_bool}
+% \begin{macro}{\g_@@_backmatter_bool}
+% \begin{macro}{\g_@@_backcover_bool}
 %   The following booleans will be used to test wheter we are respectively in the
 %   front cover, in the inside front cover, in the frontmatter, in (first page
 %   of) a rubric, in the mainmatter.
@@ -1528,7 +1543,11 @@ This work consists of the file  gzt.dtx
 \bool_new:N \g_@@_rearviewmirror_rubric_bool
 \bool_new:N \g_@@_books_rubric_bool
 \bool_new:N \g_@@_mainmatter_bool
+\bool_new:N \g_@@_backmatter_bool
+\bool_new:N \g_@@_backcover_bool
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -1860,10 +1879,10 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 % We create a constant token list that contains the geometry of the inside front
-% cover.
+% and back covers.
 %    \begin{macrocode}
 \bool_if:NTF {\g_@@_cover_bool} {
-  \tl_const:Nn \c_@@_inside_front_cover_geometry_tl {%
+  \tl_const:Nn \c_@@_inside_cover_geometry_tl {%
     ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
     ,layoutvoffset=\c_@@_layoutoffset_dim
     ,bindingoffset=\c_@@_bindingoffset_dim
@@ -1877,7 +1896,7 @@ This work consists of the file  gzt.dtx
     ,nomarginpar%
   }%
 }{
-  \tl_const:Nn \c_@@_inside_front_cover_geometry_tl {%
+  \tl_const:Nn \c_@@_inside_cover_geometry_tl {%
     ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
     ,layoutoffset=\c_@@_layoutoffset_dim
     ,bindingoffset=\c_@@_bindingoffset_dim
@@ -1926,21 +1945,36 @@ This work consists of the file  gzt.dtx
 }%
 %    \end{macrocode}
 %
-% We create a constant token list that contains the geometry of the
-% advertisement pages.
+% We create a constant token list that contains the geometry of the back cover.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_advertisement_geometry_tl {%
-  ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
-  ,layoutoffset=\c_@@_layoutoffset_dim
-  % ,bindingoffset=\c_@@_bindingoffset_dim
-  ,top=\c_zero_dim
-  ,headsep=\c_zero_dim
-  ,headheight=\c_zero_dim
-  ,bottom=\c_zero_dim
-  ,footskip=\c_zero_dim
-  ,hmargin=\c_zero_dim
-  ,nomarginpar%
-}%
+\bool_if:NTF {\g_@@_cover_bool} {
+  \tl_const:Nn \c_@@_backcover_geometry_tl {%
+    ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
+    ,layoutvoffset=\c_@@_layoutoffset_dim
+    ,bindingoffset=\c_@@_bindingoffset_dim
+    ,top=\c_@@_topmargin_backcover_dim
+    ,headsep=\c_@@_headsep_backcover_dim
+    ,headheight=\c_@@_headheight_dim
+    ,bottom=\c_zero_dim
+    ,footskip=\c_zero_dim
+    ,outer=\c_zero_dim
+    ,inner=\c_@@_layoutoffset_dim
+    ,nomarginpar%
+  }%
+}{
+  \tl_const:Nn \c_@@_backcover_geometry_tl {%
+    ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
+    ,layoutoffset=\c_@@_layoutoffset_dim
+    % ,bindingoffset=\c_@@_bindingoffset_dim
+    ,top=\c_@@_topmargin_dim-15mm%
+    ,headheight=\c_@@_headheight_dim
+    ,headsep=\c_@@_headsep_dim-18mm
+    ,bottom=\c_@@_botmargin_dim
+    ,footskip=\c_@@_footskip_dim
+    ,inner=2cm
+    ,outer=2cm
+  }%
+}
 %    \end{macrocode}
 %
 % \subsection{Skips}
@@ -4662,7 +4696,7 @@ This work consists of the file  gzt.dtx
   {%
     \uppercase{\c_@@_footer_string_tl}%
   }%
-  {\c_@@_footer_size_font_tl\thepage}%
+  {}%
 }%
 %    \end{macrocode}
 %
@@ -4763,6 +4797,45 @@ This work consists of the file  gzt.dtx
 }%
 %    \end{macrocode}
 %
+% \subsection{Inside back cover page style}
+%
+%    \begin{macrocode}
+\newpagestyle{@@_inside_backcover_ps}[]{%
+  \sethead%
+  {}%
+  {}%
+  {}%
+  %
+  \setfoot%
+  []%
+  [%
+    \uppercase{\c_@@_footer_string_tl}
+  ]%
+  []%
+  {}%
+  {%
+    \uppercase{\c_@@_footer_string_tl}%
+  }%
+  {}%
+}%
+%    \end{macrocode}
+%
+% \subsection{Back cover page style}
+%
+%    \begin{macrocode}
+\newpagestyle{@@_backcover_ps}[]{%
+  \sethead
+  {}%
+  {}%
+  {}%
+  %
+  \setfoot%
+  {}%
+  {}%
+  {}%
+}%
+%    \end{macrocode}
+%
 % We define crop marks.
 %    \begin{macrocode}
 % \bool_if:NT {\g_@@_for_printer_bool} {%
@@ -4787,8 +4860,7 @@ This work consists of the file  gzt.dtx
 % We draw a gray background at the bottom of each page, but the first one.
 %    \begin{macrocode}
 \AddEverypageHook{%
-%%<class> \int_compare:nNnT { \value{page} } > { 0 } {%
-%<class> \bool_if:nF { \g_@@_frontcovermatter_bool  }{
+%<class> \bool_if:nF { \g_@@_frontcover_bool || \g_@@_backcover_bool }{
     \bool_if:NF {\g_@@_advertisement_bool} {
       \tikz[remember~picture,overlay] { \g_@@_background_footer_tl }%
     }%
@@ -5451,20 +5523,24 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 %
-% We automatically include the third and fourth cover pages at the end of the
-% document, the former containing some condensed instructions to authors.
+% We automatically include the inside back cover and back cover pages at the end
+% of the document, the former containing some condensed instructions to authors.
 %    \begin{macrocode}
 \AtEndDocument{%
-  % \newpage
-  % \bool_if:NF {\g_@@_multicols_bool} {
-  %   % \begin{multicols}{2}[\section*{Instruction aux auteurs}]%
-  % }
-  % \lipsum[1-5]
-  % \newpage
-  % \section*{Publicité}
-  % \bool_if:NT {\g_@@_multicols_bool} {
-  %   % \end{multicols}%
-  % }
+  \clearpage
+  \ifoddpage%
+  \hbox{}
+  \fi
+  \newpage
+  \bool_gset_true:N \g_@@_backmatter_bool
+  \pagestyle{@@_inside_backcover_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_inside_cover_geometry_tl}%
+  \file_input:n {\c_@@_inside_back_cover_page_file_string_tl}
+  \newpage
+  \bool_gset_true:N \g_@@_backcover_bool
+  \pagestyle{@@_backcover_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_backcover_geometry_tl}%
+  \file_input:n {\c_@@_back_cover_page_file_string_tl}
 }%
 %    \end{macrocode}
 %
