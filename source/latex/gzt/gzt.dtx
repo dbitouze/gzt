@@ -1671,6 +1671,12 @@ This work consists of the file  gzt.dtx
   \c_@@_topmargin_dim
   +10mm
 }
+\dim_const:Nn \c_@@_topmargin_front_matter_dim   {
+  \c_@@_topmargin_inside_frontcover_dim
+}
+\dim_const:Nn \c_@@_topmargin_backcover_dim {
+  \c_@@_topmargin_frontcover_dim
+}
 \dim_const:Nn \c_@@_headsep_dim     {  24mm}
 \dim_const:Nn \c_@@_headsep_frontcover_dim {
   \c_@@_headsep_dim
@@ -1679,9 +1685,12 @@ This work consists of the file  gzt.dtx
 }
 \dim_const:Nn \c_@@_headsep_inside_frontcover_dim {
   \c_@@_headsep_dim
-  +5mm
+  +7mm
 }
-\dim_const:Nn \c_@@_headheight_dim  {  7mm}
+\dim_const:Nn \c_@@_headsep_front_matter_dim {
+  \c_@@_headsep_inside_frontcover_dim
+}
+\dim_const:Nn \c_@@_headheight_dim  {  \c_zero_dim}
 \dim_const:Nn \c_@@_botmargin_dim   {  30mm}
 \dim_const:Nn \c_@@_footskip_dim    {  26mm}
 \dim_const:Nn \c_@@_innermargin_dim { 15mm - \c_@@_bindingoffset_dim + \c_@@_adjustmargin_dim}
@@ -1698,8 +1707,7 @@ This work consists of the file  gzt.dtx
 }%
 \dim_const:Nn \c_@@_frontmatter_headtext_yshift_dim { -6.5mm-\c_@@_layoutoffset_dim }%
 \dim_const:Nn \c_@@_header_line_width_dim    {  0.25mm}
-\dim_const:Nn \c_@@_header_line_yshift_dim {  1mm-\c_@@_header_line_width_dim}%
-\dim_const:Nn \c_@@_yshift_mainmatter_headrule_dim { \c_@@_header_line_yshift_dim-2mm }%
+\dim_const:Nn \c_@@_header_line_yshift_dim {  -1mm-\c_@@_header_line_width_dim}%
 \dim_const:Nn \c_@@_footer_background_height_dim    { 10mm + \c_@@_layoutoffset_dim }
 \dim_const:Nn \c_@@_front_matter_extra_innermargin_dim    {  28mm }
 \dim_const:Nn \c_@@_front_matter_extra_outermargin_dim    {  7mm }
@@ -1828,7 +1836,7 @@ This work consists of the file  gzt.dtx
     ,bindingoffset=\c_@@_bindingoffset_dim
     ,top=\c_@@_topmargin_frontcover_dim
     ,headsep=\c_@@_headsep_frontcover_dim
-    ,headheight=\c_@@_layoutoffset_dim
+    ,headheight=\c_@@_headheight_dim
     ,bottom=\c_zero_dim
     ,footskip=\c_zero_dim
     ,outer=\c_zero_dim
@@ -1842,7 +1850,7 @@ This work consists of the file  gzt.dtx
     ,bindingoffset=\c_@@_bindingoffset_dim
     ,top=\c_@@_topmargin_frontcover_dim
     ,headsep=\c_@@_headsep_frontcover_dim
-    ,headheight=\c_zero_dim
+    ,headheight=\c_@@_headheight_dim
     ,bottom=\c_zero_dim
     ,footskip=\c_zero_dim
     ,hmargin=\c_@@_layoutoffset_dim
@@ -1875,7 +1883,7 @@ This work consists of the file  gzt.dtx
     ,bindingoffset=\c_@@_bindingoffset_dim
     ,top=\c_@@_topmargin_inside_frontcover_dim
     ,headheight=\c_@@_headheight_dim
-    ,headsep=\c_@@_headsep_dim+5mm
+    ,headsep=\c_@@_headsep_inside_frontcover_dim
     ,bottom=\c_@@_botmargin_dim
     ,footskip=\c_@@_footskip_dim
     ,inner=\c_@@_innermargin_dim
@@ -1891,9 +1899,9 @@ This work consists of the file  gzt.dtx
   ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
   ,layoutoffset=\c_@@_layoutoffset_dim
   % ,bindingoffset=\c_@@_bindingoffset_dim
-  ,top=\c_@@_topmargin_dim+10mm%
+  ,top=\c_@@_topmargin_front_matter_dim%
   ,headheight=\c_@@_headheight_dim
-  ,headsep=\c_@@_headsep_dim+5mm
+  ,headsep=\c_@@_headsep_front_matter_dim
   ,bottom=\c_@@_botmargin_dim
   ,footskip=\c_@@_footskip_dim%
   ,inner=\c_@@_innermargin_dim+\c_@@_front_matter_extra_innermargin_dim%
@@ -1909,7 +1917,7 @@ This work consists of the file  gzt.dtx
   ,layoutoffset=\c_@@_layoutoffset_dim
   % ,bindingoffset=\c_@@_bindingoffset_dim
   ,top=\c_@@_topmargin_dim-15mm%
-  ,headheight=\c_zero_dim
+  ,headheight=\c_@@_headheight_dim
   ,headsep=\c_@@_headsep_dim-18mm
   ,bottom=\c_@@_botmargin_dim
   ,footskip=\c_@@_footskip_dim
@@ -4460,9 +4468,9 @@ This work consists of the file  gzt.dtx
 \tl_new:N \g_@@_mainmatter_oddpage_headrule_tl
 \tl_gset:Nn \g_@@_mainmatter_oddpage_headrule_tl {%
   \draw [@@_headrule_color,line~width=\c_@@_header_line_width_dim]
-  ([yshift=\c_@@_yshift_mainmatter_headrule_dim]current~page~header~area.south~east)
+  ([yshift=\c_@@_header_line_yshift_dim]current~page~header~area.south~east)
   --
-  ([yshift=\c_@@_yshift_mainmatter_headrule_dim]current~page~header~area.south~west -| current~page.north~west)
+  ([yshift=\c_@@_header_line_yshift_dim]current~page~header~area.south~west -| current~page.north~west)
   ;
 }
 %    \end{macrocode}
@@ -4472,9 +4480,9 @@ This work consists of the file  gzt.dtx
 \tl_new:N \g_@@_mainmatter_evenpage_headrule_tl
 \tl_gset:Nn \g_@@_mainmatter_evenpage_headrule_tl {%
   \draw [@@_headrule_color,line~width=\c_@@_header_line_width_dim]
-  ([yshift=\c_@@_yshift_mainmatter_headrule_dim]current~page~header~area.south~west)
+  ([yshift=\c_@@_header_line_yshift_dim]current~page~header~area.south~west)
   --
-  ([yshift=\c_@@_yshift_mainmatter_headrule_dim]current~page~header~area.south~east -| current~page.north~east)
+  ([yshift=\c_@@_header_line_yshift_dim]current~page~header~area.south~east -| current~page.north~east)
   ;
 }
 %    \end{macrocode}
@@ -4565,9 +4573,9 @@ This work consists of the file  gzt.dtx
       \path (current~page.north~west |- current~page~header~area.south~west) coordinate (_@@_pwest);
       \path (current~page.north~east |- current~page~header~area.south~east) coordinate (_@@_peast);
       \draw [@@_headrule_color,line~width=\c_@@_header_line_width_dim]
-      ([yshift=\c_@@_header_line_yshift_dim-2mm]_@@_pwest)
+      ([yshift=\c_@@_header_line_yshift_dim]_@@_pwest)
       --
-      ([yshift=\c_@@_header_line_yshift_dim-2mm]_@@_peast)
+      ([yshift=\c_@@_header_line_yshift_dim]_@@_peast)
       ;%
       \tl_if_empty:NF \g_@@_rubric_abstract_tl {%
         \mbox{}%
