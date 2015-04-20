@@ -1585,15 +1585,14 @@ This work consists of the file  gzt.dtx
   \textcolor{@@_date_color}{
     \textendash{}\nobreakspace
     \MakeTextUppercase{\c_@@_journal_short_title_string_tl}
-    % \int_compare:nNnF {\g_@@_issue_number_int}<{1}
-    \bool_if:nF { \g_@@_inside_frontcover_bool || \g_@@_backmatter_bool }
-    {
-      \nobreakspace\textendash{}\nobreakspace
-      \l_@@_uppercased_date_format\displaydate{@@_date}
-      \nobreakspace
-      \textendash{}\nobreakspace
-      \textcolor{@@_smf_number_color}{\No\int_use:N\g_@@_issue_number_int}
-    }
+%<class>    \bool_if:nF { \g_@@_inside_frontcover_bool || \g_@@_backmatter_bool }
+%<class>    {
+%<class>      \nobreakspace\textendash{}\nobreakspace
+%<class>      \l_@@_uppercased_date_format\displaydate{@@_date}
+%<class>      \nobreakspace
+%<class>      \textendash{}\nobreakspace
+%<class>      \textcolor{@@_smf_number_color}{\No\int_use:N\g_@@_issue_number_int}
+%<class>    }
   }
 }
 %    \end{macrocode}
