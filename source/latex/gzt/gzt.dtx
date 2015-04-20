@@ -582,7 +582,7 @@ This work consists of the file  gzt.dtx
     format \texttt{.eps}, quoique indirectement supporté, est déconseillé.
 
     Pour faciliter la composition de textes destinés à la \gzt{}, la \smf{}
-    propose la classe \LaTeX{} \gztauthorcl{} fournie par les distributions
+    propose la classe \LaTeX{} \gztarticlecl{} fournie par les distributions
     \TeX{} courantes (\TeX{} Live et Mac\TeX{} \aside{à partir de leur version
       2015} ainsi que MiK\TeX{}), et sinon téléchargeable depuis la page
     \url{http://ctan.org/pkg/gzt}.  Sa documentation détaillée se trouve à la
@@ -1343,6 +1343,12 @@ This work consists of the file  gzt.dtx
 \tl_const:Nn \c_@@_journal_title_string_tl {
   \c_@@_journal_short_title_string_tl{}~des~Math\'ematiciens%
 }
+%    \end{macrocode}
+%
+% For the names of the underlying classes.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_gzt_class_name_tl {gzt}
+\tl_const:Nn \c_@@_gztarticle_class_name_tl {gztarticle}
 %    \end{macrocode}
 %
 % For the editor(s) in chief.
@@ -5390,6 +5396,21 @@ This work consists of the file  gzt.dtx
   }
 }
 %    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\gztcl}
+% \begin{macro}{\gztarticle}
+%    \begin{macrocode}
+\NewDocumentCommand \gztcl { }
+{%
+  \textsl{\texttt{\c_@@_gzt_class_name_tl}}
+}
+\NewDocumentCommand \gztarticlecl { }
+{%
+  \textsl{\texttt{\c_@@_gztarticle_class_name_tl}}
+}
+%    \end{macrocode}
+% \end{macro}
 % \end{macro}
 %
 % \begin{macro}{\century}
