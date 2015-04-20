@@ -486,6 +486,12 @@ This work consists of the file  gzt.dtx
 }
 %<<COMMENT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Font designer text
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%COMMENT
+\fontdesignertext{Nous~utilisons~la~police~\href{http://ctan.org/pkg/kpfonts}{Kp-Fonts}~cr{\'e}{\'e}e~par~Christophe~\textsc{Caignaert}.}
+%<<COMMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SMF President
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %COMMENT
@@ -5267,6 +5273,18 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 % \end{macro}
+%
+%    \begin{macrocode}
+\tl_new:N \g_@@_font_designer_text_tl%
+\cs_new_protected:Nn \@@_font_designer_text:n
+{
+  \tl_gset:Nn \g_@@_font_designer_text_tl { #1 }
+}
+\NewDocumentCommand \fontdesignertext {m}
+{
+  \_@@_font_designer_text:n {#1}%
+}
+%    \end{macrocode}
 %
 % \begin{macro}{\aside}
 %    \begin{macrocode}
