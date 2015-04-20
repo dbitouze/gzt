@@ -1758,26 +1758,55 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 %
-% The "\c_@@_adjustmargin_dim" is added to the inner margin and substracted to
-% the outer margin. It is non-zero if (and only if) the total pages number is
-% greater or equal than 72 (thresold for an adhesive square-back binding). For
-% this, we need first to specify the external document whom \File{.aux} file
-% will be read.
+% The binding's thickness, that depends on the total pages number, is store in
+% "\c_@@_bindingoffset_dim".
+%
+% Moreover, the inner and outer margins are repectively increase and decrease by
+% a dimension "\c_@@_adjustmargin_dim" which is non-zero if (and only if) the
+% total pages number is greater or equal than 72 (thresold for an adhesive
+% square-back binding).
+%
+% In order to know the total pages number (store in
+% "\g_@@_total_page_number_int"), we need first to specify the external document
+% whom \File{.aux} will be read.
 %    \begin{macrocode}
 \zexternaldocument[self]{\jobname}%
 %
 \int_new:N \g_@@_total_page_number_int%
 \int_gset:Nn \g_@@_total_page_number_int { \zref@extractdefault{selfLastPage}{abspage}{0} }
-\int_compare:nNnTF {\g_@@_total_page_number_int}<{72}
+\int_compare:nNnTF {\g_@@_total_page_number_int-4}<{68}
 {
   \dim_const:Nn \c_@@_adjustmargin_dim {\c_zero_dim}
-}
-{
+  \dim_const:Nn \c_@@_future_bindingoffset_dim { \c_zero_dim }
+}{
   \dim_const:Nn \c_@@_adjustmargin_dim { 5mm }
+  \int_compare:nNnTF {\g_@@_total_page_number_int-4}<{80}
+  {
+    \dim_const:Nn \c_@@_future_bindingoffset_dim { 3mm }
+  }{
+    \int_compare:nNnTF {\g_@@_total_page_number_int-4}<{88}
+    {
+      \dim_const:Nn \c_@@_future_bindingoffset_dim { 3.5mm }
+    }{
+      \int_compare:nNnTF {\g_@@_total_page_number_int-4}<{96}
+      {
+        \dim_const:Nn \c_@@_future_bindingoffset_dim { 3.9mm }
+      }{
+        \int_compare:nNnTF {\g_@@_total_page_number_int-4}<{104}
+        {
+          \dim_const:Nn \c_@@_future_bindingoffset_dim { 4.1mm }
+        }{
+          \int_compare:nNnTF {\g_@@_total_page_number_int-4}<{120}
+          {
+            \dim_const:Nn \c_@@_future_bindingoffset_dim { 4.5mm }
+          }{
+            \dim_const:Nn \c_@@_future_bindingoffset_dim { 5mm }
+          }
+        }
+      }
+    }
+  }
 }
-%
-\dim_const:Nn \c_@@_future_bindingoffset_dim { 4.1mm}
-% \dim_const:Nn \c_@@_future_bindingoffset_dim { 65mm}
 \bool_if:NTF {\g_@@_cover_bool} {
   \dim_const:Nn \c_@@_bindingoffset_dim { \c_@@_future_bindingoffset_dim }
 }{
@@ -1810,12 +1839,12 @@ This work consists of the file  gzt.dtx
   \c_@@_topmargin_dim
   + 30mm
 }
-\dim_const:Nn \c_@@_topmargin_inside_frontcover_dim   {
+\dim_const:Nn \c_@@_topmargin_inside_cover_dim   {
   \c_@@_topmargin_dim
   +10mm
 }
 \dim_const:Nn \c_@@_topmargin_front_matter_dim   {
-  \c_@@_topmargin_inside_frontcover_dim
+  \c_@@_topmargin_inside_cover_dim
 }
 \dim_const:Nn \c_@@_topmargin_backcover_dim {
   \c_@@_topmargin_frontcover_dim
@@ -1833,7 +1862,7 @@ This work consists of the file  gzt.dtx
 \dim_const:Nn \c_@@_headsep_front_matter_dim {
   \c_@@_headsep_inside_frontcover_dim
 }
-\dim_const:Nn \c_@@_headheight_dim  {  \c_zero_dim}
+\dim_const:Nn \c_@@_headheight_dim  { \c_zero_dim }
 \dim_const:Nn \c_@@_botmargin_dim   {  30mm}
 \dim_const:Nn \c_@@_footskip_dim    {  26mm}
 \dim_const:Nn \c_@@_innermargin_dim { 15mm - \c_@@_bindingoffset_dim + \c_@@_adjustmargin_dim}
@@ -1865,6 +1894,8 @@ This work consists of the file  gzt.dtx
 \dim_const:Nn \c_@@_footer_background_height_dim    { 10mm + \c_@@_layoutoffset_dim }
 \dim_const:Nn \c_@@_front_matter_extra_innermargin_dim    {  28mm }
 \dim_const:Nn \c_@@_front_matter_extra_outermargin_dim    {  7mm }
+\dim_const:Nn \c_@@_inside_cover_offset_dim { \c_zero_dim }%
+% \dim_const:Nn \c_@@_inside_cover_offset_dim { 7.5mm }%
 \dim_const:Nn \c_@@_pictogram_width_dim { 23mm }%
 \dim_const:Nn \c_@@_header_xshift_dim { \c_@@_pictogram_width_dim-6mm }%
 \dim_const:Nn \c_@@_header_yshift_dim { 5mm }%
