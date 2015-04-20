@@ -486,18 +486,6 @@ This work consists of the file  gzt.dtx
 }
 %<<COMMENT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Font designer text
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%COMMENT
-\fontdesignertext{Nous~utilisons~la~police~\href{http://ctan.org/pkg/kpfonts}{Kp-Fonts}~cr{\'e}{\'e}e~par~Christophe~\textsc{Caignaert}.}
-%<<COMMENT
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Printer text
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%COMMENT
-\printertext{Jouve \aside*{1 rue du docteur Sauvé 53100 Mayenne}}
-%<<COMMENT
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SMF President
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %COMMENT
@@ -534,6 +522,18 @@ This work consists of the file  gzt.dtx
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %COMMENT
 \classdesigner{Bitouzé, Denis}{Université du Littoral Côte d'Opale}{denis.bitouze@lmpa.univ-littoral.fr}
+%<<COMMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Font designer text
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%COMMENT
+\fontdesignertext{Nous~utilisons~la~police~\href{http://ctan.org/pkg/kpfonts}{Kp-Fonts}~cr{\'e}{\'e}e~par~Christophe~\textsc{Caignaert}.}
+%<<COMMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Printer text
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%COMMENT
+\printertext{Jouve \aside*{1 rue du docteur Sauvé 53100 Mayenne}}
 %<<COMMENT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Authors instructions
@@ -1402,9 +1402,9 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_latexclass_string_tl {Classe~\LaTeX{}}
 %    \end{macrocode}
-% For the \enquote{about font designer} sentence.
+% For "Impression".
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_font_string_tl {Nous~utilisons~la~police~Kp-Fonts~cr{\'e}{\'e}e~par~Christophe~\textsc{Caignaert}.}
+\tl_const:Nn \c_@@_printer_string_tl {Impression}
 %    \end{macrocode}
 % For configuration file.
 %    \begin{macrocode}
@@ -3152,7 +3152,7 @@ This work consists of the file  gzt.dtx
   \hypersetup{pdfauthor=\l_@@_smf_string_tl}
 %    \end{macrocode}
 %
-% We use here the fact that, if the "number", "month" or "year" options ares not
+% We use here the fact that, if the "number", "month" or "year" options are not
 % used, their corresponding "\g_@@_issue_number_int", "\g_@@_issue_month_int" or
 % "\g_@@_issue_year_int" variables are equal to $0$ ($<1$).
 %
@@ -3292,6 +3292,14 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % \end{macro}
 %
+%    \begin{macrocode}
+%</class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
 % \section{Definition of the footer of the pages}
 %
 % \begin{macro}{@@_date}
@@ -3305,7 +3313,7 @@ This work consists of the file  gzt.dtx
   \@orgargctr=#1\relax
   \ifcase\@orgargctr
   \PackageError{datetime}{Invalid~month~number~\the\@orgargctr}{%
-    Month numbers should go from 1 (janvier) to 12 (decembre)}%
+    Month~numbers~should~go~from~1~(janvier)~to~12~(decembre)}%
   \or JANVIER%
   \or F\'EVRIER%
   \or MARS%
@@ -3320,7 +3328,7 @@ This work consists of the file  gzt.dtx
   \or D\'ECEMBRE%
   \else
   \PackageError{datetime}{Invalid~month~number~\the\@orgargctr}{%
-    Month numbers should go from 1 (janvier) to 12 (decembre)}%
+    Month~numbers~should~go~from~1~(janvier)~to~12~(decembre)}%
   \fi
 }
 \newdate{@@_date}
@@ -3333,6 +3341,14 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
 %
 % \section{(Re)Definition of document commands that identify the article}
 %
@@ -4411,7 +4427,6 @@ This work consists of the file  gzt.dtx
 %   distance between the number and the title, with a title in 12.5pt.
 %    \begin{macrocode}
 \titleformat{\section}
-% [frame]
 {%
   \raggedright%
   \bfseries%
@@ -5385,6 +5400,20 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\aside}
+%    \begin{macrocode}
+\NewDocumentCommand \aside { s m } {%
+  \IfBooleanTF {#1}
+  {
+    \c_@@_aside_string_tl{}~#2
+  }
+  {
+    \c_@@_aside_string_tl{}~#2~\c_@@_aside_string_tl
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+%
 %    \begin{macrocode}
 \tl_new:N \g_@@_font_designer_text_tl%
 \cs_new_protected:Nn \@@_font_designer_text:n
@@ -5408,20 +5437,6 @@ This work consists of the file  gzt.dtx
   \_@@_printer_text:n {#1}%
 }
 %    \end{macrocode}
-%
-% \begin{macro}{\aside}
-%    \begin{macrocode}
-\NewDocumentCommand \aside { s m } {%
-  \IfBooleanTF {#1}
-  {
-    \c_@@_aside_string_tl{}~#2
-  }
-  {
-    \c_@@_aside_string_tl{}~#2~\c_@@_aside_string_tl
-  }
-}
-%    \end{macrocode}
-% \end{macro}
 %
 %    \begin{macrocode}
 \tl_new:N \g_@@_authors_instructions_text_tl%
