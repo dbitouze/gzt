@@ -6268,7 +6268,7 @@ This work consists of the file  gzt.dtx
 % Then, we define a public command, similar to "\newtheorem", based on
 % "\_@@_new_theorem", that lets the user define his own theorems:
 %    \begin{macrocode}
-\NewDocumentCommand \gztnewtheorem {O{}mmm}
+\RenewDocumentCommand \newtheorem { m m m O{} }
 {
   \_@@_new_theorem:nnnn {style=#1}{#2}{#3}{#4}
 }
@@ -6276,41 +6276,41 @@ This work consists of the file  gzt.dtx
 %
 % Finally, we define some usual theorems:
 %    \begin{macrocode}
-\gztnewtheorem[style=_@@_theorem]{theorem}{Th\'eor\`eme}{Theorem}
-\gztnewtheorem[style=_@@_theorem]{theoreme}{Th\'eor\`eme}{Theorem}
-\gztnewtheorem[style=_@@_theorem]{corollary}{Corollaire}{Corollary}
-\gztnewtheorem[style=_@@_theorem]{corollaire}{Corollaire}{Corollary}
-\gztnewtheorem[style=_@@_theorem]{conjecture}{Conjecture}{Conjecture}
-\gztnewtheorem[style=_@@_theorem]{proposition}{Proposition}{Proposition}
-\gztnewtheorem[style=_@@_theorem]{lemma}{Lemme}{Lemma}
-\gztnewtheorem[style=_@@_theorem]{lemme}{Lemme}{Lemma}
-\gztnewtheorem[style=_@@_theorem]{axiom}{Axiome}{Axiom}
-\gztnewtheorem[style=_@@_theorem]{axiome}{Axiome}{Axiom}
+\newtheorem{theorem-like}{theorem}{Th\'eor\`eme}[Theorem]
+\newtheorem{theorem-like}{corollary}{Corollaire}[Corollary]
+\newtheorem{theorem-like}{conjecture}{Conjecture}
+\newtheorem{theorem-like}{proposition}{Proposition}
+\newtheorem{theorem-like}{lemma}{Lemme}[Lemma]
+\newtheorem{theorem-like}{axiom}{Axiome}[Axiom]
 %
-\gztnewtheorem[style=_@@_definition]{definition}{D\'efinition}{Definition}
-\gztnewtheorem[style=_@@_definition]{remark}{Remarque}{Remark}
-\gztnewtheorem[style=_@@_definition]{remarque}{Remarque}{Remark}
-\gztnewtheorem[style=_@@_definition]{example}{Exemple}{Example}
-\gztnewtheorem[style=_@@_definition]{exemple}{Exemple}{Example}
-\gztnewtheorem[style=_@@_definition]{notation}{Notation}{Notation}
+\newtheorem{definition-like}{definition}{D\'efinition}[Definition]
+\newtheorem{definition-like}{remark}{Remarque}[Remark]
+\newtheorem{definition-like}{example}{Exemple}[Example]
+\newtheorem{definition-like}{notation}{Notation}
 %
-\gztnewtheorem[style=_@@_unumbered_theorem]{theorem*}{Th\'eor\`eme}{Theorem}
-\gztnewtheorem[style=_@@_unumbered_theorem]{theoreme*}{Th\'eor\`eme}{Theorem}
-\gztnewtheorem[style=_@@_unumbered_theorem]{corollary*}{Corollaire}{Corollary}
-\gztnewtheorem[style=_@@_unumbered_theorem]{corollaire*}{Corollaire}{Corollary}
-\gztnewtheorem[style=_@@_unumbered_theorem]{conjecture*}{Conjecture}{Conjecture}
-\gztnewtheorem[style=_@@_unumbered_theorem]{proposition*}{Proposition}{Proposition}
-\gztnewtheorem[style=_@@_unumbered_theorem]{lemma*}{Lemme}{Lemma}
-\gztnewtheorem[style=_@@_unumbered_theorem]{lemme*}{Lemme}{Lemma}
-\gztnewtheorem[style=_@@_unumbered_theorem]{axiom*}{Axiome}{Axiom}
-\gztnewtheorem[style=_@@_unumbered_theorem]{axiome*}{Axiome}{Axiom}
-%
-\gztnewtheorem[style=_@@_unumbered_definition]{definition*}{D\'efinition}{Definition}
-\gztnewtheorem[style=_@@_unumbered_definition]{remark*}{Remarque}{Remark}
-\gztnewtheorem[style=_@@_unumbered_definition]{remarque*}{Remarque}{Remark}
-\gztnewtheorem[style=_@@_unumbered_definition]{example*}{Exemple}{Example}
-\gztnewtheorem[style=_@@_unumbered_definition]{exemple*}{Exemple}{Example}
-\gztnewtheorem[style=_@@_unumbered_definition]{notation*}{Notation}{Notation}
+\cs_new_protected:Nn \_@@_clone_theorem:nn
+{
+  \NewDocumentEnvironment{#1}{  }
+  {
+    \begin{#2}
+    }
+    {
+    \end{#2}
+  }
+  \NewDocumentEnvironment{#1*}{  }
+  {
+    \begin{#2*}
+    }
+    {
+    \end{#2*}
+  }
+}
+\_@@_clone_theorem:nn {theoreme} {theorem}
+\_@@_clone_theorem:nn {corollaire}{corollary}
+\_@@_clone_theorem:nn {lemme}{lemma}
+\_@@_clone_theorem:nn {axiome}{axiom}
+\_@@_clone_theorem:nn {remarque}{remark}
+\_@@_clone_theorem:nn {exemple}{example}
 %    \end{macrocode}
 %
 % \subsection{(Reciprocal) Trigonometric and hyperbolic functions}
