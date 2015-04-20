@@ -1488,13 +1488,10 @@ This work consists of the file  gzt.dtx
 \tl_const:Nn \c_@@_issue_frontcover_image_file_string_tl {frontcover}
 \tl_const:Nn \c_@@_issue_frontcover_image_path_string_tl {\c_@@_issue_images_path_string_tl/\c_@@_issue_frontcover_image_file_string_tl}
 %    \end{macrocode}
-% For the name of the file containing the inside back cover page.
+% For the name of the file containing the text of the current issue's back cover.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_inside_back_cover_page_file_string_tl {\c_@@_backmatter_directory_string_tl/inside-back-cover}
-%    \end{macrocode}
-% For the name of the file containing the back cover page.
-%    \begin{macrocode}
-\tl_const:Nn \c_@@_back_cover_page_file_string_tl {\c_@@_backmatter_directory_string_tl/back-cover}
+\tl_const:Nn \c_@@_issue_backcover_text_file_string_tl {backcover}
+\tl_const:Nn \c_@@_backcover_page_file_string_tl {\c_@@_backmatter_directory_string_tl/\c_@@_issue_backcover_text_file_string_tl}
 %    \end{macrocode}
 % For the few words about the front cover.
 %    \begin{macrocode}
@@ -1542,6 +1539,7 @@ This work consists of the file  gzt.dtx
 \tl_const:Nn \c_@@_books_rubric_string_tl {Livres}
 \tl_const:Nn \c_@@_latex_rubric_string_tl {Astuces~\LaTeX{}}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -1647,6 +1645,7 @@ This work consists of the file  gzt.dtx
 %
 % \begin{macro}{\g_@@_frontcover_bool}
 % \begin{macro}{\g_@@_inside_frontcover_bool}
+% \begin{macro}{\g_@@_inside_backcover_bool}
 % \begin{macro}{\g_@@_frontmatter_bool}
 % \begin{macro}{\g_@@_rubric_bool}
 % \begin{macro}{\g_@@_interview_rubric_bool}
@@ -1659,6 +1658,7 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \bool_new:N \g_@@_frontcover_bool
 \bool_new:N \g_@@_inside_frontcover_bool
+\bool_new:N \g_@@_inside_backcover_bool
 \bool_new:N \g_@@_frontmatter_bool
 \bool_new:N \g_@@_rubric_bool
 \bool_new:N \g_@@_interview_rubric_bool
@@ -1669,6 +1669,7 @@ This work consists of the file  gzt.dtx
 \bool_new:N \g_@@_backmatter_bool
 \bool_new:N \g_@@_backcover_bool
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -1837,9 +1838,20 @@ This work consists of the file  gzt.dtx
 \dim_const:Nn \c_@@_footskip_dim    {  26mm}
 \dim_const:Nn \c_@@_innermargin_dim { 15mm - \c_@@_bindingoffset_dim + \c_@@_adjustmargin_dim}
 \dim_const:Nn \c_@@_outermargin_dim { 30mm - \c_@@_adjustmargin_dim }
+\dim_const:Nn \c_@@_inside_cover_box_width_dim { 165mm }%
+\dim_const:Nn \c_@@_innermargin_inside_cover_dim {
+  (\c_@@_layoutwidth_dim - \c_@@_inside_cover_box_width_dim)/2
+  - \c_@@_bindingoffset_dim
+  + \c_@@_adjustmargin_dim
+}
+\dim_const:Nn \c_@@_outermargin_inside_cover_dim {
+  (\c_@@_layoutwidth_dim - \c_@@_inside_cover_box_width_dim)/2
+  - \c_@@_adjustmargin_dim
+}
+\dim_const:Nn \c_@@_innermargin_backcover_dim { 2cm }
+\dim_const:Nn \c_@@_outermargin_backcover_dim { \c_@@_innermargin_backcover_dim }
 \dim_const:Nn \c_@@_frontcover_image_height_dim {  160mm}
 \dim_const:Nn \c_@@_radius_arc_dim { 85mm }%
-\dim_const:Nn \c_@@_inside_frontcover_box_width_dim { 165mm }%
 \dim_const:Nn \c_@@_frontmatter_headtext_xshift_dim { 19mm }%
 \dim_const:Nn \c_@@_frontmatter_headtext_o_xshift_dim {
   -\c_@@_frontmatter_headtext_xshift_dim  -\c_@@_layoutoffset_dim%
@@ -2009,13 +2021,13 @@ This work consists of the file  gzt.dtx
     ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
     ,layoutvoffset=\c_@@_layoutoffset_dim
     ,bindingoffset=\c_@@_bindingoffset_dim
-    ,top=\c_@@_topmargin_inside_frontcover_dim
+    ,top=\c_@@_topmargin_inside_cover_dim
     ,headheight=\c_@@_headheight_dim
     ,headsep=\c_@@_headsep_inside_frontcover_dim
     ,bottom=\c_@@_botmargin_dim
     ,footskip=\c_@@_footskip_dim
-    ,inner=\c_@@_innermargin_dim-\c_@@_layoutoffset_dim
-    ,outer=\c_@@_outermargin_dim+\c_@@_layoutoffset_dim
+    ,inner=\c_@@_innermargin_inside_cover_dim-\c_@@_layoutoffset_dim
+    ,outer=\c_@@_outermargin_inside_cover_dim+\c_@@_layoutoffset_dim
     ,nomarginpar%
   }%
 }{
@@ -2023,13 +2035,13 @@ This work consists of the file  gzt.dtx
     ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
     ,layoutoffset=\c_@@_layoutoffset_dim
     ,bindingoffset=\c_@@_bindingoffset_dim
-    ,top=\c_@@_topmargin_inside_frontcover_dim
+    ,top=\c_@@_topmargin_inside_cover_dim
     ,headheight=\c_@@_headheight_dim
     ,headsep=\c_@@_headsep_inside_frontcover_dim
     ,bottom=\c_@@_botmargin_dim
     ,footskip=\c_@@_footskip_dim
-    ,inner=\c_@@_innermargin_dim
-    ,outer=\c_@@_outermargin_dim
+    ,inner=\c_@@_innermargin_inside_cover_dim
+    ,outer=\c_@@_outermargin_inside_cover_dim
     ,nomarginpar%
   }%
 }
@@ -2070,33 +2082,17 @@ This work consists of the file  gzt.dtx
 %
 % We create a constant token list that contains the geometry of the back cover.
 %    \begin{macrocode}
-\bool_if:NTF {\g_@@_cover_bool} {
-  \tl_const:Nn \c_@@_backcover_geometry_tl {%
-    ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
-    ,layoutvoffset=\c_@@_layoutoffset_dim
-    ,bindingoffset=\c_@@_bindingoffset_dim
-    ,top=\c_@@_topmargin_backcover_dim
-    ,headsep=\c_@@_headsep_backcover_dim
-    ,headheight=\c_@@_headheight_dim
-    ,bottom=\c_zero_dim
-    ,footskip=\c_zero_dim
-    ,outer=\c_zero_dim
-    ,inner=\c_@@_layoutoffset_dim
-    ,nomarginpar%
-  }%
-}{
-  \tl_const:Nn \c_@@_backcover_geometry_tl {%
-    ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
-    ,layoutoffset=\c_@@_layoutoffset_dim
-    % ,bindingoffset=\c_@@_bindingoffset_dim
-    ,top=\c_@@_topmargin_dim-15mm%
-    ,headheight=\c_@@_headheight_dim
-    ,headsep=\c_@@_headsep_dim-18mm
-    ,bottom=\c_@@_botmargin_dim
-    ,footskip=\c_@@_footskip_dim
-    ,inner=2cm
-    ,outer=2cm
-  }%
+\tl_const:Nn \c_@@_backcover_geometry_tl {%
+  ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
+  ,layoutoffset=\c_@@_layoutoffset_dim
+  % ,bindingoffset=\c_@@_bindingoffset_dim
+  ,top=\c_@@_topmargin_dim-15mm%
+  ,headheight=\c_@@_headheight_dim
+  ,headsep=\c_@@_headsep_dim-18mm
+  ,bottom=\c_@@_botmargin_dim
+  ,footskip=\c_@@_footskip_dim
+  ,inner=\c_@@_innermargin_backcover_dim
+  ,outer=\c_@@_outermargin_backcover_dim
 }
 %    \end{macrocode}
 %
@@ -3004,7 +3000,7 @@ This work consists of the file  gzt.dtx
   \small%
   \setlength{\columnseprule}{2pt}
   \renewcommand{\columnseprulecolor}{\color{white}}
-  \begin{_@@_inside_frontcover}
+  \begin{_@@_inside_cover_tcb}[_@@_tcb_inside_frontcover_style]
     \begin{multicols}{2}
       \setlength{\columnsep}{1mm}
       \begin{description}[leftmargin=1em]
@@ -3022,7 +3018,7 @@ This work consists of the file  gzt.dtx
     \end{multicols}
     \setlength{\columnseprule}{1pt}
     \tcblower
-    \begin{tabular}{@{}m{.75\c_@@_inside_frontcover_box_width_dim}@{}m{.2\c_@@_inside_frontcover_box_width_dim-2\tabcolsep}@{}}
+    \begin{tabular}{@{}m{.75\c_@@_inside_cover_box_width_dim}@{}m{.2\c_@@_inside_cover_box_width_dim-2\tabcolsep}@{}}
       \begin{description}[leftmargin=1em]
       \item[\c_@@_editorial_secretariat_string_tl] \ \par%
         \l_@@_journal_publisher_tl\par%
@@ -3038,24 +3034,24 @@ This work consists of the file  gzt.dtx
         {%
         \item[\c_@@_isbn_string_tl{}~:] \l_@@_journal_isbn_tl
         }
-      \item[\c_@@_latexclass_string_tl{}~:]
-        \@@_display_people_by_role:n { classdesigner }
-      \item[\c_@@_artistic_director_string_tl{}~:]
-        \@@_display_people_by_role:n { graphicdesigner }
-        % \item[\c_@@_font_string_tl{}~:]
-        %   \@@_display_people_by_role:n { fontdesigner }
+      % \item[\c_@@_latexclass_string_tl{}~:]
+      %   \@@_display_people_by_role:n { classdesigner }
+      % \item[\c_@@_artistic_director_string_tl{}~:]
+      %   \@@_display_people_by_role:n { graphicdesigner }
+      %   % \item[\c_@@_font_string_tl{}~:]
+      %   %   \@@_display_people_by_role:n { fontdesigner }
       \end{description}
       &
         \hspace*{\fill}%
         \includegraphics[height=20mm]{\c_@@_smf_logo_file_string_tl}%
     \end{tabular}
-    \\
-    \c_@@_font_string_tl
+    % \\
+    % \c_@@_font_string_tl
     \bigskip
     \tl_if_empty:NF \g_@@_about_frontcover_tl
     {%
       \\
-      \begin{adjustbox}{valign=t,minipage=.75\c_@@_inside_frontcover_box_width_dim+.2\c_@@_inside_frontcover_box_width_dim-2\tabcolsep}
+      \begin{adjustbox}{valign=t,minipage=.75\c_@@_inside_cover_box_width_dim+.2\c_@@_inside_cover_box_width_dim-2\tabcolsep}
         \begin{description}[leftmargin=1em,font=\color{@@_about_frontcover_title_color}]
         \item[\g_@@_about_frontcover_string_tl] \g_@@_about_frontcover_tl
           \bool_if:NT {\g_@@_credit_frontcover_bool} {
@@ -3072,10 +3068,59 @@ This work consists of the file  gzt.dtx
         \end{description}
       \end{adjustbox}
     }
-  \end{_@@_inside_frontcover}
+  \end{_@@_inside_cover_tcb}
   \setcounter{page}{0}
   \clearpage%
   \bool_gset_false:N \g_@@_inside_frontcover_bool
+}
+%    \end{macrocode}
+%
+% \section{Displaying the inside back cover}
+%
+% We create the variable that displays the inside back cover.
+%    \begin{macrocode}
+\tl_new:N \g_@@_display_inside_backcover_tl%
+\tl_gset:Nn \g_@@_display_inside_backcover_tl {%
+  \bool_gset_true:N \g_@@_inside_backcover_bool%
+  \pagestyle{@@_inside_backcover_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_inside_cover_geometry_tl}%
+  \small%
+  \begin{_@@_inside_cover_tcb}[_@@_tcb_inside_backcover_style]
+    % \small%
+    % Page~
+    % \ifoddpage%
+    % im
+    % \fi
+    % paire.\par{}
+    % \begin{multicols}{2}
+    %   \setlength{\columnsep}{1mm}
+      \g_@@_authors_instructions_text_tl
+    % \end{multicols}
+    % \setlength{\columnseprule}{1pt}
+    \tcblower
+    \begin{description}[leftmargin=1em]
+    \item[\c_@@_latexclass_string_tl{}~:]
+      \@@_display_people_by_role:n { classdesigner }
+    \item[\c_@@_artistic_director_string_tl{}~:]
+      \@@_display_people_by_role:n { graphicdesigner }
+    \item[\c_@@_printer_string_tl{}~:] \g_@@_printer_text_tl
+    \end{description}
+    \g_@@_font_designer_text_tl
+  \end{_@@_inside_cover_tcb}
+  \bool_gset_false:N \g_@@_inside_backcover_bool
+}
+%    \end{macrocode}
+%
+% \section{Displaying the back cover}
+%
+% We create the variable that displays the back cover.
+%    \begin{macrocode}
+\tl_new:N \g_@@_display_backcover_tl%
+\tl_gset:Nn \g_@@_display_backcover_tl {%
+  \bool_gset_true:N \g_@@_backcover_bool
+  \pagestyle{@@_backcover_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_backcover_geometry_tl}%
+  \file_input:n {\c_@@_backcover_page_file_string_tl}
 }
 %    \end{macrocode}
 %
@@ -5593,9 +5638,8 @@ This work consists of the file  gzt.dtx
   _@@_tcb_book_advertisement_box_style,
   #1
 }
-\DeclareTColorBox{_@@_inside_frontcover}{ O{} }
+\DeclareTColorBox{_@@_inside_cover_tcb}{ O{} }
 {
-  _@@_tcb_inside_frontcover_style,
   #1
 }
 %    \end{macrocode}
@@ -5722,14 +5766,9 @@ This work consists of the file  gzt.dtx
   \fi
   \newpage
   \bool_gset_true:N \g_@@_backmatter_bool
-  \pagestyle{@@_inside_backcover_ps}%
-  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_inside_cover_geometry_tl}%
-  \file_input:n {\c_@@_inside_back_cover_page_file_string_tl}
+  \g_@@_display_inside_backcover_tl
   \newpage
-  \bool_gset_true:N \g_@@_backcover_bool
-  \pagestyle{@@_backcover_ps}%
-  \exp_after:wN\newgeometry\exp_after:wN{\c_@@_backcover_geometry_tl}%
-  \file_input:n {\c_@@_back_cover_page_file_string_tl}
+  \g_@@_display_backcover_tl
 }%
 %    \end{macrocode}
 %
@@ -5973,11 +6012,10 @@ This work consists of the file  gzt.dtx
   }
 }
 \tcbset{%
-  _@@_tcb_inside_frontcover_style/.style={%
+  _@@_tcb_inside_cover_style/.style={%
     % split=0.6,%
     colback=@@_inside_frontcover_frame_bg_color,%
     colbacktitle=@@_inside_frontcover_frame_bg_color,%
-    title=\c_@@_editorial_board_string_tl,%
     sharp~corners=all,%
     center~title,%
     coltitle=@@_inside_frontcover_frame_title_color,%
@@ -5987,11 +6025,20 @@ This work consists of the file  gzt.dtx
     bottomtitle=4mm,%
     frame~hidden,%
     enhanced,%
-    enlarge~left~by=-7.5mm,
-    height=\c_@@_layoutheight_dim-\c_@@_topmargin_inside_frontcover_dim-\c_@@_botmargin_dim,
-    width=\c_@@_inside_frontcover_box_width_dim,
+    height=\c_@@_layoutheight_dim-\c_@@_topmargin_inside_cover_dim-\c_@@_botmargin_dim,
+    width=\c_@@_inside_cover_box_width_dim,
     middle=4mm,
     segmentation~style={_@@_tcb_segmentation_style}%
+  },
+  _@@_tcb_inside_frontcover_style/.style={%
+    _@@_tcb_inside_cover_style,
+    enlarge~left~by=-\c_@@_inside_cover_offset_dim,
+    title=\c_@@_editorial_board_string_tl
+  },
+  _@@_tcb_inside_backcover_style/.style={%
+    _@@_tcb_inside_cover_style,
+    enlarge~left~by=\c_@@_inside_cover_offset_dim,
+    title=\c_@@_authors_instructions_string_tl
   }
 }
 \tcbset{%
@@ -6043,7 +6090,7 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \setlist[description]{
   font=
-  \bool_if:nTF { \g_@@_books_rubric_bool || \g_@@_inside_frontcover_bool }
+  \bool_if:nTF { \g_@@_books_rubric_bool || \g_@@_inside_frontcover_bool || \g_@@_inside_backcover_bool }
   {
     \color{black}
   }{
