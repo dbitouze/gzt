@@ -871,6 +871,7 @@ This work consists of the file  gzt.dtx
 %<class|class-article>\LoadClassWithOptions { book }
 \PassOptionsToPackage{table,cmyk}{xcolor}%
 \PassOptionsToPackage{export}{adjustbox}%
+\PassOptionsToPackage{english,french}{translator}
 \PassOptionsToPackage{english,french}{babel}
 \PassOptionsToPackage{english,french}{varioref}
 \PassOptionsToPackage{english,french}{cleveref}
@@ -1043,6 +1044,11 @@ This work consists of the file  gzt.dtx
 % \item Hooks to do actions on every page or on the current page:
 %    \begin{macrocode}
 \RequirePackage{everypage}
+%    \end{macrocode}
+%
+% \item For translating words in \LaTeX{}.
+%    \begin{macrocode}
+\RequirePackage{translator}%
 %    \end{macrocode}
 %
 % \item Flexible and easy interface to page dimensions:
@@ -6217,33 +6223,54 @@ This work consists of the file  gzt.dtx
 %   \end{enumerate}
 % \item a public environment based on this private theorem with a the usual
 %   syntax of \pkg{amsthm} theorems, except it has an optional argument for
-%   possible additional options to the default styles ("_@@_theorem" or
-%   "_@@_definition").
+%   possible additional options to the default styles ("theorem-like" or
+%   "definition-like").
 % \end{enumerate}
+%
+% \begin{macro}{\bilingual}
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_bilingual:nnn
+{
+  % \AtBeginDocument{%
+    % \deftranslation[to=French]{lbl-#1}{#2}%
+    % \deftranslation[to=English]{lbl-#1}{#3}%
+    \deftranslation[to=French]{#1}{#2}%
+    \deftranslation[to=English]{#1}{#3}%
+  % }%
+}
+%    \end{macrocode}
+% \end{macro}
 %
 %    \begin{macrocode}
 \cs_new_protected:Nn \_@@_new_theorem:nnnn
 {
+  \tl_if_empty:nTF {#4}
+  {
+    \_@@_bilingual:nnn {#2}{#3}{#3}
+  }
+  {
+    \_@@_bilingual:nnn {#2}{#3}{#4}
+  }
   \declaretheorem[%
   #1,%
-  name=
-  \IfLanguageName{french}{#3}{}%
-  \IfLanguageName{english}{#4}{}%
+  name=\translate{#2}
   ]{#2}
+  \declaretheorem[%
+  #1,%
+  name=\translate{#2},
+  numbered=no
+  ]{#2*}
 }
-\declaretheoremstyle[spaceabove=3pt,bodyfont=\itshape]{_@@_theorem}
-\declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont]{_@@_definition}
-%
-\declaretheoremstyle[spaceabove=3pt,bodyfont=\itshape,numbered=no]{_@@_unumbered_theorem}
-\declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont,numbered=no]{_@@_unumbered_definition}
+\declaretheoremstyle[spaceabove=3pt,bodyfont=\itshape]{theorem-like}
+\declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont]{definition-like}
 %    \end{macrocode}
 %
 % Then, we define a public command, similar to "\newtheorem", based on
-% "\_@@_new_theorem", that lets the user define its personal theorems:
+% "\_@@_new_theorem", that lets the user define his own theorems:
 %    \begin{macrocode}
 \NewDocumentCommand \gztnewtheorem {O{}mmm}
 {
-  \_@@_new_theorem:nnnn {#1}{#2}{#3}{#4}
+  \_@@_new_theorem:nnnn {style=#1}{#2}{#3}{#4}
 }
 %    \end{macrocode}
 %
