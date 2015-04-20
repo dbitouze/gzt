@@ -6231,12 +6231,8 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \cs_new_protected:Nn \_@@_bilingual:nnn
 {
-  % \AtBeginDocument{%
-    % \deftranslation[to=French]{lbl-#1}{#2}%
-    % \deftranslation[to=English]{lbl-#1}{#3}%
-    \deftranslation[to=French]{#1}{#2}%
-    \deftranslation[to=English]{#1}{#3}%
-  % }%
+  \deftranslation[to=French]{#1}{#2}%
+  \deftranslation[to=English]{#1}{#3}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -6272,6 +6268,12 @@ This work consists of the file  gzt.dtx
 {
   \_@@_new_theorem:nnnn {style=#1}{#2}{#3}{#4}
 }
+%    \end{macrocode}
+%
+% The old "\gztnewtheorem" document command remains an alias of the new
+% "\newtheorem":
+%    \begin{macrocode}
+\cs_set_eq:cc {gztnewtheorem} {newtheorem}
 %    \end{macrocode}
 %
 % Finally, we define some usual theorems:
