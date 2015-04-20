@@ -492,6 +492,12 @@ This work consists of the file  gzt.dtx
 \fontdesignertext{Nous~utilisons~la~police~\href{http://ctan.org/pkg/kpfonts}{Kp-Fonts}~cr{\'e}{\'e}e~par~Christophe~\textsc{Caignaert}.}
 %<<COMMENT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Printer text
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%COMMENT
+\printertext{Jouve \aside*{1 rue du docteur Sauvé 53100 Mayenne}}
+%<<COMMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SMF President
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %COMMENT
@@ -5283,6 +5289,18 @@ This work consists of the file  gzt.dtx
 \NewDocumentCommand \fontdesignertext {m}
 {
   \_@@_font_designer_text:n {#1}%
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\tl_new:N \g_@@_printer_text_tl%
+\cs_new_protected:Nn \@@_printer_text:n
+{
+  \tl_gset:Nn \g_@@_printer_text_tl { #1 }
+}
+\NewDocumentCommand \printertext {m}
+{
+  \_@@_printer_text:n {#1}%
 }
 %    \end{macrocode}
 %
