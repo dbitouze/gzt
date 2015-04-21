@@ -1148,11 +1148,6 @@ This work consists of the file  gzt.dtx
 %<class>\RequirePackage[foreground]{pagegrid}%
 %    \end{macrocode}
 %
-% We restore "\@preamblecmds" as it was before:
-%    \begin{macrocode}
-%<class|class-article>\cs_set_eq:NN \@preamblecmds \_@@_orig_preamblecmds
-%    \end{macrocode}
-%
 % \item Typesetting theorems (AMS style):
 %    \begin{macrocode}
 \RequirePackage{amsthm}
@@ -1161,6 +1156,11 @@ This work consists of the file  gzt.dtx
 % \item Extensions to theorem environments:
 %    \begin{macrocode}
 \RequirePackage{thmtools}
+%    \end{macrocode}
+%
+% We restore "\@preamblecmds" as it was before:
+%    \begin{macrocode}
+%<class|class-article>\cs_set_eq:NN \@preamblecmds \_@@_orig_preamblecmds
 %    \end{macrocode}
 %
 % \item Control float placement:
@@ -1239,6 +1239,8 @@ This work consists of the file  gzt.dtx
   {Please~specify~`#1=<number>',
     ~otherwise~`<number>'~will~be~set~to
     ~`\int_use:N\c_@@_first_issue_number_int'.}
+\msg_new:nnnn{gzt}{unknown-choice}{Choice~`#3'~invalid!}
+  {Please~specify~#1=#2.}
 %    \end{macrocode}
 %
 % \section{Counters}
@@ -2505,6 +2507,32 @@ This work consists of the file  gzt.dtx
 % \end{macro}
 % \end{macro}
 %
+% \subsection{New theorem options}
+%
+%    \begin{macrocode}
+\tl_new:N \l_@@_newtheorem_style_tl
+\keys_define:nn { gzt/newtheorem }
+{
+  frenchtitle .tl_set:N = \l_@@_newtheorem_frenchtitle_tl,
+  englishtitle .tl_set:N = \l_@@_newtheorem_englishtitle_tl,
+  frenchtitle .value_required:,
+  englishtitle .value_required:,
+  %
+  style .choice:,
+  style / theorem-like .code:n = {\tl_set:Nn \l_@@_newtheorem_style_tl {theorem-like}},
+  style / definition-like .code:n = {\tl_set:Nn \l_@@_newtheorem_style_tl {definition-like}},
+  style / proof-like .code:n = {\tl_set:Nn \l_@@_newtheorem_style_tl {proof-like}},
+  style / unknown .code:n =
+  \msg_error:nnxxx { gzt } { unknown-choice }
+  { style } % Name of choice key
+  { theorem-like~or~definition-like~or~proof-like } % Valid choices
+  { \exp_not:n {#1} } % Invalid choice given
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
 % \section{Colors}
 %
 % In this section, we define the colors that will be used by the class and by
@@ -3681,7 +3709,6 @@ This work consists of the file  gzt.dtx
     \addcontentsline{toc}{part}{\g_@@_rubric_title_tl}
     \thispagestyle{@@_rubric_ps}
     \exp_after:wN\newgeometry\exp_after:wN{\c_@@_main_geometry_tl}%
-    % \tl_show:N \g_@@_rubric_abstract_tl
     \tl_if_empty:NTF \g_@@_rubric_abstract_tl
     {
       \dim_set:Nn \l_@@_rubrics_head_text_width_dim { \c_@@_rubrics_head_text_no_abstract_width_dim }
@@ -3877,21 +3904,21 @@ This work consists of the file  gzt.dtx
 \setcounter{equation}{0}
 %
 \setcounter{theorem}{0}
-\setcounter{theoreme}{0}
+% \setcounter{theoreme}{0}
 \setcounter{corollary}{0}
-\setcounter{corollaire}{0}
+% \setcounter{corollaire}{0}
 \setcounter{conjecture}{0}
 \setcounter{proposition}{0}
 \setcounter{lemma}{0}
-\setcounter{lemme}{0}
+% \setcounter{lemme}{0}
 \setcounter{axiom}{0}
-\setcounter{axiome}{0}
+% \setcounter{axiome}{0}
 %
 \setcounter{definition}{0}
 \setcounter{remark}{0}
-\setcounter{remarque}{0}
+% \setcounter{remarque}{0}
 \setcounter{example}{0}
-\setcounter{exemple}{0}
+% \setcounter{exemple}{0}
 \setcounter{notation}{0}
 %    \end{macrocode}
 %
@@ -6240,13 +6267,9 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \cs_new_protected:Nn \_@@_new_theorem:nnnn
 {
-  \tl_if_empty:nTF {#4}
-  {
-    \_@@_bilingual:nnn {#2}{#3}{#3}
-  }
-  {
-    \_@@_bilingual:nnn {#2}{#3}{#4}
-  }
+  % \_@@_bilingual:nnn {#2}{#3}{#4}
+  \deftranslation[to=French]{#2}{#3}%
+  \deftranslation[to=English]{#2}{#4}%
   \declaretheorem[%
   #1,%
   name=\translate{#2}
@@ -6257,38 +6280,73 @@ This work consists of the file  gzt.dtx
   numbered=no
   ]{#2*}
 }
-\declaretheoremstyle[spaceabove=3pt,bodyfont=\itshape]{theorem-like}
-\declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont]{definition-like}
+\cs_generate_variant:Nn \_@@_new_theorem:nnnn { nnVV }
+\declaretheoremstyle[spaceabove=3pt,notefont=\bfseries,bodyfont=\itshape]{theorem-like}
+\declaretheoremstyle[spaceabove=3pt,notefont=\bfseries,bodyfont=\normalfont]{definition-like}
+\declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont,qed=\ensuremath{\blacksquare},headfont=\normalfont\itshape,numbered=no]{proof-like}
 %    \end{macrocode}
 %
 % Then, we define a public command, similar to "\newtheorem", based on
 % "\_@@_new_theorem", that lets the user define his own theorems:
 %    \begin{macrocode}
-\RenewDocumentCommand \newtheorem { m m m O{} }
+\tl_new:N \l_@@_apriori_newtheorem_englishtitle_tl
+\cs_generate_variant:Nn \tl_if_eq:nnF { VVF }
+\RenewDocumentCommand \newtheorem { O{} m }
 {
-  \_@@_new_theorem:nnnn {style=#1}{#2}{#3}{#4}
+  \tl_clear:N \l_@@_newtheorem_style_tl
+  \tl_clear:N \l_@@_newtheorem_frenchtitle_tl
+  \tl_clear:N \l_@@_newtheorem_englishtitle_tl
+  \tl_set:Nn \l_@@_newtheorem_englishtitle_tl {
+    \MakeUppercase #2
+  }
+  \tl_set:Nf \l_@@_newtheorem_frenchtitle_tl {
+    \l_@@_newtheorem_englishtitle_tl
+  }
+  \tl_set:Nn \l_@@_newtheorem_style_tl {
+    theorem-like
+  }
+  \IfNoValueF {#1}
+  {
+    \keys_set:nn { gzt/newtheorem } { #1 }
+  }
+  % \tl_if_eq:VVF { \l_@@_newtheorem_englishtitle_tl } { \MakeUppercase #2 }
+  %   {%
+  %     \tl_show:N \l_@@_newtheorem_englishtitle_tl
+  %     \tl_show:N \l_@@_newtheorem_frenchtitle_tl
+  %     \tl_if_eq:NNF { \l_@@_newtheorem_frenchtitle_tl } { \l_@@_newtheorem_englishtitle_tl }
+  %     {%
+  %     \tl_set:Nf \l_@@_newtheorem_frenchtitle_tl {
+  %       \l_@@_newtheorem_englishtitle_tl
+  %     }
+  %   }
+  % }
+  % \tl_show:N \l_@@_newtheorem_style_tl
+  % \tl_show:N \l_@@_newtheorem_frenchtitle_tl
+  % \tl_show:N \l_@@_newtheorem_englishtitle_tl
+  \_@@_new_theorem:nnVV {style=\l_@@_newtheorem_style_tl}{#2}{\l_@@_newtheorem_frenchtitle_tl}{\l_@@_newtheorem_englishtitle_tl}
 }
-%    \end{macrocode}
-%
-% The old "\gztnewtheorem" document command remains an alias of the new
-% "\newtheorem":
-%    \begin{macrocode}
-\cs_set_eq:cc {gztnewtheorem} {newtheorem}
 %    \end{macrocode}
 %
 % Finally, we define some usual theorems:
 %    \begin{macrocode}
-\newtheorem{theorem-like}{theorem}{Th\'eor\`eme}[Theorem]
-\newtheorem{theorem-like}{corollary}{Corollaire}[Corollary]
-\newtheorem{theorem-like}{conjecture}{Conjecture}
-\newtheorem{theorem-like}{proposition}{Proposition}
-\newtheorem{theorem-like}{lemma}{Lemme}[Lemma]
-\newtheorem{theorem-like}{axiom}{Axiome}[Axiom]
+\newtheorem[frenchtitle=Th\'eor\`eme]{theorem}
+% \newtheorem[frenchtitle=Th\'eor\`eme,englishtitle=Theorem]{theoreme}
+\newtheorem[frenchtitle=Corollaire]{corollary}
+% \newtheorem[englishtitle=corollary]{corollaire}
+\newtheorem{conjecture}
+\newtheorem{proposition}
+\newtheorem[frenchtitle=Lemme]{lemma}
+% \newtheorem[englishtitle=Lemma]{lemme}
+\newtheorem[frenchtitle=Axiome]{axiom}
+% \newtheorem[englishtitle=Axiom]{axiome}
 %
-\newtheorem{definition-like}{definition}{D\'efinition}[Definition]
-\newtheorem{definition-like}{remark}{Remarque}[Remark]
-\newtheorem{definition-like}{example}{Exemple}[Example]
-\newtheorem{definition-like}{notation}{Notation}
+\newtheorem[style=definition-like,frenchtitle=D\'efinition]{definition}
+\newtheorem[style=definition-like,frenchtitle=Remarque]{remark}
+\newtheorem[style=definition-like,frenchtitle=Exemple]{example}
+\newtheorem[style=definition-like]{notation}
+%
+\let\proof\relax
+\newtheorem[style=proof-like,frenchtitle=Preuve]{proof}
 %
 \cs_new_protected:Nn \_@@_clone_theorem:nn
 {
