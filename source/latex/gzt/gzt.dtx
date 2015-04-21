@@ -2519,13 +2519,13 @@ This work consists of the file  gzt.dtx
   englishtitle .value_required:,
   %
   style .choice:,
-  style / theorem-like .code:n = {\tl_set:Nn \l_@@_newtheorem_style_tl {theorem-like}},
-  style / definition-like .code:n = {\tl_set:Nn \l_@@_newtheorem_style_tl {definition-like}},
-  style / proof-like .code:n = {\tl_set:Nn \l_@@_newtheorem_style_tl {proof-like}},
+  style / theorem .code:n = {\tl_set:Nn \l_@@_newtheorem_style_tl {theorem}},
+  style / definition .code:n = {\tl_set:Nn \l_@@_newtheorem_style_tl {definition}},
+  style / proof .code:n = {\tl_set:Nn \l_@@_newtheorem_style_tl {proof}},
   style / unknown .code:n =
   \msg_error:nnxxx { gzt } { unknown-choice }
   { style } % Name of choice key
-  { theorem-like~or~definition-like~or~proof-like } % Valid choices
+  { theorem~or~definition~or~proof } % Valid choices
   { \exp_not:n {#1} } % Invalid choice given
 }
 %    \end{macrocode}
@@ -6250,8 +6250,8 @@ This work consists of the file  gzt.dtx
 %   \end{enumerate}
 % \item a public environment based on this private theorem with a the usual
 %   syntax of \pkg{amsthm} theorems, except it has an optional argument for
-%   possible additional options to the default styles ("theorem-like" or
-%   "definition-like").
+%   possible additional options to the default styles ("theorem" or
+%   "definition").
 % \end{enumerate}
 %
 % \begin{macro}{\bilingual}
@@ -6281,9 +6281,9 @@ This work consists of the file  gzt.dtx
   ]{#2*}
 }
 \cs_generate_variant:Nn \_@@_new_theorem:nnnn { nnVV }
-\declaretheoremstyle[spaceabove=3pt,notefont=\bfseries,bodyfont=\itshape]{theorem-like}
-\declaretheoremstyle[spaceabove=3pt,notefont=\bfseries,bodyfont=\normalfont]{definition-like}
-\declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont,qed=\ensuremath{\blacksquare},headfont=\normalfont\itshape,numbered=no]{proof-like}
+\declaretheoremstyle[spaceabove=3pt,notefont=\bfseries,bodyfont=\itshape]{theorem}
+\declaretheoremstyle[spaceabove=3pt,notefont=\bfseries,bodyfont=\normalfont]{definition}
+\declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont,qed=\ensuremath{\blacksquare},headfont=\normalfont\itshape,numbered=no]{proof}
 %    \end{macrocode}
 %
 % Then, we define a public command, similar to "\newtheorem", based on
@@ -6303,7 +6303,7 @@ This work consists of the file  gzt.dtx
     \l_@@_newtheorem_englishtitle_tl
   }
   \tl_set:Nn \l_@@_newtheorem_style_tl {
-    theorem-like
+    theorem
   }
   \IfNoValueF {#1}
   {
@@ -6340,13 +6340,13 @@ This work consists of the file  gzt.dtx
 \newtheorem[frenchtitle=Axiome]{axiom}
 % \newtheorem[englishtitle=Axiom]{axiome}
 %
-\newtheorem[style=definition-like,frenchtitle=D\'efinition]{definition}
-\newtheorem[style=definition-like,frenchtitle=Remarque]{remark}
-\newtheorem[style=definition-like,frenchtitle=Exemple]{example}
-\newtheorem[style=definition-like]{notation}
+\newtheorem[style=definition,frenchtitle=D\'efinition]{definition}
+\newtheorem[style=definition,frenchtitle=Remarque]{remark}
+\newtheorem[style=definition,frenchtitle=Exemple]{example}
+\newtheorem[style=definition]{notation}
 %
 \let\proof\relax
-\newtheorem[style=proof-like,frenchtitle=Preuve]{proof}
+\newtheorem[style=proof,frenchtitle=Preuve]{proof}
 %
 \cs_new_protected:Nn \_@@_clone_theorem:nn
 {
@@ -6371,6 +6371,7 @@ This work consists of the file  gzt.dtx
 \_@@_clone_theorem:nn {axiome}{axiom}
 \_@@_clone_theorem:nn {remarque}{remark}
 \_@@_clone_theorem:nn {exemple}{example}
+\_@@_clone_theorem:nn {preuve}{proof}
 %    \end{macrocode}
 %
 % \subsection{(Reciprocal) Trigonometric and hyperbolic functions}
