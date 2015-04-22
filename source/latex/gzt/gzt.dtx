@@ -1593,10 +1593,8 @@ This work consists of the file  gzt.dtx
 \int_gset:Nn \g_@@_total_page_number_int { \zref@extractdefault{selfLastPage}{abspage}{0} }
 \int_compare:nNnTF {\g_@@_total_page_number_int-4}<{68}
 {
-  \dim_const:Nn \c_@@_adjustmargin_dim {\c_zero_dim}
   \dim_const:Nn \c_@@_future_bindingoffset_dim { \c_zero_dim }
 }{
-  \dim_const:Nn \c_@@_adjustmargin_dim { 5mm }
   \int_compare:nNnTF {\g_@@_total_page_number_int-4}<{80}
   {
     \dim_const:Nn \c_@@_future_bindingoffset_dim { 3mm }
@@ -1682,17 +1680,20 @@ This work consists of the file  gzt.dtx
 \dim_const:Nn \c_@@_headheight_dim  { \c_zero_dim }
 \dim_const:Nn \c_@@_botmargin_dim   {  30mm}
 \dim_const:Nn \c_@@_footskip_dim    {  26mm}
-\dim_const:Nn \c_@@_innermargin_dim { 15mm - \c_@@_bindingoffset_dim + \c_@@_adjustmargin_dim}
-\dim_const:Nn \c_@@_outermargin_dim { 30mm - \c_@@_adjustmargin_dim }
+\dim_const:Nn \c_@@_innermargin_dim { 20mm - \c_@@_bindingoffset_dim }
+\dim_const:Nn \c_@@_outermargin_dim { 25mm }
+% \dim_const:Nn \c_@@_adjustmargin_dim { 5mm }
+% \dim_const:Nn \c_@@_innermargin_dim { 15mm - \c_@@_bindingoffset_dim + \c_@@_adjustmargin_dim}
+% \dim_const:Nn \c_@@_outermargin_dim { 30mm - \c_@@_adjustmargin_dim }
 \dim_const:Nn \c_@@_inside_cover_box_width_dim { 165mm }%
 \dim_const:Nn \c_@@_innermargin_inside_cover_dim {
   (\c_@@_layoutwidth_dim - \c_@@_inside_cover_box_width_dim)/2
   - \c_@@_bindingoffset_dim
-  + \c_@@_adjustmargin_dim
+  % + \c_@@_adjustmargin_dim
 }
 \dim_const:Nn \c_@@_outermargin_inside_cover_dim {
   (\c_@@_layoutwidth_dim - \c_@@_inside_cover_box_width_dim)/2
-  - \c_@@_adjustmargin_dim
+  % - \c_@@_adjustmargin_dim
 }
 \dim_const:Nn \c_@@_innermargin_backcover_dim { 2cm }
 \dim_const:Nn \c_@@_outermargin_backcover_dim { \c_@@_innermargin_backcover_dim }
