@@ -4860,8 +4860,21 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \newpagestyle{@@_inside_backcover_ps}[]{%
   \sethead%
+  [
+    \tikz[remember~picture,overlay] {%
+      \g_@@_frontmatter_page_headrule_tl%
+      \g_@@_frontmatter_headtext_tl%
+    }%
+  ]%
+  []%
+  []%
   {}%
-  {}%
+  {
+    \tikz[remember~picture,overlay] {%
+      \g_@@_frontmatter_page_headrule_tl%
+      \g_@@_frontmatter_headtext_tl%
+    }%
+  }%
   {}%
   %
   \setfoot%
