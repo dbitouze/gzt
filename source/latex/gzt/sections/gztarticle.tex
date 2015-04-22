@@ -12,11 +12,11 @@ souhaitant publier un article dans la
 \href{http://smf4.emath.fr/Publications/Gazette/}{\gzt*{}}. Cette classe a pour
 but :
 \begin{enumerate}
-\item de reproduire fidèlement la maquette de la \gzt{}, permettant ainsi
-  aux auteurs de pouvoir travailler la mise en page de leur document dans des
-  conditions réelles ;
+\item de reproduire fidèlement la maquette de la \gzt{}, permettant ainsi aux
+  auteurs de pouvoir travailler la mise en page de leur document dans des
+  conditions (quasi-)réelles ;
 \item de fournir un certain nombre d'outils (commandes et environnements)
-  destinés à faciliter la rédaction de documents, notamment ceux contenant des
+  destinés à faciliter la composition de documents, notamment ceux contenant des
   formules de mathématiques.
 \end{enumerate}
 
@@ -79,20 +79,20 @@ finale.
 \subsubsection{Titre, sous-titre}
 \label{sec-titre}
 
-\begin{docCommand}[doc description=\mandatory]{title}{\oarg{options}\marg{titre}}
+\begin{docCommand}[doc description=\mandatory]{title}{\oarg{option}\marg{titre}}
   Cette commande définit le \meta{titre} de l'article. Celui-ci apparaît alors
   en début d'article et aussi comme métadonnée \enquote{Titre} du fichier
   \textsc{pdf} correspondant.
 \end{docCommand}
 
-\begin{docCommand}{subtitle}{\oarg{options}\marg{sous-titre}}
+\begin{docCommand}{subtitle}{\oarg{option}\marg{sous-titre}}
   Cette commande définit l'éventuel \meta{sous-titre} de l'article. Celui-ci
   est automatiquement ajouté au titre.
 \end{docCommand}
 
 Les commandes \refCom{title} et \refCom{subtitle} admettent un argument
-optionnel permettant de spécifier un (sous-)titre court au moyen de la clé
-\refKey{short}.
+optionnel permettant de spécifier comme \oarg{option} un (sous-)titre court au
+moyen de la clé \refKey{short}.
 
 \begin{docKey}{short}{=\meta{(sous-)titre court}}{pas de valeur par défaut,
     initialement vide}
@@ -809,114 +809,166 @@ La \gztauthorcl{} :
   \end{description}
 \end{docCommand}
 
-\paragraph{Environnements de type \enquote{théorème}}
+\paragraph{Théorèmes et objets analogues}
 
-Les environnements de type \enquote{théorème} suivants ont pour noms l'objet
-qu'ils représentent : par exemple, l'environnement \refEnv{theoreme} permet de
-composer un \enquote{théorème}. Lorsque ce nom est différent en français et en
-anglais, un alias en anglais est proposé : par exemple, l'environnement
-\refEnv{theorem} permet de composer un \enquote{théorème} dans les mêmes
-conditions que l'environnement \refEnv{theoreme}.
+Pour faciliter la composition des théorèmes et objets analogues, la
+\gztauthorcl{} fournit des environnements prêts à l'emploi et permet d'en créer
+de nouveaux si besoin est (cf. commande \refCom{newtheorem}).
 
+Le \vref{env-theorems} liste les théorèmes et objets analogues disponibles
+%
+avec :
 \begin{description}
-\item[Théorèmes] \
-  \begin{docEnvironment}{theoreme}{}
-  \end{docEnvironment}
-  \begin{docEnvironment}{theorem}{}
-    Ces deux environnements, alias l'un de l'autre, permettent de composer un
-    théorème. Leur titre récurrent est \enquote{Th\'eor\`eme} ou
-    \enquote{Theorem} selon que la langue en cours est le français ou l'anglais.
-  \end{docEnvironment}
-  %
-\item[Corollaires] \
-  \begin{docEnvironment}{corollaire}{}
-  \end{docEnvironment}
-  \begin{docEnvironment}{corollary}{}
-    Ces deux environnements, alias l'un de l'autre, permettent de composer un
-    corollaire. Leur titre récurrent est ou \enquote{Corollaire} ou
-    \enquote{Corollary} selon que la langue en cours est le français ou
-    l'anglais.
-  \end{docEnvironment}
-  %
-\item[Conjectures] \
-  \begin{docEnvironment}{conjecture}{}
-    Cet environnement permet de composer une conjecture. Son titre récurrent est
-    \enquote{Conjecture}.
-  \end{docEnvironment}
-  %
-\item[Propositions] \
-  \begin{docEnvironment}{proposition}{}
-    Cet environnement permet de composer une proposition. Son titre récurrent
-    est \enquote{Proposition}.
-  \end{docEnvironment}
-  %
-\item[Lemmes] \
-  \begin{docEnvironment}{lemme}{}
-  \end{docEnvironment}
-  \begin{docEnvironment}{lemma}{}
-    Ces deux environnements, alias l'un de l'autre, permettent de composer un
-    lemme. Leur titre récurrent est \enquote{Lemme} ou \enquote{Lemma} selon que
-    la langue en cours est le français ou l'anglais.
-  \end{docEnvironment}
-  %
-\item[Axiomes] \
-  \begin{docEnvironment}{axiome}{}
-  \end{docEnvironment}
-  \begin{docEnvironment}{axiom}{}
-    Ces deux environnements, alias l'un de l'autre, permettent de composer un
-    axiome. Leur titre récurrent est \enquote{Axiome} ou \enquote{Axiom} selon
-    que la langue en cours est le français ou l'anglais.
-  \end{docEnvironment}
-  %
-\item[Définitions] \
-  \begin{docEnvironment}{definition}{}
-    Cet environnement permet de composer une définition. Son titre récurrent est
-    ou \enquote{D\'efinition} ou \enquote{Definition} selon que la langue en
-    cours est le français ou l'anglais.
-  \end{docEnvironment}
-  %
-\item[Remarques] \
-  \begin{docEnvironment}{remarque}{}
-  \end{docEnvironment}
-  \begin{docEnvironment}{remark}{}
-    Ces deux environnements, alias l'un de l'autre, permettent de composer un
-    remarque. Leur titre récurrent est \enquote{Remarque} ou \enquote{Remark}
-    selon que la langue en cours est le français ou l'anglais.
-  \end{docEnvironment}
-  %
-\item[Exemples] \
-  \begin{docEnvironment}{exemple}{}
-  \end{docEnvironment}
-  \begin{docEnvironment}{example}{}
-    Ces deux environnements, alias l'un de l'autre, permettent de composer un
-    exemple. Leur titre récurrent est \enquote{Exemple} ou \enquote{Example}
-    selon que la langue en cours est le français ou l'anglais.
-  \end{docEnvironment}
-  %
-\item[Notations] \
-  \begin{docEnvironment}{notation}{}
-    Cet environnement permet de composer une notation. Son titre récurrent est
-    \enquote{Notation}.
-  \end{docEnvironment}
+\item[en colonne~1] le nom de l'environnement \LaTeX{} correspondant, et son
+  éventuel alias (utilisables indifféremment) ;
+\item[en colonne~2] les titres récurrents correspondants selon que la langue en
+  cours est le français ou l'anglais.
 \end{description}
+
+\begin{gzttable}[label=env-theorems,title=Environnements de type \enquote{théorème} fournis]
+  \begin{tabular}{ll}
+    Environnement/Alias       & Titre en français/en anglais \\\toprule
+    |theoreme|/|theorem|      & Théorème/Theorem          \\\midrule
+    |corollaire|/|corollary|  & Corollaire/Corollary      \\\midrule
+    |conjecture|              & Conjecture                \\\midrule
+    |proposition|             & Proposition               \\\midrule
+    |lemme|/|lemma|           & Lemme/Lemma               \\\midrule
+    |axiome|/|axiom|          & Axiome/Axiom              \\\midrule[.75pt]
+    |definition|/|definition| & Définition/Definition     \\\midrule
+    |remarque|/|remark|       & Remarque/Remark           \\\midrule
+    |exemple|/|example|       & Exemple/Example           \\\midrule
+    |notation|                & Notation                  \\\midrule[.75pt]
+    |preuve|/|proof|          & Preuve/Proof              \\\bottomrule
+  \end{tabular}
+\end{gzttable}
 
 \begin{dbremark}{\enquote{Théorèmes} non numérotés : versions étoilées des
     environnements}{}
-  Tous les environnements de type \enquote{théorème} précédents admettent une
-  version étoilée produisant une occurrence \emph{non} numérotée de l'objet
+  Tous les environnements \LaTeX{} du \vref{env-theorems} admettent une version
+  étoilée produisant des occurrences \emph{non} numérotées du \enquote{théorème}
   correspondant.
 \end{dbremark}
+
+Ces environnements s'emploient de façon classique, c'est-à-dire comme tout
+environnement \LaTeX{}. Ils disposent cependant d'un argument optionnel
+permettant de préciser le \enquote{théorème}, par exemple en spécifiant son
+auteur.
 
 \begin{bodycode}[listing and text]
 \begin{theorem}
   Tout espace métrisable séquentiellement compact est compact.
 \end{theorem}
-\begin{proposition*}
+\begin{definition}[congruence modulo $n$]
+  Soit $n$ un entier supérieur ou égal à 2. Deux entiers $a$ et $b$ sont dits
+  congruents modulo $n$ si $a - b \in n\Z$
+\end{definition}
+\begin{remark*}
   \[
   e^{i\pi}+1=0.
   \]
-\end{proposition*}
+\end{remark*}
+\begin{proof}
+  Tout ce qui est rare est cher. Or un cheval bon marché est rare. Donc un
+  cheval bon marché est cher.
+\end{proof}
 \end{bodycode}
+
+On remarque dans l'exemple précédent que les \enquote{théorèmes} ont des mises
+en forme variables. La \gztauthorcl{} fournit effectivement trois styles de
+\enquote{théorèmes}, \docValue{theorem}, \docValue{definition} et
+\docValue{proof}, dont les caractéristiques sont indiquées au
+\vref{env-theorems-styles}.
+
+\begin{gzttable}[label=env-theorems-styles,title=Styles de \enquote{théorèmes} fournis]
+\begin{tabular}{lp{3cm}p{3cm}p{5.5cm}}
+Style                 & Titre récurrent                  & Contenu                           & Théorèmes concernés                                               \\\toprule
+\docValue{theorem}    & gras                             & italique
+                                                                                             & théorèmes, corollaires, conjectures, propositions, lemmes, axiomes \\\midrule
+\docValue{definition} & gras                             & romain                            & définitions, remarques, exemples, notations                       \\\midrule
+\docValue{proof}      & italique, non gras, non numéroté & romain, terminé par un carré noir & preuves                                                           \\\bottomrule
+\end{tabular}
+\end{gzttable}
+
+% \begin{description}
+% \item[\docValue{theorem} :]\
+%   \begin{enumerate}
+%   \item le titre récurrent (et l'éventuelle précision) est en gras ;
+%   \item le contenu est en italique.
+%   \end{enumerate}
+%   Ce style est appliqué aux environnements \enquote{de type théorème}, \cad*{}
+%   les théorèmes, corollaires, conjectures, propositions, lemmes et axiomes.
+% \item[\docValue{definition} :]\
+%   \begin{enumerate}
+%   \item le titre récurrent (et l'éventuelle précision) est en gras ;
+%   \item le contenu \emph{n'est pas} en italique.
+%   \end{enumerate}
+%   Ce style est appliqué aux environnements \enquote{de type définition}, \cad*{}
+%   les définitions, remarques, exemples et notations.
+% \item[\docValue{proof} :]\
+%   \begin{enumerate}
+%   \item le titre récurrent (et l'éventuelle précision) \emph{n'est pas} en gras,
+%     est en italique et n'est \emph{jamais} numéroté ;
+%   \item le contenu \emph{n'est pas} en italique et se termine par un carré noir
+%     en fin de ligne.
+%   \end{enumerate}
+%   Ce style est appliqué aux environnements \enquote{de type preuve},
+%   \cad*{}... les preuves.
+% \end{description}
+
+Si les environnements de \enquote{théorème} fournis par la classe ne suffisent
+pas, la commande \refCom{newtheorem} permet d'en créer de nouveaux.
+
+\begin{docCommand}{newtheorem}{\oarg{option(s)}\marg{nom}}
+  Cette commande crée un nouvel environnement \LaTeX{}, \meta{nom}, destiné à la
+  composition d'un \enquote{théorème} dont, par défaut :
+  \begin{itemize}
+  \item le titre récurrent est \meta{Nom}\footnote{\Cad*{}, quelle que soit la
+      langue en cours, le \meta{nom} de l'environnement \LaTeX{} dont l'initiale
+      est en majuscule.} ;
+  \item le style est \docValue{theorem}.
+  \end{itemize}
+  Cette commande crée également l'environnement \meta{nom}* produisant des
+  occurrences \emph{non} numérotées de ce \enquote{théorème}.
+
+  Si les valeurs par défaut du titre récurrent (\meta{Nom}) ou du style
+  (\docValue{theorem}) ne conviennent pas, il suffit spécifier celles souhaitées
+  en \meta{option(s)} au moyen des clés \refKey{frenchtitle},
+  \refKey{englishtitle} et \refKey{style} suivantes.
+  \begin{docKey}{frenchtitle}{={\meta{titre récurrent en français}}}{pas de
+      valeur par défaut, initialement vide}
+    Cette clé permet de spécifier un \meta{titre récurrent en français}
+    différent de \meta{Nom}.
+  \end{docKey}
+  \begin{docKey}{englishtitle}{={\meta{titre récurrent en anglais}}}{pas de
+      valeur par défaut, initialement vide}
+    Cette clé permet de spécifier un \meta{titre récurrent en anglais} différent
+    de \meta{Nom}.
+  \end{docKey}
+  \begin{docKey}{style}{=\docValue{theorem}\textbar\docValue{definition}\textbar\docValue{proof}}{pas
+      de valeur par défaut, initialement \docValue{theorem}}
+    Cette clé permet de spécifier le style du \enquote{théorème} à créer, au
+    moyen des valeurs \docValue{theorem}, \docValue{definition} et
+    \docValue{proof}.
+  \end{docKey}
+
+\newtheorem{article}
+\newtheorem[frenchtitle=Fait,style=definition]{fact}
+\begin{preamblecode}
+\newtheorem{article}
+\newtheorem[frenchtitle=Fait,style=definition]{fact}
+\end{preamblecode}
+\begin{bodycode}[listing and text]
+\begin{article}[dit premier]
+Les hommes naissent et demeurent libres et égaux en droits\ldots{}
+\end{article}
+\begin{fact*}
+Tout ce qui est rare est cher.
+\end{fact*}
+\begin{fact}
+Un cheval bon marché est rare.
+\end{fact}
+\end{bodycode}
+\end{docCommand}
 
 \subsubsection{Code informatique}
 \label{sec:commande-pour-code}
@@ -1208,7 +1260,7 @@ canevas de fichier source dont il pourra faire un copié-collé\footnote{La
 et environnement moins fréquents ont été mis en commentaire.
 
 \begin{bodycode}
-\documentclass{gztarticle}
+\documentclass{gztauthor}
 %
 % Indiquer le (chemin vers le) fichier .bib utilisé.
 \addbibresource{....bib}
