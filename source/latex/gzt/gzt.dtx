@@ -2944,8 +2944,8 @@ This work consists of the file  gzt.dtx
       \end{adjustbox}
     }
   \end{_@@_inside_cover_tcb}
-  \setcounter{page}{0}
   \clearpage%
+  \pagenumbering{arabic}%
   \bool_gset_false:N \g_@@_inside_frontcover_bool
 }
 %    \end{macrocode}
@@ -4409,6 +4409,7 @@ This work consists of the file  gzt.dtx
   % \bool_gset_true:N \g_@@_mainmatter_bool
   % \SetParskip{\c_@@_mainmatter_parskip_skip}
   % \pagestyle{@@_mainmatter_ps}%
+  \pagenumbering{roman}%
   \exp_after:wN\newgeometry\exp_after:wN{\c_@@_main_geometry_tl}%
 }
 %    \end{macrocode}
