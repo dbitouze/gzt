@@ -72,6 +72,7 @@
 \LoadClassWithOptions { book }
 \PassOptionsToPackage{table,cmyk}{xcolor}%
 \PassOptionsToPackage{export}{adjustbox}%
+\PassOptionsToPackage{english,french}{translator}
 \PassOptionsToPackage{english,french}{babel}
 \PassOptionsToPackage{english,french}{varioref}
 \PassOptionsToPackage{english,french}{cleveref}
@@ -106,6 +107,7 @@
 \RequirePackage{mathrsfs}
 \RequirePackage{esvect}
 \RequirePackage{everypage}
+\RequirePackage{translator}%
 \RequirePackage{geometry}
 \RequirePackage{babel}%
 \RequirePackage{eurosym}%
@@ -122,9 +124,9 @@
 \RequirePackage{pgfplots}
 \RequirePackage{tcolorbox}
 \RequirePackage{tikzpagenodes}
-\cs_set_eq:NN \@preamblecmds \__gzt_orig_preamblecmds
 \RequirePackage{amsthm}
 \RequirePackage{thmtools}
+\cs_set_eq:NN \@preamblecmds \__gzt_orig_preamblecmds
 \RequirePackage{placeins}%
 \RequirePackage[hidelinks,hypertexnames=false]{hyperref}%
 \RequirePackage[numbered]{bookmark}%
@@ -147,6 +149,8 @@
   {Please~specify~`#1=<number>',
     ~otherwise~`<number>'~will~be~set~to
     ~`\int_use:N\c__gzt_first_issue_number_int'.}
+\msg_new:nnnn{gzt}{unknown-choice}{Choice~`#3'~invalid!}
+  {Please~specify~#1=#2.}
 \int_new:N \g__gzt_editors_in_chief_int
 \int_new:N \g__gzt_item_in_rubric_int
 \int_new:N \g__gzt_articles_int
@@ -159,6 +163,8 @@
 \tl_const:Nn \c__gzt_journal_title_string_tl {
   \c__gzt_journal_short_title_string_tl{}~des~Math\'ematiciens%
 }
+\tl_const:Nn \c__gzt_gzt_class_name_tl {gzt}
+\tl_const:Nn \c__gzt_gztarticle_class_name_tl {gztarticle}
 \tl_const:Nn \c__gzt_editors_in_chief_string_tl
 {
   \int_compare:nNnTF { \g__gzt_editors_in_chief_int } > { 1 }
@@ -177,7 +183,7 @@
 \tl_const:Nn \c__gzt_issn_string_tl {\textsc{issn}}
 \tl_const:Nn \c__gzt_isbn_string_tl {\textsc{isbn}}
 \tl_const:Nn \c__gzt_latexclass_string_tl {Classe~\LaTeX{}}
-\tl_const:Nn \c__gzt_font_string_tl {Nous~utilisons~la~police~Kp-Fonts~cr{\'e}{\'e}e~par~Christophe~\textsc{Caignaert}.}
+\tl_const:Nn \c__gzt_printer_string_tl {Impression}
 \tl_const:Nn \c__gzt_configuration_file_string_tl {gzt.cfg}
 \tl_const:Nn \c__gzt_artistic_director_string_tl {Conception~graphique}
 \tl_const:Nn \c__gzt_editorial_string_tl {\'Editorial}
@@ -187,13 +193,14 @@
 \tl_const:Nn \c__gzt_president_signatory_string_tl {pr\'esident~de~la~\l__gzt_smf_short_string_tl}
 \tl_const:Nn \c__gzt_editorinchief_message_date_string_tl {Le~\displaydate{__gzt_editorinchief_message_date}}
 \tl_const:Nn \c__gzt_president_message_date_string_tl {Le~}
-\tl_const:Nn \c__gzt_front_cover_header_string_tl {
+\tl_const:Nn \c__gzt_frontcover_header_string_tl {
   \l__gzt_uppercased_date_format\displaydate{__gzt_date}
   \nobreakspace
   \textendash{}\nobreakspace
   \No\int_use:N\g__gzt_issue_number_int%
 }
 \tl_const:Nn \c__gzt_frontmatter_directory_string_tl {frontmatter}
+\tl_const:Nn \c__gzt_backmatter_directory_string_tl {backmatter}
 \tl_const:Nn \c__gzt_editorial_file_string_tl {\c__gzt_frontmatter_directory_string_tl/editorial}
 \tl_const:Nn \c__gzt_president_message_file_string_tl {\c__gzt_frontmatter_directory_string_tl/presidentmessage}
 \tl_const:Nn \c__gzt_issue_path_string_tl {\int_use:N \g__gzt_issue_number_int}
@@ -202,8 +209,11 @@
   \c__gzt_images_directory_string_tl}
 \tl_const:Nn \c__gzt_issue_frontcover_image_file_string_tl {frontcover}
 \tl_const:Nn \c__gzt_issue_frontcover_image_path_string_tl {\c__gzt_issue_images_path_string_tl/\c__gzt_issue_frontcover_image_file_string_tl}
-\tl_const:Nn \c__gzt_about_front_cover_string_tl {\`A~propos~de~la~couverture.}
-\tl_const:Nn \c__gzt_credit_front_cover_string_tl {cr\'edit}
+\tl_const:Nn \c__gzt_issue_backcover_text_file_string_tl {backcover}
+\tl_const:Nn \c__gzt_backcover_page_file_string_tl {\c__gzt_backmatter_directory_string_tl/\c__gzt_issue_backcover_text_file_string_tl}
+\tl_const:Nn \c__gzt_about_frontcover_string_tl {\`A~propos~de~la~couverture.}
+\tl_const:Nn \c__gzt_credit_frontcover_string_tl {cr\'edit}
+\tl_const:Nn \c__gzt_authors_instructions_string_tl {Instructions~aux~auteurs}
 \tl_const:Nn \c__gzt_preliminary_version_string_tl {%
   Ce~document~est~une~{\'e}preuve~vous~permettant~de~contr{\^o}ler~l'int{\'e}grit{\'e}~du~
   texte~d'origine~(et~de~la~bibliographie~s'il~y~en~a~une)~de~votre~article~
@@ -238,14 +248,6 @@
   \textcolor{__gzt_date_color}{
     \textendash{}\nobreakspace
     \MakeTextUppercase{\c__gzt_journal_short_title_string_tl}
-    \int_compare:nNnF {\g__gzt_issue_number_int}<{1}
-    {
-      \nobreakspace\textendash{}\nobreakspace
-      \l__gzt_uppercased_date_format\displaydate{__gzt_date}
-      \nobreakspace
-      \textendash{}\nobreakspace
-      \textcolor{__gzt_smf_number_color}{\No\int_use:N\g__gzt_issue_number_int}
-    }
   }
 }
 \tl_const:Nn \c__gzt_smf_logo_file_string_tl {logo_SMF}
@@ -259,8 +261,9 @@
 \newacronym{issn}{issn}{International Standard Serial Number}%
 \newacronym{isbn}{isbn}{International Standard Book Number}%
 \newacronym{cv}{cv}{curriculum vit\ae}%
-\bool_new:N \g__gzt_frontcovermatter_bool
-\bool_new:N \g__gzt_insidefrontcovermatter_bool
+\bool_new:N \g__gzt_frontcover_bool
+\bool_new:N \g__gzt_inside_frontcover_bool
+\bool_new:N \g__gzt_inside_backcover_bool
 \bool_new:N \g__gzt_frontmatter_bool
 \bool_new:N \g__gzt_rubric_bool
 \bool_new:N \g__gzt_interview_rubric_bool
@@ -268,6 +271,8 @@
 \bool_new:N \g__gzt_rearviewmirror_rubric_bool
 \bool_new:N \g__gzt_books_rubric_bool
 \bool_new:N \g__gzt_mainmatter_bool
+\bool_new:N \g__gzt_backmatter_bool
+\bool_new:N \g__gzt_backcover_bool
 \bool_new:N \g__gzt_previous_article_with_bibliography_or_minibio_bool
 \bool_new:N \g__gzt_advertisement_bool
 \bool_new:N \g__gzt_multicols_bool
@@ -288,14 +293,39 @@
 \zexternaldocument[self]{\jobname}%
 \int_new:N \g__gzt_total_page_number_int%
 \int_gset:Nn \g__gzt_total_page_number_int { \zref@extractdefault{selfLastPage}{abspage}{0} }
-\int_compare:nNnTF {\g__gzt_total_page_number_int}<{72}
+\int_compare:nNnTF {\g__gzt_total_page_number_int-4}<{68}
 {
   \dim_const:Nn \c__gzt_adjustmargin_dim {\c_zero_dim}
-}
-{
+  \dim_const:Nn \c__gzt_future_bindingoffset_dim { \c_zero_dim }
+}{
   \dim_const:Nn \c__gzt_adjustmargin_dim { 5mm }
+  \int_compare:nNnTF {\g__gzt_total_page_number_int-4}<{80}
+  {
+    \dim_const:Nn \c__gzt_future_bindingoffset_dim { 3mm }
+  }{
+    \int_compare:nNnTF {\g__gzt_total_page_number_int-4}<{88}
+    {
+      \dim_const:Nn \c__gzt_future_bindingoffset_dim { 3.5mm }
+    }{
+      \int_compare:nNnTF {\g__gzt_total_page_number_int-4}<{96}
+      {
+        \dim_const:Nn \c__gzt_future_bindingoffset_dim { 3.9mm }
+      }{
+        \int_compare:nNnTF {\g__gzt_total_page_number_int-4}<{104}
+        {
+          \dim_const:Nn \c__gzt_future_bindingoffset_dim { 4.1mm }
+        }{
+          \int_compare:nNnTF {\g__gzt_total_page_number_int-4}<{120}
+          {
+            \dim_const:Nn \c__gzt_future_bindingoffset_dim { 4.5mm }
+          }{
+            \dim_const:Nn \c__gzt_future_bindingoffset_dim { 5mm }
+          }
+        }
+      }
+    }
+  }
 }
-\dim_const:Nn \c__gzt_future_bindingoffset_dim { 4.1mm}
 \bool_if:NTF {\g__gzt_cover_bool} {
   \dim_const:Nn \c__gzt_bindingoffset_dim { \c__gzt_future_bindingoffset_dim }
 }{
@@ -328,9 +358,15 @@
   \c__gzt_topmargin_dim
   + 30mm
 }
-\dim_const:Nn \c__gzt_topmargin_inside_frontcover_dim   {
+\dim_const:Nn \c__gzt_topmargin_inside_cover_dim   {
   \c__gzt_topmargin_dim
   +10mm
+}
+\dim_const:Nn \c__gzt_topmargin_front_matter_dim   {
+  \c__gzt_topmargin_inside_cover_dim
+}
+\dim_const:Nn \c__gzt_topmargin_backcover_dim {
+  \c__gzt_topmargin_frontcover_dim
 }
 \dim_const:Nn \c__gzt_headsep_dim     {  24mm}
 \dim_const:Nn \c__gzt_headsep_frontcover_dim {
@@ -340,16 +376,30 @@
 }
 \dim_const:Nn \c__gzt_headsep_inside_frontcover_dim {
   \c__gzt_headsep_dim
-  +5mm
+  +7mm
 }
-\dim_const:Nn \c__gzt_headheight_dim  {  7mm}
+\dim_const:Nn \c__gzt_headsep_front_matter_dim {
+  \c__gzt_headsep_inside_frontcover_dim
+}
+\dim_const:Nn \c__gzt_headheight_dim  { \c_zero_dim }
 \dim_const:Nn \c__gzt_botmargin_dim   {  30mm}
 \dim_const:Nn \c__gzt_footskip_dim    {  26mm}
 \dim_const:Nn \c__gzt_innermargin_dim { 15mm - \c__gzt_bindingoffset_dim + \c__gzt_adjustmargin_dim}
 \dim_const:Nn \c__gzt_outermargin_dim { 30mm - \c__gzt_adjustmargin_dim }
+\dim_const:Nn \c__gzt_inside_cover_box_width_dim { 165mm }%
+\dim_const:Nn \c__gzt_innermargin_inside_cover_dim {
+  (\c__gzt_layoutwidth_dim - \c__gzt_inside_cover_box_width_dim)/2
+  - \c__gzt_bindingoffset_dim
+  + \c__gzt_adjustmargin_dim
+}
+\dim_const:Nn \c__gzt_outermargin_inside_cover_dim {
+  (\c__gzt_layoutwidth_dim - \c__gzt_inside_cover_box_width_dim)/2
+  - \c__gzt_adjustmargin_dim
+}
+\dim_const:Nn \c__gzt_innermargin_backcover_dim { 2cm }
+\dim_const:Nn \c__gzt_outermargin_backcover_dim { \c__gzt_innermargin_backcover_dim }
 \dim_const:Nn \c__gzt_frontcover_image_height_dim {  160mm}
 \dim_const:Nn \c__gzt_radius_arc_dim { 85mm }%
-\dim_const:Nn \c__gzt_inside_frontcover_box_width_dim { 165mm }%
 \dim_const:Nn \c__gzt_frontmatter_headtext_xshift_dim { 19mm }%
 \dim_const:Nn \c__gzt_frontmatter_headtext_o_xshift_dim {
   -\c__gzt_frontmatter_headtext_xshift_dim  -\c__gzt_layoutoffset_dim%
@@ -359,11 +409,11 @@
 }%
 \dim_const:Nn \c__gzt_frontmatter_headtext_yshift_dim { -6.5mm-\c__gzt_layoutoffset_dim }%
 \dim_const:Nn \c__gzt_header_line_width_dim    {  0.25mm}
-\dim_const:Nn \c__gzt_header_line_yshift_dim {  1mm-\c__gzt_header_line_width_dim}%
-\dim_const:Nn \c__gzt_yshift_mainmatter_headrule_dim { \c__gzt_header_line_yshift_dim-2mm }%
+\dim_const:Nn \c__gzt_header_line_yshift_dim {  -1mm-\c__gzt_header_line_width_dim}%
 \dim_const:Nn \c__gzt_footer_background_height_dim    { 10mm + \c__gzt_layoutoffset_dim }
 \dim_const:Nn \c__gzt_front_matter_extra_innermargin_dim    {  28mm }
 \dim_const:Nn \c__gzt_front_matter_extra_outermargin_dim    {  7mm }
+\dim_const:Nn \c__gzt_inside_cover_offset_dim { \c_zero_dim }%
 \dim_const:Nn \c__gzt_pictogram_width_dim { 23mm }%
 \dim_const:Nn \c__gzt_header_xshift_dim { \c__gzt_pictogram_width_dim-6mm }%
 \dim_const:Nn \c__gzt_header_yshift_dim { 5mm }%
@@ -408,13 +458,13 @@
   papersize={\c__gzt_paperwidth_dim,\c__gzt_paperheight_dim}
 }
 \bool_if:NTF {\g__gzt_cover_bool} {
-  \tl_const:Nn \c__gzt_front_cover_geometry_tl {%
+  \tl_const:Nn \c__gzt_frontcover_geometry_tl {%
     ,layoutsize={\c__gzt_layoutwidth_dim,\c__gzt_layoutheight_dim}
     ,layoutvoffset=\c__gzt_layoutoffset_dim
     ,bindingoffset=\c__gzt_bindingoffset_dim
     ,top=\c__gzt_topmargin_frontcover_dim
     ,headsep=\c__gzt_headsep_frontcover_dim
-    ,headheight=\c__gzt_layoutoffset_dim
+    ,headheight=\c__gzt_headheight_dim
     ,bottom=\c_zero_dim
     ,footskip=\c_zero_dim
     ,outer=\c_zero_dim
@@ -422,13 +472,13 @@
     ,nomarginpar%
   }%
 }{
-  \tl_const:Nn \c__gzt_front_cover_geometry_tl {%
+  \tl_const:Nn \c__gzt_frontcover_geometry_tl {%
     ,layoutsize={\c__gzt_layoutwidth_dim,\c__gzt_layoutheight_dim}
     ,layoutoffset=\c__gzt_layoutoffset_dim
     ,bindingoffset=\c__gzt_bindingoffset_dim
     ,top=\c__gzt_topmargin_frontcover_dim
     ,headsep=\c__gzt_headsep_frontcover_dim
-    ,headheight=\c_zero_dim
+    ,headheight=\c__gzt_headheight_dim
     ,bottom=\c_zero_dim
     ,footskip=\c_zero_dim
     ,hmargin=\c__gzt_layoutoffset_dim
@@ -436,31 +486,31 @@
   }%
 }
 \bool_if:NTF {\g__gzt_cover_bool} {
-  \tl_const:Nn \c__gzt_inside_front_cover_geometry_tl {%
+  \tl_const:Nn \c__gzt_inside_cover_geometry_tl {%
     ,layoutsize={\c__gzt_layoutwidth_dim,\c__gzt_layoutheight_dim}
     ,layoutvoffset=\c__gzt_layoutoffset_dim
     ,bindingoffset=\c__gzt_bindingoffset_dim
-    ,top=\c__gzt_topmargin_inside_frontcover_dim
+    ,top=\c__gzt_topmargin_inside_cover_dim
     ,headheight=\c__gzt_headheight_dim
     ,headsep=\c__gzt_headsep_inside_frontcover_dim
     ,bottom=\c__gzt_botmargin_dim
     ,footskip=\c__gzt_footskip_dim
-    ,inner=\c__gzt_innermargin_dim-\c__gzt_layoutoffset_dim
-    ,outer=\c__gzt_outermargin_dim+\c__gzt_layoutoffset_dim
+    ,inner=\c__gzt_innermargin_inside_cover_dim-\c__gzt_layoutoffset_dim
+    ,outer=\c__gzt_outermargin_inside_cover_dim+\c__gzt_layoutoffset_dim
     ,nomarginpar%
   }%
 }{
-  \tl_const:Nn \c__gzt_inside_front_cover_geometry_tl {%
+  \tl_const:Nn \c__gzt_inside_cover_geometry_tl {%
     ,layoutsize={\c__gzt_layoutwidth_dim,\c__gzt_layoutheight_dim}
     ,layoutoffset=\c__gzt_layoutoffset_dim
     ,bindingoffset=\c__gzt_bindingoffset_dim
-    ,top=\c__gzt_topmargin_inside_frontcover_dim
+    ,top=\c__gzt_topmargin_inside_cover_dim
     ,headheight=\c__gzt_headheight_dim
-    ,headsep=\c__gzt_headsep_dim+5mm
+    ,headsep=\c__gzt_headsep_inside_frontcover_dim
     ,bottom=\c__gzt_botmargin_dim
     ,footskip=\c__gzt_footskip_dim
-    ,inner=\c__gzt_innermargin_dim
-    ,outer=\c__gzt_outermargin_dim
+    ,inner=\c__gzt_innermargin_inside_cover_dim
+    ,outer=\c__gzt_outermargin_inside_cover_dim
     ,nomarginpar%
   }%
 }
@@ -468,9 +518,9 @@
   ,layoutsize={\c__gzt_layoutwidth_dim,\c__gzt_layoutheight_dim}
   ,layoutoffset=\c__gzt_layoutoffset_dim
   % ,bindingoffset=\c__gzt_bindingoffset_dim
-  ,top=\c__gzt_topmargin_dim+10mm%
+  ,top=\c__gzt_topmargin_front_matter_dim%
   ,headheight=\c__gzt_headheight_dim
-  ,headsep=\c__gzt_headsep_dim+5mm
+  ,headsep=\c__gzt_headsep_front_matter_dim
   ,bottom=\c__gzt_botmargin_dim
   ,footskip=\c__gzt_footskip_dim%
   ,inner=\c__gzt_innermargin_dim+\c__gzt_front_matter_extra_innermargin_dim%
@@ -482,25 +532,25 @@
   ,layoutoffset=\c__gzt_layoutoffset_dim
   % ,bindingoffset=\c__gzt_bindingoffset_dim
   ,top=\c__gzt_topmargin_dim-15mm%
-  ,headheight=\c_zero_dim
+  ,headheight=\c__gzt_headheight_dim
   ,headsep=\c__gzt_headsep_dim-18mm
   ,bottom=\c__gzt_botmargin_dim
   ,footskip=\c__gzt_footskip_dim
   ,inner=\c__gzt_innermargin_dim
   ,outer=\c__gzt_outermargin_dim
 }%
-\tl_const:Nn \c__gzt_advertisement_geometry_tl {%
+\tl_const:Nn \c__gzt_backcover_geometry_tl {%
   ,layoutsize={\c__gzt_layoutwidth_dim,\c__gzt_layoutheight_dim}
   ,layoutoffset=\c__gzt_layoutoffset_dim
   % ,bindingoffset=\c__gzt_bindingoffset_dim
-  ,top=\c_zero_dim
-  ,headsep=\c_zero_dim
-  ,headheight=\c_zero_dim
-  ,bottom=\c_zero_dim
-  ,footskip=\c_zero_dim
-  ,hmargin=\c_zero_dim
-  ,nomarginpar%
-}%
+  ,top=\c__gzt_topmargin_dim-15mm%
+  ,headheight=\c__gzt_headheight_dim
+  ,headsep=\c__gzt_headsep_dim-18mm
+  ,bottom=\c__gzt_botmargin_dim
+  ,footskip=\c__gzt_footskip_dim
+  ,inner=\c__gzt_innermargin_backcover_dim
+  ,outer=\c__gzt_outermargin_backcover_dim
+}
 \skip_const:Nn \c__gzt_editorial_presidentmessage_parskip_skip { 12pt plus 2pt minus .8pt }%
 \skip_const:Nn \c__gzt_mainmatter_parskip_skip { 2pt plus .5pt minus .2pt }%
 \int_new:N \g__gzt_issue_number_int
@@ -622,6 +672,24 @@
   frontcover .value_required:,
   bibkey .value_required:,
 }
+\tl_new:N \l__gzt_newtheorem_style_tl
+\keys_define:nn { gzt/newtheorem }
+{
+  frenchtitle .tl_set:N = \l__gzt_newtheorem_frenchtitle_tl,
+  englishtitle .tl_set:N = \l__gzt_newtheorem_englishtitle_tl,
+  frenchtitle .value_required:,
+  englishtitle .value_required:,
+  %
+  style .choice:,
+  style / theorem .code:n = {\tl_set:Nn \l__gzt_newtheorem_style_tl {theorem}},
+  style / definition .code:n = {\tl_set:Nn \l__gzt_newtheorem_style_tl {definition}},
+  style / proof .code:n = {\tl_set:Nn \l__gzt_newtheorem_style_tl {proof}},
+  style / unknown .code:n =
+  \msg_error:nnxxx { gzt } { unknown-choice }
+  { style } % Name of choice key
+  { theorem~or~definition~or~proof } % Valid choices
+  { \exp_not:n {#1} } % Invalid choice given
+}
 \definecolorset{cmyk}{__gzt_}{_color}{
   generic_dark,1,.60,.10,0; % kind of blue (!)
   light_generic_dark,1,.35,0,0 % kind of blue (!), light
@@ -652,10 +720,10 @@
 \colorlet{__gzt_rubric_abstract_color}{__gzt_generic_dark_color}
 \colorlet{__gzt_article_abstract_color}{__gzt_generic_light_color}
 \colorlet{__gzt_dotfill_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_about_front_cover_title_color}{__gzt_generic_dark_color}
+\colorlet{__gzt_about_frontcover_title_color}{__gzt_generic_dark_color}
 \colorlet{__gzt_reflected_text_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_inside_front_cover_frame_bg_color}{__gzt_generic_dark_color!8}
-\colorlet{__gzt_inside_front_cover_frame_title_color}{__gzt_generic_dark_color}
+\colorlet{__gzt_inside_frontcover_frame_bg_color}{__gzt_generic_dark_color!8}
+\colorlet{__gzt_inside_frontcover_frame_title_color}{__gzt_generic_dark_color}
 \colorlet{__gzt_footer_bg_color}{black!10}
 \colorlet{__gzt_float_title_color}{__gzt_generic_dark_color}
 \colorlet{__gzt_float_title_bg_color}{__gzt_generic_dark_color!10}
@@ -919,11 +987,11 @@
     \node[scope~fading=south,opacity=0.2,yscale=-1,__gzt_reflect_node]{#1};
   \end{tikzpicture}
 }
-\tl_new:N \g__gzt_display_front_cover_tl%
-\tl_gset:Nn \g__gzt_display_front_cover_tl {%
-  \bool_gset_true:N \g__gzt_frontcovermatter_bool
-  \pagestyle{__gzt_cover_ps}%
-  \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_front_cover_geometry_tl}%
+\tl_new:N \g__gzt_display_frontcover_tl%
+\tl_gset:Nn \g__gzt_display_frontcover_tl {%
+  \bool_gset_true:N \g__gzt_frontcover_bool
+  \pagestyle{__gzt_frontcover_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_frontcover_geometry_tl}%
   \noindent%
   \bool_if:NTF {\g__gzt_cover_bool} {
     \hspace*{-\c__gzt_layoutoffset_dim}
@@ -949,8 +1017,8 @@
     {
       \large
       \color{__gzt_dark_generic_light_color}
-      \bool_if:NF {\g__gzt_front_cover_minitoc_tl} {
-        \g__gzt_front_cover_minitoc_tl
+      \bool_if:NF {\g__gzt_frontcover_minitoc_tl} {
+        \g__gzt_frontcover_minitoc_tl
       }
     };
     \bool_if:NT {\g__gzt_minitoc_help_bool} {
@@ -981,17 +1049,17 @@
   \includegraphics[height=22.5mm]{\c__gzt_smf_logo_file_string_tl}%
   \vfill%
   \clearpage%
-  \bool_gset_false:N \g__gzt_frontcovermatter_bool
+  \bool_gset_false:N \g__gzt_frontcover_bool
 }
-\tl_new:N \g__gzt_display_inside_front_cover_tl%
-\tl_gset:Nn \g__gzt_display_inside_front_cover_tl {%
-  \bool_gset_true:N \g__gzt_insidefrontcovermatter_bool%
-  \pagestyle{__gzt_insidefrontcover_ps}%
-  \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_inside_front_cover_geometry_tl}%
+\tl_new:N \g__gzt_display_inside_frontcover_tl%
+\tl_gset:Nn \g__gzt_display_inside_frontcover_tl {%
+  \bool_gset_true:N \g__gzt_inside_frontcover_bool%
+  \pagestyle{__gzt_inside_frontcover_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_inside_cover_geometry_tl}%
   \small%
   \setlength{\columnseprule}{2pt}
   \renewcommand{\columnseprulecolor}{\color{white}}
-  \begin{__gzt_inside_frontcover}
+  \begin{__gzt_inside_cover_tcb}[__gzt_tcb_inside_frontcover_style]
     \begin{multicols}{2}
       \setlength{\columnsep}{1mm}
       \begin{description}[leftmargin=1em]
@@ -1009,7 +1077,7 @@
     \end{multicols}
     \setlength{\columnseprule}{1pt}
     \tcblower
-    \begin{tabular}{@{}m{.75\c__gzt_inside_frontcover_box_width_dim}@{}m{.2\c__gzt_inside_frontcover_box_width_dim-2\tabcolsep}@{}}
+    \begin{tabular}{@{}m{.75\c__gzt_inside_cover_box_width_dim}@{}m{.2\c__gzt_inside_cover_box_width_dim-2\tabcolsep}@{}}
       \begin{description}[leftmargin=1em]
       \item[\c__gzt_editorial_secretariat_string_tl] \ \par%
         \l__gzt_journal_publisher_tl\par%
@@ -1025,29 +1093,28 @@
         {%
         \item[\c__gzt_isbn_string_tl{}~:] \l__gzt_journal_isbn_tl
         }
-      \item[\c__gzt_latexclass_string_tl{}~:]
-        \__gzt_display_people_by_role:n { classdesigner }
-      \item[\c__gzt_artistic_director_string_tl{}~:]
-        \__gzt_display_people_by_role:n { graphicdesigner }
-        % \item[\c__gzt_font_string_tl{}~:]
-        %   \__gzt_display_people_by_role:n { fontdesigner }
+      % \item[\c__gzt_latexclass_string_tl{}~:]
+      %   \__gzt_display_people_by_role:n { classdesigner }
+      % \item[\c__gzt_artistic_director_string_tl{}~:]
+      %   \__gzt_display_people_by_role:n { graphicdesigner }
+      %   % \item[\c__gzt_font_string_tl{}~:]
+      %   %   \__gzt_display_people_by_role:n { fontdesigner }
       \end{description}
       &
-        % \raggedleft%
         \hspace*{\fill}%
         \includegraphics[height=20mm]{\c__gzt_smf_logo_file_string_tl}%
     \end{tabular}
-    \\
-    \c__gzt_font_string_tl
+    % \\
+    % \c__gzt_font_string_tl
     \bigskip
-    \tl_if_empty:NF \g__gzt_about_front_cover_tl
+    \tl_if_empty:NF \g__gzt_about_frontcover_tl
     {%
       \\
-      \begin{adjustbox}{valign=t,minipage=.75\c__gzt_inside_frontcover_box_width_dim+.2\c__gzt_inside_frontcover_box_width_dim-2\tabcolsep}
-        \begin{description}[leftmargin=1em,font=\color{__gzt_about_front_cover_title_color}]
-        \item[\g__gzt_about_front_cover_string_tl] \g__gzt_about_front_cover_tl
-          \bool_if:NT {\g__gzt_credit_front_cover_bool} {
-            \space(\c__gzt_credit_front_cover_string_tl{}~:~%
+      \begin{adjustbox}{valign=t,minipage=.75\c__gzt_inside_cover_box_width_dim+.2\c__gzt_inside_cover_box_width_dim-2\tabcolsep}
+        \begin{description}[leftmargin=1em,font=\color{__gzt_about_frontcover_title_color}]
+        \item[\g__gzt_about_frontcover_string_tl] \g__gzt_about_frontcover_tl
+          \bool_if:NT {\g__gzt_credit_frontcover_bool} {
+            \space(\c__gzt_credit_frontcover_string_tl{}~:~%
             \DTLforeach*[\DTLiseq{\l__gzt_people_role_tl}{frontcovercredit}]{people}{%
               \l__gzt_firstlastname=first-last-name%
               ,\l__gzt_people_role_tl=role%
@@ -1060,10 +1127,47 @@
         \end{description}
       \end{adjustbox}
     }
-  \end{__gzt_inside_frontcover}
+  \end{__gzt_inside_cover_tcb}
   \setcounter{page}{0}
   \clearpage%
-  \bool_gset_false:N \g__gzt_insidefrontcovermatter_bool
+  \bool_gset_false:N \g__gzt_inside_frontcover_bool
+}
+\tl_new:N \g__gzt_display_inside_backcover_tl%
+\tl_gset:Nn \g__gzt_display_inside_backcover_tl {%
+  \bool_gset_true:N \g__gzt_inside_backcover_bool%
+  \pagestyle{__gzt_inside_backcover_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_inside_cover_geometry_tl}%
+  \small%
+  \begin{__gzt_inside_cover_tcb}[__gzt_tcb_inside_backcover_style]
+    % \small%
+    % Page~
+    % \ifoddpage%
+    % im
+    % \fi
+    % paire.\par{}
+    % \begin{multicols}{2}
+    %   \setlength{\columnsep}{1mm}
+      \g__gzt_authors_instructions_text_tl
+    % \end{multicols}
+    % \setlength{\columnseprule}{1pt}
+    \tcblower
+    \begin{description}[leftmargin=1em]
+    \item[\c__gzt_latexclass_string_tl{}~:]
+      \__gzt_display_people_by_role:n { classdesigner }
+    \item[\c__gzt_artistic_director_string_tl{}~:]
+      \__gzt_display_people_by_role:n { graphicdesigner }
+    \item[\c__gzt_printer_string_tl{}~:] \g__gzt_printer_text_tl
+    \end{description}
+    \g__gzt_font_designer_text_tl
+  \end{__gzt_inside_cover_tcb}
+  \bool_gset_false:N \g__gzt_inside_backcover_bool
+}
+\tl_new:N \g__gzt_display_backcover_tl%
+\tl_gset:Nn \g__gzt_display_backcover_tl {%
+  \bool_gset_true:N \g__gzt_backcover_bool
+  \pagestyle{__gzt_backcover_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_backcover_geometry_tl}%
+  \file_input:n {\c__gzt_backcover_page_file_string_tl}
 }
 \NewDocumentCommand \editorinchief {ommm}
 {
@@ -1166,36 +1270,6 @@
 }
 \NewDocumentCommand \academicsignature { m } {
   \__gzt_display_academic_signature:n {#1}
-}
-\cs_new_protected:Nn \__gzt_uppercased_monthname_french:n
-{
-  \@orgargctr=#1\relax
-  \ifcase\@orgargctr
-  \PackageError{datetime}{Invalid~month~number~\the\@orgargctr}{%
-    Month numbers should go from 1 (janvier) to 12 (decembre)}%
-  \or JANVIER%
-  \or F\'EVRIER%
-  \or MARS%
-  \or AVRIL%
-  \or MAI%
-  \or JUIN%
-  \or JUILLET%
-  \or AO\^UT%
-  \or SEPTEMBRE%
-  \or OCTOBRE%
-  \or NOVEMBRE%
-  \or D\'ECEMBRE%
-  \else
-  \PackageError{datetime}{Invalid~month~number~\the\@orgargctr}{%
-    Month numbers should go from 1 (janvier) to 12 (decembre)}%
-  \fi
-}
-\newdate{__gzt_date}
-  {1}
-  {\int_use:N \g__gzt_issue_month_int}
-  {\int_use:N \g__gzt_issue_year_int}
-\newdateformat{l__gzt_uppercased_date_format}{
-  \__gzt_uppercased_monthname_french:n {\THEMONTH}~\THEYEAR
 }
 \AtBeginDocument{%
 \tl_new:N \g__gzt_bib_issue_date_tl
@@ -1352,20 +1426,14 @@
 \setcounter{footnote}{0}
 \setcounter{equation}{0}
 \setcounter{theorem}{0}
-\setcounter{theoreme}{0}
 \setcounter{corollary}{0}
-\setcounter{corollaire}{0}
 \setcounter{conjecture}{0}
 \setcounter{proposition}{0}
 \setcounter{lemma}{0}
-\setcounter{lemme}{0}
 \setcounter{axiom}{0}
-\setcounter{axiome}{0}
 \setcounter{definition}{0}
 \setcounter{remark}{0}
-\setcounter{remarque}{0}
 \setcounter{example}{0}
-\setcounter{exemple}{0}
 \setcounter{notation}{0}
 \tl_gset:Nn \g__gzt_article_bib_key_tl {%
   \c__gzt_issue_bib_key_tl
@@ -1773,16 +1841,16 @@
     \__gzt_display_toc: {}
   }
 }
-\tl_new:N \g__gzt_front_cover_minitoc_tl%
+\tl_new:N \g__gzt_frontcover_minitoc_tl%
 \tl_new:N \l__gzt_minitoc_label_tl%
-\cs_new_protected:Nn \__gzt_front_cover_minitoc:n
+\cs_new_protected:Nn \__gzt_frontcover_minitoc:n
 {
-  \tl_gset:Nn \g__gzt_front_cover_minitoc_tl {#1}
+  \tl_gset:Nn \g__gzt_frontcover_minitoc_tl {#1}
 }
 \NewDocumentCommand \minitoc { O{} m }
 {
   \keys_set:nn { gzt/minitoc } { #1 }
-  \__gzt_front_cover_minitoc:n {#2}
+  \__gzt_frontcover_minitoc:n {#2}
 }
 \newlist{__gzt_minitoc_list}{itemize}{1}
 \setlist[__gzt_minitoc_list]{itemsep=2ex,label=\textcolor{__gzt_cover_itemize_label_color}\textbullet}
@@ -1938,17 +2006,17 @@
 \tl_new:N \g__gzt_mainmatter_oddpage_headrule_tl
 \tl_gset:Nn \g__gzt_mainmatter_oddpage_headrule_tl {%
   \draw [__gzt_headrule_color,line~width=\c__gzt_header_line_width_dim]
-  ([yshift=\c__gzt_yshift_mainmatter_headrule_dim]current~page~header~area.south~east)
+  ([yshift=\c__gzt_header_line_yshift_dim]current~page~header~area.south~east)
   --
-  ([yshift=\c__gzt_yshift_mainmatter_headrule_dim]current~page~header~area.south~west -| current~page.north~west)
+  ([yshift=\c__gzt_header_line_yshift_dim]current~page~header~area.south~west -| current~page.north~west)
   ;
 }
 \tl_new:N \g__gzt_mainmatter_evenpage_headrule_tl
 \tl_gset:Nn \g__gzt_mainmatter_evenpage_headrule_tl {%
   \draw [__gzt_headrule_color,line~width=\c__gzt_header_line_width_dim]
-  ([yshift=\c__gzt_yshift_mainmatter_headrule_dim]current~page~header~area.south~west)
+  ([yshift=\c__gzt_header_line_yshift_dim]current~page~header~area.south~west)
   --
-  ([yshift=\c__gzt_yshift_mainmatter_headrule_dim]current~page~header~area.south~east -| current~page.north~east)
+  ([yshift=\c__gzt_header_line_yshift_dim]current~page~header~area.south~east -| current~page.north~east)
   ;
 }
 \ExplSyntaxOff
@@ -1965,13 +2033,13 @@
     /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure\nobreakspace\textendash{}\nobreakspace}}}},%
 }
 \ExplSyntaxOn
-\newpagestyle{__gzt_cover_ps}[]{%
+\newpagestyle{__gzt_frontcover_ps}[]{%
   \sethead
   {}%
   {%
     \adjustbox{stack=c}{
       {\Large
-        \c__gzt_front_cover_header_string_tl
+        \c__gzt_frontcover_header_string_tl
       }\\[7mm]
       \adjustbox{scale=2.08}{
         \l__gzt_frontmatter_head_text_tl
@@ -1985,7 +2053,7 @@
   {}%
   {}%
 }%
-\newpagestyle{__gzt_insidefrontcover_ps}[]{%
+\newpagestyle{__gzt_inside_frontcover_ps}[]{%
   \sethead%
   [
     \tikz[remember~picture,overlay] {%
@@ -2014,7 +2082,7 @@
   {%
     \uppercase{\c__gzt_footer_string_tl}%
   }%
-  {\c__gzt_footer_size_font_tl\thepage}%
+  {}%
 }%
 \newpagestyle{__gzt_frontmatter_ps}[]{%
   \widenhead*{\c__gzt_front_matter_extra_innermargin_dim}{\c__gzt_front_matter_extra_outermargin_dim}
@@ -2098,8 +2166,36 @@
   {}%
   {}%
 }%
+\newpagestyle{__gzt_inside_backcover_ps}[]{%
+  \sethead%
+  {}%
+  {}%
+  {}%
+  %
+  \setfoot%
+  []%
+  [%
+    \uppercase{\c__gzt_footer_string_tl}
+  ]%
+  []%
+  {}%
+  {%
+    \uppercase{\c__gzt_footer_string_tl}%
+  }%
+  {}%
+}%
+\newpagestyle{__gzt_backcover_ps}[]{%
+  \sethead
+  {}%
+  {}%
+  {}%
+  %
+  \setfoot%
+  {}%
+  {}%
+  {}%
+}%
 \AddEverypageHook{%
-%%<class> \int_compare:nNnT { \value{page} } > { 0 } {%
     \bool_if:NF {\g__gzt_advertisement_bool} {
       \tikz[remember~picture,overlay] { \g__gzt_background_footer_tl }%
     }%
@@ -2285,6 +2381,14 @@
     \l__gzt_gzt_short_string_tl
   }
 }
+\NewDocumentCommand \gztcl { }
+{%
+  \textsl{\texttt{\c__gzt_gzt_class_name_tl}}
+}
+\NewDocumentCommand \gztarticlecl { }
+{%
+  \textsl{\texttt{\c__gzt_gztarticle_class_name_tl}}
+}
 \NewDocumentCommand \century { m } {%
   \__gzt_century:n {#1}%
 }
@@ -2296,6 +2400,33 @@
   {
     \c__gzt_aside_string_tl{}~#2~\c__gzt_aside_string_tl
   }
+}
+\tl_new:N \g__gzt_font_designer_text_tl%
+\cs_new_protected:Nn \__gzt_font_designer_text:n
+{
+  \tl_gset:Nn \g__gzt_font_designer_text_tl { #1 }
+}
+\NewDocumentCommand \fontdesignertext {m}
+{
+  \__gzt_font_designer_text:n {#1}%
+}
+\tl_new:N \g__gzt_printer_text_tl%
+\cs_new_protected:Nn \__gzt_printer_text:n
+{
+  \tl_gset:Nn \g__gzt_printer_text_tl { #1 }
+}
+\NewDocumentCommand \printertext {m}
+{
+  \__gzt_printer_text:n {#1}%
+}
+\tl_new:N \g__gzt_authors_instructions_text_tl%
+\cs_new_protected:Nn \__gzt_authors_instructions_text:n
+{
+  \tl_gset:Nn \g__gzt_authors_instructions_text_tl { #1 }
+}
+\NewDocumentCommand \authorsinstructions {+m}
+{
+  \__gzt_authors_instructions_text:n {#1}%
 }
 \lstdefinestyle{__gzt_lst_style}{%
   escapechar=+,
@@ -2404,9 +2535,8 @@
   __gzt_tcb_book_advertisement_box_style,
   #1
 }
-\DeclareTColorBox{__gzt_inside_frontcover}{ O{} }
+\DeclareTColorBox{__gzt_inside_cover_tcb}{ O{} }
 {
-  __gzt_tcb_inside_frontcover_style,
   #1
 }
 \NewDocumentEnvironment{bookadvertisement}{ O{} m }
@@ -2640,25 +2770,33 @@
   }
 }
 \tcbset{%
-  __gzt_tcb_inside_frontcover_style/.style={%
+  __gzt_tcb_inside_cover_style/.style={%
     % split=0.6,%
-    colback=__gzt_inside_front_cover_frame_bg_color,%
-    colbacktitle=__gzt_inside_front_cover_frame_bg_color,%
-    title=\c__gzt_editorial_board_string_tl,%
+    colback=__gzt_inside_frontcover_frame_bg_color,%
+    colbacktitle=__gzt_inside_frontcover_frame_bg_color,%
     sharp~corners=all,%
     center~title,%
-    coltitle=__gzt_inside_front_cover_frame_title_color,%
+    coltitle=__gzt_inside_frontcover_frame_title_color,%
     fonttitle=\bfseries\large,%
     boxrule=\c_zero_dim,%
     toptitle=3mm,%
     bottomtitle=4mm,%
     frame~hidden,%
     enhanced,%
-    enlarge~left~by=-7.5mm,
-    height=\c__gzt_layoutheight_dim-\c__gzt_topmargin_inside_frontcover_dim-\c__gzt_botmargin_dim,
-    width=\c__gzt_inside_frontcover_box_width_dim,
+    height=\c__gzt_layoutheight_dim-\c__gzt_topmargin_inside_cover_dim-\c__gzt_botmargin_dim,
+    width=\c__gzt_inside_cover_box_width_dim,
     middle=4mm,
     segmentation~style={__gzt_tcb_segmentation_style}%
+  },
+  __gzt_tcb_inside_frontcover_style/.style={%
+    __gzt_tcb_inside_cover_style,
+    enlarge~left~by=-\c__gzt_inside_cover_offset_dim,
+    title=\c__gzt_editorial_board_string_tl
+  },
+  __gzt_tcb_inside_backcover_style/.style={%
+    __gzt_tcb_inside_cover_style,
+    enlarge~left~by=\c__gzt_inside_cover_offset_dim,
+    title=\c__gzt_authors_instructions_string_tl
   }
 }
 \tcbset{%
@@ -2700,7 +2838,7 @@
 }
 \setlist[description]{
   font=
-  \bool_if:nTF { \g__gzt_books_rubric_bool || \g__gzt_insidefrontcovermatter_bool }
+  \bool_if:nTF { \g__gzt_books_rubric_bool || \g__gzt_inside_frontcover_bool || \g__gzt_inside_backcover_bool }
   {
     \color{black}
   }{
@@ -2728,55 +2866,102 @@
   \__gzt_orig_usetikzlibrary{#1}
   \shorthandon{:}%
 }
+\cs_new_protected:Nn \__gzt_bilingual:nnn
+{
+  \deftranslation[to=French]{#1}{#2}%
+  \deftranslation[to=English]{#1}{#3}%
+}
 \cs_new_protected:Nn \__gzt_new_theorem:nnnn
 {
+  % \__gzt_bilingual:nnn {#2}{#3}{#4}
+  \deftranslation[to=French]{#2}{#3}%
+  \deftranslation[to=English]{#2}{#4}%
   \declaretheorem[%
   #1,%
-  name=
-  \IfLanguageName{french}{#3}{}%
-  \IfLanguageName{english}{#4}{}%
+  name=\translate{#2}
   ]{#2}
+  \declaretheorem[%
+  #1,%
+  name=\translate{#2},
+  numbered=no
+  ]{#2*}
 }
-\declaretheoremstyle[spaceabove=3pt,bodyfont=\itshape]{__gzt_theorem}
-\declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont]{__gzt_definition}
-\declaretheoremstyle[spaceabove=3pt,bodyfont=\itshape,numbered=no]{__gzt_unumbered_theorem}
-\declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont,numbered=no]{__gzt_unumbered_definition}
-\NewDocumentCommand \gztnewtheorem {O{}mmm}
+\cs_generate_variant:Nn \__gzt_new_theorem:nnnn { nnVV }
+\declaretheoremstyle[spaceabove=3pt,notefont=\bfseries,bodyfont=\itshape]{theorem}
+\declaretheoremstyle[spaceabove=3pt,notefont=\bfseries,bodyfont=\normalfont]{definition}
+\declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont,qed=\ensuremath{\blacksquare},headfont=\normalfont\itshape,numbered=no]{proof}
+\tl_new:N \l__gzt_apriori_newtheorem_englishtitle_tl
+\cs_generate_variant:Nn \tl_if_eq:nnF { VVF }
+\RenewDocumentCommand \newtheorem { O{} m }
 {
-  \__gzt_new_theorem:nnnn {#1}{#2}{#3}{#4}
+  \tl_clear:N \l__gzt_newtheorem_style_tl
+  \tl_clear:N \l__gzt_newtheorem_frenchtitle_tl
+  \tl_clear:N \l__gzt_newtheorem_englishtitle_tl
+  \tl_set:Nn \l__gzt_newtheorem_englishtitle_tl {
+    \MakeUppercase #2
+  }
+  \tl_set:Nf \l__gzt_newtheorem_frenchtitle_tl {
+    \l__gzt_newtheorem_englishtitle_tl
+  }
+  \tl_set:Nn \l__gzt_newtheorem_style_tl {
+    theorem
+  }
+  \IfNoValueF {#1}
+  {
+    \keys_set:nn { gzt/newtheorem } { #1 }
+  }
+  % \tl_if_eq:VVF { \l__gzt_newtheorem_englishtitle_tl } { \MakeUppercase #2 }
+  %   {%
+  %     \tl_show:N \l__gzt_newtheorem_englishtitle_tl
+  %     \tl_show:N \l__gzt_newtheorem_frenchtitle_tl
+  %     \tl_if_eq:NNF { \l__gzt_newtheorem_frenchtitle_tl } { \l__gzt_newtheorem_englishtitle_tl }
+  %     {%
+  %     \tl_set:Nf \l__gzt_newtheorem_frenchtitle_tl {
+  %       \l__gzt_newtheorem_englishtitle_tl
+  %     }
+  %   }
+  % }
+  % \tl_show:N \l__gzt_newtheorem_style_tl
+  % \tl_show:N \l__gzt_newtheorem_frenchtitle_tl
+  % \tl_show:N \l__gzt_newtheorem_englishtitle_tl
+  \__gzt_new_theorem:nnVV {style=\l__gzt_newtheorem_style_tl}{#2}{\l__gzt_newtheorem_frenchtitle_tl}{\l__gzt_newtheorem_englishtitle_tl}
 }
-\gztnewtheorem[style=__gzt_theorem]{theorem}{Th\'eor\`eme}{Theorem}
-\gztnewtheorem[style=__gzt_theorem]{theoreme}{Th\'eor\`eme}{Theorem}
-\gztnewtheorem[style=__gzt_theorem]{corollary}{Corollaire}{Corollary}
-\gztnewtheorem[style=__gzt_theorem]{corollaire}{Corollaire}{Corollary}
-\gztnewtheorem[style=__gzt_theorem]{conjecture}{Conjecture}{Conjecture}
-\gztnewtheorem[style=__gzt_theorem]{proposition}{Proposition}{Proposition}
-\gztnewtheorem[style=__gzt_theorem]{lemma}{Lemme}{Lemma}
-\gztnewtheorem[style=__gzt_theorem]{lemme}{Lemme}{Lemma}
-\gztnewtheorem[style=__gzt_theorem]{axiom}{Axiome}{Axiom}
-\gztnewtheorem[style=__gzt_theorem]{axiome}{Axiome}{Axiom}
-\gztnewtheorem[style=__gzt_definition]{definition}{D\'efinition}{Definition}
-\gztnewtheorem[style=__gzt_definition]{remark}{Remarque}{Remark}
-\gztnewtheorem[style=__gzt_definition]{remarque}{Remarque}{Remark}
-\gztnewtheorem[style=__gzt_definition]{example}{Exemple}{Example}
-\gztnewtheorem[style=__gzt_definition]{exemple}{Exemple}{Example}
-\gztnewtheorem[style=__gzt_definition]{notation}{Notation}{Notation}
-\gztnewtheorem[style=__gzt_unumbered_theorem]{theorem*}{Th\'eor\`eme}{Theorem}
-\gztnewtheorem[style=__gzt_unumbered_theorem]{theoreme*}{Th\'eor\`eme}{Theorem}
-\gztnewtheorem[style=__gzt_unumbered_theorem]{corollary*}{Corollaire}{Corollary}
-\gztnewtheorem[style=__gzt_unumbered_theorem]{corollaire*}{Corollaire}{Corollary}
-\gztnewtheorem[style=__gzt_unumbered_theorem]{conjecture*}{Conjecture}{Conjecture}
-\gztnewtheorem[style=__gzt_unumbered_theorem]{proposition*}{Proposition}{Proposition}
-\gztnewtheorem[style=__gzt_unumbered_theorem]{lemma*}{Lemme}{Lemma}
-\gztnewtheorem[style=__gzt_unumbered_theorem]{lemme*}{Lemme}{Lemma}
-\gztnewtheorem[style=__gzt_unumbered_theorem]{axiom*}{Axiome}{Axiom}
-\gztnewtheorem[style=__gzt_unumbered_theorem]{axiome*}{Axiome}{Axiom}
-\gztnewtheorem[style=__gzt_unumbered_definition]{definition*}{D\'efinition}{Definition}
-\gztnewtheorem[style=__gzt_unumbered_definition]{remark*}{Remarque}{Remark}
-\gztnewtheorem[style=__gzt_unumbered_definition]{remarque*}{Remarque}{Remark}
-\gztnewtheorem[style=__gzt_unumbered_definition]{example*}{Exemple}{Example}
-\gztnewtheorem[style=__gzt_unumbered_definition]{exemple*}{Exemple}{Example}
-\gztnewtheorem[style=__gzt_unumbered_definition]{notation*}{Notation}{Notation}
+\newtheorem[frenchtitle=Th\'eor\`eme]{theorem}
+\newtheorem[frenchtitle=Corollaire]{corollary}
+\newtheorem{conjecture}
+\newtheorem{proposition}
+\newtheorem[frenchtitle=Lemme]{lemma}
+\newtheorem[frenchtitle=Axiome]{axiom}
+\newtheorem[style=definition,frenchtitle=D\'efinition]{definition}
+\newtheorem[style=definition,frenchtitle=Remarque]{remark}
+\newtheorem[style=definition,frenchtitle=Exemple]{example}
+\newtheorem[style=definition]{notation}
+\let\proof\relax
+\newtheorem[style=proof,frenchtitle=Preuve]{proof}
+\cs_new_protected:Nn \__gzt_clone_theorem:nn
+{
+  \NewDocumentEnvironment{#1}{  }
+  {
+    \begin{#2}
+    }
+    {
+    \end{#2}
+  }
+  \NewDocumentEnvironment{#1*}{  }
+  {
+    \begin{#2*}
+    }
+    {
+    \end{#2*}
+  }
+}
+\__gzt_clone_theorem:nn {theoreme} {theorem}
+\__gzt_clone_theorem:nn {corollaire}{corollary}
+\__gzt_clone_theorem:nn {lemme}{lemma}
+\__gzt_clone_theorem:nn {axiome}{axiom}
+\__gzt_clone_theorem:nn {remarque}{remark}
+\__gzt_clone_theorem:nn {exemple}{example}
+\__gzt_clone_theorem:nn {preuve}{proof}
 \DeclareMathOperator{\cotan}{cotan}
 \DeclareMathOperator{\Arccos}{Arccos}
 \DeclareMathOperator{\Arcsin}{Arcsin}
