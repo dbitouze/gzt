@@ -5652,6 +5652,14 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \preto\@enddocumenthook{
   \clearpage
+%    \end{macrocode}
+%
+% The inside front cover and front cover pages are numbered \enquote{i} and
+% \enquote{ii} hence the inside back cover and back cover pages are numbered
+% \enquote{iii} and \enquote{iv}.
+%    \begin{macrocode}
+  \pagenumbering{roman}%
+  \addtocounter{page}{2}
   \ifoddpage%
   \hbox{}
   \fi
