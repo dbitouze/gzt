@@ -1422,7 +1422,8 @@ This work consists of the file  gzt.dtx
 % For the name of the file containing the bibliography of the current issue.
 %    \begin{macrocode}
 % \tl_const:Nn \c_@@_issue_bib_file_string_tl {issue-\c_job_name_tl.bib}
-\tl_const:Nn \c_@@_issue_bib_file_string_tl {\c_job_name_tl.bib}
+\tl_const:Nn \c_@@_issue_bib_file_suffix_string_tl {@@}
+\tl_const:Nn \c_@@_issue_bib_file_string_tl {\c_job_name_tl\c_@@_issue_bib_file_suffix_string_tl.bib}
 \tl_const:Nn \c_@@_issue_bib_path_string_tl {\c_@@_issue_bib_file_string_tl}
 %    \end{macrocode}
 % For the prefix of the bibliographic key of each article.
