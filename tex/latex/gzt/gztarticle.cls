@@ -212,7 +212,7 @@
 \tl_const:Nn \c__gzt_issue_frontcover_image_path_string_tl {\c__gzt_issue_images_path_string_tl/\c__gzt_issue_frontcover_image_file_string_tl}
 \tl_const:Nn \c__gzt_issue_backcover_text_file_string_tl {backcover}
 \tl_const:Nn \c__gzt_backcover_page_file_string_tl {\c__gzt_backmatter_directory_string_tl/\c__gzt_issue_backcover_text_file_string_tl}
-\tl_const:Nn \c__gzt_authors_instructions_file_extension_tl {authinst}
+\tl_const:Nn \c__gzt_authors_instructions_file_extension_tl {ain}
 \tl_const:Nn \c__gzt_authors_instructions_file_tl {\c_job_name_tl.\c__gzt_authors_instructions_file_extension_tl}
 \tl_const:Nn \c__gzt_about_frontcover_string_tl {\`A~propos~de~la~couverture.}
 \tl_const:Nn \c__gzt_credit_frontcover_string_tl {cr\'edit}
@@ -1097,13 +1097,17 @@
         {%
         \item[\c__gzt_isbn_string_tl{}~:] \l__gzt_journal_isbn_tl
         }
-      % \item[\c__gzt_latexclass_string_tl{}~:]
-      %   \__gzt_display_people_by_role:n { classdesigner }
-      % \item[\c__gzt_artistic_director_string_tl{}~:]
-      %   \__gzt_display_people_by_role:n { graphicdesigner }
-      %   % \item[\c__gzt_font_string_tl{}~:]
-      %   %   \__gzt_display_people_by_role:n { fontdesigner }
+        \bool_if:NT {\g__gzt_no_inside_backcover_bool} {
+        \item[\c__gzt_latexclass_string_tl{}~:]
+          \__gzt_display_people_by_role:n { classdesigner }
+        \item[\c__gzt_artistic_director_string_tl{}~:]
+          \__gzt_display_people_by_role:n { graphicdesigner }
+        \item[\c__gzt_printer_string_tl{}~:] \g__gzt_printer_text_tl
+        }
       \end{description}
+      \bool_if:NT {\g__gzt_no_inside_backcover_bool} {
+      \g__gzt_font_designer_text_tl
+      }
       &
         \hspace*{\fill}%
         \includegraphics[height=20mm]{\c__gzt_smf_logo_file_string_tl}%
@@ -1141,29 +1145,37 @@
   \bool_gset_true:N \g__gzt_inside_backcover_bool%
   \pagestyle{__gzt_inside_backcover_ps}%
   \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_inside_cover_geometry_tl}%
-  \small%
-  \begin{__gzt_inside_cover_tcb}[__gzt_tcb_inside_backcover_style]
-    % \small%
-    % Page~
-    % \ifoddpage%
-    % im
-    % \fi
-    % paire.\par{}
-    % \begin{multicols}{2}
-    %   \setlength{\columnsep}{1mm}
-    \file_input:n {\c__gzt_authors_instructions_file_tl}
-    % \end{multicols}
-    % \setlength{\columnseprule}{1pt}
-    \tcblower
-    \begin{description}[leftmargin=1em]
-    \item[\c__gzt_latexclass_string_tl{}~:]
-      \__gzt_display_people_by_role:n { classdesigner }
-    \item[\c__gzt_artistic_director_string_tl{}~:]
-      \__gzt_display_people_by_role:n { graphicdesigner }
-    \item[\c__gzt_printer_string_tl{}~:] \g__gzt_printer_text_tl
-    \end{description}
-    \g__gzt_font_designer_text_tl
-  \end{__gzt_inside_cover_tcb}
+  \file_if_exist:nTF { \c__gzt_authors_instructions_file_tl } {%
+    \bool_if:NF {\g__gzt_no_inside_backcover_bool} {
+      \small%
+      \begin{__gzt_inside_cover_tcb}[__gzt_tcb_inside_backcover_style]
+        % \small%
+        % Page~
+        % \ifoddpage%
+        % im
+        % \fi
+        % paire.\par{}
+        % \begin{multicols}{2}
+        %   \setlength{\columnsep}{1mm}
+        \file_input:n {\c__gzt_authors_instructions_file_tl}
+        % \end{multicols}
+        % \setlength{\columnseprule}{1pt}
+        \tcblower
+        \begin{description}[leftmargin=1em]
+        \item[\c__gzt_latexclass_string_tl{}~:]
+          \__gzt_display_people_by_role:n { classdesigner }
+        \item[\c__gzt_artistic_director_string_tl{}~:]
+          \__gzt_display_people_by_role:n { graphicdesigner }
+        \item[\c__gzt_printer_string_tl{}~:] \g__gzt_printer_text_tl
+        \end{description}
+        \g__gzt_font_designer_text_tl
+      \end{__gzt_inside_cover_tcb}
+    }{%
+      \hbox{}
+    }
+  }{%
+    \hbox{}
+  }
   \bool_gset_false:N \g__gzt_inside_backcover_bool
 }
 \tl_new:N \g__gzt_display_backcover_tl%
@@ -1171,7 +1183,11 @@
   \bool_gset_true:N \g__gzt_backcover_bool
   \pagestyle{__gzt_backcover_ps}%
   \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_backcover_geometry_tl}%
-  \file_input:n {\c__gzt_backcover_page_file_string_tl}
+  \file_if_exist:nTF { \c__gzt_backcover_page_file_string_tl } {%
+    \file_input:n {\c__gzt_backcover_page_file_string_tl}
+  }{%
+    \hbox{}
+  }
 }
 \NewDocumentCommand \editorinchief {ommm}
 {
@@ -2912,7 +2928,7 @@
 \cs_generate_variant:Nn \__gzt_new_theorem:nnnn { nnVV }
 \declaretheoremstyle[spaceabove=3pt,notefont=\bfseries,bodyfont=\itshape]{theorem}
 \declaretheoremstyle[spaceabove=3pt,notefont=\bfseries,bodyfont=\normalfont]{definition}
-\declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont,qed=\ensuremath{\blacksquare},headfont=\normalfont\itshape,numbered=no]{proof}
+\declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont,qed=\ensuremath{\qedsymbol},headfont=\normalfont\itshape,numbered=no]{proof}
 \tl_new:N \l__gzt_apriori_newtheorem_englishtitle_tl
 \cs_generate_variant:Nn \tl_if_eq:nnF { VVF }
 \RenewDocumentCommand \newtheorem { O{} m }
