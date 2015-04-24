@@ -782,6 +782,11 @@ This work consists of the file  gzt.dtx
 \RequirePackage{ragged2e}%
 %    \end{macrocode}
 %
+% \item Define commands that appear not to eat spaces:
+%    \begin{macrocode}
+\RequirePackage{xspace}%
+%    \end{macrocode}
+%
 % \item Context sensitive quotation facilities:
 %    \begin{macrocode}
 \RequirePackage[autostyle]{csquotes}%
@@ -5288,6 +5293,7 @@ This work consists of the file  gzt.dtx
   {
     \l_@@_smf_short_string_tl
   }
+  \xspace
 }
 %    \end{macrocode}
 % \end{macro}
@@ -5311,6 +5317,7 @@ This work consists of the file  gzt.dtx
   {
     \c_@@_cad_short_string_tl
   }
+  \xspace
 }
 \NewDocumentCommand \Cad { s } {
   \IfBooleanTF {#1}
@@ -5320,6 +5327,7 @@ This work consists of the file  gzt.dtx
   {
     \c_@@_Cad_short_string_tl
   }
+  \xspace
 }
 %    \end{macrocode}
 % \end{macro}
@@ -5335,6 +5343,7 @@ This work consists of the file  gzt.dtx
   {
     \l_@@_gzt_short_string_tl
   }
+  \xspace
 }
 %    \end{macrocode}
 % \end{macro}
@@ -5345,10 +5354,12 @@ This work consists of the file  gzt.dtx
 \NewDocumentCommand \gztcl { }
 {%
   \textsl{\texttt{\c_@@_gzt_class_name_tl}}
+  \xspace
 }
 \NewDocumentCommand \gztarticlecl { }
 {%
   \textsl{\texttt{\c_@@_gztarticle_class_name_tl}}
+  \xspace
 }
 %    \end{macrocode}
 % \end{macro}
