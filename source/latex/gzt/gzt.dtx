@@ -5645,9 +5645,12 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 % We automatically include the inside back cover and back cover pages at the end
-% of the document, the former containing some condensed instructions to authors.
+% of the document, the former containing some condensed instructions to
+% authors. But, this cannot be done within "\AtEndDocument" and
+% "\preto\@enddocumenthook" should be used instead (see
+% \url{http://tex.stackexchange.com/q/240318/18401}).
 %    \begin{macrocode}
-\AtEndDocument{%
+\preto\@enddocumenthook{
   \clearpage
   \ifoddpage%
   \hbox{}
