@@ -3020,7 +3020,11 @@ This work consists of the file  gzt.dtx
   \bool_gset_true:N \g_@@_backcover_bool
   \pagestyle{@@_backcover_ps}%
   \exp_after:wN\newgeometry\exp_after:wN{\c_@@_backcover_geometry_tl}%
-  \file_input:n {\c_@@_backcover_page_file_string_tl}
+  \file_if_exist:nTF { \c_@@_backcover_page_file_string_tl } {%
+    \file_input:n {\c_@@_backcover_page_file_string_tl}
+  }{%
+    \hbox{}
+  }
 }
 %    \end{macrocode}
 %
