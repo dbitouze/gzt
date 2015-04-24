@@ -652,6 +652,7 @@ This work consists of the file  gzt.dtx
   pagegrid .default:n = {\c_@@_pagegrid_dim},
   forprinter .bool_gset:N = \g_@@_for_printer_bool,
   insidepages .bool_gset:N = \g_@@_inside_pages_bool,
+  noinsidebackcover .bool_gset:N = \g_@@_no_inside_backcover_bool,
   cover .code:n = {%
     \bool_gset_true:N \g_@@_for_printer_bool%
     \bool_gset_true:N \g_@@_cover_bool%
@@ -2921,13 +2922,17 @@ This work consists of the file  gzt.dtx
         {%
         \item[\c_@@_isbn_string_tl{}~:] \l_@@_journal_isbn_tl
         }
-      % \item[\c_@@_latexclass_string_tl{}~:]
-      %   \@@_display_people_by_role:n { classdesigner }
-      % \item[\c_@@_artistic_director_string_tl{}~:]
-      %   \@@_display_people_by_role:n { graphicdesigner }
-      %   % \item[\c_@@_font_string_tl{}~:]
-      %   %   \@@_display_people_by_role:n { fontdesigner }
+        \bool_if:NT {\g_@@_no_inside_backcover_bool} {
+        \item[\c_@@_latexclass_string_tl{}~:]
+          \@@_display_people_by_role:n { classdesigner }
+        \item[\c_@@_artistic_director_string_tl{}~:]
+          \@@_display_people_by_role:n { graphicdesigner }
+        \item[\c_@@_printer_string_tl{}~:] \g_@@_printer_text_tl
+        }
       \end{description}
+      \bool_if:NT {\g_@@_no_inside_backcover_bool} {
+      \g_@@_font_designer_text_tl
+      }
       &
         \hspace*{\fill}%
         \includegraphics[height=20mm]{\c_@@_smf_logo_file_string_tl}%
@@ -2971,29 +2976,37 @@ This work consists of the file  gzt.dtx
   \bool_gset_true:N \g_@@_inside_backcover_bool%
   \pagestyle{@@_inside_backcover_ps}%
   \exp_after:wN\newgeometry\exp_after:wN{\c_@@_inside_cover_geometry_tl}%
-  \small%
-  \begin{_@@_inside_cover_tcb}[_@@_tcb_inside_backcover_style]
-    % \small%
-    % Page~
-    % \ifoddpage%
-    % im
-    % \fi
-    % paire.\par{}
-    % \begin{multicols}{2}
-    %   \setlength{\columnsep}{1mm}
-    \file_input:n {\c_@@_authors_instructions_file_tl}
-    % \end{multicols}
-    % \setlength{\columnseprule}{1pt}
-    \tcblower
-    \begin{description}[leftmargin=1em]
-    \item[\c_@@_latexclass_string_tl{}~:]
-      \@@_display_people_by_role:n { classdesigner }
-    \item[\c_@@_artistic_director_string_tl{}~:]
-      \@@_display_people_by_role:n { graphicdesigner }
-    \item[\c_@@_printer_string_tl{}~:] \g_@@_printer_text_tl
-    \end{description}
-    \g_@@_font_designer_text_tl
-  \end{_@@_inside_cover_tcb}
+  \file_if_exist:nTF { \c_@@_authors_instructions_file_tl } {%
+    \bool_if:NF {\g_@@_no_inside_backcover_bool} {
+      \small%
+      \begin{_@@_inside_cover_tcb}[_@@_tcb_inside_backcover_style]
+        % \small%
+        % Page~
+        % \ifoddpage%
+        % im
+        % \fi
+        % paire.\par{}
+        % \begin{multicols}{2}
+        %   \setlength{\columnsep}{1mm}
+        \file_input:n {\c_@@_authors_instructions_file_tl}
+        % \end{multicols}
+        % \setlength{\columnseprule}{1pt}
+        \tcblower
+        \begin{description}[leftmargin=1em]
+        \item[\c_@@_latexclass_string_tl{}~:]
+          \@@_display_people_by_role:n { classdesigner }
+        \item[\c_@@_artistic_director_string_tl{}~:]
+          \@@_display_people_by_role:n { graphicdesigner }
+        \item[\c_@@_printer_string_tl{}~:] \g_@@_printer_text_tl
+        \end{description}
+        \g_@@_font_designer_text_tl
+      \end{_@@_inside_cover_tcb}
+    }{%
+      \hbox{}
+    }
+  }{%
+    \hbox{}
+  }
   \bool_gset_false:N \g_@@_inside_backcover_bool
 }
 %    \end{macrocode}
