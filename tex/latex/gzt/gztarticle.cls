@@ -95,6 +95,7 @@
 \RequirePackage{zref-totpages}
 \RequirePackage{zref-xr}%
 \RequirePackage{ragged2e}%
+\RequirePackage{xspace}%
 \RequirePackage[autostyle]{csquotes}%
 \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
 \RequirePackage{array}
@@ -385,8 +386,9 @@
 \dim_const:Nn \c__gzt_headheight_dim  { \c_zero_dim }
 \dim_const:Nn \c__gzt_botmargin_dim   {  30mm}
 \dim_const:Nn \c__gzt_footskip_dim    {  26mm}
-\dim_const:Nn \c__gzt_innermargin_dim { 20mm - \c__gzt_bindingoffset_dim }
-\dim_const:Nn \c__gzt_outermargin_dim { 25mm }
+\dim_const:Nn \c__gzt_shift_margin_dim { 5mm }
+\dim_const:Nn \c__gzt_innermargin_dim { 15mm - \c__gzt_bindingoffset_dim + \c__gzt_shift_margin_dim}
+\dim_const:Nn \c__gzt_outermargin_dim { 30mm - \c__gzt_shift_margin_dim }
 \dim_const:Nn \c__gzt_inside_cover_box_width_dim { 165mm }%
 \dim_const:Nn \c__gzt_innermargin_inside_cover_dim {
   (\c__gzt_layoutwidth_dim - \c__gzt_inside_cover_box_width_dim)/2
@@ -2365,6 +2367,7 @@
   {
     \l__gzt_smf_short_string_tl
   }
+  \xspace
 }
 \DeclareExpandableDocumentCommand \surname { m } {
   \textsc{#1}
@@ -2377,6 +2380,7 @@
   {
     \c__gzt_cad_short_string_tl
   }
+  \xspace
 }
 \NewDocumentCommand \Cad { s } {
   \IfBooleanTF {#1}
@@ -2386,6 +2390,7 @@
   {
     \c__gzt_Cad_short_string_tl
   }
+  \xspace
 }
 \NewDocumentCommand \gzt { s } {
   \IfBooleanTF {#1}
@@ -2395,14 +2400,17 @@
   {
     \l__gzt_gzt_short_string_tl
   }
+  \xspace
 }
 \NewDocumentCommand \gztcl { }
 {%
   \textsl{\texttt{\c__gzt_gzt_class_name_tl}}
+  \xspace
 }
 \NewDocumentCommand \gztarticlecl { }
 {%
   \textsl{\texttt{\c__gzt_gztarticle_class_name_tl}}
+  \xspace
 }
 \NewDocumentCommand \century { m } {%
   \__gzt_century:n {#1}%
