@@ -93,6 +93,7 @@
   pagegrid .dim_gset:N = \g__gzt_pagegrid_dim,
   pagegrid .default:n = {\c__gzt_pagegrid_dim},
   forprinter .bool_gset:N = \g__gzt_for_printer_bool,
+  insidepages .bool_gset:N = \g__gzt_inside_pages_bool,
   cover .code:n = {%
     \bool_gset_true:N \g__gzt_for_printer_bool%
     \bool_gset_true:N \g__gzt_cover_bool%
@@ -250,6 +251,8 @@
 \tl_const:Nn \c__gzt_issue_frontcover_image_path_string_tl {\c__gzt_issue_images_path_string_tl/\c__gzt_issue_frontcover_image_file_string_tl}
 \tl_const:Nn \c__gzt_issue_backcover_text_file_string_tl {backcover}
 \tl_const:Nn \c__gzt_backcover_page_file_string_tl {\c__gzt_backmatter_directory_string_tl/\c__gzt_issue_backcover_text_file_string_tl}
+\tl_const:Nn \c__gzt_authors_instructions_file_extension_tl {authinst}
+\tl_const:Nn \c__gzt_authors_instructions_file_tl {\c_job_name_tl.\c__gzt_authors_instructions_file_extension_tl}
 \tl_const:Nn \c__gzt_about_frontcover_string_tl {\`A~propos~de~la~couverture.}
 \tl_const:Nn \c__gzt_credit_frontcover_string_tl {cr\'edit}
 \tl_const:Nn \c__gzt_authors_instructions_string_tl {Instructions~aux~auteurs}
@@ -298,7 +301,8 @@
   }
 }
 \tl_const:Nn \c__gzt_smf_logo_file_string_tl {logo_SMF}
-\tl_const:Nn \c__gzt_issue_bib_file_string_tl {issue-\c_job_name_tl.bib}
+\tl_const:Nn \c__gzt_issue_bib_file_suffix_string_tl {__gzt}
+\tl_const:Nn \c__gzt_issue_bib_file_string_tl {\c_job_name_tl\c__gzt_issue_bib_file_suffix_string_tl.bib}
 \tl_const:Nn \c__gzt_issue_bib_path_string_tl {\c__gzt_issue_bib_file_string_tl}
 \tl_const:Nn \c__gzt_issue_bib_key_tl {\int_use:N \g__gzt_issue_number_int}
 \tl_const:Nn \c__gzt_interview_title_string_tl {En~apart\'e~avec~}
@@ -342,10 +346,8 @@
 \int_gset:Nn \g__gzt_total_page_number_int { \zref@extractdefault{selfLastPage}{abspage}{0} }
 \int_compare:nNnTF {\g__gzt_total_page_number_int-4}<{68}
 {
-  \dim_const:Nn \c__gzt_adjustmargin_dim {\c_zero_dim}
   \dim_const:Nn \c__gzt_future_bindingoffset_dim { \c_zero_dim }
 }{
-  \dim_const:Nn \c__gzt_adjustmargin_dim { 5mm }
   \int_compare:nNnTF {\g__gzt_total_page_number_int-4}<{80}
   {
     \dim_const:Nn \c__gzt_future_bindingoffset_dim { 3mm }
@@ -431,17 +433,17 @@
 \dim_const:Nn \c__gzt_headheight_dim  { \c_zero_dim }
 \dim_const:Nn \c__gzt_botmargin_dim   {  30mm}
 \dim_const:Nn \c__gzt_footskip_dim    {  26mm}
-\dim_const:Nn \c__gzt_innermargin_dim { 15mm - \c__gzt_bindingoffset_dim + \c__gzt_adjustmargin_dim}
-\dim_const:Nn \c__gzt_outermargin_dim { 30mm - \c__gzt_adjustmargin_dim }
+\dim_const:Nn \c__gzt_innermargin_dim { 20mm - \c__gzt_bindingoffset_dim }
+\dim_const:Nn \c__gzt_outermargin_dim { 25mm }
 \dim_const:Nn \c__gzt_inside_cover_box_width_dim { 165mm }%
 \dim_const:Nn \c__gzt_innermargin_inside_cover_dim {
   (\c__gzt_layoutwidth_dim - \c__gzt_inside_cover_box_width_dim)/2
   - \c__gzt_bindingoffset_dim
-  + \c__gzt_adjustmargin_dim
+  % + \c__gzt_adjustmargin_dim
 }
 \dim_const:Nn \c__gzt_outermargin_inside_cover_dim {
   (\c__gzt_layoutwidth_dim - \c__gzt_inside_cover_box_width_dim)/2
-  - \c__gzt_adjustmargin_dim
+  % - \c__gzt_adjustmargin_dim
 }
 \dim_const:Nn \c__gzt_innermargin_backcover_dim { 2cm }
 \dim_const:Nn \c__gzt_outermargin_backcover_dim { \c__gzt_innermargin_backcover_dim }
@@ -1037,6 +1039,7 @@
 \tl_new:N \g__gzt_display_frontcover_tl%
 \tl_gset:Nn \g__gzt_display_frontcover_tl {%
   \bool_gset_true:N \g__gzt_frontcover_bool
+  \pagenumbering{roman}%
   \pagestyle{__gzt_frontcover_ps}%
   \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_frontcover_geometry_tl}%
   \noindent%
@@ -1175,8 +1178,8 @@
       \end{adjustbox}
     }
   \end{__gzt_inside_cover_tcb}
-  \setcounter{page}{0}
   \clearpage%
+  \pagenumbering{arabic}%
   \bool_gset_false:N \g__gzt_inside_frontcover_bool
 }
 \tl_new:N \g__gzt_display_inside_backcover_tl%
@@ -1194,7 +1197,7 @@
     % paire.\par{}
     % \begin{multicols}{2}
     %   \setlength{\columnsep}{1mm}
-      \g__gzt_authors_instructions_text_tl
+    \file_input:n {\c__gzt_authors_instructions_file_tl}
     % \end{multicols}
     % \setlength{\columnseprule}{1pt}
     \tcblower
@@ -2161,8 +2164,10 @@
     \vfill
     \newpage
   }{
-    \g__gzt_display_frontcover_tl
-    \g__gzt_display_inside_frontcover_tl
+    \bool_if:NF {\g__gzt_inside_pages_bool} {
+      \g__gzt_display_frontcover_tl
+      \g__gzt_display_inside_frontcover_tl
+    }
     \bool_if:NT {\g__gzt_cover_bool} {
       \end{document}
     }
@@ -2436,8 +2441,21 @@
 }%
 \newpagestyle{__gzt_inside_backcover_ps}[]{%
   \sethead%
+  [
+    \tikz[remember~picture,overlay] {%
+      \g__gzt_frontmatter_page_headrule_tl%
+      \g__gzt_frontmatter_headtext_tl%
+    }%
+  ]%
+  []%
+  []%
   {}%
-  {}%
+  {
+    \tikz[remember~picture,overlay] {%
+      \g__gzt_frontmatter_page_headrule_tl%
+      \g__gzt_frontmatter_headtext_tl%
+    }%
+  }%
   {}%
   %
   \setfoot%
@@ -2762,14 +2780,14 @@
 {
   \__gzt_printer_text:n {#1}%
 }
-\tl_new:N \g__gzt_authors_instructions_text_tl%
-\cs_new_protected:Nn \__gzt_authors_instructions_text:n
+\NewDocumentEnvironment{authorsinstructions}{  }
+{%
+  \begingroup
+  \tcbverbatimwrite{\c__gzt_authors_instructions_file_tl}
+}%
 {
-  \tl_gset:Nn \g__gzt_authors_instructions_text_tl { #1 }
-}
-\NewDocumentCommand \authorsinstructions {+m}
-{
-  \__gzt_authors_instructions_text:n {#1}%
+  \endtcbverbatimwrite
+  \endgroup
 }
 \lstdefinestyle{__gzt_lst_style}{%
   escapechar=+,
@@ -2976,16 +2994,20 @@
     }
     \cleancustomization%
 }
-\AtEndDocument{%
-  \clearpage
-  \ifoddpage%
-  \hbox{}
-  \fi
-  \newpage
-  \bool_gset_true:N \g__gzt_backmatter_bool
-  \g__gzt_display_inside_backcover_tl
-  \newpage
-  \g__gzt_display_backcover_tl
+\bool_if:NF {\g__gzt_inside_pages_bool} {
+  \preto\@enddocumenthook{
+    \clearpage
+    \pagenumbering{roman}%
+    \addtocounter{page}{2}
+    \ifoddpage%
+    \hbox{}
+    \fi
+    \newpage
+    \bool_gset_true:N \g__gzt_backmatter_bool
+    \g__gzt_display_inside_backcover_tl
+    \newpage
+    \g__gzt_display_backcover_tl
+  }%
 }%
 \pgfplotsset{%
   /pgf/number~format/.cd,
