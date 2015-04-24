@@ -1682,11 +1682,15 @@ This work consists of the file  gzt.dtx
 \dim_const:Nn \c_@@_headheight_dim  { \c_zero_dim }
 \dim_const:Nn \c_@@_botmargin_dim   {  30mm}
 \dim_const:Nn \c_@@_footskip_dim    {  26mm}
-\dim_const:Nn \c_@@_innermargin_dim { 20mm - \c_@@_bindingoffset_dim }
-\dim_const:Nn \c_@@_outermargin_dim { 25mm }
-% \dim_const:Nn \c_@@_adjustmargin_dim { 5mm }
-% \dim_const:Nn \c_@@_innermargin_dim { 15mm - \c_@@_bindingoffset_dim + \c_@@_adjustmargin_dim}
-% \dim_const:Nn \c_@@_outermargin_dim { 30mm - \c_@@_adjustmargin_dim }
+%    \end{macrocode}
+%
+% Inner margins of the initial issue (\#~143) were too small. We make them
+% definitively bigger as of \SI{5}{\milli\meter} (and make the outer margins
+% smaller of the same dimension).
+%    \begin{macrocode}
+\dim_const:Nn \c_@@_shift_margin_dim { 5mm }
+\dim_const:Nn \c_@@_innermargin_dim { 15mm - \c_@@_bindingoffset_dim + \c_@@_shift_margin_dim}
+\dim_const:Nn \c_@@_outermargin_dim { 30mm - \c_@@_shift_margin_dim }
 \dim_const:Nn \c_@@_inside_cover_box_width_dim { 165mm }%
 \dim_const:Nn \c_@@_innermargin_inside_cover_dim {
   (\c_@@_layoutwidth_dim - \c_@@_inside_cover_box_width_dim)/2
