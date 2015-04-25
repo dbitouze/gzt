@@ -134,6 +134,7 @@
 \RequirePackage{zref-xr}%
 \RequirePackage{ragged2e}%
 \RequirePackage{xspace}%
+\RequirePackage{epigraph}%
 \RequirePackage[autostyle]{csquotes}%
 \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
 \RequirePackage{array}
@@ -2804,6 +2805,32 @@
 \NewDocumentCommand \printertext {m}
 {
   \__gzt_printer_text:n {#1}%
+}
+\renewcommand{\textflush}{flushepinormal}
+\cs_set_eq:NN \__gzt_orig_epigraph \epigraph
+\cs_new_protected:Nn \__gzt_epigraph:nn
+{
+  \bool_if:nTF { \tl_if_empty_p:n {#2}  }
+  {
+    \setlength{\epigraphrule}{\c_zero_dim}
+  }
+  {
+    \setlength{\epigraphrule}{.4\p@}
+  }
+  \__gzt_orig_epigraph{%
+    \emph{%
+      \enquote{%
+        #1%
+      }%
+    }%
+  }%
+  {%
+    #2
+  }
+}
+\RenewDocumentCommand \epigraph { m m }
+{
+  \__gzt_epigraph:nn {#1}{#2}%
 }
 \NewDocumentEnvironment{authorsinstructions}{  }
 {%
