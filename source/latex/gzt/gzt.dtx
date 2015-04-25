@@ -788,6 +788,11 @@ This work consists of the file  gzt.dtx
 \RequirePackage{xspace}%
 %    \end{macrocode}
 %
+% \item For typesetting epigraphs:
+%    \begin{macrocode}
+\RequirePackage{epigraph}%
+%    \end{macrocode}
+%
 % \item Context sensitive quotation facilities:
 %    \begin{macrocode}
 \RequirePackage[autostyle]{csquotes}%
@@ -5425,6 +5430,36 @@ This work consists of the file  gzt.dtx
 \NewDocumentCommand \printertext {m}
 {
   \_@@_printer_text:n {#1}%
+}
+%    \end{macrocode}
+%
+% Command for epigraphs.
+%    \begin{macrocode}
+\renewcommand{\textflush}{flushepinormal}
+\cs_set_eq:NN \_@@_orig_epigraph \epigraph
+\cs_new_protected:Nn \_@@_epigraph:nn
+{
+  \bool_if:nTF { \tl_if_empty_p:n {#2}  }
+  {
+    \setlength{\epigraphrule}{\c_zero_dim}
+  }
+  {
+    \setlength{\epigraphrule}{.4\p@}
+  }
+  \_@@_orig_epigraph{%
+    \emph{%
+      \enquote{%
+        #1%
+      }%
+    }%
+  }%
+  {%
+    #2
+  }
+}
+\RenewDocumentCommand \epigraph { m m }
+{
+  \_@@_epigraph:nn {#1}{#2}%
 }
 %    \end{macrocode}
 %
