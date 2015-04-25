@@ -1154,6 +1154,13 @@ Il lui répondit: \enquote{Courteline disait: \enquote{Passer pour un idiot aux
 \end{bodycode}
 \end{docCommand}
 
+\begin{docCommand}{textelp}{\marg{texte}}
+  Cette commande est à employer pour signifier une omission, avec éventuel ajout
+  de \meta{texte}.
+
+  Cf. \vref{sec-epigraphes} pour un exemple d'utilisation de cette commande.
+\end{docCommand}
+
 (\textsc{À suivre...})
 
 \subsection{Adresses Web (\enquote{\textsc{url}})}
@@ -1212,6 +1219,56 @@ commande \refCom{vref} de ce dernier très puissante.
 fichier source [...]
 \end{bodycode}
 \end{docCommand}
+
+\subsection{Épigraphes}
+\label{sec-epigraphes}
+
+Le \Package*{epigraph} permet de composer des épigraphes au moyen de la commande
+\refCom{epigraph}.
+
+\begin{docCommand}{epigraph}{\marg{épigraphe}{\marg{source}}}
+  Cette commande\footnote{Légèrement redéfinie par la \gztauthorcl.} compose un
+  \meta{épigraphe} et sa \meta{source} (qui peut éventuellement être vide).
+\end{docCommand}
+
+\begin{bodycode}[listing and text]
+\epigraph{%
+  Parce qu'un secret, ce n'est pas quelque chose qui ne se raconte pas. \textelp{}%
+}{%
+  César\\M. \textsc{Pagnol}, \emph{César}. Livre de Poche~161, p.~115%
+}
+\end{bodycode}
+
+\begin{dbremark}{Source de l'épigraphe en entrée bibliographique}{}
+  La source de l'épigraphe pourra faire l'objet d'une entrée bibliographique en
+  vue d'être citée en 2\ieme{} argument de \refCom{epigraph} au moyen de la
+  commande |\fullcite| du \Package*{biblatex}
+  (cf. \vref{sec-bibliographie}).\footnote{%
+    Dans le fichier \hologo{BibTeX}, on ajoutera à cette entrée la ligne
+    \protect\lstinline+options = {skipbib}+ pour éviter que cette source figure
+    dans la liste des références bibliographiques.%
+  }
+\end{dbremark}
+
+% Dans le source \hologo{BibTeX} de l'exemple suivant, on notera la ligne
+% \lstinline|options = {skipbib}| permettant d'éviter que la source de l'épigraphe
+% ne figure dans la liste des références bibliographiques.
+% \begin{preamblecode}[title=Source \hologo{BibTeX}]
+% @book{pagnol,
+%   title                    = {César},
+%   author                   = {Pagnol, Marcel},
+%   number                   = {161},
+%   pages                    = {115},
+%   series                   = {Livre de poche},
+%   options                  = {skipbib}
+% }
+% \end{preamblecode}
+% \begin{bodycode}[listing and text,listing options={deletekeywords={options,[2]number}}]
+% \epigraph{Je ne peux pas vous le dire à tous à la fois, et si vite que ça. Parce
+%   qu'un secret, ce n'est pas quelque chose qui ne se raconte pas. Mais c'est une
+%   chose qu'on se raconte à voix basse, et séparément.}{César\\\fullcite{pagnol}}
+% \end{bodycode}
+
 
 \subsection{Listes en ligne}
 \label{sec:listes-en-ligne}
