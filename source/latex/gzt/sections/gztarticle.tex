@@ -1260,7 +1260,7 @@ canevas de fichier source dont il pourra faire un copié-collé\footnote{La
 et environnement moins fréquents ont été mis en commentaire.
 
 \begin{bodycode}
-\documentclass{gztauthor}
+\documentclass{gztarticle}
 %
 % Indiquer le (chemin vers le) fichier .bib utilisé.
 \addbibresource{....bib}
@@ -1286,10 +1286,11 @@ et environnement moins fréquents ont été mis en commentaire.
 % \end{abstract}
 %
 \maketitle
+%
+% Ici vient le contenu de l'article.
 
-% [...]
-
-\printbibliography
+%
+\printbibliography % ou \printminibios
 \end{document}
 \end{bodycode}
 
