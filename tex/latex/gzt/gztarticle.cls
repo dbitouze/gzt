@@ -197,8 +197,9 @@
 \tl_const:Nn \c__gzt_president_message_date_string_tl {Le~}
 \tl_const:Nn \c__gzt_frontcover_header_string_tl {
   \l__gzt_uppercased_date_format\displaydate{__gzt_date}
-  \nobreakspace
-  \textendash{}\nobreakspace
+  \space
+  \textendash{}
+  \space
   \No\int_use:N\g__gzt_issue_number_int%
 }
 \tl_const:Nn \c__gzt_frontmatter_directory_string_tl {frontmatter}
@@ -248,9 +249,9 @@
 \tl_const:Nn \c__gzt_footer_string_tl {
   \c__gzt_footer_size_font_tl
   \textcolor{__gzt_smf_number_color}{\c__gzt_smf_short_string_tl}
-  \nobreakspace
+  \space
   \textcolor{__gzt_date_color}{
-    \textendash{}\nobreakspace
+    \textendash{}\space
     \MakeTextUppercase{\c__gzt_journal_short_title_string_tl}
   }
 }
@@ -1148,7 +1149,7 @@
   \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_inside_cover_geometry_tl}%
   \file_if_exist:nTF { \c__gzt_authors_instructions_file_tl } {%
     \bool_if:NTF {\g__gzt_no_inside_backcover_bool} {
-      \hbox{} Blah
+      \hbox{}
     }{%
       \small%
       \begin{__gzt_inside_cover_tcb}[__gzt_tcb_inside_backcover_style]
@@ -1175,7 +1176,7 @@
       \end{__gzt_inside_cover_tcb}
     }
   }{%
-    \hbox{} Blih
+    \hbox{}
   }
   \bool_gset_false:N \g__gzt_inside_backcover_bool
 }
@@ -2047,11 +2048,11 @@
   new/blend into/tables/.style={%
     use counter*=table,%
     list inside=lot,
-    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@table\nobreakspace\textendash{}\nobreakspace}}}},%
+    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@table\space\textendash{}\space}}}},%
   new/blend into/figures/.style={%
     use counter*=figure,%
     list inside=lof,
-    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure\nobreakspace\textendash{}\nobreakspace}}}},%
+    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure\space\textendash{}\space}}}},%
 }
 \ExplSyntaxOn
 \newpagestyle{__gzt_frontcover_ps}[]{%
@@ -2931,6 +2932,10 @@
   \shorthandoff{:}%
   \__gzt_orig_usetikzlibrary{#1}
   \shorthandon{:}%
+  % \begingroup
+  % \NoAutoSpacing
+  % \__gzt_orig_usetikzlibrary{#1}
+  % \endgroup
 }
 \cs_new_protected:Nn \__gzt_bilingual:nnn
 {
