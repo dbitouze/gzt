@@ -5121,12 +5121,23 @@ This work consists of the file  gzt.dtx
 %
 % Command for centuries.
 %    \begin{macrocode}
+\deftranslation[to=French]{_@@_century}{si\`ecle}%
+\deftranslation[to=English]{_@@_century}{century}%
+\deftranslation[to=French]{_@@_first}{\ier}%
+\deftranslation[to=English]{_@@_first}{\up{st}\xspace}%
+\deftranslation[to=French]{_@@_nth}{\ieme}%
+\deftranslation[to=English]{_@@_nth}{\up{th}\xspace}%
+\deftranslation[to=French]{_@@_bc}{avant~J.-C.}%
+\deftranslation[to=English]{_@@_bc}{BC}%
 \cs_new_protected:Nn \_@@_century:n
 {
   \textsc{
-    \int_to_roman:n {#1}
+    \int_to_roman:n {\int_abs:n {#1}}
   }%
-  \int_compare:nNnTF { #1 } > { 1 }{\ieme}{\ier} si\`ecle%
+  \int_compare:nNnTF { \int_abs:n {#1} } > { 1 }{\translate{_@@_nth}}{\translate{_@@_first}}
+  \translate{_@@_century}%
+  \space
+  \int_compare:nNnT { #1 } < { 0 }{\translate{_@@_bc}}
 }
 %    \end{macrocode}
 %
