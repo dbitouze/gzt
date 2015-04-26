@@ -657,8 +657,14 @@ mathématiques destinées à faciliter la saisie d'un article à paraître dans 
 
 \begin{docCommand}{century}{\marg{numéro}}
   Cette commande affiche le \meta{numéro}\footnote{Ce numéro doit être un nombre
-    entier positif.} d'un siècle en chiffre romain composé en petites capitales,
-  suivi du mot \enquote{siècle}. Ainsi :
+    entier relatif non nul.} d'un siècle en chiffre romain composé en petites
+  capitales, suivi :
+  \begin{itemize}
+  \item du mot \enquote{siècle} ou \enquote{century} ;
+  \item si \meta{numéro} $<0$, de l'expression \enquote{avant J.-C.} ou
+    \enquote{BC} ;
+  \end{itemize}
+  selon que la langue en cours est le français ou l'anglais.  Ainsi :
 \begin{bodycode}[listing and text]
 Au \century{1}, [...]. Plus tard, au \century{8}, [...]
 \end{bodycode}
