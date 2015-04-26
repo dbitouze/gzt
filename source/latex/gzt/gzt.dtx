@@ -22,23 +22,23 @@
 %</internal>
 %<*readme>
 -----------------------------------------------------------------------------
-gzt --- SMF class for the French journal "La Gazette des Math'ematiciens",
-            version 0.1
+gzt --- SMF bundle of classes for the French journal "La Gazette des
+        Math'ematiciens", version 0.9
 
 E-mail: denis.bitouze@lmpa.univ-littoral.fr
 Released under the LaTeX Project Public License v1.3c or later
 See http://www.latex-project.org/lppl.txt
 -----------------------------------------------------------------------------
 
-`gzt' is the new SMF class for the French journal "La gazette des
+`gzt' is a new SMF bundle of classes for the French journal "La gazette des
 math'ematiciens".
 
 Installation
 ------------
 
-The class is supplied in dtx format. If you want to unpack the dtx yourself,
-running 'tex gzt.dtx' will extract the class whereas 'pdflatex
-gzt.dtx will extract it and also typeset the documentation.
+The classes are supplied in dtx format. If you want to unpack the dtx yourself,
+running 'tex gzt.dtx' will extract the two classes gzt.cls and gztarticle.cls
+whereas 'pdflatex gzt.tex' will typeset the gztarticle.cls' documentation.
 
 Typesetting the documentation also requires a number of packages in addition to
 those needed to use the gzt class.  To compile the documentation without
@@ -59,7 +59,7 @@ error, you will need the packages:
 % \input docstrip.tex
 \Msg{********************************************************}
 \Msg{* Installation}
-\Msg{* Class: gzt 2015/02/27 v0.9}
+\Msg{* Class: gzt 2015/04/26 v0.9}
 \Msg{* for the French journal}
 \Msg{* "La Gazette des Math'ematiciens" (DB)}
 \Msg{********************************************************}
@@ -67,8 +67,9 @@ error, you will need the packages:
 \askforoverwritefalse
 \preamble
 -----------------------------------------------------------------------------
-gzt --- SMF class for the French journal "La Gazette des Math'ematiciens",
-            version 0.1
+gzt --- SMF bundle of classes for the French journal "La Gazette des
+        Math'ematiciens", version 0.9
+
 E-mail: denis.bitouze@lmpa.univ-littoral.fr
 Released under the LaTeX Project Public License v1.3c or later
 See http://www.latex-project.org/lppl.txt
@@ -91,9 +92,9 @@ The Current Maintainer of this work is Denis Bitouz'e.
 
 This work consists of the file  gzt.dtx
           and the derived files gzt.cls,
+                                gztarticle.cls,
                                 gzt.ins,
                                 gzt.pdf,
-                                gzt-doc.sty,
                                 and a number of configuration files.
 \endpostamble
 %
@@ -143,7 +144,7 @@ This work consists of the file  gzt.dtx
 \fi
 %</internal>
 %
-% \changes{v0.9}{2015/02/27}{First public version}%
+% \changes{v0.9}{2015/04/29}{First CTAN version}%
 %
 % \CheckSum{4413}
 %
@@ -607,7 +608,7 @@ This work consists of the file  gzt.dtx
 \ProvidesExplClass
 %<class>  {gzt}
 %<class-article>  {gztarticle}
-  {2015/02/27}
+  {2015/04/26}
   {0.9}
   {
     SMF class for the French journal^^J
