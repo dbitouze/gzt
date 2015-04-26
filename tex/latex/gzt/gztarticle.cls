@@ -6,8 +6,9 @@
 %%
 %% gzt.dtx  (with options: `class-article')
 %% -----------------------------------------------------------------------------
-%% gzt --- SMF class for the French journal "La Gazette des Math'ematiciens",
-%%             version 0.1
+%% gzt --- SMF bundle of classes for the French journal "La Gazette des
+%%         Math'ematiciens", version 0.9
+%% 
 %% E-mail: denis.bitouze@lmpa.univ-littoral.fr
 %% Released under the LaTeX Project Public License v1.3c or later
 %% See http://www.latex-project.org/lppl.txt
@@ -60,7 +61,7 @@
 \ExplSyntaxOn
 \ProvidesExplClass
   {gztarticle}
-  {2015/02/27}
+  {2015/04/26}
   {0.9}
   {
     SMF class for the French journal^^J
@@ -2318,12 +2319,23 @@
   \nopagebreak[0]
   \printauthorsdetails
 }
+\deftranslation[to=French]{__gzt_century}{si\`ecle}%
+\deftranslation[to=English]{__gzt_century}{century}%
+\deftranslation[to=French]{__gzt_first}{\ier}%
+\deftranslation[to=English]{__gzt_first}{\up{st}\xspace}%
+\deftranslation[to=French]{__gzt_nth}{\ieme}%
+\deftranslation[to=English]{__gzt_nth}{\up{th}\xspace}%
+\deftranslation[to=French]{__gzt_bc}{avant~J.-C.}%
+\deftranslation[to=English]{__gzt_bc}{BC}%
 \cs_new_protected:Nn \__gzt_century:n
 {
   \textsc{
-    \int_to_roman:n {#1}
+    \int_to_roman:n {\int_abs:n {#1}}
   }%
-  \int_compare:nNnTF { #1 } > { 1 }{\ieme}{\ier} si\`ecle%
+  \int_compare:nNnTF { \int_abs:n {#1} } > { 1 }{\translate{__gzt_nth}}{\translate{__gzt_first}}
+  \translate{__gzt_century}%
+  \space
+  \int_compare:nNnT { #1 } < { 0 }{\translate{__gzt_bc}}
 }
 \DeclareCiteCommand{\citeinterviewee}{}{%
   \printnames{interviewee}%
@@ -3116,9 +3128,9 @@
 %% 
 %% This work consists of the file  gzt.dtx
 %%           and the derived files gzt.cls,
+%%                                 gztarticle.cls,
 %%                                 gzt.ins,
 %%                                 gzt.pdf,
-%%                                 gzt-doc.sty,
 %%                                 and a number of configuration files.
 %%
 %% End of file `gztarticle.cls'.
