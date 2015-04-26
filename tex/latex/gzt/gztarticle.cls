@@ -1147,7 +1147,9 @@
   \pagestyle{__gzt_inside_backcover_ps}%
   \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_inside_cover_geometry_tl}%
   \file_if_exist:nTF { \c__gzt_authors_instructions_file_tl } {%
-    \bool_if:NF {\g__gzt_no_inside_backcover_bool} {
+    \bool_if:NTF {\g__gzt_no_inside_backcover_bool} {
+      \hbox{} Blah
+    }{%
       \small%
       \begin{__gzt_inside_cover_tcb}[__gzt_tcb_inside_backcover_style]
         % \small%
@@ -1171,11 +1173,9 @@
         \end{description}
         \g__gzt_font_designer_text_tl
       \end{__gzt_inside_cover_tcb}
-    }{%
-      \hbox{}
     }
   }{%
-    \hbox{}
+    \hbox{} Blih
   }
   \bool_gset_false:N \g__gzt_inside_backcover_bool
 }
@@ -2322,7 +2322,7 @@
   \textsc{
     \int_to_roman:n {#1}
   }%
-  \int_compare:nNnTF { #1 } > { 1 }{\ieme}{\ier}\nobreakspace si\`ecle%
+  \int_compare:nNnTF { #1 } > { 1 }{\ieme}{\ier} si\`ecle%
 }
 \DeclareCiteCommand{\citeinterviewee}{}{%
   \printnames{interviewee}%
