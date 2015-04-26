@@ -2982,7 +2982,9 @@ This work consists of the file  gzt.dtx
   \pagestyle{@@_inside_backcover_ps}%
   \exp_after:wN\newgeometry\exp_after:wN{\c_@@_inside_cover_geometry_tl}%
   \file_if_exist:nTF { \c_@@_authors_instructions_file_tl } {%
-    \bool_if:NF {\g_@@_no_inside_backcover_bool} {
+    \bool_if:NTF {\g_@@_no_inside_backcover_bool} {
+      \hbox{}
+    }{%
       \small%
       \begin{_@@_inside_cover_tcb}[_@@_tcb_inside_backcover_style]
         % \small%
@@ -3006,8 +3008,6 @@ This work consists of the file  gzt.dtx
         \end{description}
         \g_@@_font_designer_text_tl
       \end{_@@_inside_cover_tcb}
-    }{%
-      \hbox{}
     }
   }{%
     \hbox{}
