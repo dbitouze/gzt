@@ -1277,8 +1277,9 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_frontcover_header_string_tl {
   \l_@@_uppercased_date_format\displaydate{@@_date}
-  \nobreakspace
-  \textendash{}\nobreakspace
+  \space
+  \textendash{}
+  \space
   \No\int_use:N\g_@@_issue_number_int%
 }
 %    \end{macrocode}
@@ -1411,16 +1412,16 @@ This work consists of the file  gzt.dtx
 \tl_const:Nn \c_@@_footer_string_tl {
   \c_@@_footer_size_font_tl
   \textcolor{@@_smf_number_color}{\c_@@_smf_short_string_tl}
-  \nobreakspace
+  \space
   \textcolor{@@_date_color}{
-    \textendash{}\nobreakspace
+    \textendash{}\space
     \MakeTextUppercase{\c_@@_journal_short_title_string_tl}
 %<class>    \bool_if:nF { \g_@@_inside_frontcover_bool || \g_@@_backmatter_bool }
 %<class>    {
-%<class>      \nobreakspace\textendash{}\nobreakspace
+%<class>      \space\textendash{}\space
 %<class>      \l_@@_uppercased_date_format\displaydate{@@_date}
-%<class>      \nobreakspace
-%<class>      \textendash{}\nobreakspace
+%<class>      \space
+%<class>      \textendash{}\space
 %<class>      \textcolor{@@_smf_number_color}{\No\int_use:N\g_@@_issue_number_int}
 %<class>    }
   }
@@ -4633,11 +4634,11 @@ This work consists of the file  gzt.dtx
   new/blend into/tables/.style={%
     use counter*=table,%
     list inside=lot,
-    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@table\nobreakspace\textendash{}\nobreakspace}}}},%
+    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@table\space\textendash{}\space}}}},%
   new/blend into/figures/.style={%
     use counter*=figure,%
     list inside=lof,
-    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure\nobreakspace\textendash{}\nobreakspace}}}},%
+    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure\space\textendash{}\space}}}},%
 }
 %    \end{macrocode}
 %
