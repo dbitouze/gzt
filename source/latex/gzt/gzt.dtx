@@ -2917,12 +2917,17 @@ This work consists of the file  gzt.dtx
     \tcblower
     \begin{tabular}{@{}m{.75\c_@@_inside_cover_box_width_dim}@{}m{.2\c_@@_inside_cover_box_width_dim-2\tabcolsep}@{}}
       \begin{description}[leftmargin=1em]
-      \item[\c_@@_editorial_secretariat_string_tl] \ \par%
-        \l_@@_journal_publisher_tl\par%
+      \item[\c_@@_editorial_secretariat_string_tl{}~:] \ \par%
+        \l_@@_journal_publisher_tl%
+        % \par%
+        \space\textendash{}\space%
+        \@@_display_people_by_role:n { secretary }\par
         \l_@@_journal_address_tl\par%
         \c_@@_phone_string_tl{}~:~\l_@@_journal_phone_tl{} \space\textendash{}\space
         \c_@@_fax_string_tl{}~:~\l_@@_journal_fax_tl\par%
-        \href{mailto:\l_@@_journal_email_tl}{\nolinkurl{\l_@@_journal_email_tl}}\newline%
+        \href{mailto:\l_@@_journal_email_tl}{\nolinkurl{\l_@@_journal_email_tl}}%
+        % \newline%
+        \space\textendash{}\space
         \url{\l_@@_journal_url_tl}
       \item[\c_@@_publishingdirector_string_tl{}~:]
         \@@_display_people_by_role:n { president }
@@ -3087,6 +3092,10 @@ This work consists of the file  gzt.dtx
 \NewDocumentCommand \graphicdesigner {ommm}
 {
   \_@@_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{graphicdesigner}{}
+}
+\NewDocumentCommand \secretary {ommm}
+{
+  \_@@_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{secretary}{}
 }
 % \NewDocumentCommand \frontcovercredit {om}
 % {
@@ -6441,6 +6450,10 @@ This work consists of the file  gzt.dtx
 %% Graphic designer
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \graphicdesigner{Lozanne, Nathalie}{}{n.lozanne@free.fr}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Secretary
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\secretary{Ropartz, Claire}{}{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LaTeX class designer (and maintainer(s))
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
