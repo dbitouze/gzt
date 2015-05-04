@@ -2990,7 +2990,7 @@ This work consists of the file  gzt.dtx
   \bool_gset_true:N \g_@@_inside_backcover_bool%
   \pagestyle{@@_inside_backcover_ps}%
   \exp_after:wN\newgeometry\exp_after:wN{\c_@@_inside_cover_geometry_tl}%
-  \file_if_exist:nTF { \c_@@_authors_instructions_file_tl } {%
+  % \file_if_exist:nT { \c_@@_authors_instructions_file_tl } {%
     \bool_if:NTF {\g_@@_no_inside_backcover_bool} {
       \hbox{}
     }{%
@@ -3002,12 +3002,14 @@ This work consists of the file  gzt.dtx
         % im
         % \fi
         % paire.\par{}
-        % \begin{multicols}{2}
-        %   \setlength{\columnsep}{1mm}
-        \file_input:n {\c_@@_authors_instructions_file_tl}
-        % \end{multicols}
-        % \setlength{\columnseprule}{1pt}
-        \tcblower
+        \file_if_exist:nT { \c_@@_authors_instructions_file_tl } {%
+          % \begin{multicols}{2}
+          %   \setlength{\columnsep}{1mm}
+          \file_input:n {\c_@@_authors_instructions_file_tl}
+          % \end{multicols}
+          % \setlength{\columnseprule}{1pt}
+          \tcblower
+        }
         \begin{description}[leftmargin=1em]
         \item[\c_@@_latexclass_string_tl{}~:]
           \@@_display_people_by_role:n { classdesigner }
@@ -3018,9 +3020,9 @@ This work consists of the file  gzt.dtx
         \g_@@_font_designer_text_tl
       \end{_@@_inside_cover_tcb}
     }
-  }{%
-    \hbox{}
-  }
+  % }{%
+  %   \hbox{}
+  % }
   \bool_gset_false:N \g_@@_inside_backcover_bool
 }
 %    \end{macrocode}
@@ -6036,7 +6038,9 @@ This work consists of the file  gzt.dtx
   _@@_tcb_inside_backcover_style/.style={%
     _@@_tcb_inside_cover_style,
     enlarge~left~by=\c_@@_inside_cover_offset_dim,
-    title=\c_@@_authors_instructions_string_tl
+    title=\file_if_exist:nT { \c_@@_authors_instructions_file_tl } {%
+      \c_@@_authors_instructions_string_tl
+    }
   }
 }
 \tcbset{%
