@@ -42,12 +42,8 @@ whereas 'pdflatex gzt.tex' will typeset the gztarticle.cls' documentation.
 
 Typesetting the documentation also requires a number of packages in addition to
 those needed to use the gzt class.  To compile the documentation without error,
-you will need, among others:
-
-- my personal package denisbdoc.sty for documenting packages which can be found
-  on CTAN,
-- a modified version of tcbdocumentation.code.tex (from tcolorbox package) which
-  is provided with this bundle.
+you will need, among others, my personal package denisbdoc.sty for documenting
+packages which can be found on CTAN.
 %</readme>
 %<*internal>
 \fi
@@ -998,10 +994,10 @@ This work consists of the file  gzt.dtx
 \RequirePackage[numbered]{bookmark}%
 %    \end{macrocode}
 %
-% \item Create glossaries and lists of acronyms:
-%    \begin{macrocode}
-\RequirePackage[nowarn]{glossaries}%
-%    \end{macrocode}
+% % \item Create glossaries and lists of acronyms:
+% %    \begin{macrocode}
+% \RequirePackage[nowarn]{glossaries}%
+% %    \end{macrocode}
 %
 % \item Intelligent cross-referencing:
 %    \begin{macrocode}
@@ -1009,16 +1005,16 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % \end{enumerate}
 %
-% Setings of the glossaries and acronyms.
-%    \begin{macrocode}
-\makeglossaries
-% \loadglsentries{../glossaries/glossary}
-% \loadglsentries{../glossaries/acronyms}
-%
-\setglossarystyle{indexhypergroup}
-\setacronymstyle{long-sc-short}
-\glsaddall
-%    \end{macrocode}
+% % Setings of the glossaries and acronyms.
+% %    \begin{macrocode}
+% \makeglossaries
+% % \loadglsentries{../glossaries/glossary}
+% % \loadglsentries{../glossaries/acronyms}
+% %
+% \setglossarystyle{indexhypergroup}
+% \setacronymstyle{long-sc-short}
+% \glsaddall
+% %    \end{macrocode}
 %
 %    \begin{macrocode}
 %</class|class-article>
@@ -1224,11 +1220,11 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_publishingdirector_string_tl {Directeur~de~la~publication}
 %    \end{macrocode}
-% For the \gls{issn}.
+% For the \textsc{issn}.
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_issn_string_tl {\textsc{issn}}
 %    \end{macrocode}
-% For the \gls{isbn}.
+% For the \textsc{isbn}.
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_isbn_string_tl {\textsc{isbn}}
 %    \end{macrocode}
@@ -1400,9 +1396,10 @@ This work consists of the file  gzt.dtx
 % \end{macro}
 % \end{macro}
 %
-% For the long and short forms of \acrshort*{smf}.
+% For the long and short forms of \textsc{smf}.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_smf_short_string_tl {SMF}
+\tl_const:Nn \c_@@_smf_short_string_tl {\textsc{smf}}
+\tl_const:Nn \c_@@_smf_short_pdf_string_tl {SMF}
 \tl_const:Nn \c_@@_smf_string_tl {Soci\'et\'e~Math\'ematique~de~France}
 %    \end{macrocode}
 % For the long and short forms of \enquote{c'est-à-dire} and
@@ -1433,7 +1430,7 @@ This work consists of the file  gzt.dtx
   }
 }
 %    \end{macrocode}
-% For the name of the file containing the \gls{smf} logo.
+% For the name of the file containing the \textsc{smf} logo.
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_smf_logo_file_string_tl {logo_SMF}
 %    \end{macrocode}
@@ -1461,20 +1458,20 @@ This work consists of the file  gzt.dtx
 \tl_const:Nn \c_@@_draftwatermark_string_tl {draft}
 %    \end{macrocode}
 %
-% \begin{macro}{smf}
-% \begin{macro}{issn}
-% \begin{macro}{isbn}
-% \begin{macro}{cv}
-%    \begin{macrocode}
-\newacronym{smf}{smf}{\c_@@_smf_string_tl}%
-\newacronym{issn}{issn}{International Standard Serial Number}%
-\newacronym{isbn}{isbn}{International Standard Book Number}%
-\newacronym{cv}{cv}{curriculum vit\ae}%
+% % \begin{macro}{smf}
+% % \begin{macro}{issn}
+% % \begin{macro}{isbn}
+% % \begin{macro}{cv}
+% %    \begin{macrocode}
+% \newacronym{smf}{smf}{\c_@@_smf_string_tl}%
+% \newacronym{issn}{issn}{International Standard Serial Number}%
+% \newacronym{isbn}{isbn}{International Standard Book Number}%
+% \newacronym{cv}{cv}{curriculum vit\ae}%
 %    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
+% % \end{macro}
+% % \end{macro}
+% % \end{macro}
+% % \end{macro}
 %
 % \subsection{Booleans}
 %
@@ -2469,25 +2466,26 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 %
-% We define some token lists for the long and short forms of \acrshort*{smf}.
+% We define some token lists for the long and short forms of \textsc{smf}.
 %    \begin{macrocode}
 \tl_new:N \l_@@_smf_short_string_tl
 \tl_new:N \l_@@_smf_string_tl
 \tl_set:Nn \l_@@_smf_short_string_tl {
-  \cs_if_exist:cTF {texorpdfstring}
-  {
-    \texorpdfstring{\acrshort*{smf}}{\c_@@_smf_short_string_tl}
-  }{%
-    \acrshort*{smf}
-  }%
+  % \cs_if_exist:cTF {texorpdfstring}
+  % {
+    \texorpdfstring{\c_@@_smf_short_string_tl}{\c_@@_smf_short_pdf_string_tl}
+  % }{%
+  %   \c_@@_smf_short_pdf_string_tl
+  % }%
 }
 \tl_set:Nn \l_@@_smf_string_tl {
-  \cs_if_exist:cTF {texorpdfstring}
-  {
-    \texorpdfstring{\acrlong*{smf}}{\c_@@_smf_string_tl}
-  }{%
-    \acrlong*{smf}
-  }%
+  % \cs_if_exist:cTF {texorpdfstring}
+  % {
+  % \texorpdfstring{Soci\'et\'e~Math\'ematique~de~France}{\c_@@_smf_string_tl}
+  \c_@@_smf_string_tl
+  % }{%
+  %   \acrlong*{smf}
+  % }%
 }
 %    \end{macrocode}
 %
@@ -3064,8 +3062,8 @@ This work consists of the file  gzt.dtx
 % \begin{macro}{\classmaintainer}
 % \begin{macro}{\graphicdesigner}
 %   We define some document-level commands that let the user specify
-%   respectively the editor(s) in chief, the editors, the (\gls{smf}) president,
-%   the class designer and maintainer(s), and the graphic designer.
+%   respectively the editor(s) in chief, the editors, the (\textsc{smf})
+%   president, the class designer and maintainer(s), and the graphic designer.
 %
 %   For the editor(s) in chief, we increment the "\g_@@_editors_in_chief_int"
 %   counter in order to use singular or plural form of the corresponding string
@@ -3744,7 +3742,7 @@ This work consists of the file  gzt.dtx
 % We force all the previous floats to be processed before a new article starts
 % (this is already done in "bibliography_minibiographies_acknowledgments"
 % environment but is repeated here if what is before provides floats but neither
-% bibliography, \gls{cv} nor acknowledgments).
+% bibliography, \textsc{cv} nor acknowledgments).
 %    \begin{macrocode}
   \FloatBarrier%
 %    \end{macrocode}
@@ -4458,7 +4456,7 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \AtBeginDocument{%
   % \graphicspath{{\c_@@_issue_images_path_string_tl//}}
-  \glsdisablehyper
+  % \glsdisablehyper
   \g_@@_mainmatter_switch_tl
   % \bool_gset_false:N \g_@@_frontmatter_bool
   % \bool_gset_true:N \g_@@_mainmatter_bool
@@ -5083,7 +5081,7 @@ This work consists of the file  gzt.dtx
   }
 %    \end{macrocode}
 % We force all the previous floats to be processed no later on the page
-% following the beginning of the bibliography, \gls{cv} or
+% following the beginning of the bibliography, \textsc{cv} or
 % acknowledgments.
 %    \begin{macrocode}
   \FloatBarrier%
@@ -5129,7 +5127,7 @@ This work consists of the file  gzt.dtx
 % \begin{itemize}
 % \item beforehand quit the multicolumn environment and enter in the
 % "_@@_bibliography_tcbox" environment (which gives a special layout to
-% bibliographies, \glspl{cv} and acknowledgements),
+% bibliographies, \textsc{cv} and acknowledgements),
 % \item afterwards quit the "bibliography_minibiographies_acknowledgments" environment and enter in
 %   the multicolumn environment.
 % \end{itemize}
@@ -5141,7 +5139,7 @@ This work consists of the file  gzt.dtx
   }
 %    \end{macrocode}
 % We force all the previous floats to be processed no later on the page
-% following the beginning of the bibliography, \gls{cv} or
+% following the beginning of the bibliography, \textsc{cv} or
 % acknowledgments.
 %    \begin{macrocode}
 % \afterpage{%
@@ -6595,7 +6593,7 @@ This work consists of the file  gzt.dtx
     %     (titre, nom l'auteur, collection à laquelle il appartient, nom de
     %     l'éditeur, ville de la maison d'édition, année de la publication,
     %     nombre
-    %     de pages, \gls{isbn} et prix en euros ou en dollars).
+    %     de pages, \textsc{isbn} et prix en euros ou en dollars).
     %   \item Précisez à quel public (de quel niveau) s'adresse le livre.
     %   \item Vous êtes libre de dire ce que vous pensez (dans les limites de la
     %     politesse et de la correction). Le comité de rédaction se réserve la
