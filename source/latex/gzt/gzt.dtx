@@ -2511,6 +2511,18 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 %
+% We fix some strings for the PDF's metadata .
+%    \begin{macrocode}
+\tl_new:N \l_@@_pdftitle_string_tl
+\tl_new:N \l_@@_pdfauthor_string_tl
+\tl_set:Nn \l_@@_pdftile_string_tl {
+  \c_@@_journal_title_string_tl\space--\space{}N°\int_use:N\g_@@_issue_number_int
+}
+\tl_set:Nn \l_@@_pdfauthor_string_tl {
+  \l_@@_smf_string_tl
+}
+%    \end{macrocode}
+%
 % \section{Database for the articles' authors}
 %
 % For this, and thanks to \Pkg{datatool}, we create a database of
@@ -3127,8 +3139,12 @@ This work consists of the file  gzt.dtx
 % Its keys are set (only "number", "month" and "year" are relevant here).
 %    \begin{macrocode}
   \keys_set:nn { gzt/issuesetup } { #1 }
-  \hypersetup{pdftitle=\c_@@_journal_title_string_tl\space--\space{}N°\int_use:N\g_@@_issue_number_int}
-  \hypersetup{pdfauthor=\l_@@_smf_string_tl}
+%    \end{macrocode}
+%
+% We fix some of the PDF's metadata .
+%    \begin{macrocode}
+\hypersetup{pdftitle=\l_@@_pdftitle_string_tl}
+\hypersetup{pdfauthor=\l_@@_pdfauthor_string_tl}
 %    \end{macrocode}
 %
 % We use here the fact that, if the "number", "month" or "year" options are not
