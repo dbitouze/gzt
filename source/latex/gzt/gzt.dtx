@@ -1681,9 +1681,9 @@ This work consists of the file  gzt.dtx
 \dim_const:Nn \c_@@_topmargin_front_matter_dim   {
   \c_@@_topmargin_inside_cover_dim
 }
-\dim_const:Nn \c_@@_topmargin_backcover_dim {
-  \c_@@_topmargin_frontcover_dim
-}
+% \dim_const:Nn \c_@@_topmargin_backcover_dim {
+%   \c_@@_topmargin_frontcover_dim
+% }
 \dim_const:Nn \c_@@_headsep_dim     {  24mm}
 \dim_const:Nn \c_@@_headsep_frontcover_dim {
   \c_@@_headsep_dim
@@ -1719,8 +1719,10 @@ This work consists of the file  gzt.dtx
   (\c_@@_layoutwidth_dim - \c_@@_inside_cover_box_width_dim)/2
   % - \c_@@_adjustmargin_dim
 }
-\dim_const:Nn \c_@@_innermargin_backcover_dim { 2cm }
+\dim_const:Nn \c_@@_innermargin_backcover_dim { 10mm }
 \dim_const:Nn \c_@@_outermargin_backcover_dim { \c_@@_innermargin_backcover_dim }
+\dim_const:Nn \c_@@_topmargin_backcover_dim { \c_@@_innermargin_backcover_dim }
+\dim_const:Nn \c_@@_bottommargin_backcover_dim { \c_@@_innermargin_backcover_dim }
 \dim_const:Nn \c_@@_frontcover_image_height_dim {  160mm}
 \dim_const:Nn \c_@@_radius_arc_dim { 85mm }%
 \dim_const:Nn \c_@@_frontmatter_headtext_xshift_dim { 19mm }%
@@ -1959,11 +1961,12 @@ This work consists of the file  gzt.dtx
   ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
   ,layoutoffset=\c_@@_layoutoffset_dim
   % ,bindingoffset=\c_@@_bindingoffset_dim
-  ,top=\c_@@_topmargin_dim-15mm%
-  ,headheight=\c_@@_headheight_dim
-  ,headsep=\c_@@_headsep_dim-18mm
-  ,bottom=\c_@@_botmargin_dim
-  ,footskip=\c_@@_footskip_dim
+  ,top=\c_@@_topmargin_backcover_dim%
+  % ,top=\c_@@_topmargin_dim-15mm%
+  % ,headheight=\c_@@_headheight_dim
+  % ,headsep=\c_@@_headsep_dim-18mm
+  ,bottom=\c_@@_bottommargin_backcover_dim
+  % ,footskip=\c_@@_footskip_dim
   ,inner=\c_@@_innermargin_backcover_dim
   ,outer=\c_@@_outermargin_backcover_dim
 }
