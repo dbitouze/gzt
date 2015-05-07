@@ -1372,6 +1372,9 @@ This work consists of the file  gzt.dtx
 % \tl_const:Nn \c_@@_books_rubric_string_tl {Recension}
 \tl_const:Nn \c_@@_books_rubric_string_tl {Livres}
 \tl_const:Nn \c_@@_latex_rubric_string_tl {Astuces~\LaTeX{}}
+\tl_const:Nn \c_@@_published_with_help_of_string_tl {Publi\'e~avec~le~concours~de~:}
+\tl_const:Nn \c_@@_advertisement_directory_string_tl {advertisement/}
+\tl_const:Nn \c_@@_advertisement_string_tl {Publicit\'e}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -4893,16 +4896,39 @@ This work consists of the file  gzt.dtx
 %
 %    \begin{macrocode}
 \newpagestyle{@@_advertisement_ps}[]{%
-  \sethead
+  \widenhead{\c_zero_dim}{\c_zero_dim}
+  \sethead%
+  [
+  \tikz[remember~picture,overlay] {\g_@@_mainmatter_evenpage_headrule_tl}
+  ]%
+  [%
+  \adjustbox{raise={\c_@@_header_yshift_dim}{\height}}{%
+    \large\bfseries\scshape\c_@@_advertisement_string_tl%
+    }%
+    ]%
+  []%
   {}%
-  {}%
-  {}%
+  {%
+    \adjustbox{raise={\c_@@_header_yshift_dim}{\height}}{%
+      \large\bfseries\scshape\c_@@_advertisement_string_tl%
+    }
+  }%
+  {
+    \tikz[remember~picture,overlay] {\g_@@_mainmatter_oddpage_headrule_tl}
+  }%
   %
   \setfoot%
+  [\c_@@_footer_size_font_tl\thepage]%
+  [%
+    \uppercase{\c_@@_footer_string_tl}
+  ]%
+  []%
   {}%
-  {}%
-  {}%
-}%
+  {%
+    \uppercase{\c_@@_footer_string_tl}%
+  }%
+  {\c_@@_footer_size_font_tl\thepage}%
+}
 %    \end{macrocode}
 %
 % \subsection{Inside back cover page style}
@@ -5727,10 +5753,16 @@ This work consists of the file  gzt.dtx
 % customizations if any and, if necessary open and close the "refsection" and
 % "multicols" environments.
 %    \begin{macrocode}
+\cs_generate_variant:Nn \tl_if_eq:nnT { NnT }
 \NewDocumentCommand \gztinput { m m } {%
   \startcustomization%
   \bool_if:NF {\g_@@_refsection_bool} {
     \begin{refsection}
+    }
+    \tl_if_in:NnT
+    { \c_@@_advertisement_directory_string_tl } { #1 } {%
+      \newpage
+      \thispagestyle{@@_advertisement_ps}
     }
     \inputfrom{#1}{#2}
     \bool_if:NT {\g_@@_multicols_bool} {
