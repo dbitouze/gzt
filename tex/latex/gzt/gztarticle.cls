@@ -61,7 +61,7 @@
 \ExplSyntaxOn
 \ProvidesExplClass
   {gztarticle}
-  {2015/04/26}
+  {2015/05/02}
   {0.9}
   {
     SMF class for the French journal^^J
@@ -241,6 +241,9 @@
 \tl_const:Nn \c__gzt_tribute_rubric_string_tl {Carnet}
 \tl_const:Nn \c__gzt_books_rubric_string_tl {Livres}
 \tl_const:Nn \c__gzt_latex_rubric_string_tl {Astuces~\LaTeX{}}
+\tl_const:Nn \c__gzt_published_with_help_of_string_tl {Publi\'e~avec~le~concours~de~:}
+\tl_const:Nn \c__gzt_advertisement_directory_string_tl {advertisement/}
+\tl_const:Nn \c__gzt_advertisement_string_tl {Publicit\'e}
 \tl_const:Nn \c__gzt_smf_short_string_tl {SMF}
 \tl_const:Nn \c__gzt_smf_string_tl {Soci\'et\'e~Math\'ematique~de~France}
 \tl_const:Nn \c__gzt_cad_short_string_tl {c.-\`a-d.}
@@ -370,9 +373,6 @@
 \dim_const:Nn \c__gzt_topmargin_front_matter_dim   {
   \c__gzt_topmargin_inside_cover_dim
 }
-\dim_const:Nn \c__gzt_topmargin_backcover_dim {
-  \c__gzt_topmargin_frontcover_dim
-}
 \dim_const:Nn \c__gzt_headsep_dim     {  24mm}
 \dim_const:Nn \c__gzt_headsep_frontcover_dim {
   \c__gzt_headsep_dim
@@ -402,8 +402,10 @@
   (\c__gzt_layoutwidth_dim - \c__gzt_inside_cover_box_width_dim)/2
   % - \c__gzt_adjustmargin_dim
 }
-\dim_const:Nn \c__gzt_innermargin_backcover_dim { 2cm }
+\dim_const:Nn \c__gzt_innermargin_backcover_dim { 10mm }
 \dim_const:Nn \c__gzt_outermargin_backcover_dim { \c__gzt_innermargin_backcover_dim }
+\dim_const:Nn \c__gzt_topmargin_backcover_dim { \c__gzt_innermargin_backcover_dim }
+\dim_const:Nn \c__gzt_bottommargin_backcover_dim { \c__gzt_innermargin_backcover_dim }
 \dim_const:Nn \c__gzt_frontcover_image_height_dim {  160mm}
 \dim_const:Nn \c__gzt_radius_arc_dim { 85mm }%
 \dim_const:Nn \c__gzt_frontmatter_headtext_xshift_dim { 19mm }%
@@ -549,11 +551,12 @@
   ,layoutsize={\c__gzt_layoutwidth_dim,\c__gzt_layoutheight_dim}
   ,layoutoffset=\c__gzt_layoutoffset_dim
   % ,bindingoffset=\c__gzt_bindingoffset_dim
-  ,top=\c__gzt_topmargin_dim-15mm%
-  ,headheight=\c__gzt_headheight_dim
-  ,headsep=\c__gzt_headsep_dim-18mm
-  ,bottom=\c__gzt_botmargin_dim
-  ,footskip=\c__gzt_footskip_dim
+  ,top=\c__gzt_topmargin_backcover_dim%
+  % ,top=\c__gzt_topmargin_dim-15mm%
+  % ,headheight=\c__gzt_headheight_dim
+  % ,headsep=\c__gzt_headsep_dim-18mm
+  ,bottom=\c__gzt_bottommargin_backcover_dim
+  % ,footskip=\c__gzt_footskip_dim
   ,inner=\c__gzt_innermargin_backcover_dim
   ,outer=\c__gzt_outermargin_backcover_dim
 }
@@ -709,7 +712,7 @@
 \colorlet{__gzt_bibliography_minibios_acknowledgments_bg_color}{black!10}
 \colorlet{__gzt_headrule_color}{__gzt_generic_light_color!65}
 \colorlet{__gzt_circlerule_color}{__gzt_generic_dark_color!65}
-\colorlet{__gzt_frontmatter_text_color}{__gzt_generic_light_color}
+\colorlet{__gzt_frontmatter_text_color}{black!75}
 \colorlet{__gzt_people_color}{__gzt_generic_dark_color}
 \colorlet{__gzt_arrayrule_color}{__gzt_generic_dark_color}
 \colorlet{__gzt_acknowledgements_color}{__gzt_generic_dark_color}
@@ -1086,12 +1089,17 @@
     \tcblower
     \begin{tabular}{@{}m{.75\c__gzt_inside_cover_box_width_dim}@{}m{.2\c__gzt_inside_cover_box_width_dim-2\tabcolsep}@{}}
       \begin{description}[leftmargin=1em]
-      \item[\c__gzt_editorial_secretariat_string_tl] \ \par%
-        \l__gzt_journal_publisher_tl\par%
+      \item[\c__gzt_editorial_secretariat_string_tl{}~:] \ \par%
+        \l__gzt_journal_publisher_tl%
+        % \par%
+        \space\textendash{}\space%
+        \__gzt_display_people_by_role:n { secretary }\par
         \l__gzt_journal_address_tl\par%
         \c__gzt_phone_string_tl{}~:~\l__gzt_journal_phone_tl{} \space\textendash{}\space
         \c__gzt_fax_string_tl{}~:~\l__gzt_journal_fax_tl\par%
-        \href{mailto:\l__gzt_journal_email_tl}{\nolinkurl{\l__gzt_journal_email_tl}}\newline%
+        \href{mailto:\l__gzt_journal_email_tl}{\nolinkurl{\l__gzt_journal_email_tl}}%
+        % \newline%
+        \space\textendash{}\space
         \url{\l__gzt_journal_url_tl}
       \item[\c__gzt_publishingdirector_string_tl{}~:]
         \__gzt_display_people_by_role:n { president }
@@ -1148,7 +1156,7 @@
   \bool_gset_true:N \g__gzt_inside_backcover_bool%
   \pagestyle{__gzt_inside_backcover_ps}%
   \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_inside_cover_geometry_tl}%
-  \file_if_exist:nTF { \c__gzt_authors_instructions_file_tl } {%
+  % \file_if_exist:nT { \c__gzt_authors_instructions_file_tl } {%
     \bool_if:NTF {\g__gzt_no_inside_backcover_bool} {
       \hbox{}
     }{%
@@ -1160,12 +1168,14 @@
         % im
         % \fi
         % paire.\par{}
-        % \begin{multicols}{2}
-        %   \setlength{\columnsep}{1mm}
-        \file_input:n {\c__gzt_authors_instructions_file_tl}
-        % \end{multicols}
-        % \setlength{\columnseprule}{1pt}
-        \tcblower
+        \file_if_exist:nT { \c__gzt_authors_instructions_file_tl } {%
+          % \begin{multicols}{2}
+          %   \setlength{\columnsep}{1mm}
+          \file_input:n {\c__gzt_authors_instructions_file_tl}
+          % \end{multicols}
+          % \setlength{\columnseprule}{1pt}
+          \tcblower
+        }
         \begin{description}[leftmargin=1em]
         \item[\c__gzt_latexclass_string_tl{}~:]
           \__gzt_display_people_by_role:n { classdesigner }
@@ -1176,9 +1186,9 @@
         \g__gzt_font_designer_text_tl
       \end{__gzt_inside_cover_tcb}
     }
-  }{%
-    \hbox{}
-  }
+  % }{%
+  %   \hbox{}
+  % }
   \bool_gset_false:N \g__gzt_inside_backcover_bool
 }
 \tl_new:N \g__gzt_display_backcover_tl%
@@ -1221,6 +1231,10 @@
 \NewDocumentCommand \graphicdesigner {ommm}
 {
   \__gzt_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{graphicdesigner}{}
+}
+\NewDocumentCommand \secretary {ommm}
+{
+  \__gzt_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{secretary}{}
 }
 \NewDocumentCommand \issuesetup { m } {
   \keys_set:nn { gzt/issuesetup } { #1 }
@@ -2179,16 +2193,39 @@
   {\c__gzt_footer_size_font_tl\thepage}%
 }%
 \newpagestyle{__gzt_advertisement_ps}[]{%
-  \sethead
+  \widenhead{\c_zero_dim}{\c_zero_dim}
+  \sethead%
+  [
+  \tikz[remember~picture,overlay] {\g__gzt_mainmatter_evenpage_headrule_tl}
+  ]%
+  [%
+  \adjustbox{raise={\c__gzt_header_yshift_dim}{\height}}{%
+    \large\bfseries\scshape\c__gzt_advertisement_string_tl%
+    }%
+    ]%
+  []%
   {}%
-  {}%
-  {}%
+  {%
+    \adjustbox{raise={\c__gzt_header_yshift_dim}{\height}}{%
+      \large\bfseries\scshape\c__gzt_advertisement_string_tl%
+    }
+  }%
+  {
+    \tikz[remember~picture,overlay] {\g__gzt_mainmatter_oddpage_headrule_tl}
+  }%
   %
   \setfoot%
+  [\c__gzt_footer_size_font_tl\thepage]%
+  [%
+    \uppercase{\c__gzt_footer_string_tl}
+  ]%
+  []%
   {}%
-  {}%
-  {}%
-}%
+  {%
+    \uppercase{\c__gzt_footer_string_tl}%
+  }%
+  {\c__gzt_footer_size_font_tl\thepage}%
+}
 \newpagestyle{__gzt_inside_backcover_ps}[]{%
   \sethead%
   [
@@ -2646,7 +2683,7 @@
       \def\abx@str{abx@sstr}%
     \end{tcolorbox}
     \bigskip
-    Publi\'e~avec~le~concours~de~:~\citecopublisher{\g__gzt_bookadvertisement_bibkey_tl}.
+    \c__gzt_published_with_help_of_string_tl~\citecopublisher{\g__gzt_bookadvertisement_bibkey_tl}.
     \par
     \bigskip
     \citefrenchabstract{\g__gzt_bookadvertisement_bibkey_tl}
@@ -2875,7 +2912,9 @@
   __gzt_tcb_inside_backcover_style/.style={%
     __gzt_tcb_inside_cover_style,
     enlarge~left~by=\c__gzt_inside_cover_offset_dim,
-    title=\c__gzt_authors_instructions_string_tl
+    title=\file_if_exist:nT { \c__gzt_authors_instructions_file_tl } {%
+      \c__gzt_authors_instructions_string_tl
+    }
   }
 }
 \tcbset{%
@@ -2973,8 +3012,6 @@
 \declaretheoremstyle[spaceabove=3pt,notefont=\bfseries,bodyfont=\itshape]{theorem}
 \declaretheoremstyle[spaceabove=3pt,notefont=\bfseries,bodyfont=\normalfont]{definition}
 \declaretheoremstyle[spaceabove=3pt,bodyfont=\normalfont,qed=\ensuremath{\qedsymbol},headfont=\normalfont\itshape,numbered=no]{proof}
-\tl_new:N \l__gzt_apriori_newtheorem_englishtitle_tl
-\cs_generate_variant:Nn \tl_if_eq:nnF { VVF }
 \RenewDocumentCommand \newtheorem { O{} m }
 {
   \tl_clear:N \l__gzt_newtheorem_style_tl
