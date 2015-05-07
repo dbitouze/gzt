@@ -5690,7 +5690,7 @@ This work consists of the file  gzt.dtx
       \def\abx@str{abx@sstr}%
     \end{tcolorbox}
     \bigskip
-    Publi\'e~avec~le~concours~de~:~\citecopublisher{\g_@@_bookadvertisement_bibkey_tl}.
+    \c_@@_published_with_help_of_string_tl~\citecopublisher{\g_@@_bookadvertisement_bibkey_tl}.
     \par
     \bigskip
     \citefrenchabstract{\g_@@_bookadvertisement_bibkey_tl}
@@ -6267,8 +6267,6 @@ This work consists of the file  gzt.dtx
 % Then, we define a public command, similar to "\newtheorem", based on
 % "\_@@_new_theorem", that lets the user define his own theorems:
 %    \begin{macrocode}
-\tl_new:N \l_@@_apriori_newtheorem_englishtitle_tl
-\cs_generate_variant:Nn \tl_if_eq:nnF { VVF }
 \RenewDocumentCommand \newtheorem { O{} m }
 {
   \tl_clear:N \l_@@_newtheorem_style_tl
