@@ -97,6 +97,7 @@
 \RequirePackage{zref-xr}%
 \RequirePackage{ragged2e}%
 \RequirePackage{xspace}%
+\RequirePackage{textcase}%
 \RequirePackage{epigraph}%
 \RequirePackage[autostyle]{csquotes}%
 \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%

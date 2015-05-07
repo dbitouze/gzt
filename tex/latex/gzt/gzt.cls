@@ -135,6 +135,7 @@
 \RequirePackage{zref-xr}%
 \RequirePackage{ragged2e}%
 \RequirePackage{xspace}%
+\RequirePackage{textcase}%
 \RequirePackage{epigraph}%
 \RequirePackage[autostyle]{csquotes}%
 \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
@@ -2206,7 +2207,7 @@
       \g__gzt_display_inside_frontcover_tl
     }
     \bool_if:NT {\g__gzt_cover_bool} {
-      \end{document}
+      % \end{document}
     }
   }
 }
