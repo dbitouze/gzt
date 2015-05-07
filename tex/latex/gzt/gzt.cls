@@ -174,12 +174,7 @@
 \RequirePackage{placeins}%
 \RequirePackage[hidelinks,hypertexnames=false]{hyperref}%
 \RequirePackage[numbered]{bookmark}%
-\RequirePackage[nowarn]{glossaries}%
 \RequirePackage{cleveref}%
-\makeglossaries
-\setglossarystyle{indexhypergroup}
-\setacronymstyle{long-sc-short}
-\glsaddall
 \pdftex_if_engine:T
   {
     \renewcommand\familydefault{\sfdefault}
@@ -285,7 +280,8 @@
 \tl_const:Nn \c__gzt_published_with_help_of_string_tl {Publi\'e~avec~le~concours~de~:}
 \tl_const:Nn \c__gzt_advertisement_directory_string_tl {advertisement/}
 \tl_const:Nn \c__gzt_advertisement_string_tl {Publicit\'e}
-\tl_const:Nn \c__gzt_smf_short_string_tl {SMF}
+\tl_const:Nn \c__gzt_smf_short_string_tl {\textsc{smf}}
+\tl_const:Nn \c__gzt_smf_short_pdf_string_tl {SMF}
 \tl_const:Nn \c__gzt_smf_string_tl {Soci\'et\'e~Math\'ematique~de~France}
 \tl_const:Nn \c__gzt_cad_short_string_tl {c.-\`a-d.}
 \tl_const:Nn \c__gzt_cad_string_tl {c'est-\`a-dire}
@@ -316,10 +312,6 @@
 \tl_const:Nn \c__gzt_interview_title_string_tl {En~apart\'e~avec~}
 \tl_const:Nn \c__gzt_aside_string_tl {--}
 \tl_const:Nn \c__gzt_draftwatermark_string_tl {draft}
-\newacronym{smf}{smf}{\c__gzt_smf_string_tl}%
-\newacronym{issn}{issn}{International Standard Serial Number}%
-\newacronym{isbn}{isbn}{International Standard Book Number}%
-\newacronym{cv}{cv}{curriculum vit\ae}%
 \bool_new:N \g__gzt_frontcover_bool
 \bool_new:N \g__gzt_inside_frontcover_bool
 \bool_new:N \g__gzt_inside_backcover_bool
@@ -811,20 +803,21 @@
 \tl_new:N \l__gzt_smf_short_string_tl
 \tl_new:N \l__gzt_smf_string_tl
 \tl_set:Nn \l__gzt_smf_short_string_tl {
-  \cs_if_exist:cTF {texorpdfstring}
-  {
-    \texorpdfstring{\acrshort*{smf}}{\c__gzt_smf_short_string_tl}
-  }{%
-    \acrshort*{smf}
-  }%
+  % \cs_if_exist:cTF {texorpdfstring}
+  % {
+    \texorpdfstring{\c__gzt_smf_short_string_tl}{\c__gzt_smf_short_pdf_string_tl}
+  % }{%
+  %   \c__gzt_smf_short_pdf_string_tl
+  % }%
 }
 \tl_set:Nn \l__gzt_smf_string_tl {
-  \cs_if_exist:cTF {texorpdfstring}
-  {
-    \texorpdfstring{\acrlong*{smf}}{\c__gzt_smf_string_tl}
-  }{%
-    \acrlong*{smf}
-  }%
+  % \cs_if_exist:cTF {texorpdfstring}
+  % {
+  % \texorpdfstring{Soci\'et\'e~Math\'ematique~de~France}{\c__gzt_smf_string_tl}
+  \c__gzt_smf_string_tl
+  % }{%
+  %   \acrlong*{smf}
+  % }%
 }
 \tl_new:N \l__gzt_gzt_short_string_tl
 \tl_new:N \l__gzt_gzt_string_tl
@@ -843,6 +836,14 @@
   }{%
     \emph{\c__gzt_journal_title_string_tl}
   }%
+}
+\tl_new:N \l__gzt_pdftitle_string_tl
+\tl_new:N \l__gzt_pdfauthor_string_tl
+\tl_set:Nn \l__gzt_pdftile_string_tl {
+  \c__gzt_journal_title_string_tl\space--\space{}N°\int_use:N\g__gzt_issue_number_int
+}
+\tl_set:Nn \l__gzt_pdfauthor_string_tl {
+  \l__gzt_smf_string_tl
 }
 \DTLnewdb{__gzt_authors}
 \cs_new_protected:Nn \__gzt_authors:nnnnnn
@@ -1287,8 +1288,8 @@
 }
 \NewDocumentCommand \issuesetup { m } {
   \keys_set:nn { gzt/issuesetup } { #1 }
-  \hypersetup{pdftitle=\c__gzt_journal_title_string_tl\space--\space{}N°\int_use:N\g__gzt_issue_number_int}
-  \hypersetup{pdfauthor=\l__gzt_smf_string_tl}
+\hypersetup{pdftitle=\l__gzt_pdftitle_string_tl}
+\hypersetup{pdfauthor=\l__gzt_pdfauthor_string_tl}
   \int_compare:nNnT {\g__gzt_issue_number_int}<{1}
   {
     \int_set:Nn \g__gzt_issue_number_int { \c__gzt_first_issue_number_int }
@@ -2167,7 +2168,7 @@
 {}
 \AtBeginDocument{%
   % \graphicspath{{\c__gzt_issue_images_path_string_tl//}}
-  \glsdisablehyper
+  % \glsdisablehyper
   \g__gzt_mainmatter_switch_tl
   % \bool_gset_false:N \g__gzt_frontmatter_bool
   % \bool_gset_true:N \g__gzt_mainmatter_bool
@@ -3088,11 +3089,8 @@
   \bool_if:NF {\g__gzt_refsection_bool} {
     \begin{refsection}
     }
-    % \tl_if_in:NnT
-    \tl_if_eq:NnT
+    \tl_if_in:NnT
     { \c__gzt_advertisement_directory_string_tl } { #1 } {%
-      % \message{^^J^^JDirectory:~#1}
-      % \tl_show:N \c__gzt_advertisement_directory_string_tl
       \newpage
       \thispagestyle{__gzt_advertisement_ps}
     }
