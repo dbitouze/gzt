@@ -64,9 +64,9 @@
   {2015/05/02}
   {0.9}
   {
-    SMF class for the French journal^^J
-    "La Gazette des Math'ematiciens".
-^^J    (Author version.)
+    SMF~class~for~the~French~journal^^J
+    "La~Gazette~des~Math'ematiciens".
+~(Author~version.)
   }
 \NeedsTeXFormat{LaTeX2e}
 \PassOptionsToClass{openany,english,french}{book}

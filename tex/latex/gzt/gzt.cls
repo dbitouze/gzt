@@ -84,8 +84,8 @@
   {2015/05/02}
   {0.9}
   {
-    SMF class for the French journal^^J
-    "La Gazette des Math'ematiciens".
+    SMF~class~for~the~French~journal^^J
+    "La~Gazette~des~Math'ematiciens".
   }
 \NeedsTeXFormat{LaTeX2e}
 \dim_const:Nn \c__gzt_pagegrid_dim { 1mm}
