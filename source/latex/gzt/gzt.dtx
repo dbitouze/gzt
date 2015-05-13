@@ -2399,9 +2399,11 @@ This work consists of the file  gzt.dtx
 \colorlet{@@_generic_light_color}{black!50}
 \colorlet{@@_dark_generic_light_color}{black!60}
 \colorlet{@@_description_label_light_color}{@@_dark_generic_light_color}
+\colorlet{@@_minitoc_color}{@@_dark_generic_light_color}
 \colorlet{@@_cover_itemize_label_color}{@@_light_generic_dark_color}
 \colorlet{@@_default_text_color}{black}
-\colorlet{@@_rubric_head_text_color}{black!65}
+\colorlet{@@_head_text_color}{black!65}
+\colorlet{@@_rubric_head_text_color}{@@_head_text_color}
 \colorlet{@@_bibliography_minibios_acknowledgments_bg_color}{black!10}
 \colorlet{@@_headrule_color}{@@_generic_light_color!65}
 \colorlet{@@_circlerule_color}{@@_generic_dark_color!65}
@@ -2874,7 +2876,7 @@ This work consists of the file  gzt.dtx
     ([xshift=\c_@@_minitoc_from_circle_xshift_dim,yshift=\c_@@_minitoc_from_circle_yshift_dim]$ (@@_circle_minitoc.north)!.5!(@@_circle_minitoc.west) $)
     {
       \large
-      \color{@@_dark_generic_light_color}
+      \color{@@_minitoc_color}
       \bool_if:NF {\g_@@_frontcover_minitoc_tl} {
         \g_@@_frontcover_minitoc_tl
       }
@@ -5053,7 +5055,7 @@ This work consists of the file  gzt.dtx
   ]%
   [%
   \adjustbox{raise={\c_@@_header_yshift_dim}{\height}}{%
-    \large\bfseries\scshape\color{@@_rubric_head_text_color}\g_@@_rubric_title_tl%
+    \large\bfseries\scshape\color{@@_head_text_color}\g_@@_rubric_title_tl%
     }%
     ]%
   []%
@@ -5063,7 +5065,7 @@ This work consists of the file  gzt.dtx
       \g_@@_rearviewmirror_rubric_bool || \g_@@_books_rubric_bool
     }{
       \adjustbox{raise={\c_@@_header_yshift_dim}{\height}}{%
-        \bfseries\color{@@_rubric_head_text_color}\g_@@_short_title_tl%
+        \bfseries\color{@@_head_text_color}\g_@@_short_title_tl%
       }
     }
   }%
