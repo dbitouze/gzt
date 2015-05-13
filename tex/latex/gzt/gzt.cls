@@ -89,6 +89,8 @@
   }
 \NeedsTeXFormat{LaTeX2e}
 \dim_const:Nn \c__gzt_pagegrid_dim { 1mm}
+\bool_new:N \g__gzt_for_authors_bool
+\bool_new:N \g__gzt_cover_bool
 \keys_define:nn { gzt }
 {
   pagegrid .dim_gset:N = \g__gzt_pagegrid_dim,
@@ -100,7 +102,10 @@
     \bool_gset_true:N \g__gzt_for_printer_bool%
     \bool_gset_true:N \g__gzt_cover_bool%
   },%
-  forauthors .bool_gset:N = \g__gzt_for_authors_bool,%
+  forauthors .code:n = {%
+    \bool_gset_true:N \g__gzt_for_authors_bool%
+    \bool_gset_true:N \g__gzt_inside_pages_bool%
+  },%
 }%
 \ProcessKeysOptions { gzt }
 \PassOptionsToClass{openany,english,french}{book}
@@ -290,12 +295,12 @@
 \tl_const:Nn \c__gzt_Cad_string_tl {C'est-\`a-dire}
 \tl_const:Nn \c__gzt_footer_string_tl {
   \c__gzt_footer_size_font_tl
-  \textcolor{__gzt_smf_number_color}{\c__gzt_smf_short_string_tl}
+  \textcolor{__gzt_smf_number_color}{\MakeTextUppercase{\c__gzt_smf_short_string_tl}}
   \space
   \textcolor{__gzt_date_color}{
     \textendash{}\space
     \MakeTextUppercase{\c__gzt_journal_short_title_string_tl}
-    \bool_if:nF { \g__gzt_inside_frontcover_bool || \g__gzt_backmatter_bool }
+    \bool_if:nF { \g__gzt_inside_frontcover_bool || \g__gzt_backmatter_bool || \g__gzt_for_authors_bool }
     {
       \space\textendash{}\space
       \l__gzt_uppercased_date_format\displaydate{__gzt_date}
@@ -748,9 +753,11 @@
 \colorlet{__gzt_generic_light_color}{black!50}
 \colorlet{__gzt_dark_generic_light_color}{black!60}
 \colorlet{__gzt_description_label_light_color}{__gzt_dark_generic_light_color}
+\colorlet{__gzt_minitoc_color}{__gzt_dark_generic_light_color}
 \colorlet{__gzt_cover_itemize_label_color}{__gzt_light_generic_dark_color}
 \colorlet{__gzt_default_text_color}{black}
-\colorlet{__gzt_rubric_head_text_color}{black!65}
+\colorlet{__gzt_head_text_color}{black!65}
+\colorlet{__gzt_rubric_head_text_color}{__gzt_head_text_color}
 \colorlet{__gzt_bibliography_minibios_acknowledgments_bg_color}{black!10}
 \colorlet{__gzt_headrule_color}{__gzt_generic_light_color!65}
 \colorlet{__gzt_circlerule_color}{__gzt_generic_dark_color!65}
@@ -1077,7 +1084,7 @@
     ([xshift=\c__gzt_minitoc_from_circle_xshift_dim,yshift=\c__gzt_minitoc_from_circle_yshift_dim]$ (__gzt_circle_minitoc.north)!.5!(__gzt_circle_minitoc.west) $)
     {
       \large
-      \color{__gzt_dark_generic_light_color}
+      \color{__gzt_minitoc_color}
       \bool_if:NF {\g__gzt_frontcover_minitoc_tl} {
         \g__gzt_frontcover_minitoc_tl
       }
@@ -2474,14 +2481,14 @@
   ]%
   [%
   \adjustbox{raise={\c__gzt_header_yshift_dim}{\height}}{%
-    \large\bfseries\scshape\c__gzt_advertisement_string_tl%
+    \large\bfseries\scshape\color{__gzt_head_text_color}\c__gzt_advertisement_string_tl%
     }%
     ]%
   []%
   {}%
   {%
     \adjustbox{raise={\c__gzt_header_yshift_dim}{\height}}{%
-      \large\bfseries\scshape\c__gzt_advertisement_string_tl%
+      \large\bfseries\scshape\color{__gzt_head_text_color}\c__gzt_advertisement_string_tl%
     }
   }%
   {
@@ -2557,7 +2564,7 @@
   ]%
   [%
   \adjustbox{raise={\c__gzt_header_yshift_dim}{\height}}{%
-    \large\bfseries\scshape\color{__gzt_rubric_head_text_color}\g__gzt_rubric_title_tl%
+    \large\bfseries\scshape\color{__gzt_head_text_color}\g__gzt_rubric_title_tl%
     }%
     ]%
   []%
@@ -2567,7 +2574,7 @@
       \g__gzt_rearviewmirror_rubric_bool || \g__gzt_books_rubric_bool
     }{
       \adjustbox{raise={\c__gzt_header_yshift_dim}{\height}}{%
-        \bfseries\color{__gzt_rubric_head_text_color}\g__gzt_short_title_tl%
+        \bfseries\color{__gzt_head_text_color}\g__gzt_short_title_tl%
       }
     }
   }%
@@ -3032,7 +3039,7 @@
       \def\abx@str{abx@sstr}%
     \end{tcolorbox}
     \bigskip
-    \c__gzt_published_with_help_of_string_tl~\citecopublisher{\g__gzt_bookadvertisement_bibkey_tl}.
+    \c__gzt_published_with_help_of_string_tl\space\citecopublisher{\g__gzt_bookadvertisement_bibkey_tl}.
     \par
     \bigskip
     \citefrenchabstract{\g__gzt_bookadvertisement_bibkey_tl}
@@ -3090,10 +3097,12 @@
   \bool_if:NF {\g__gzt_refsection_bool} {
     \begin{refsection}
     }
-    \tl_if_in:NnT
-    { \c__gzt_advertisement_directory_string_tl } { #1 } {%
-      \newpage
-      \thispagestyle{__gzt_advertisement_ps}
+    \bool_if:NF { \g__gzt_backcover_bool } {
+      \tl_if_in:NnT
+      { \c__gzt_advertisement_directory_string_tl } { #1 } {%
+        \newpage
+        \thispagestyle{__gzt_advertisement_ps}
+      }
     }
     \inputfrom{#1}{#2}
     \bool_if:NT {\g__gzt_multicols_bool} {

@@ -249,7 +249,7 @@
 \tl_const:Nn \c__gzt_Cad_string_tl {C'est-\`a-dire}
 \tl_const:Nn \c__gzt_footer_string_tl {
   \c__gzt_footer_size_font_tl
-  \textcolor{__gzt_smf_number_color}{\c__gzt_smf_short_string_tl}
+  \textcolor{__gzt_smf_number_color}{\MakeTextUppercase{\c__gzt_smf_short_string_tl}}
   \space
   \textcolor{__gzt_date_color}{
     \textendash{}\space
@@ -699,9 +699,11 @@
 \colorlet{__gzt_generic_light_color}{black!50}
 \colorlet{__gzt_dark_generic_light_color}{black!60}
 \colorlet{__gzt_description_label_light_color}{__gzt_dark_generic_light_color}
+\colorlet{__gzt_minitoc_color}{__gzt_dark_generic_light_color}
 \colorlet{__gzt_cover_itemize_label_color}{__gzt_light_generic_dark_color}
 \colorlet{__gzt_default_text_color}{black}
-\colorlet{__gzt_rubric_head_text_color}{black!65}
+\colorlet{__gzt_head_text_color}{black!65}
+\colorlet{__gzt_rubric_head_text_color}{__gzt_head_text_color}
 \colorlet{__gzt_bibliography_minibios_acknowledgments_bg_color}{black!10}
 \colorlet{__gzt_headrule_color}{__gzt_generic_light_color!65}
 \colorlet{__gzt_circlerule_color}{__gzt_generic_dark_color!65}
@@ -1028,7 +1030,7 @@
     ([xshift=\c__gzt_minitoc_from_circle_xshift_dim,yshift=\c__gzt_minitoc_from_circle_yshift_dim]$ (__gzt_circle_minitoc.north)!.5!(__gzt_circle_minitoc.west) $)
     {
       \large
-      \color{__gzt_dark_generic_light_color}
+      \color{__gzt_minitoc_color}
       \bool_if:NF {\g__gzt_frontcover_minitoc_tl} {
         \g__gzt_frontcover_minitoc_tl
       }
@@ -2202,14 +2204,14 @@
   ]%
   [%
   \adjustbox{raise={\c__gzt_header_yshift_dim}{\height}}{%
-    \large\bfseries\scshape\c__gzt_advertisement_string_tl%
+    \large\bfseries\scshape\color{__gzt_head_text_color}\c__gzt_advertisement_string_tl%
     }%
     ]%
   []%
   {}%
   {%
     \adjustbox{raise={\c__gzt_header_yshift_dim}{\height}}{%
-      \large\bfseries\scshape\c__gzt_advertisement_string_tl%
+      \large\bfseries\scshape\color{__gzt_head_text_color}\c__gzt_advertisement_string_tl%
     }
   }%
   {
@@ -2283,7 +2285,7 @@
   ]%
   [%
   \adjustbox{raise={\c__gzt_header_yshift_dim}{\height}}{%
-    \large\bfseries\scshape\color{__gzt_rubric_head_text_color}\g__gzt_rubric_title_tl%
+    \large\bfseries\scshape\color{__gzt_head_text_color}\g__gzt_rubric_title_tl%
     }%
     ]%
   []%
@@ -2293,7 +2295,7 @@
       \g__gzt_rearviewmirror_rubric_bool || \g__gzt_books_rubric_bool
     }{
       \adjustbox{raise={\c__gzt_header_yshift_dim}{\height}}{%
-        \bfseries\color{__gzt_rubric_head_text_color}\g__gzt_short_title_tl%
+        \bfseries\color{__gzt_head_text_color}\g__gzt_short_title_tl%
       }
     }
   }%
@@ -2685,7 +2687,7 @@
       \def\abx@str{abx@sstr}%
     \end{tcolorbox}
     \bigskip
-    \c__gzt_published_with_help_of_string_tl~\citecopublisher{\g__gzt_bookadvertisement_bibkey_tl}.
+    \c__gzt_published_with_help_of_string_tl\space\citecopublisher{\g__gzt_bookadvertisement_bibkey_tl}.
     \par
     \bigskip
     \citefrenchabstract{\g__gzt_bookadvertisement_bibkey_tl}
