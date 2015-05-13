@@ -5788,10 +5788,12 @@ This work consists of the file  gzt.dtx
   \bool_if:NF {\g_@@_refsection_bool} {
     \begin{refsection}
     }
-    \tl_if_in:NnT
-    { \c_@@_advertisement_directory_string_tl } { #1 } {%
-      \newpage
-      \thispagestyle{@@_advertisement_ps}
+    \bool_if:NF { \g_@@_backcover_bool } {
+      \tl_if_in:NnT
+      { \c_@@_advertisement_directory_string_tl } { #1 } {%
+        \newpage
+        \thispagestyle{@@_advertisement_ps}
+      }
     }
     \inputfrom{#1}{#2}
     \bool_if:NT {\g_@@_multicols_bool} {
