@@ -645,6 +645,8 @@ This work consists of the file  gzt.dtx
 % \end{itemize}
 %
 %    \begin{macrocode}
+\bool_new:N \g_@@_for_authors_bool
+\bool_new:N \g_@@_cover_bool
 \keys_define:nn { gzt }
 {
   pagegrid .dim_gset:N = \g_@@_pagegrid_dim,
@@ -656,7 +658,10 @@ This work consists of the file  gzt.dtx
     \bool_gset_true:N \g_@@_for_printer_bool%
     \bool_gset_true:N \g_@@_cover_bool%
   },%
-  forauthors .bool_gset:N = \g_@@_for_authors_bool,%
+  forauthors .code:n = {%
+    \bool_gset_true:N \g_@@_for_authors_bool%
+    \bool_gset_true:N \g_@@_inside_pages_bool%
+  },%
 }%
 %
 \ProcessKeysOptions { gzt }
@@ -1424,7 +1429,7 @@ This work consists of the file  gzt.dtx
   \textcolor{@@_date_color}{
     \textendash{}\space
     \MakeTextUppercase{\c_@@_journal_short_title_string_tl}
-%<class>    \bool_if:nF { \g_@@_inside_frontcover_bool || \g_@@_backmatter_bool }
+%<class>    \bool_if:nF { \g_@@_inside_frontcover_bool || \g_@@_backmatter_bool || \g_@@_for_authors_bool }
 %<class>    {
 %<class>      \space\textendash{}\space
 %<class>      \l_@@_uppercased_date_format\displaydate{@@_date}
