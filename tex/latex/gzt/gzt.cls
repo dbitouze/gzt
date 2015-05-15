@@ -95,18 +95,31 @@
 {
   pagegrid .dim_gset:N = \g__gzt_pagegrid_dim,
   pagegrid .default:n = {\c__gzt_pagegrid_dim},
-  forprinter .bool_gset:N = \g__gzt_for_printer_bool,
-  insidepages .bool_gset:N = \g__gzt_inside_pages_bool,
-  noinsidebackcover .bool_gset:N = \g__gzt_no_inside_backcover_bool,
-  cover .code:n = {%
-    \bool_gset_true:N \g__gzt_for_printer_bool%
-    \bool_gset_true:N \g__gzt_cover_bool%
-  },%
   forauthors .code:n = {%
     \bool_gset_true:N \g__gzt_for_authors_bool%
     \bool_gset_true:N \g__gzt_inside_pages_bool%
   },%
+  % insidepages .bool_gset:N = \g__gzt_inside_pages_bool,
+  % noinsidebackcover .bool_gset:N = \g__gzt_no_inside_backcover_bool,
+  % cover .code:n = {%
+  %   \bool_gset_true:N \g__gzt_for_printer_bool%
+  %   \bool_gset_true:N \g__gzt_cover_bool%
+  % },%
+  forprinter .bool_gset:N = \g__gzt_for_printer_bool,
+  output .choice:,
+  output / frontcover .code:n = {%
+    \bool_gset_true:N \g__gzt_for_printer_bool%
+    \bool_gset_true:N \g__gzt_cover_bool%
+  },%
+  output / insidepages .code:n = {%
+    \bool_gset_true:N \g__gzt_for_printer_bool%
+    \bool_gset_true:N \g__gzt_inside_pages_bool%
+  },%
+  output / backcover .code:n = {%
+    \bool_gset_true:N \g__gzt_for_printer_bool%
+  },%
 }%
+\bool_gset_true:N \g__gzt_no_inside_backcover_bool
 \ProcessKeysOptions { gzt }
 \PassOptionsToClass{openany,english,french}{book}
 \LoadClassWithOptions { book }
@@ -2213,9 +2226,6 @@
       \g__gzt_display_frontcover_tl
       \g__gzt_display_inside_frontcover_tl
     }
-    \bool_if:NT {\g__gzt_cover_bool} {
-      % \end{document}
-    }
   }
 }
 \tl_new:N \g__gzt_background_footer_tl
@@ -3059,6 +3069,7 @@
     \pagenumbering{roman}%
     \addtocounter{page}{2}
     \ifoddpage%
+    \else
     \hbox{}
     \fi
     \newpage
