@@ -730,18 +730,31 @@ This work consists of the file  gzt.dtx
 {
   pagegrid .dim_gset:N = \g_@@_pagegrid_dim,
   pagegrid .default:n = {\c_@@_pagegrid_dim},
-  forprinter .bool_gset:N = \g_@@_for_printer_bool,
-  insidepages .bool_gset:N = \g_@@_inside_pages_bool,
-  noinsidebackcover .bool_gset:N = \g_@@_no_inside_backcover_bool,
-  cover .code:n = {%
-    \bool_gset_true:N \g_@@_for_printer_bool%
-    \bool_gset_true:N \g_@@_cover_bool%
-  },%
   forauthors .code:n = {%
     \bool_gset_true:N \g_@@_for_authors_bool%
     \bool_gset_true:N \g_@@_inside_pages_bool%
   },%
+  % insidepages .bool_gset:N = \g_@@_inside_pages_bool,
+  % noinsidebackcover .bool_gset:N = \g_@@_no_inside_backcover_bool,
+  % cover .code:n = {%
+  %   \bool_gset_true:N \g_@@_for_printer_bool%
+  %   \bool_gset_true:N \g_@@_cover_bool%
+  % },%
+  forprinter .bool_gset:N = \g_@@_for_printer_bool,
+  output .choice:,
+  output / frontcover .code:n = {%
+    \bool_gset_true:N \g_@@_for_printer_bool%
+    \bool_gset_true:N \g_@@_cover_bool%
+  },%
+  output / insidepages .code:n = {%
+    \bool_gset_true:N \g_@@_for_printer_bool%
+    \bool_gset_true:N \g_@@_inside_pages_bool%
+  },%
+  output / backcover .code:n = {%
+    \bool_gset_true:N \g_@@_for_printer_bool%
+  },%
 }%
+\bool_gset_true:N \g_@@_no_inside_backcover_bool
 %
 \ProcessKeysOptions { gzt }
 %    \end{macrocode}
@@ -4611,9 +4624,6 @@ This work consists of the file  gzt.dtx
       \g_@@_display_frontcover_tl
       \g_@@_display_inside_frontcover_tl
     }
-    \bool_if:NT {\g_@@_cover_bool} {
-      % \end{document}
-    }
   }
 }
 %    \end{macrocode}
@@ -5843,6 +5853,7 @@ This work consists of the file  gzt.dtx
     \pagenumbering{roman}%
     \addtocounter{page}{2}
     \ifoddpage%
+    \else
     \hbox{}
     \fi
     \newpage
