@@ -5286,7 +5286,7 @@ This work consists of the file  gzt.dtx
 \deftranslation[to=English]{_@@_first}{\up{st}\xspace}%
 \deftranslation[to=French]{_@@_nth}{\ieme}%
 \deftranslation[to=English]{_@@_nth}{\up{th}\xspace}%
-\deftranslation[to=French]{_@@_bc}{avant~J.-C.}%
+\deftranslation[to=French]{_@@_bc}{avant~J.-C}%
 \deftranslation[to=English]{_@@_bc}{BC}%
 \cs_new_protected:Nn \_@@_century:n
 {
@@ -5294,10 +5294,26 @@ This work consists of the file  gzt.dtx
     \int_to_roman:n {\int_abs:n {#1}}
   }%
   \int_compare:nNnTF { \int_abs:n {#1} } > { 1 }{\translate{_@@_nth}}{\translate{_@@_first}}
+}
+\cs_new_protected:Nn \_@@_century_suffix:n
+{
   \translate{_@@_century}%
   \int_compare:nNnT { #1 } < { 0 }{
     \space
     \translate{_@@_bc}
+%    \end{macrocode}
+% In case of French language, we add a period just after \enquote{avant~J.-C},
+% but only if the character following the "\century" macro is not a period
+% itself.
+%    \begin{macrocode}
+    \IfLanguageName {french}{
+      \@ifnextchar.%
+      {
+      }{
+        .\xspace
+      }%
+    }
+  }{
   }
 }
 %    \end{macrocode}
@@ -5565,8 +5581,17 @@ This work consists of the file  gzt.dtx
 %
 % \begin{macro}{\century}
 %    \begin{macrocode}
-\NewDocumentCommand \century { m } {%
-  \_@@_century:n {#1}%
+\NewDocumentCommand \century { s m } {%
+  \_@@_century:n {#2}%
+  \IfBooleanTF {#1}
+  {
+    \int_compare:nNnT { #2 } < { 0 }{
+      \_@@_century_suffix:n {#2}%
+    }
+  }
+  {
+    \_@@_century_suffix:n {#2}%
+  }
 }
 %    \end{macrocode}
 % \end{macro}
