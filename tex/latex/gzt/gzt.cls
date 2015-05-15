@@ -118,6 +118,8 @@
   output / backcover .code:n = {%
     \bool_gset_true:N \g__gzt_for_printer_bool%
   },%
+  output / web .code:n = {%
+  },%
 }%
 \bool_gset_true:N \g__gzt_no_inside_backcover_bool
 \ProcessKeysOptions { gzt }
