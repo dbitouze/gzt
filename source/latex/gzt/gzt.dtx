@@ -378,78 +378,157 @@ This work consists of the file  gzt.dtx
 %
 % \subsection{For the books advertisements}
 %
-% First, we create the new bibliography driver "bookadvertisement" (that seems to
-% create the corresponding new entry).
-%    \begin{macrocode}
-\DeclareBibliographyDriver{bookadvertisement}{%
-  \usebibmacro{bibindex}%
-  \usebibmacro{begentry}%
-  \textbf{\printfield{series}}%
-  % \usebibmacro{series+number}%
-  \bigskip\newline\nopunct\newblock
-  {%
-    \Large%
-    \printfield{title}%
-    \newunit\newblock
-  }%
-  \iffieldundef{volume}
-  {}%
-  {\textbf{\printfield{volume}}}
-  \newline\nopunct\newblock
-  \textbf{\printfield{titleaddon}}%
-  \newline\nopunct\newblock
-  \printfield{subtitle}%
-  \newline\nopunct\newblock
-  \usebibmacro{author/editor+others/translator+others}%
-  \setunit{\labelnamepunct}
-  \newline\nopunct\newblock
-  \usebibmacro{byauthor}%
-  \newunit\newblock
-  \usebibmacro{byeditor+others}%
-  \newunit\newblock
-  \printfield{edition}%
-  \newunit\newblock
-  \printfield{note}%
-  \newunit\newblock
-  \usebibmacro{publisher+location+date}%
-  \newunit\newblock
-  \usebibmacro{chapter+pages}%
-  \newunit
-  \printfield{pagetotal}%
-  \newunit\newblock
-  \printlist{language}%
-  \newline\nopunct\newblock
-  \iftoggle{bbx:isbn}
-    {\printfield{isbn}}
-    {}%
-  \newunit\newblock
-  \usebibmacro{doi+eprint+url}%
-  \newunit\newblock
-  \usebibmacro{addendum+pubstate}%
-  \setunit{\bibpagerefpunct}\newblock
-  \usebibmacro{pageref}%
-  \newunit\newblock
-  \iftoggle{bbx:related}
-    {\usebibmacro{related:init}%
-     \usebibmacro{related}}
-    {}%
-    \usebibmacro{finentry}}
-%    \end{macrocode}
-%
-% Then, we create the new fields "publicprice" and "smfprice" and make
-% them known by the entry type "bookadvertisement".
+% We create some new fields make them known by the entry type
+% "bookadvertisement".
 %    \begin{macrocode}
 \DeclareDatamodelFields[type=field,datatype=literal]{publicprice}
 \DeclareDatamodelFields[type=field,datatype=literal]{smfprice}
 \DeclareDatamodelFields[type=field,datatype=literal]{frenchabstract}
 \DeclareDatamodelFields[type=field,datatype=literal]{englishabstract}
 \DeclareDatamodelFields[type=list,datatype=literal]{copublisher}
+\DeclareDatamodelFields[type=field, datatype=verbatim]{thumbnail}
 \DeclareDatamodelEntryfields[bookadvertisement]{
   publicprice,
   smfprice,
   frenchabstract,
   englishabstract,
-  copublisher
+  copublisher,
+  thumbnail
+}
+%    \end{macrocode}
+%
+% Then, we create the new bibliography driver "bookadvertisement" (that seems to
+% create the corresponding new entry).
+%    \begin{macrocode}
+\newcommand*{\insertbibimage}[1]{\includegraphics[width=45mm]{#1}}
+\DeclareBibliographyDriver{bookadvertisement}{%
+  \begin{tcolorbox}[
+    lefthand width=47.5mm
+    ,sidebyside
+    ,colback=white
+    ,fontlower=\large
+    ,flushleft lower
+    ,boxrule=0mm
+    ,frame hidden%
+    ,leftright skip=0mm
+    ,before skip=0mm
+    ,lower separated=false
+    ]
+    \iffieldundef{thumbnail}
+    {}
+    {
+      \usefield{\insertbibimage}{thumbnail}
+    }
+    \tcblower
+    \xpatchfieldformat{title}{mkbibemph}{textbf}{}{}%
+    \def\abx@str{abx@lstr}%
+    \noindent
+    \usebibmacro{bibindex}%
+    \usebibmacro{begentry}%
+    \textbf{\printfield{series}}%
+    % \usebibmacro{series+number}%
+    \bigskip\newline\nopunct\newblock
+    {%
+      \Large%
+      \printfield{title}%
+      \newunit\newblock
+    }%
+    \iffieldundef{volume}
+    {}%
+    {\textbf{\printfield{volume}}}
+    \iffieldundef{titleaddon}
+    {}%
+    {%
+      \newline\nopunct\newblock
+      \textbf{\printfield{titleaddon}}%
+    }
+    \iffieldundef{subtitle}
+    {}%
+    {%
+      \newline\nopunct\newblock
+      \printfield{subtitle}%
+    }
+    \newline\nopunct\newblock
+    \newline\nopunct\newblock
+    \usebibmacro{author/editor+others/translator+others}%
+    \setunit{\labelnamepunct}
+    \newline\nopunct\newblock
+    \usebibmacro{byauthor}%
+    \newunit\newblock
+    \usebibmacro{byeditor+others}%
+    \newunit\newblock
+    \printfield{edition}%
+    \newunit\newblock
+    \printfield{note}%
+    \newunit\newblock
+    \usebibmacro{publisher+location+date}%
+    \newunit\newblock
+    \usebibmacro{chapter+pages}%
+    \newunit
+    \printfield{pagetotal}%
+    \newunit\newblock
+    \printlist{language}%
+    \iftoggle{bbx:isbn}
+    {%
+      \newline\nopunct\newblock
+      \printfield{isbn}
+    }
+    {}%
+    \newunit\newblock
+    \usebibmacro{doi+eprint+url}%
+    \newunit\newblock
+    \usebibmacro{addendum+pubstate}%
+    \setunit{\bibpagerefpunct}\newblock
+    \usebibmacro{pageref}%
+    \def\abx@str{abx@sstr}%
+  \end{tcolorbox}
+    \iflistundef{copublisher}
+    {}%
+    {%
+      \bigskip
+      % \newline\nopunct\newblock%
+      \normalsize
+      Publi\'e avec le concours de : \printlist{copublisher}%
+      \par
+    }
+    \iffieldundef{frenchabstract}
+    {}%
+    {%
+      \bigskip
+      \printfield{frenchabstract}%
+      \par
+      \medskip
+      %
+      \begin{center}
+        Prix~public~:\space
+        \EUR{\printfield{publicprice}}
+        \space\textendash\space Prix~membre~\smf{}~:\space
+        \EUR{\printfield{smfprice}}
+        \space\textendash\space Frais~de~port~non~compris
+      \end{center}
+    }
+    \iffieldundef{englishabstract}
+    {}%
+    {%
+      \par
+      \bigskip
+      \begin{otherlanguage}{english}
+        \itshape
+        \printfield{englishabstract}%
+        %
+        \par
+        \medskip
+        %
+        \begin{center}
+          Public~price:\space
+          \EUR{\printfield{publicprice}}
+          \space\textendash\space \smf{}~member~price:\space
+          \EUR{\printfield{smfprice}}
+          \space\textendash\space Shipping~costs~not~included
+        \end{center}
+      \end{otherlanguage}
+    }
+  \usebibmacro{finentry}
 }
 %    \end{macrocode}
 %
@@ -4483,7 +4562,7 @@ This work consists of the file  gzt.dtx
 %
 %    \begin{macrocode}
 \AtBeginDocument{%
-  % \graphicspath{{\c_@@_issue_images_path_string_tl//}}
+  \graphicspath{{\c_@@_issue_images_path_string_tl//}{../\c_@@_issue_images_path_string_tl//}}
   % \glsdisablehyper
   \g_@@_mainmatter_switch_tl
   % \bool_gset_false:N \g_@@_frontmatter_bool
@@ -5688,77 +5767,17 @@ This work consists of the file  gzt.dtx
 %
 % We create a "bookadvertisement" environment for the book advertisements.
 %    \begin{macrocode}
-\NewDocumentEnvironment{bookadvertisement}{ O{} m }
-{%
-  \keys_set:nn { gzt/bookadvertisement } { #2 }%
+\NewDocumentCommand \bookadvertisement {O{} m}
+{
   \newpage{}
   \mbox{}
   \vfill
   \begin{_@@_book_advertisement}[#1]
-    \begin{tcolorbox}[
-      lefthand~width=47.5mm
-      ,sidebyside
-      ,colback=@@_book_advertisement_bg_color
-      % ,sharp~corners=all
-      ,fontlower=\large
-      ,flushleft~lower
-      ,boxrule=\c_zero_dim
-      ,frame~hidden%
-      ,leftright~skip=\c_zero_dim
-      ,before~skip=\c_zero_dim
-      ,lower~separated=false
-      ]
-      \adjustbox{frame}{\includegraphics[width=45mm]{\g_@@_bookadvertisement_frontcover_tl}}%
-      \tcblower
-      \xpatchfieldformat{title}{mkbibemph}{textbf}{}{}%
-      \def\abx@str{abx@lstr}%
-      \noindent\fullcite{\g_@@_bookadvertisement_bibkey_tl}
-      \def\abx@str{abx@sstr}%
-    \end{tcolorbox}
-    \bigskip
-    \c_@@_published_with_help_of_string_tl\space\citecopublisher{\g_@@_bookadvertisement_bibkey_tl}.
+    \fullcite{#2}
     \par
     \bigskip
-    \citefrenchabstract{\g_@@_bookadvertisement_bibkey_tl}
-    \par
-    \medskip
-    %
-    \begin{center}
-      Prix~public~:\space
-      \EUR{\_@@_cite_public_price{\g_@@_bookadvertisement_bibkey_tl}}
-      \space\textendash\space Prix~membre~\smf{}~:\space
-      \EUR{\_@@_cite_smf_price{\g_@@_bookadvertisement_bibkey_tl}}
-      \space\textendash\space Frais~de~port~non~compris
-    \end{center}
-    %
-    \par
-    \bigskip
-    \begin{otherlanguage}{english}
-      \itshape
-      \_@@_cite_englishabstract{\g_@@_bookadvertisement_bibkey_tl}
-      %
-      \par
-      \medskip
-      %
-      \begin{center}
-        Public~price:\space
-        \EUR{\_@@_cite_public_price{\g_@@_bookadvertisement_bibkey_tl}}
-        \space\textendash\space \smf{}~member~price:\space
-        \EUR{\_@@_cite_smf_price{\g_@@_bookadvertisement_bibkey_tl}}
-        \space\textendash\space Shipping~costs~not~included
-      \end{center}
-    \end{otherlanguage}
-    \par
-    \bigskip
-  }{
     \tcblower
       \includegraphics[height=22.5mm]{\c_@@_smf_logo_file_string_tl}%
-      % \newline
-      % \smallskip
-      % % \begin{adjustbox}{valign=t,minipage=60mm}
-      % \l_@@_journal_address_tl
-      % % \end{adjustbox}
-      % \newline
       \par{}
       \smallskip%
       \url{\l_@@_journal_url_tl}
