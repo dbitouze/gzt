@@ -2375,8 +2375,10 @@
   }%
   \int_compare:nNnTF { \int_abs:n {#1} } > { 1 }{\translate{__gzt_nth}}{\translate{__gzt_first}}
   \translate{__gzt_century}%
-  \space
-  \int_compare:nNnT { #1 } < { 0 }{\translate{__gzt_bc}}
+  \int_compare:nNnT { #1 } < { 0 }{
+    \space
+    \translate{__gzt_bc}
+  }
 }
 \DeclareCiteCommand{\citeinterviewee}{}{%
   \printnames{interviewee}%
