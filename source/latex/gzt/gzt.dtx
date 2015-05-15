@@ -5295,8 +5295,10 @@ This work consists of the file  gzt.dtx
   }%
   \int_compare:nNnTF { \int_abs:n {#1} } > { 1 }{\translate{_@@_nth}}{\translate{_@@_first}}
   \translate{_@@_century}%
-  \space
-  \int_compare:nNnT { #1 } < { 0 }{\translate{_@@_bc}}
+  \int_compare:nNnT { #1 } < { 0 }{
+    \space
+    \translate{_@@_bc}
+  }
 }
 %    \end{macrocode}
 %
