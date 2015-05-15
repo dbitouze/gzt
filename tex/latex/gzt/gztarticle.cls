@@ -715,7 +715,7 @@
 \colorlet{__gzt_boxed_issue_number_bg_color}{__gzt_generic_dark_color}
 \colorlet{__gzt_rule_in_toc_color}{__gzt_generic_dark_color}
 \colorlet{__gzt_rubric_in_toc_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_article_in_toc_color}{__gzt_generic_light_color}
+\colorlet{__gzt_article_in_toc_color}{__gzt_frontmatter_text_color}
 \colorlet{__gzt_rubric_title_color}{__gzt_generic_light_color}
 \colorlet{__gzt_article_title_color}{__gzt_generic_dark_color}
 \colorlet{__gzt_section_color}{__gzt_generic_dark_color}
@@ -1980,7 +1980,7 @@
 {\c_zero_dim}
 {}
 \AtBeginDocument{%
-  % \graphicspath{{\c__gzt_issue_images_path_string_tl//}}
+  \graphicspath{{\c__gzt_issue_images_path_string_tl//}{../\c__gzt_issue_images_path_string_tl//}}
   % \glsdisablehyper
   \g__gzt_mainmatter_switch_tl
   % \bool_gset_false:N \g__gzt_frontmatter_bool
@@ -2659,77 +2659,17 @@
 {
   #1
 }
-\NewDocumentEnvironment{bookadvertisement}{ O{} m }
-{%
-  \keys_set:nn { gzt/bookadvertisement } { #2 }%
+\NewDocumentCommand \bookadvertisement {O{} m}
+{
   \newpage{}
   \mbox{}
   \vfill
   \begin{__gzt_book_advertisement}[#1]
-    \begin{tcolorbox}[
-      lefthand~width=47.5mm
-      ,sidebyside
-      ,colback=__gzt_book_advertisement_bg_color
-      % ,sharp~corners=all
-      ,fontlower=\large
-      ,flushleft~lower
-      ,boxrule=\c_zero_dim
-      ,frame~hidden%
-      ,leftright~skip=\c_zero_dim
-      ,before~skip=\c_zero_dim
-      ,lower~separated=false
-      ]
-      \adjustbox{frame}{\includegraphics[width=45mm]{\g__gzt_bookadvertisement_frontcover_tl}}%
-      \tcblower
-      \xpatchfieldformat{title}{mkbibemph}{textbf}{}{}%
-      \def\abx@str{abx@lstr}%
-      \noindent\fullcite{\g__gzt_bookadvertisement_bibkey_tl}
-      \def\abx@str{abx@sstr}%
-    \end{tcolorbox}
-    \bigskip
-    \c__gzt_published_with_help_of_string_tl\space\citecopublisher{\g__gzt_bookadvertisement_bibkey_tl}.
+    \fullcite{#2}
     \par
     \bigskip
-    \citefrenchabstract{\g__gzt_bookadvertisement_bibkey_tl}
-    \par
-    \medskip
-    %
-    \begin{center}
-      Prix~public~:\space
-      \EUR{\__gzt_cite_public_price{\g__gzt_bookadvertisement_bibkey_tl}}
-      \space\textendash\space Prix~membre~\smf{}~:\space
-      \EUR{\__gzt_cite_smf_price{\g__gzt_bookadvertisement_bibkey_tl}}
-      \space\textendash\space Frais~de~port~non~compris
-    \end{center}
-    %
-    \par
-    \bigskip
-    \begin{otherlanguage}{english}
-      \itshape
-      \__gzt_cite_englishabstract{\g__gzt_bookadvertisement_bibkey_tl}
-      %
-      \par
-      \medskip
-      %
-      \begin{center}
-        Public~price:\space
-        \EUR{\__gzt_cite_public_price{\g__gzt_bookadvertisement_bibkey_tl}}
-        \space\textendash\space \smf{}~member~price:\space
-        \EUR{\__gzt_cite_smf_price{\g__gzt_bookadvertisement_bibkey_tl}}
-        \space\textendash\space Shipping~costs~not~included
-      \end{center}
-    \end{otherlanguage}
-    \par
-    \bigskip
-  }{
     \tcblower
       \includegraphics[height=22.5mm]{\c__gzt_smf_logo_file_string_tl}%
-      % \newline
-      % \smallskip
-      % % \begin{adjustbox}{valign=t,minipage=60mm}
-      % \l__gzt_journal_address_tl
-      % % \end{adjustbox}
-      % \newline
       \par{}
       \smallskip%
       \url{\l__gzt_journal_url_tl}

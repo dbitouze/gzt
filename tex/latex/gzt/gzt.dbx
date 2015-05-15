@@ -76,70 +76,149 @@
   reviewer,
   reviewerinstitution
 }
-\DeclareBibliographyDriver{bookadvertisement}{%
-  \usebibmacro{bibindex}%
-  \usebibmacro{begentry}%
-  \textbf{\printfield{series}}%
-  % \usebibmacro{series+number}%
-  \bigskip\newline\nopunct\newblock
-  {%
-    \Large%
-    \printfield{title}%
-    \newunit\newblock
-  }%
-  \iffieldundef{volume}
-  {}%
-  {\textbf{\printfield{volume}}}
-  \newline\nopunct\newblock
-  \textbf{\printfield{titleaddon}}%
-  \newline\nopunct\newblock
-  \printfield{subtitle}%
-  \newline\nopunct\newblock
-  \usebibmacro{author/editor+others/translator+others}%
-  \setunit{\labelnamepunct}
-  \newline\nopunct\newblock
-  \usebibmacro{byauthor}%
-  \newunit\newblock
-  \usebibmacro{byeditor+others}%
-  \newunit\newblock
-  \printfield{edition}%
-  \newunit\newblock
-  \printfield{note}%
-  \newunit\newblock
-  \usebibmacro{publisher+location+date}%
-  \newunit\newblock
-  \usebibmacro{chapter+pages}%
-  \newunit
-  \printfield{pagetotal}%
-  \newunit\newblock
-  \printlist{language}%
-  \newline\nopunct\newblock
-  \iftoggle{bbx:isbn}
-    {\printfield{isbn}}
-    {}%
-  \newunit\newblock
-  \usebibmacro{doi+eprint+url}%
-  \newunit\newblock
-  \usebibmacro{addendum+pubstate}%
-  \setunit{\bibpagerefpunct}\newblock
-  \usebibmacro{pageref}%
-  \newunit\newblock
-  \iftoggle{bbx:related}
-    {\usebibmacro{related:init}%
-     \usebibmacro{related}}
-    {}%
-    \usebibmacro{finentry}}
 \DeclareDatamodelFields[type=field,datatype=literal]{publicprice}
 \DeclareDatamodelFields[type=field,datatype=literal]{smfprice}
 \DeclareDatamodelFields[type=field,datatype=literal]{frenchabstract}
 \DeclareDatamodelFields[type=field,datatype=literal]{englishabstract}
 \DeclareDatamodelFields[type=list,datatype=literal]{copublisher}
+\DeclareDatamodelFields[type=field, datatype=verbatim]{thumbnail}
 \DeclareDatamodelEntryfields[bookadvertisement]{
   publicprice,
   smfprice,
   frenchabstract,
   englishabstract,
-  copublisher
+  copublisher,
+  thumbnail
+}
+\newcommand*{\insertbibimage}[1]{\includegraphics[width=45mm]{#1}}
+\DeclareBibliographyDriver{bookadvertisement}{%
+  \begin{tcolorbox}[
+    lefthand width=47.5mm
+    ,sidebyside
+    ,colback=white
+    ,fontlower=\large
+    ,flushleft lower
+    ,boxrule=0mm
+    ,frame hidden%
+    ,leftright skip=0mm
+    ,before skip=0mm
+    ,lower separated=false
+    ]
+    \iffieldundef{thumbnail}
+    {}
+    {
+      \usefield{\insertbibimage}{thumbnail}
+    }
+    \tcblower
+    \xpatchfieldformat{title}{mkbibemph}{textbf}{}{}%
+    \def\abx@str{abx@lstr}%
+    \noindent
+    \usebibmacro{bibindex}%
+    \usebibmacro{begentry}%
+    \textbf{\printfield{series}}%
+    % \usebibmacro{series+number}%
+    \bigskip\newline\nopunct\newblock
+    {%
+      \Large%
+      \printfield{title}%
+      \newunit\newblock
+    }%
+    \iffieldundef{volume}
+    {}%
+    {\textbf{\printfield{volume}}}
+    \iffieldundef{titleaddon}
+    {}%
+    {%
+      \newline\nopunct\newblock
+      \textbf{\printfield{titleaddon}}%
+    }
+    \iffieldundef{subtitle}
+    {}%
+    {%
+      \newline\nopunct\newblock
+      \printfield{subtitle}%
+    }
+    \newline\nopunct\newblock
+    \newline\nopunct\newblock
+    \usebibmacro{author/editor+others/translator+others}%
+    \setunit{\labelnamepunct}
+    \newline\nopunct\newblock
+    \usebibmacro{byauthor}%
+    \newunit\newblock
+    \usebibmacro{byeditor+others}%
+    \newunit\newblock
+    \printfield{edition}%
+    \newunit\newblock
+    \printfield{note}%
+    \newunit\newblock
+    \usebibmacro{publisher+location+date}%
+    \newunit\newblock
+    \usebibmacro{chapter+pages}%
+    \newunit
+    \printfield{pagetotal}%
+    \newunit\newblock
+    \printlist{language}%
+    \iftoggle{bbx:isbn}
+    {%
+      \newline\nopunct\newblock
+      \printfield{isbn}
+    }
+    {}%
+    \newunit\newblock
+    \usebibmacro{doi+eprint+url}%
+    \newunit\newblock
+    \usebibmacro{addendum+pubstate}%
+    \setunit{\bibpagerefpunct}\newblock
+    \usebibmacro{pageref}%
+    \def\abx@str{abx@sstr}%
+  \end{tcolorbox}
+    \iflistundef{copublisher}
+    {}%
+    {%
+      \bigskip
+      % \newline\nopunct\newblock%
+      \normalsize
+      Publi\'e avec le concours de : \printlist{copublisher}%
+      \par
+    }
+    \iffieldundef{frenchabstract}
+    {}%
+    {%
+      \bigskip
+      \printfield{frenchabstract}%
+      \par
+      \medskip
+      %
+      \begin{center}
+        Prix~public~:\space
+        \EUR{\printfield{publicprice}}
+        \space\textendash\space Prix~membre~\smf{}~:\space
+        \EUR{\printfield{smfprice}}
+        \space\textendash\space Frais~de~port~non~compris
+      \end{center}
+    }
+    \iffieldundef{englishabstract}
+    {}%
+    {%
+      \par
+      \bigskip
+      \begin{otherlanguage}{english}
+        \itshape
+        \printfield{englishabstract}%
+        %
+        \par
+        \medskip
+        %
+        \begin{center}
+          Public~price:\space
+          \EUR{\printfield{publicprice}}
+          \space\textendash\space \smf{}~member~price:\space
+          \EUR{\printfield{smfprice}}
+          \space\textendash\space Shipping~costs~not~included
+        \end{center}
+      \end{otherlanguage}
+    }
+  \usebibmacro{finentry}
 }
 
 %% ----------------------------------------------------------------------------
