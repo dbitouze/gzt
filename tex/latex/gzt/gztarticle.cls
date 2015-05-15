@@ -2366,7 +2366,7 @@
 \deftranslation[to=English]{__gzt_first}{\up{st}\xspace}%
 \deftranslation[to=French]{__gzt_nth}{\ieme}%
 \deftranslation[to=English]{__gzt_nth}{\up{th}\xspace}%
-\deftranslation[to=French]{__gzt_bc}{avant~J.-C.}%
+\deftranslation[to=French]{__gzt_bc}{avant~J.-C}%
 \deftranslation[to=English]{__gzt_bc}{BC}%
 \cs_new_protected:Nn \__gzt_century:n
 {
@@ -2374,10 +2374,21 @@
     \int_to_roman:n {\int_abs:n {#1}}
   }%
   \int_compare:nNnTF { \int_abs:n {#1} } > { 1 }{\translate{__gzt_nth}}{\translate{__gzt_first}}
+}
+\cs_new_protected:Nn \__gzt_century_suffix:n
+{
   \translate{__gzt_century}%
   \int_compare:nNnT { #1 } < { 0 }{
     \space
     \translate{__gzt_bc}
+    \IfLanguageName {french}{
+      \@ifnextchar.%
+      {
+      }{
+        .\xspace
+      }%
+    }
+  }{
   }
 }
 \DeclareCiteCommand{\citeinterviewee}{}{%
@@ -2485,8 +2496,17 @@
   \textsl{\texttt{\c__gzt_gztarticle_class_name_tl}}
   \xspace
 }
-\NewDocumentCommand \century { m } {%
-  \__gzt_century:n {#1}%
+\NewDocumentCommand \century { s m } {%
+  \__gzt_century:n {#2}%
+  \IfBooleanTF {#1}
+  {
+    \int_compare:nNnT { #2 } < { 0 }{
+      \__gzt_century_suffix:n {#2}%
+    }
+  }
+  {
+    \__gzt_century_suffix:n {#2}%
+  }
 }
 \NewDocumentCommand \aside { s m } {%
   \IfBooleanTF {#1}
