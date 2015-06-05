@@ -594,8 +594,9 @@ le \Package*{biblatex} et le moteur \hologo{biber}. Leur usage est détaillé da
 \begin{docCommand}{printbibliography}{}
   Cette commande produit la liste des références bibliographiques saisies selon
   la syntaxe du \Package*{biblatex}. Elle a été redéfinie de sorte
-  à automatiquement afficher, en sus de la bibliographie, les détails
-  complémentaires sur les auteurs (s'ils ont été renseignés).
+  à automatiquement afficher, en sus de la bibliographie, les
+  \hyperref[sec-auteurs-details]{détails complémentaires sur les auteurs} (s'ils
+  ont été renseignés).
 \end{docCommand}
 
 \subsection{Commandes diverses}
@@ -657,16 +658,26 @@ mathématiques destinées à faciliter la saisie d'un article à paraître dans 
 
 \begin{docCommand}{century}{\marg{numéro}}
   Cette commande affiche le \meta{numéro}\footnote{Ce numéro doit être un nombre
-    entier relatif non nul.} d'un siècle en chiffre romain composé en petites
-  capitales, suivi :
+    entier relatif non nul.} ordinal d'un siècle en chiffre romain composé en
+  petites capitales, suivi du suffixe constitué, selon que la langue en cours
+  est le français ou l'anglais :
   \begin{itemize}
-  \item du mot \enquote{siècle} ou \enquote{century} ;
-  \item si \meta{numéro} $<0$, de l'expression \enquote{avant J.-C.} ou
-    \enquote{BC} ;
+  \item du mot \enquote{siècle} puis, si \meta{numéro} $<0$, de l'expression
+    \enquote{avant J.-C.}\footnote{Sauf si le caractère qui suit est un point,
+      auquel cas l'expression est \enquote{avant J.-C}.} ;
+  \item du mot \enquote{century} puis, si \meta{numéro} $<0$, de l'expression
+    \enquote{BC}.
   \end{itemize}
-  selon que la langue en cours est le français ou l'anglais.  Ainsi :
+  Ainsi :
 \begin{bodycode}[listing and text]
-Au \century{1}, [...]. Plus tard, au \century{8}, [...]
+Au \century{8}, [...]. Auparavant, au \century{1}, [...]. Il en fût de même au
+\century{-3} et au \century{-2}.
+\end{bodycode}
+  Cette commande dispose également d'une version étoilée ne faisant figurer
+  le suffixe que si \meta{numéro} $<0$, à utiliser par exemple dans un cas tel
+  que le suivant :
+\begin{bodycode}[listing and text]
+Toute la poésie du \century*{19} mérite d'être lue.
 \end{bodycode}
 \end{docCommand}
 
