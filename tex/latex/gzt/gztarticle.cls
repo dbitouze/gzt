@@ -1710,7 +1710,7 @@
   \color{__gzt_default_text_color}%
   \IfBooleanF {#1}%
   {
-    \bool_if:nF { \g__gzt_multicols_bool || \g__gzt_rearviewmirror_rubric_bool}
+    \bool_if:nF { \g__gzt_multicols_bool || \g__gzt_rearviewmirror_rubric_bool || \g__gzt_for_authors_bool}
     {
       \begin{multicols}{2}%
     }
