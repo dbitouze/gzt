@@ -5182,7 +5182,7 @@ This work consists of the file  gzt.dtx
 % We define a public macro for possible acknowledgements to be used by author(s)
 % of articles.
 %    \begin{macrocode}
-\NewDocumentCommand \acknowledgements { m } {
+\NewDocumentCommand \acknowledgements { +m } {
   \@@_article_acknowledgements:n {#1}%
 }
 %    \end{macrocode}
