@@ -1710,7 +1710,8 @@
   \color{__gzt_default_text_color}%
   \IfBooleanF {#1}%
   {
-    \bool_if:nF { \g__gzt_multicols_bool || \g__gzt_rearviewmirror_rubric_bool || \g__gzt_for_authors_bool}
+    \bool_if:nF { \g__gzt_multicols_bool || \g__gzt_rearviewmirror_rubric_bool % || \g__gzt_for_authors_bool
+    }
     {
       \begin{multicols}{2}%
     }
@@ -2315,7 +2316,7 @@
   }%
   {\c__gzt_footer_size_font_tl\thepage}%
 }
-\NewDocumentCommand \acknowledgements { m } {
+\NewDocumentCommand \acknowledgements { +m } {
   \__gzt_article_acknowledgements:n {#1}%
 }
 \NewDocumentCommand \printminibios {  } {
