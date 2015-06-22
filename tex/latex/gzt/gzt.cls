@@ -1760,9 +1760,11 @@
       }{
         \g__gzt_short_title_tl%
       }
-      \bool_if:nF { \tl_if_empty_p:N \g__gzt_short_subtitle_tl || \g__gzt_interview_rubric_bool || \g__gzt_rearviewmirror_rubric_bool }
-      {
-        \space\textendash{}\space\g__gzt_short_subtitle_tl
+      \bool_if:NF {\g__gzt_subtitle_not_in_toc_bool} {
+        \bool_if:nF { \tl_if_empty_p:N \g__gzt_short_subtitle_tl || \g__gzt_interview_rubric_bool || \g__gzt_rearviewmirror_rubric_bool }
+        {
+          \space\textendash{}\space\g__gzt_short_subtitle_tl
+        }
       }
       \bool_if:nF { \tl_if_empty_p:N \l__gzt_people_first_last_names_tl || \g__gzt_interview_rubric_bool || \g__gzt_rearviewmirror_rubric_bool }
       {
