@@ -4016,9 +4016,11 @@ This work consists of the file  gzt.dtx
       }{
         \g_@@_short_title_tl%
       }
-      \bool_if:nF { \tl_if_empty_p:N \g_@@_short_subtitle_tl || \g_@@_interview_rubric_bool || \g_@@_rearviewmirror_rubric_bool }
-      {
-        \space\textendash{}\space\g_@@_short_subtitle_tl
+      \bool_if:NF {\g_@@_subtitle_not_in_toc_bool} {
+        \bool_if:nF { \tl_if_empty_p:N \g_@@_short_subtitle_tl || \g_@@_interview_rubric_bool || \g_@@_rearviewmirror_rubric_bool }
+        {
+          \space\textendash{}\space\g_@@_short_subtitle_tl
+        }
       }
       \bool_if:nF { \tl_if_empty_p:N \l_@@_people_first_last_names_tl || \g_@@_interview_rubric_bool || \g_@@_rearviewmirror_rubric_bool }
       {
