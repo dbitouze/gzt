@@ -4293,8 +4293,7 @@ This work consists of the file  gzt.dtx
   \color{@@_default_text_color}%
   \IfBooleanF {#1}%
   {
-    \bool_if:nF { \g_@@_multicols_bool || \g_@@_rearviewmirror_rubric_bool % || \g_@@_for_authors_bool
-    }
+    \bool_if:nF { \g_@@_multicols_bool || \g_@@_rearviewmirror_rubric_bool }
     {
       \begin{multicols}{2}%
     }
@@ -4303,6 +4302,20 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % \end{macro}
 %
+% In case of "forauthors" option, we close the "multicols" environment in case
+% it isn't closed (which happens if neither "\printbibliography" nor
+% "\printauthorsdetails" is used). This should fix issue
+% \url{https://github.com/dbitouze/gzt/issues/36}.
+%    \begin{macrocode}
+\bool_if:nT { \g_@@_for_authors_bool }
+{
+  \AtEndDocument{%
+    \bool_if:NT {\g_@@_multicols_bool} {
+    \end{multicols}%
+  }
+}
+}
+%    \end{macrocode}
 % We load the configuration file, which has to be located in the \TeX{} search
 % path: at least one such a file is provided by the class and located in the
 % same directory as the class file. This file is loaded at the end of preamble
