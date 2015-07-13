@@ -1936,12 +1936,19 @@
   \color{__gzt_default_text_color}%
   \IfBooleanF {#1}%
   {
-    \bool_if:nF { \g__gzt_multicols_bool || \g__gzt_rearviewmirror_rubric_bool % || \g__gzt_for_authors_bool
-    }
+    \bool_if:nF { \g__gzt_multicols_bool || \g__gzt_rearviewmirror_rubric_bool }
     {
       \begin{multicols}{2}%
     }
   }
+}
+\bool_if:nT { \g__gzt_for_authors_bool }
+{
+  \AtEndDocument{%
+    \bool_if:NT {\g__gzt_multicols_bool} {
+    \end{multicols}%
+  }
+}
 }
 \AtEndPreamble{\file_input:n {\c__gzt_configuration_file_string_tl}}
 \@ifpackageloaded{etoc}{%
