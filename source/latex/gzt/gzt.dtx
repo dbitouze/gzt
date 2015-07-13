@@ -214,7 +214,7 @@ This work consists of the file  gzt.dtx
  }%
 }
 %
-\NewDocumentCommand \frontmatterheadtext {  } {
+\NewDocumentCommand \frontmatterheadtext {} {
   \l__gzt_frontmatter_head_text_tl
 }
 %    \end{macrocode}
@@ -3597,7 +3597,7 @@ This work consists of the file  gzt.dtx
 %   paragraph (\enquote{chapô} in French typography) is (re)defined.
 %    \begin{macrocode}
 \tl_new:N \g_@@_abstract_body_tl
-\NewDocumentEnvironment{abstract}{  }
+\NewDocumentEnvironment{abstract}{}
   {\CollectAbstract}
   {\endCollectAbstract}
 \NewEnviron{CollectAbstract}
@@ -4448,7 +4448,7 @@ This work consists of the file  gzt.dtx
 \newlist{@@_minitoc_list}{itemize}{1}
 \setlist[@@_minitoc_list]{itemsep=2ex,label=\textcolor{@@_cover_itemize_label_color}\textbullet}
 %
-\NewDocumentEnvironment{minitoclist}{  }
+\NewDocumentEnvironment{minitoclist}{}
 {%
   \cs_set_eq:NN \_@@_orig_item \item
   \RenewDocumentCommand \item { s O{} }{%
@@ -5197,7 +5197,7 @@ This work consists of the file  gzt.dtx
 % \item the acknowledgements if not empty.
 % \end{itemize}
 %    \begin{macrocode}
-\NewDocumentCommand \printminibios {  } {
+\NewDocumentCommand \printminibios {} {
   \bool_if:NT {\g_@@_multicols_bool} {
     \end{multicols}%
   }
@@ -5568,12 +5568,12 @@ This work consists of the file  gzt.dtx
 % \begin{macro}{\gztcl}
 % \begin{macro}{\gztarticle}
 %    \begin{macrocode}
-\NewDocumentCommand \gztcl { }
+\NewDocumentCommand \gztcl {}
 {%
   \textsl{\texttt{\c_@@_gzt_class_name_tl}}
   \xspace
 }
-\NewDocumentCommand \gztarticlecl { }
+\NewDocumentCommand \gztarticlecl {}
 {%
   \textsl{\texttt{\c_@@_gztarticle_class_name_tl}}
   \xspace
@@ -5668,7 +5668,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\NewDocumentEnvironment{authorsinstructions}{  }
+\NewDocumentEnvironment{authorsinstructions}{}
 {%
   \begingroup
   \tcbverbatimwrite{\c_@@_authors_instructions_file_tl}
@@ -6416,14 +6416,14 @@ This work consists of the file  gzt.dtx
 %
 \cs_new_protected:Nn \_@@_clone_theorem:nn
 {
-  \NewDocumentEnvironment{#1}{  }
+  \NewDocumentEnvironment{#1}{}
   {
     \begin{#2}
     }
     {
     \end{#2}
   }
-  \NewDocumentEnvironment{#1*}{  }
+  \NewDocumentEnvironment{#1*}{}
   {
     \begin{#2*}
     }
@@ -6455,19 +6455,19 @@ This work consists of the file  gzt.dtx
 \cs_set_eq:NN \_@@_orig_arccos \arccos
 \cs_set_eq:NN \_@@_orig_arcsin \arcsin
 \cs_set_eq:NN \_@@_orig_arctan \arctan
-\RenewDocumentCommand \arccos { } {
+\RenewDocumentCommand \arccos {} {
   \IfLanguageName {french}{\Arccos}{\_@@_orig_arccos}%
 }
-\RenewDocumentCommand \arcsin { } {
+\RenewDocumentCommand \arcsin {} {
   \IfLanguageName {french}{\Arcsin}{\_@@_orig_arcsin}%
 }
-\RenewDocumentCommand \arctan { } {
+\RenewDocumentCommand \arctan {} {
   \IfLanguageName {french}{\Arctan}{\_@@_orig_arctan}%
 }
 \DeclareMathOperator{\ch}{ch}
 \DeclareMathOperator{\sh}{sh}
 \cs_set_eq:NN \_@@_orig_tanh \tanh
-\RenewDocumentCommand \tanh { } {
+\RenewDocumentCommand \tanh {} {
   \IfLanguageName {french}{\operatorname{th}}{\_@@_orig_tanh}%
 }
 \cs_set_eq:NN \_@@_orig_log \log
@@ -6492,25 +6492,25 @@ This work consists of the file  gzt.dtx
 }
 \cs_set_eq:NN \_@@_orig_leq \leq
 \cs_set_eq:NN \_@@_orig_geq \geq
-\RenewDocumentCommand \le { } {%
+\RenewDocumentCommand \le {} {%
   \IfLanguageName {french}{\leqslant}{\_@@_orig_leq}%
 }
-\RenewDocumentCommand \leq { } {%
+\RenewDocumentCommand \leq {} {%
   \IfLanguageName {french}{\leqslant}{\_@@_orig_leq}%
 }
-\RenewDocumentCommand \ge { } {%
+\RenewDocumentCommand \ge {} {%
   \IfLanguageName {french}{\geqslant}{\_@@_orig_geq}%
 }
-\RenewDocumentCommand \geq { } {%
+\RenewDocumentCommand \geq {} {%
   \IfLanguageName {french}{\geqslant}{\_@@_orig_geq}%
 }
-\NewDocumentCommand \N { } {\mathbb{N}}
-\NewDocumentCommand \Z { } {\mathbb{Z}}
-\NewDocumentCommand \D { } {\mathbb{D}}
-\NewDocumentCommand \Q { } {\mathbb{Q}}
-\NewDocumentCommand \R { } {\mathbb{R}}
-\NewDocumentCommand \C { } {\mathbb{C}}
-\NewDocumentCommand \K { } {\mathbb{K}}
+\NewDocumentCommand \N {} {\mathbb{N}}
+\NewDocumentCommand \Z {} {\mathbb{Z}}
+\NewDocumentCommand \D {} {\mathbb{D}}
+\NewDocumentCommand \Q {} {\mathbb{Q}}
+\NewDocumentCommand \R {} {\mathbb{R}}
+\NewDocumentCommand \C {} {\mathbb{C}}
+\NewDocumentCommand \K {} {\mathbb{K}}
 %    \end{macrocode}
 %
 % We define a token list variable that contains the color of the description
