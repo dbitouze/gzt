@@ -92,8 +92,8 @@ finale.
 \end{docCommand}
 
 Les commandes \refCom{title} et \refCom{subtitle} admettent un argument
-optionnel permettant de spécifier comme \oarg{option} un (sous-)titre court au
-moyen de la clé \refKey{short}.
+optionnel permettant de spécifier un (sous-)titre court au moyen de la clé
+\refKey{short}.
 
 \begin{docKey}{short}{=\meta{(sous-)titre court}}{pas de valeur par défaut,
     initialement vide}
@@ -507,9 +507,7 @@ Les environnements \refEnv{gztfigure}, \refEnv{gztfigure*}, \refEnv{gzttable} et
 
 Les exemples suivants illustrent les environnements et options qui viennent
 d'être vus.
-
-% \tcbset{listing options={morekeywords=[2]{title,label}}}
-\begin{bodycode}[listing options={morekeywords={[2]title,label}}]
+\begin{bodycode}[listing options={deletekeywords={[1]{exemple,title,label}},morekeywords={[2]{title,label}}}]
 L'exemple avec $a=-1$ et $b=0$ donne la courbe de la \vref{elliptique}.
 %
 \begin{gztfigure}[title=Courbe elliptique correspondant à l'équation
@@ -570,14 +568,14 @@ le \Package*{biblatex} et le moteur \hologo{biber}. Leur usage est détaillé da
   \begin{enumerate}
   \item \emph{En préambule}, utiliser la commande \docAuxCommand{addbibresource}
     pour indiquer le \meta{fichier bibliographique} à considérer :
-\begin{preamblecode}
+\begin{preamblecode}[listing options={moretexcs={addbibresource}}]
 \addbibresource{"\meta{fichier bibliographique}".bib}
 \end{preamblecode}
   \item Dans le corps du document, utiliser la commande
     \docAuxCommand{autocite}\footnote{De préférence à la commande
       \docAuxCommand{cite}.} du \Package*{biblatex} pour citer les références
     bibliographiques (pourvue d'une \meta{clé}) :
-\begin{bodycode}
+\begin{bodycode}[listing options={moretexcs={autocite}}]
 \autocite{"\meta{clé}"}
 \end{bodycode}
   \item À la fin du document, faire figurer la liste des références
@@ -971,7 +969,7 @@ pas, la commande \refCom{newtheorem} permet d'en créer de nouveaux.
 
 \newtheorem{article}
 \newtheorem[frenchtitle=Fait,style=definition]{fact}
-\begin{preamblecode}
+\begin{preamblecode}[listing options={deletekeywords={[1]{definition}},morekeywords={[3]{definition}}}]
 \newtheorem{article}
 \newtheorem[frenchtitle=Fait,style=definition]{fact}
 \end{preamblecode}
@@ -1067,7 +1065,7 @@ L'environnement \verb|eqnarray| est obsolète et nous préconisons plutôt
 \end{tcboutputlisting}
 L'exemple suivant illustre l'usage de cette option\conseilslatex{}. Le
 code :
-\tcbinputlisting{codes,listing only}
+\tcbinputlisting{codes,listing only,listing options={deletekeywords={listing}}}
 donne :
 \input{\jobname.listing}
 \end{docKey}
@@ -1092,7 +1090,7 @@ pris en charge.
   toute option connue du \Package*{listings}, notamment le langage sous-jacent
   au moyen de l'option \docAuxKey{language}.
 \lstset{escapechar={},escapeinside={}}
-\begin{bodycode}[listing and text,listing options={deletekeywords={listing,[2]style}}]
+\begin{bodycode}[listing and text]
 \lstdefinestyle{mon-style}{%
   language=Python,%
   basicstyle=\ttfamily,%
@@ -1115,11 +1113,11 @@ def factorielle(x):
 
 \begin{docCommand}{gztverb}{\marg{code}}
   Cette commande permet d'afficher \emph{verbatim}\footnote{\Cad*{} tel quel,
-    sans être compilé par \LaTeX{}.} un (court) extrait de \meta{code} passé en
+    sans être interprété par \LaTeX{}.} un (court) extrait de \meta{code} passé en
   argument.
 
   L'exemple suivant illustre l'usage de cette commande\conseilslatex.
-\begin{bodycode}[listing and text,colback=white,listing options={deletekeywords={[3]style}}]
+\begin{bodycode}[listing and text,colback=white,listing options={deletekeywords={listing},deletekeywords={[3]style}}]
 Dans le cas de \LaTeX, les commandes de style de caractères \gztverb{\bf},
 \gztverb{\it}, \gztverb{\sf}, \gztverb{\tt}, \gztverb{\sc}, \gztverb{\sl},
 \gztverb{\rm} sont désormais à proscrire. Elles doivent être remplacées par
@@ -1194,12 +1192,11 @@ même si elles comportent des caractères spéciaux de \TeX{} (|#|, |_|, |~|,
     quelle}\footnote{Notamment sans faire précéder les éventuels caractères
     spéciaux qu'elle contient de la commande d'échappement
     \protect\lstinline+\\+.} et fait d'elle un lien hypertexte.
-\begin{bodycode}[listing and text,listing options={deletekeywords={[2]url,math}}]
+\begin{bodycode}[listing and text,listing options={deletekeywords={[2]{url}},deletekeywords={[1]{math}}}]
 Pour plus d'information, nous renvoyons à notre site Web
 \url{http://math.univ-lille1.fr/~nwejm/}.
 \end{bodycode}
-  \lstset{deletekeywords={[2]url,[1]exemple}}%
-\begin{bodycode}[listing and text,listing options={deletekeywords={[2]url,[1]exemple}}]
+\begin{bodycode}[listing and text,listing options={deletekeywords={[2]{url}},deletekeywords={[1]{exemple}}}]
 Par exemple, \url{www.cnrs.fr/insmi/IMG/pdf/Parite_ReunionDU290312.pdf}.
 \end{bodycode}
 \end{docCommand}
@@ -1260,11 +1257,16 @@ Le \Package*{epigraph} permet de composer des épigraphes au moyen de la command
 \begin{dbremark}{Source de l'épigraphe en entrée bibliographique}{}
   La source de l'épigraphe pourra faire l'objet d'une entrée bibliographique en
   vue d'être citée en 2\ieme{} argument de \refCom{epigraph} au moyen de la
-  commande |\fullcite| du \Package*{biblatex}
-  (cf. \vref{sec-bibliographie}).\footnote{%
+  commande \lstinline[moretexcs={fullcite}]+\fullcite+ du \Package*{biblatex}
+  (cf. \vref{sec-bibliographie}).%
+  \footnote{%
+    \lstset{deletekeywords={options},deletekeywords={[2]skipbib},morekeywords={[2]{options}},morekeywords={[3]skipbib}}%
     Dans le fichier \hologo{BibTeX}, on ajoutera à cette entrée la ligne
-    \protect\lstinline+options = {skipbib}+ pour éviter que cette source figure
-    dans la liste des références bibliographiques.%
+    %
+    \protect\lstinline+options = \{skipbib\}+
+    %
+    pour éviter que cette source figure dans la liste des
+    références bibliographiques.%
   }
 \end{dbremark}
 
@@ -1318,7 +1320,7 @@ paragraphe\footnote{Le but premier de ce package est de personnaliser les listes
 \item Les données que j'ai rassemblées [...]
 \item Les données que j'ai recueillies sont
   \begin{enumerate*}
-  \item disponibles publiquement sur internet : [...]
+  \item disponibles publiquement sur internet : [...] ;
   \item accessibles par Wikipédia, [...] ;
   \item pour 60 des conférenciers [...].
   \end{enumerate*}
@@ -1328,20 +1330,17 @@ paragraphe\footnote{Le but premier de ce package est de personnaliser les listes
 \section{Canevas de fichier source typique}
 \label{sec-canevas-de-fichier}
 
-Le lecteur souhaitant écrire un article pour la \gzt*{} trouvera ci-dessous un
-canevas de fichier source dont il pourra faire un copié-collé\footnote{La
-  plupart des afficheurs \textsc{pdf} permetttent de sélectionner et de copier
-  du texte.}. Il s'agit d'un modèle typique d'article standard où les commandes
-et environnement moins fréquents ont été mis en commentaire.
-
-\begin{bodycode}
+\newcommand{\attachfilename}{mon-article.tex}%
+\newcommand{\attachfiletextlink}{Canevas de fichier source typique}%
+\tcbset{listing file=\attachfilename}%
+\begin{tcboutputlisting}
 \documentclass{gztarticle}
 %
 % Indiquer le (chemin vers le) fichier .bib utilisé.
-\addbibresource{....bib}
+\addbibresource{.bib}
 %
 \begin{document}
-\title[short=]{}
+\title{}
 % \subtitle[short=]{}
 %
 \author[%
@@ -1365,9 +1364,21 @@ et environnement moins fréquents ont été mis en commentaire.
 % Ici vient le contenu de l'article.
 
 %
-\printbibliography % ou \printminibios
+\printbibliography % ou \printauthorsdetails
 \end{document}
-\end{bodycode}
+\end{tcboutputlisting}
+%
+Pour le lecteur souhaitant écrire un article pour la \gzt*{}, un modèle typique
+d'article standard\footnote{Où les commandes et environnement moins fréquents
+  ont été mis en commentaire.} est :
+\begin{itemize}
+\item reproduit ci-dessous ;
+\item attaché à la version \format{pdf} du présent document et atteignable par
+  simple clic sur l'icone ci-dessous.
+\end{itemize}
+%
+\tcbinputlisting{codes,listing only,listing
+  options={moretexcs={addbibresource}},title={\attachfiletextlink~\attachfile[icon=Paperclip]{\attachfilename}}}
 
 \iffalse
 %%% Local Variables:
