@@ -287,40 +287,54 @@
 \dim_new:N \l__gzt_rubrics_head_text_width_dim
 \dim_const:Nn \c__gzt_layoutheight_dim { 270mm}
 \dim_const:Nn \c__gzt_layoutwidth_dim  { 210mm}
-\dim_const:Nn \c__gzt_future_layoutoffset_dim { 5mm}
+\dim_const:Nn \c__gzt_printer_layoutoffset_dim { 5mm}
 \bool_if:NTF {\g__gzt_for_printer_bool} {
-  \dim_const:Nn \c__gzt_layoutoffset_dim { \c__gzt_future_layoutoffset_dim}
+  \dim_const:Nn \c__gzt_potential_layoutoffset_dim { \c__gzt_printer_layoutoffset_dim}
 }{
-  \dim_const:Nn \c__gzt_layoutoffset_dim {\c_zero_dim}
+  \dim_const:Nn \c__gzt_potential_layoutoffset_dim {\c_zero_dim}
 }
+\int_const:Nn \c__gzt_thresold_a_int {68}
+\int_const:Nn \c__gzt_thresold_b_int {80}
+\int_const:Nn \c__gzt_thresold_c_int {88}
+\int_const:Nn \c__gzt_thresold_d_int {96}
+\int_const:Nn \c__gzt_thresold_e_int {104}
+\int_const:Nn \c__gzt_thresold_f_int {120}
+\dim_const:Nn \c__gzt_bindingoffset_a_dim {3mm}
+\dim_const:Nn \c__gzt_bindingoffset_b_dim {3.5mm}
+\dim_const:Nn \c__gzt_bindingoffset_c_dim {3.9mm}
+\dim_const:Nn \c__gzt_bindingoffset_d_dim {4.1mm}
+\dim_const:Nn \c__gzt_bindingoffset_e_dim {4.5mm}
+\dim_const:Nn \c__gzt_bindingoffset_f_dim {5mm}
 \zexternaldocument[self]{\jobname}%
-\int_new:N \g__gzt_total_page_number_int%
-\int_gset:Nn \g__gzt_total_page_number_int { \zref@extractdefault{selfLastPage}{abspage}{0} }
-\int_compare:nNnTF {\g__gzt_total_page_number_int-4}<{68}
+\int_new:N \g__gzt_total_pages_number_int%
+\int_new:N \g__gzt_total_inside_pages_number_int%
+\int_gset:Nn \g__gzt_total_pages_number_int { \zref@extractdefault{selfLastPage}{abspage}{0} }
+\int_gset:Nn \g__gzt_total_inside_pages_number_int { \g__gzt_total_pages_number_int - 4 }
+\int_compare:nNnTF {\g__gzt_total_inside_pages_number_int}<{\c__gzt_thresold_a_int}
 {
-  \dim_const:Nn \c__gzt_future_bindingoffset_dim { \c_zero_dim }
+  \dim_const:Nn \c__gzt_printer_bindingoffset_dim { \c_zero_dim }
 }{
-  \int_compare:nNnTF {\g__gzt_total_page_number_int-4}<{80}
+  \int_compare:nNnTF {\g__gzt_total_inside_pages_number_int}<{\c__gzt_thresold_b_int}
   {
-    \dim_const:Nn \c__gzt_future_bindingoffset_dim { 3mm }
+    \dim_const:Nn \c__gzt_printer_bindingoffset_dim { \c__gzt_bindingoffset_a_dim }
   }{
-    \int_compare:nNnTF {\g__gzt_total_page_number_int-4}<{88}
+    \int_compare:nNnTF {\g__gzt_total_inside_pages_number_int}<{\c__gzt_thresold_c_int}
     {
-      \dim_const:Nn \c__gzt_future_bindingoffset_dim { 3.5mm }
+      \dim_const:Nn \c__gzt_printer_bindingoffset_dim { \c__gzt_bindingoffset_b_dim }
     }{
-      \int_compare:nNnTF {\g__gzt_total_page_number_int-4}<{96}
+      \int_compare:nNnTF {\g__gzt_total_inside_pages_number_int}<{\c__gzt_thresold_d_int}
       {
-        \dim_const:Nn \c__gzt_future_bindingoffset_dim { 3.9mm }
+        \dim_const:Nn \c__gzt_printer_bindingoffset_dim { \c__gzt_bindingoffset_c_dim }
       }{
-        \int_compare:nNnTF {\g__gzt_total_page_number_int-4}<{104}
+        \int_compare:nNnTF {\g__gzt_total_inside_pages_number_int}<{\c__gzt_thresold_e_int}
         {
-          \dim_const:Nn \c__gzt_future_bindingoffset_dim { 4.1mm }
+          \dim_const:Nn \c__gzt_printer_bindingoffset_dim { \c__gzt_bindingoffset_d_dim }
         }{
-          \int_compare:nNnTF {\g__gzt_total_page_number_int-4}<{120}
+          \int_compare:nNnTF {\g__gzt_total_inside_pages_number_int}<{\c__gzt_thresold_f_int}
           {
-            \dim_const:Nn \c__gzt_future_bindingoffset_dim { 4.5mm }
+            \dim_const:Nn \c__gzt_printer_bindingoffset_dim { \c__gzt_bindingoffset_e_dim }
           }{
-            \dim_const:Nn \c__gzt_future_bindingoffset_dim { 5mm }
+            \dim_const:Nn \c__gzt_printer_bindingoffset_dim { \c__gzt_bindingoffset_f_dim }
           }
         }
       }
@@ -328,33 +342,33 @@
   }
 }
 \bool_if:NTF {\g__gzt_cover_bool} {
-  \dim_const:Nn \c__gzt_bindingoffset_dim { \c__gzt_future_bindingoffset_dim }
+  \dim_const:Nn \c__gzt_potential_bindingoffset_dim { \c__gzt_printer_bindingoffset_dim }
 }{
-  \dim_const:Nn \c__gzt_bindingoffset_dim {\c_zero_dim}
+  \dim_const:Nn \c__gzt_potential_bindingoffset_dim {\c_zero_dim}
 }
-\dim_const:Nn \c__gzt_paperheight_dim { \c__gzt_layoutheight_dim+2\c__gzt_layoutoffset_dim}
+\dim_const:Nn \c__gzt_paperheight_dim { \c__gzt_layoutheight_dim+2\c__gzt_potential_layoutoffset_dim}
 \bool_if:NTF {\g__gzt_cover_bool} {
   \dim_const:Nn \c__gzt_paperwidth_dim  {
     \c__gzt_layoutwidth_dim
     +
-    \c__gzt_layoutoffset_dim
-    +\c__gzt_bindingoffset_dim
+    \c__gzt_potential_layoutoffset_dim
+    +\c__gzt_potential_bindingoffset_dim
   }
 }{
   \dim_const:Nn \c__gzt_paperwidth_dim  {
     \c__gzt_layoutwidth_dim
     +
     2
-    \c__gzt_layoutoffset_dim
-    +\c__gzt_bindingoffset_dim
+    \c__gzt_potential_layoutoffset_dim
+    +\c__gzt_potential_bindingoffset_dim
   }
 }
 \dim_const:Nn \c__gzt_frontcover_image_width_dim {
     \c__gzt_layoutwidth_dim
     +
-    \c__gzt_future_layoutoffset_dim
+    \c__gzt_printer_layoutoffset_dim
 }
-\dim_const:Nn \c__gzt_topmargin_dim   {  31mm}
+\dim_const:Nn \c__gzt_topmargin_dim   { 31mm}
 \dim_const:Nn \c__gzt_topmargin_frontcover_dim {
   \c__gzt_topmargin_dim
   + 30mm
@@ -366,11 +380,11 @@
 \dim_const:Nn \c__gzt_topmargin_front_matter_dim   {
   \c__gzt_topmargin_inside_cover_dim
 }
-\dim_const:Nn \c__gzt_headsep_dim     {  24mm}
+\dim_const:Nn \c__gzt_headsep_dim     { 24mm}
 \dim_const:Nn \c__gzt_headsep_frontcover_dim {
   \c__gzt_headsep_dim
   +31mm
-  -\c__gzt_layoutoffset_dim
+  % -\c__gzt_potential_layoutoffset_dim
 }
 \dim_const:Nn \c__gzt_headsep_inside_frontcover_dim {
   \c__gzt_headsep_dim
@@ -380,15 +394,15 @@
   \c__gzt_headsep_inside_frontcover_dim
 }
 \dim_const:Nn \c__gzt_headheight_dim  { \c_zero_dim }
-\dim_const:Nn \c__gzt_botmargin_dim   {  30mm}
-\dim_const:Nn \c__gzt_footskip_dim    {  26mm}
-\dim_const:Nn \c__gzt_shift_margin_dim { 5mm }
-\dim_const:Nn \c__gzt_innermargin_dim { 15mm - \c__gzt_bindingoffset_dim + \c__gzt_shift_margin_dim}
-\dim_const:Nn \c__gzt_outermargin_dim { 30mm - \c__gzt_shift_margin_dim }
+\dim_const:Nn \c__gzt_botmargin_dim   { 30mm}
+\dim_const:Nn \c__gzt_footskip_dim    { 26mm}
+\dim_const:Nn \c__gzt_extra_margin_dim { 5mm }
+\dim_const:Nn \c__gzt_innermargin_dim { 15mm - \c__gzt_potential_bindingoffset_dim + \c__gzt_extra_margin_dim}
+\dim_const:Nn \c__gzt_outermargin_dim { 30mm - \c__gzt_extra_margin_dim }
 \dim_const:Nn \c__gzt_inside_cover_box_width_dim { 165mm }%
 \dim_const:Nn \c__gzt_innermargin_inside_cover_dim {
   (\c__gzt_layoutwidth_dim - \c__gzt_inside_cover_box_width_dim)/2
-  - \c__gzt_bindingoffset_dim
+  - \c__gzt_potential_bindingoffset_dim
   % + \c__gzt_adjustmargin_dim
 }
 \dim_const:Nn \c__gzt_outermargin_inside_cover_dim {
@@ -399,35 +413,35 @@
 \dim_const:Nn \c__gzt_outermargin_backcover_dim { \c__gzt_innermargin_backcover_dim }
 \dim_const:Nn \c__gzt_topmargin_backcover_dim { \c__gzt_innermargin_backcover_dim }
 \dim_const:Nn \c__gzt_bottommargin_backcover_dim { \c__gzt_innermargin_backcover_dim }
-\dim_const:Nn \c__gzt_frontcover_image_height_dim {  160mm}
+\dim_const:Nn \c__gzt_frontcover_image_height_dim { 160mm}
 \dim_const:Nn \c__gzt_radius_arc_dim { 85mm }%
 \dim_const:Nn \c__gzt_frontmatter_headtext_xshift_dim { 19mm }%
 \dim_const:Nn \c__gzt_frontmatter_headtext_o_xshift_dim {
-  -\c__gzt_frontmatter_headtext_xshift_dim  -\c__gzt_layoutoffset_dim%
+  -\c__gzt_frontmatter_headtext_xshift_dim  -\c__gzt_potential_layoutoffset_dim%
 }%
 \dim_const:Nn \c__gzt_frontmatter_headtext_e_xshift_dim {
-  \c__gzt_frontmatter_headtext_xshift_dim  +\c__gzt_layoutoffset_dim%
+  \c__gzt_frontmatter_headtext_xshift_dim  +\c__gzt_potential_layoutoffset_dim%
 }%
-\dim_const:Nn \c__gzt_frontmatter_headtext_yshift_dim { -6.5mm-\c__gzt_layoutoffset_dim }%
-\dim_const:Nn \c__gzt_header_line_width_dim    {  0.25mm}
-\dim_const:Nn \c__gzt_header_line_yshift_dim {  -1mm-\c__gzt_header_line_width_dim}%
-\dim_const:Nn \c__gzt_footer_background_height_dim    { 10mm + \c__gzt_layoutoffset_dim }
-\dim_const:Nn \c__gzt_front_matter_extra_innermargin_dim    {  28mm }
-\dim_const:Nn \c__gzt_front_matter_extra_outermargin_dim    {  7mm }
+\dim_const:Nn \c__gzt_frontmatter_headtext_yshift_dim { -6.5mm-\c__gzt_potential_layoutoffset_dim }%
+\dim_const:Nn \c__gzt_header_line_width_dim    { 0.25mm}
+\dim_const:Nn \c__gzt_header_line_yshift_dim { -1mm-\c__gzt_header_line_width_dim}%
+\dim_const:Nn \c__gzt_footer_background_height_dim    { 10mm + \c__gzt_potential_layoutoffset_dim }
+\dim_const:Nn \c__gzt_front_matter_extra_innermargin_dim    { 28mm }
+\dim_const:Nn \c__gzt_front_matter_extra_outermargin_dim    { 7mm }
 \dim_const:Nn \c__gzt_inside_cover_offset_dim { \c_zero_dim }%
 \dim_const:Nn \c__gzt_pictogram_width_dim { 23mm }%
 \dim_const:Nn \c__gzt_header_xshift_dim { \c__gzt_pictogram_width_dim-6mm }%
 \dim_const:Nn \c__gzt_header_yshift_dim { 5mm }%
-\dim_const:Nn \c__gzt_xshift_arccircle_A_dim { \c__gzt_rubrics_abstract_width_dim+\c__gzt_innermargin_dim+10mm+\c__gzt_layoutoffset_dim }%
-\dim_const:Nn \c__gzt_yshift_arccircle_A_dim { -22mm-\c__gzt_layoutoffset_dim }%
+\dim_const:Nn \c__gzt_xshift_arccircle_A_dim { \c__gzt_rubrics_abstract_width_dim+\c__gzt_innermargin_dim+10mm+\c__gzt_potential_layoutoffset_dim }%
+\dim_const:Nn \c__gzt_yshift_arccircle_A_dim { -22mm-\c__gzt_potential_layoutoffset_dim }%
 \dim_const:Nn \c__gzt_xshift_arccircle_B_dim {%
   (\c__gzt_rubrics_abstract_width_dim+\c__gzt_innermargin_dim)/2%
   % \c__gzt_innermargin_dim+(\c__gzt_rubrics_abstract_width_dim/2)%
   % \c__gzt_xshift_arccircle_A_dim/2
 }%
-\dim_const:Nn \c__gzt_yshift_arccircle_B_dim { -\c__gzt_layoutoffset_dim }%
-\dim_const:Nn \c__gzt_xshift_arccircle_C_dim { \c__gzt_layoutoffset_dim-5mm }%
-\dim_const:Nn \c__gzt_yshift_arccircle_C_dim { -19.75mm-\c__gzt_layoutoffset_dim }%
+\dim_const:Nn \c__gzt_yshift_arccircle_B_dim { -\c__gzt_potential_layoutoffset_dim }%
+\dim_const:Nn \c__gzt_xshift_arccircle_C_dim { \c__gzt_potential_layoutoffset_dim-5mm }%
+\dim_const:Nn \c__gzt_yshift_arccircle_C_dim { -19.75mm-\c__gzt_potential_layoutoffset_dim }%
 \dim_const:Nn \c__gzt_book_review_frontcover_extend_dim { 12mm }%
 \dim_const:Nn \c__gzt_tcb_left_dim { 4mm }%
 \dim_const:Nn \c__gzt_tcb_boxsep_dim { 1mm }%
@@ -461,50 +475,50 @@
 \bool_if:NTF {\g__gzt_cover_bool} {
   \tl_const:Nn \c__gzt_frontcover_geometry_tl {%
     ,layoutsize={\c__gzt_layoutwidth_dim,\c__gzt_layoutheight_dim}
-    ,layoutvoffset=\c__gzt_layoutoffset_dim
-    ,bindingoffset=\c__gzt_bindingoffset_dim
+    ,layoutvoffset=\c__gzt_potential_layoutoffset_dim
+    ,bindingoffset=\c__gzt_potential_bindingoffset_dim
     ,top=\c__gzt_topmargin_frontcover_dim
     ,headsep=\c__gzt_headsep_frontcover_dim
     ,headheight=\c__gzt_headheight_dim
     ,bottom=\c_zero_dim
     ,footskip=\c_zero_dim
     ,outer=\c_zero_dim
-    ,inner=\c__gzt_layoutoffset_dim
+    ,inner=\c__gzt_potential_layoutoffset_dim
     ,nomarginpar%
   }%
 }{
   \tl_const:Nn \c__gzt_frontcover_geometry_tl {%
     ,layoutsize={\c__gzt_layoutwidth_dim,\c__gzt_layoutheight_dim}
-    ,layoutoffset=\c__gzt_layoutoffset_dim
-    ,bindingoffset=\c__gzt_bindingoffset_dim
+    ,layoutoffset=\c__gzt_potential_layoutoffset_dim
+    ,bindingoffset=\c__gzt_potential_bindingoffset_dim
     ,top=\c__gzt_topmargin_frontcover_dim
     ,headsep=\c__gzt_headsep_frontcover_dim
     ,headheight=\c__gzt_headheight_dim
     ,bottom=\c_zero_dim
     ,footskip=\c_zero_dim
-    ,hmargin=\c__gzt_layoutoffset_dim
+    ,hmargin=\c__gzt_potential_layoutoffset_dim
     ,nomarginpar%
   }%
 }
 \bool_if:NTF {\g__gzt_cover_bool} {
   \tl_const:Nn \c__gzt_inside_cover_geometry_tl {%
     ,layoutsize={\c__gzt_layoutwidth_dim,\c__gzt_layoutheight_dim}
-    ,layoutvoffset=\c__gzt_layoutoffset_dim
-    ,bindingoffset=\c__gzt_bindingoffset_dim
+    ,layoutvoffset=\c__gzt_potential_layoutoffset_dim
+    ,bindingoffset=\c__gzt_potential_bindingoffset_dim
     ,top=\c__gzt_topmargin_inside_cover_dim
     ,headheight=\c__gzt_headheight_dim
     ,headsep=\c__gzt_headsep_inside_frontcover_dim
     ,bottom=\c__gzt_botmargin_dim
     ,footskip=\c__gzt_footskip_dim
-    ,inner=\c__gzt_innermargin_inside_cover_dim-\c__gzt_layoutoffset_dim
-    ,outer=\c__gzt_outermargin_inside_cover_dim+\c__gzt_layoutoffset_dim
+    ,inner=\c__gzt_innermargin_inside_cover_dim-\c__gzt_potential_layoutoffset_dim
+    ,outer=\c__gzt_outermargin_inside_cover_dim+\c__gzt_potential_layoutoffset_dim
     ,nomarginpar%
   }%
 }{
   \tl_const:Nn \c__gzt_inside_cover_geometry_tl {%
     ,layoutsize={\c__gzt_layoutwidth_dim,\c__gzt_layoutheight_dim}
-    ,layoutoffset=\c__gzt_layoutoffset_dim
-    ,bindingoffset=\c__gzt_bindingoffset_dim
+    ,layoutoffset=\c__gzt_potential_layoutoffset_dim
+    ,bindingoffset=\c__gzt_potential_bindingoffset_dim
     ,top=\c__gzt_topmargin_inside_cover_dim
     ,headheight=\c__gzt_headheight_dim
     ,headsep=\c__gzt_headsep_inside_frontcover_dim
@@ -517,8 +531,8 @@
 }
 \tl_const:Nn \c__gzt_front_matter_geometry_tl {%
   ,layoutsize={\c__gzt_layoutwidth_dim,\c__gzt_layoutheight_dim}
-  ,layoutoffset=\c__gzt_layoutoffset_dim
-  % ,bindingoffset=\c__gzt_bindingoffset_dim
+  ,layoutoffset=\c__gzt_potential_layoutoffset_dim
+  % ,bindingoffset=\c__gzt_potential_bindingoffset_dim
   ,top=\c__gzt_topmargin_front_matter_dim%
   ,headheight=\c__gzt_headheight_dim
   ,headsep=\c__gzt_headsep_front_matter_dim
@@ -530,8 +544,8 @@
 }%
 \tl_const:Nn \c__gzt_main_geometry_tl {%
   ,layoutsize={\c__gzt_layoutwidth_dim,\c__gzt_layoutheight_dim}
-  ,layoutoffset=\c__gzt_layoutoffset_dim
-  % ,bindingoffset=\c__gzt_bindingoffset_dim
+  ,layoutoffset=\c__gzt_potential_layoutoffset_dim
+  % ,bindingoffset=\c__gzt_potential_bindingoffset_dim
   ,top=\c__gzt_topmargin_dim-15mm%
   ,headheight=\c__gzt_headheight_dim
   ,headsep=\c__gzt_headsep_dim-18mm
@@ -542,8 +556,8 @@
 }%
 \tl_const:Nn \c__gzt_backcover_geometry_tl {%
   ,layoutsize={\c__gzt_layoutwidth_dim,\c__gzt_layoutheight_dim}
-  ,layoutoffset=\c__gzt_layoutoffset_dim
-  % ,bindingoffset=\c__gzt_bindingoffset_dim
+  ,layoutoffset=\c__gzt_potential_layoutoffset_dim
+  % ,bindingoffset=\c__gzt_potential_bindingoffset_dim
   ,top=\c__gzt_topmargin_backcover_dim%
   % ,top=\c__gzt_topmargin_dim-15mm%
   % ,headheight=\c__gzt_headheight_dim
@@ -1008,22 +1022,22 @@
   \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_frontcover_geometry_tl}%
   \noindent%
   \bool_if:NTF {\g__gzt_cover_bool} {
-    \hspace*{-\c__gzt_layoutoffset_dim}
+    \hspace*{-\c__gzt_potential_layoutoffset_dim}
   }{
-    \hspace*{-2\c__gzt_layoutoffset_dim}
+    \hspace*{-2\c__gzt_potential_layoutoffset_dim}
   }
   \includegraphics[
   width=\c__gzt_frontcover_image_width_dim
   % min~width=\paperwidth
-  % width=\c__gzt_layoutwidth_dim + 2\c__gzt_layoutoffset_dim
-  % min~size={\paperwidth}{\c__gzt_frontcover_image_height_dim+\c__gzt_layoutoffset_dim},
-  % max~size={\paperwidth}{\c__gzt_frontcover_image_height_dim+\c__gzt_layoutoffset_dim},
+  % width=\c__gzt_layoutwidth_dim + 2\c__gzt_potential_layoutoffset_dim
+  % min~size={\paperwidth}{\c__gzt_frontcover_image_height_dim+\c__gzt_potential_layoutoffset_dim},
+  % max~size={\paperwidth}{\c__gzt_frontcover_image_height_dim+\c__gzt_potential_layoutoffset_dim},
   % Clip*=0mm~40mm~211mm~160mm
   % Clip*=0mm~{\height-\c__gzt_frontcover_image_height_dim}~{\paperwidth}~{\height}
   ]{\c__gzt_issue_frontcover_image_path_string_tl}
   \begin{tikzpicture}[remember~picture, overlay]
     \coordinate (__gzt_circle_minitoc_center) at
-    ([xshift=\g__gzt_minitoc_xshift_dim-\c__gzt_layoutoffset_dim,yshift=\g__gzt_minitoc_yshift_dim+\c__gzt_layoutoffset_dim]current~page.south~east) ;
+    ([xshift=\g__gzt_minitoc_xshift_dim-\c__gzt_potential_layoutoffset_dim,yshift=\g__gzt_minitoc_yshift_dim+\c__gzt_potential_layoutoffset_dim]current~page.south~east) ;
     \node[name=__gzt_circle_minitoc,shape=circle,inner~sep=\c_zero_dim,fill=white,text~width=\g__gzt_minitoc_circle_diameter_dim] at
     (__gzt_circle_minitoc_center) {};
     \node[text~width=\g__gzt_minitoc_textwidth_dim,anchor=north~west] at
@@ -1043,15 +1057,15 @@
     \small
     \begin{tikzpicture}[remember~picture, overlay]
       \node[name=__gzt_binding_sw,inner~sep=\c_zero_dim,fill=white,rotate=90,anchor=west] at
-      ([xshift=0.45\c__gzt_bindingoffset_dim,yshift=15mm+\c__gzt_layoutoffset_dim]current~page.south~west) {
+      ([xshift=0.45\c__gzt_potential_bindingoffset_dim,yshift=15mm+\c__gzt_potential_layoutoffset_dim]current~page.south~west) {
         \No\int_use:N\g__gzt_issue_number_int
       };
       \node[name=__gzt_binding_w,inner~sep=\c_zero_dim,fill=white,rotate=90] at
-      ([xshift=0.45\c__gzt_bindingoffset_dim]current~page.west) {
+      ([xshift=0.45\c__gzt_potential_bindingoffset_dim]current~page.west) {
         \MakeUppercase{\c__gzt_journal_title_string_tl}
       };
       \node[name=__gzt_binding_nw,inner~sep=\c_zero_dim,fill=white,rotate=90,anchor=east] at
-      ([xshift=0.45\c__gzt_bindingoffset_dim,yshift=-15mm-\c__gzt_layoutoffset_dim]current~page.north~west) {
+      ([xshift=0.45\c__gzt_potential_bindingoffset_dim,yshift=-15mm-\c__gzt_potential_layoutoffset_dim]current~page.north~west) {
         \l__gzt_uppercased_date_format\displaydate{__gzt_date}
       };
     \end{tikzpicture}
@@ -1059,7 +1073,7 @@
   \vfill%
   \noindent%
   \hspace*{10mm}%
-  \hspace*{-\c__gzt_layoutoffset_dim}
+  \hspace*{-\c__gzt_potential_layoutoffset_dim}
   \includegraphics[height=22.5mm]{\c__gzt_smf_logo_file_string_tl}%
   \vfill%
   \clearpage%
@@ -1397,7 +1411,7 @@
 }
 \iow_open:Nn \g__gzt_bib_out_iow { \c__gzt_issue_bib_path_string_tl }
 \tl_new:N \g__gzt_abstract_body_tl
-\NewDocumentEnvironment{abstract}{  }
+\NewDocumentEnvironment{abstract}{}
   {\CollectAbstract}
   {\endCollectAbstract}
 \NewEnviron{CollectAbstract}
@@ -1528,7 +1542,7 @@
 {%
   \begin{tikzpicture}[remember~picture,overlay]
     \draw[fill=__gzt_circlerule_color,draw=__gzt_circlerule_color,line~width=0.7mm]
-    ([xshift=-\c__gzt_innermargin_dim-\c__gzt_layoutoffset_dim]0,0 -| current~page.west) -- (\linewidth,0);%
+    ([xshift=-\c__gzt_innermargin_dim-\c__gzt_potential_layoutoffset_dim]0,0 -| current~page.west) -- (\linewidth,0);%
     \fill[__gzt_circlerule_color] (\linewidth-2\pgflinewidth,0) circle [radius=2.75mm];
   \end{tikzpicture}%
 }%
@@ -1898,7 +1912,7 @@
 }
 \newlist{__gzt_minitoc_list}{itemize}{1}
 \setlist[__gzt_minitoc_list]{itemsep=2ex,label=\textcolor{__gzt_cover_itemize_label_color}\textbullet}
-\NewDocumentEnvironment{minitoclist}{  }
+\NewDocumentEnvironment{minitoclist}{}
 {%
   \cs_set_eq:NN \__gzt_orig_item \item
   \RenewDocumentCommand \item { s O{} }{%
@@ -2321,7 +2335,7 @@
 \NewDocumentCommand \acknowledgements { +m } {
   \__gzt_article_acknowledgements:n {#1}%
 }
-\NewDocumentCommand \printminibios {  } {
+\NewDocumentCommand \printminibios {} {
   \bool_if:NT {\g__gzt_multicols_bool} {
     \end{multicols}%
   }
@@ -2489,12 +2503,12 @@
   }
   \xspace
 }
-\NewDocumentCommand \gztcl { }
+\NewDocumentCommand \gztcl {}
 {%
   \textsl{\texttt{\c__gzt_gzt_class_name_tl}}
   \xspace
 }
-\NewDocumentCommand \gztarticlecl { }
+\NewDocumentCommand \gztarticlecl {}
 {%
   \textsl{\texttt{\c__gzt_gztarticle_class_name_tl}}
   \xspace
@@ -2564,7 +2578,7 @@
 {
   \__gzt_epigraph:nn {#1}{#2}%
 }
-\NewDocumentEnvironment{authorsinstructions}{  }
+\NewDocumentEnvironment{authorsinstructions}{}
 {%
   \begingroup
   \tcbverbatimwrite{\c__gzt_authors_instructions_file_tl}
@@ -3029,14 +3043,14 @@
 \newtheorem[style=proof,frenchtitle=Preuve]{proof}
 \cs_new_protected:Nn \__gzt_clone_theorem:nn
 {
-  \NewDocumentEnvironment{#1}{  }
+  \NewDocumentEnvironment{#1}{}
   {
     \begin{#2}
     }
     {
     \end{#2}
   }
-  \NewDocumentEnvironment{#1*}{  }
+  \NewDocumentEnvironment{#1*}{}
   {
     \begin{#2*}
     }
@@ -3061,19 +3075,19 @@
 \cs_set_eq:NN \__gzt_orig_arccos \arccos
 \cs_set_eq:NN \__gzt_orig_arcsin \arcsin
 \cs_set_eq:NN \__gzt_orig_arctan \arctan
-\RenewDocumentCommand \arccos { } {
+\RenewDocumentCommand \arccos {} {
   \IfLanguageName {french}{\Arccos}{\__gzt_orig_arccos}%
 }
-\RenewDocumentCommand \arcsin { } {
+\RenewDocumentCommand \arcsin {} {
   \IfLanguageName {french}{\Arcsin}{\__gzt_orig_arcsin}%
 }
-\RenewDocumentCommand \arctan { } {
+\RenewDocumentCommand \arctan {} {
   \IfLanguageName {french}{\Arctan}{\__gzt_orig_arctan}%
 }
 \DeclareMathOperator{\ch}{ch}
 \DeclareMathOperator{\sh}{sh}
 \cs_set_eq:NN \__gzt_orig_tanh \tanh
-\RenewDocumentCommand \tanh { } {
+\RenewDocumentCommand \tanh {} {
   \IfLanguageName {french}{\operatorname{th}}{\__gzt_orig_tanh}%
 }
 \cs_set_eq:NN \__gzt_orig_log \log
@@ -3098,25 +3112,25 @@
 }
 \cs_set_eq:NN \__gzt_orig_leq \leq
 \cs_set_eq:NN \__gzt_orig_geq \geq
-\RenewDocumentCommand \le { } {%
+\RenewDocumentCommand \le {} {%
   \IfLanguageName {french}{\leqslant}{\__gzt_orig_leq}%
 }
-\RenewDocumentCommand \leq { } {%
+\RenewDocumentCommand \leq {} {%
   \IfLanguageName {french}{\leqslant}{\__gzt_orig_leq}%
 }
-\RenewDocumentCommand \ge { } {%
+\RenewDocumentCommand \ge {} {%
   \IfLanguageName {french}{\geqslant}{\__gzt_orig_geq}%
 }
-\RenewDocumentCommand \geq { } {%
+\RenewDocumentCommand \geq {} {%
   \IfLanguageName {french}{\geqslant}{\__gzt_orig_geq}%
 }
-\NewDocumentCommand \N { } {\mathbb{N}}
-\NewDocumentCommand \Z { } {\mathbb{Z}}
-\NewDocumentCommand \D { } {\mathbb{D}}
-\NewDocumentCommand \Q { } {\mathbb{Q}}
-\NewDocumentCommand \R { } {\mathbb{R}}
-\NewDocumentCommand \C { } {\mathbb{C}}
-\NewDocumentCommand \K { } {\mathbb{K}}
+\NewDocumentCommand \N {} {\mathbb{N}}
+\NewDocumentCommand \Z {} {\mathbb{Z}}
+\NewDocumentCommand \D {} {\mathbb{D}}
+\NewDocumentCommand \Q {} {\mathbb{Q}}
+\NewDocumentCommand \R {} {\mathbb{R}}
+\NewDocumentCommand \C {} {\mathbb{C}}
+\NewDocumentCommand \K {} {\mathbb{K}}
 \ExplSyntaxOff
 
 %% ----------------------------------------------------------------------------
