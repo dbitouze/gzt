@@ -1684,93 +1684,177 @@ This work consists of the file  gzt.dtx
 % \begin{macro}{\c_@@_footskip_dim}
 % \begin{macro}{\c_@@_header_line_width_dim}
 % \begin{macro}{\c_@@_header_line_yshift_dim}
-%   We declare the default page layout constant dimensions.
+%   We first declare the default page layout constant dimensions.
 %    \begin{macrocode}
 \dim_const:Nn \c_@@_layoutheight_dim { 270mm}
 \dim_const:Nn \c_@@_layoutwidth_dim  { 210mm}
-\dim_const:Nn \c_@@_future_layoutoffset_dim { 5mm}
+%    \end{macrocode}
+%
+% We define a \enquote{printer} layout offset dimension
+% "\c_@@_printer_layoutoffset_dim", fixed by the printer to be \SI{5}{\mm}.
+%    \begin{macrocode}
+\dim_const:Nn \c_@@_printer_layoutoffset_dim { 5mm}
+%    \end{macrocode}
+%
+% We define a \enquote{potential} layout offset dimension which is non-zero (and
+% the equal to \enquote{printer} layout offset dimension) iff the output is
+% prepared for the printer ("\g_@@_for_printer_bool" flag equals true).
+%    \begin{macrocode}
 \bool_if:NTF {\g_@@_for_printer_bool} {
-  \dim_const:Nn \c_@@_layoutoffset_dim { \c_@@_future_layoutoffset_dim}
+  \dim_const:Nn \c_@@_potential_layoutoffset_dim { \c_@@_printer_layoutoffset_dim}
 }{
-  \dim_const:Nn \c_@@_layoutoffset_dim {\c_zero_dim}
+  \dim_const:Nn \c_@@_potential_layoutoffset_dim {\c_zero_dim}
 }
 %    \end{macrocode}
 %
-% The binding's thickness, that depends on the total pages number, is store in
-% "\c_@@_bindingoffset_dim".
+% We define a \enquote{printer} binding dimension
+% "\c_@@_printer_bindingoffset_dim", fixed by the printer to have different
+% values depending on some total pages thresholds. If the binding dimension is
+% denoted by $b$ (and expressed in millimeters) and the total page number of the
+% document\footnote{Except cover pages, that is the \enquote{real} total page
+% number minus $4$.} is denoted by $N$, the thresholds are as follows:
+% \begin{equation}\label{binding}
+%   b=
+%   \begin{cases}
+%     0   & \text{ si } N < 68        \\
+%     3   & \text{ si } 68\leq N<80   \\
+%     3.5 & \text{ si } 80\leq N<88   \\
+%     3.9 & \text{ si } 88\leq N<96   \\
+%     4.1 & \text{ si } 96\leq N<104  \\
+%     4.5 & \text{ si } 104\leq N<120 \\
+%     5   & \text{ si } N\geq 120
+%   \end{cases}
+% \end{equation}
 %
-% Moreover, the inner and outer margins are repectively increase and decrease by
-% a dimension "\c_@@_adjustmargin_dim" which is non-zero if (and only if) the
-% total pages number is greater or equal than 72 (thresold for an adhesive
-% square-back binding).
+% We define the thresholds:
+%    \begin{macrocode}
+\int_const:Nn \c_@@_thresold_a_int {68}
+\int_const:Nn \c_@@_thresold_b_int {80}
+\int_const:Nn \c_@@_thresold_c_int {88}
+\int_const:Nn \c_@@_thresold_d_int {96}
+\int_const:Nn \c_@@_thresold_e_int {104}
+\int_const:Nn \c_@@_thresold_f_int {120}
+%    \end{macrocode}
+% and the corresponding binding dimensions:
+%    \begin{macrocode}
+\dim_const:Nn \c_@@_bindingoffset_a_dim {3mm}
+\dim_const:Nn \c_@@_bindingoffset_b_dim {3.5mm}
+\dim_const:Nn \c_@@_bindingoffset_c_dim {3.9mm}
+\dim_const:Nn \c_@@_bindingoffset_d_dim {4.1mm}
+\dim_const:Nn \c_@@_bindingoffset_e_dim {4.5mm}
+\dim_const:Nn \c_@@_bindingoffset_f_dim {5mm}
+%    \end{macrocode}
 %
-% In order to know the total pages number (store in
-% "\g_@@_total_page_number_int"), we need first to specify the external document
-% whom \File{.aux} will be read.
+% In order to know the total pages number of the document (store in
+% "\g_@@_total_page_number_int"), we need first to specify the
+% \enquote{external} document whom \File{.aux} will be read.
 %    \begin{macrocode}
 \zexternaldocument[self]{\jobname}%
+\int_new:N \g_@@_total_pages_number_int%
+\int_new:N \g_@@_total_inside_pages_number_int%
+%    \end{macrocode}
 %
-\int_new:N \g_@@_total_page_number_int%
-\int_gset:Nn \g_@@_total_page_number_int { \zref@extractdefault{selfLastPage}{abspage}{0} }
-\int_compare:nNnTF {\g_@@_total_page_number_int-4}<{68}
+% We extract the total pages number thanks to "\zref@extractdefault" from
+% \Package{zref-totpages}.
+%    \begin{macrocode}
+\int_gset:Nn \g_@@_total_pages_number_int { \zref@extractdefault{selfLastPage}{abspage}{0} }
+\int_gset:Nn \g_@@_total_inside_pages_number_int { \g_@@_total_pages_number_int - 4 }
+%    \end{macrocode}
+%
+% The \enquote{printer} binding dimension is now store in
+% "\c_@@_printer_bindingoffset_dim" following \vref{binding}.
+%
+%    \begin{macrocode}
+\int_compare:nNnTF {\g_@@_total_inside_pages_number_int}<{\c_@@_thresold_a_int}
 {
-  \dim_const:Nn \c_@@_future_bindingoffset_dim { \c_zero_dim }
+  \dim_const:Nn \c_@@_printer_bindingoffset_dim { \c_zero_dim }
 }{
-  \int_compare:nNnTF {\g_@@_total_page_number_int-4}<{80}
+  \int_compare:nNnTF {\g_@@_total_inside_pages_number_int}<{\c_@@_thresold_b_int}
   {
-    \dim_const:Nn \c_@@_future_bindingoffset_dim { 3mm }
+    \dim_const:Nn \c_@@_printer_bindingoffset_dim { \c_@@_bindingoffset_a_dim }
   }{
-    \int_compare:nNnTF {\g_@@_total_page_number_int-4}<{88}
+    \int_compare:nNnTF {\g_@@_total_inside_pages_number_int}<{\c_@@_thresold_c_int}
     {
-      \dim_const:Nn \c_@@_future_bindingoffset_dim { 3.5mm }
+      \dim_const:Nn \c_@@_printer_bindingoffset_dim { \c_@@_bindingoffset_b_dim }
     }{
-      \int_compare:nNnTF {\g_@@_total_page_number_int-4}<{96}
+      \int_compare:nNnTF {\g_@@_total_inside_pages_number_int}<{\c_@@_thresold_d_int}
       {
-        \dim_const:Nn \c_@@_future_bindingoffset_dim { 3.9mm }
+        \dim_const:Nn \c_@@_printer_bindingoffset_dim { \c_@@_bindingoffset_c_dim }
       }{
-        \int_compare:nNnTF {\g_@@_total_page_number_int-4}<{104}
+        \int_compare:nNnTF {\g_@@_total_inside_pages_number_int}<{\c_@@_thresold_e_int}
         {
-          \dim_const:Nn \c_@@_future_bindingoffset_dim { 4.1mm }
+          \dim_const:Nn \c_@@_printer_bindingoffset_dim { \c_@@_bindingoffset_d_dim }
         }{
-          \int_compare:nNnTF {\g_@@_total_page_number_int-4}<{120}
+          \int_compare:nNnTF {\g_@@_total_inside_pages_number_int}<{\c_@@_thresold_f_int}
           {
-            \dim_const:Nn \c_@@_future_bindingoffset_dim { 4.5mm }
+            \dim_const:Nn \c_@@_printer_bindingoffset_dim { \c_@@_bindingoffset_e_dim }
           }{
-            \dim_const:Nn \c_@@_future_bindingoffset_dim { 5mm }
+            \dim_const:Nn \c_@@_printer_bindingoffset_dim { \c_@@_bindingoffset_f_dim }
           }
         }
       }
     }
   }
 }
+%    \end{macrocode}
+%
+% The binding offset is applied iff the front cover is required ("frontcover"
+% option), which implies the output is prepared for the printer, with non-zero
+% offset ("\g_@@_for_printer_bool" flag equals true).
+%    \begin{macrocode}
 \bool_if:NTF {\g_@@_cover_bool} {
-  \dim_const:Nn \c_@@_bindingoffset_dim { \c_@@_future_bindingoffset_dim }
+  \dim_const:Nn \c_@@_potential_bindingoffset_dim { \c_@@_printer_bindingoffset_dim }
 }{
-  \dim_const:Nn \c_@@_bindingoffset_dim {\c_zero_dim}
+  \dim_const:Nn \c_@@_potential_bindingoffset_dim {\c_zero_dim}
 }
-\dim_const:Nn \c_@@_paperheight_dim { \c_@@_layoutheight_dim+2\c_@@_layoutoffset_dim}
+%    \end{macrocode}
+%
+% The paper height is rather simple: it is always the layout height dimension
+% plus 2 times (top and bottom) the layout offset dimension (which turns to be
+% non-zero iff the output is prepared for the printer).
+%    \begin{macrocode}
+\dim_const:Nn \c_@@_paperheight_dim { \c_@@_layoutheight_dim+2\c_@@_potential_layoutoffset_dim}
+%    \end{macrocode}
+%
+% The paper width is more complicated: it is the layout width dimension plus:
+% \begin{itemize}
+% \item the \enquote{potential} binding offset (which turns to be non-zero iff
+%   only the cover page is output),
+% \item the layout offset dimension (which turns to be non-zero iff the output
+%   is prepared for the printer):
+%   \begin{description}
+%   \item[if for the cover pages] just 1 time,
+%   \item[if for the other pages] 2 times.
+%   \end{description}
+% \end{itemize}
+%    \begin{macrocode}
 \bool_if:NTF {\g_@@_cover_bool} {
   \dim_const:Nn \c_@@_paperwidth_dim  {
     \c_@@_layoutwidth_dim
     +
-    \c_@@_layoutoffset_dim
-    +\c_@@_bindingoffset_dim
+    \c_@@_potential_layoutoffset_dim
+    +\c_@@_potential_bindingoffset_dim
   }
 }{
   \dim_const:Nn \c_@@_paperwidth_dim  {
     \c_@@_layoutwidth_dim
     +
     2
-    \c_@@_layoutoffset_dim
-    +\c_@@_bindingoffset_dim
+    \c_@@_potential_layoutoffset_dim
+    +\c_@@_potential_bindingoffset_dim
   }
 }
+%    \end{macrocode}
+%
+% The image width is the layout width plus the (non-zero) printer layout offset
+% dimension:
+%    \begin{macrocode}
 \dim_const:Nn \c_@@_frontcover_image_width_dim {
     \c_@@_layoutwidth_dim
     +
-    \c_@@_future_layoutoffset_dim
+    \c_@@_printer_layoutoffset_dim
 }
-\dim_const:Nn \c_@@_topmargin_dim   {  31mm}
+\dim_const:Nn \c_@@_topmargin_dim   { 31mm}
 \dim_const:Nn \c_@@_topmargin_frontcover_dim {
   \c_@@_topmargin_dim
   + 30mm
@@ -1785,11 +1869,11 @@ This work consists of the file  gzt.dtx
 % \dim_const:Nn \c_@@_topmargin_backcover_dim {
 %   \c_@@_topmargin_frontcover_dim
 % }
-\dim_const:Nn \c_@@_headsep_dim     {  24mm}
+\dim_const:Nn \c_@@_headsep_dim     { 24mm}
 \dim_const:Nn \c_@@_headsep_frontcover_dim {
   \c_@@_headsep_dim
   +31mm
-  -\c_@@_layoutoffset_dim
+  -\c_@@_potential_layoutoffset_dim
 }
 \dim_const:Nn \c_@@_headsep_inside_frontcover_dim {
   \c_@@_headsep_dim
@@ -1799,21 +1883,21 @@ This work consists of the file  gzt.dtx
   \c_@@_headsep_inside_frontcover_dim
 }
 \dim_const:Nn \c_@@_headheight_dim  { \c_zero_dim }
-\dim_const:Nn \c_@@_botmargin_dim   {  30mm}
-\dim_const:Nn \c_@@_footskip_dim    {  26mm}
+\dim_const:Nn \c_@@_botmargin_dim   { 30mm}
+\dim_const:Nn \c_@@_footskip_dim    { 26mm}
 %    \end{macrocode}
 %
 % Inner margins of the initial issue (\#~143) were too small. We make them
-% definitively bigger as of \SI{5}{\milli\meter} (and make the outer margins
-% smaller of the same dimension).
+% definitively bigger as of \SI{5}{\milli\meter} ("\c_@@_extra_margin_dim") and
+% make the outer margins smaller of the same dimension.
 %    \begin{macrocode}
-\dim_const:Nn \c_@@_shift_margin_dim { 5mm }
-\dim_const:Nn \c_@@_innermargin_dim { 15mm - \c_@@_bindingoffset_dim + \c_@@_shift_margin_dim}
-\dim_const:Nn \c_@@_outermargin_dim { 30mm - \c_@@_shift_margin_dim }
+\dim_const:Nn \c_@@_extra_margin_dim { 5mm }
+\dim_const:Nn \c_@@_innermargin_dim { 15mm - \c_@@_potential_bindingoffset_dim + \c_@@_extra_margin_dim}
+\dim_const:Nn \c_@@_outermargin_dim { 30mm - \c_@@_extra_margin_dim }
 \dim_const:Nn \c_@@_inside_cover_box_width_dim { 165mm }%
 \dim_const:Nn \c_@@_innermargin_inside_cover_dim {
   (\c_@@_layoutwidth_dim - \c_@@_inside_cover_box_width_dim)/2
-  - \c_@@_bindingoffset_dim
+  - \c_@@_potential_bindingoffset_dim
   % + \c_@@_adjustmargin_dim
 }
 \dim_const:Nn \c_@@_outermargin_inside_cover_dim {
@@ -1824,36 +1908,36 @@ This work consists of the file  gzt.dtx
 \dim_const:Nn \c_@@_outermargin_backcover_dim { \c_@@_innermargin_backcover_dim }
 \dim_const:Nn \c_@@_topmargin_backcover_dim { \c_@@_innermargin_backcover_dim }
 \dim_const:Nn \c_@@_bottommargin_backcover_dim { \c_@@_innermargin_backcover_dim }
-\dim_const:Nn \c_@@_frontcover_image_height_dim {  160mm}
+\dim_const:Nn \c_@@_frontcover_image_height_dim { 160mm}
 \dim_const:Nn \c_@@_radius_arc_dim { 85mm }%
 \dim_const:Nn \c_@@_frontmatter_headtext_xshift_dim { 19mm }%
 \dim_const:Nn \c_@@_frontmatter_headtext_o_xshift_dim {
-  -\c_@@_frontmatter_headtext_xshift_dim  -\c_@@_layoutoffset_dim%
+  -\c_@@_frontmatter_headtext_xshift_dim  -\c_@@_potential_layoutoffset_dim%
 }%
 \dim_const:Nn \c_@@_frontmatter_headtext_e_xshift_dim {
-  \c_@@_frontmatter_headtext_xshift_dim  +\c_@@_layoutoffset_dim%
+  \c_@@_frontmatter_headtext_xshift_dim  +\c_@@_potential_layoutoffset_dim%
 }%
-\dim_const:Nn \c_@@_frontmatter_headtext_yshift_dim { -6.5mm-\c_@@_layoutoffset_dim }%
-\dim_const:Nn \c_@@_header_line_width_dim    {  0.25mm}
-\dim_const:Nn \c_@@_header_line_yshift_dim {  -1mm-\c_@@_header_line_width_dim}%
-\dim_const:Nn \c_@@_footer_background_height_dim    { 10mm + \c_@@_layoutoffset_dim }
-\dim_const:Nn \c_@@_front_matter_extra_innermargin_dim    {  28mm }
-\dim_const:Nn \c_@@_front_matter_extra_outermargin_dim    {  7mm }
+\dim_const:Nn \c_@@_frontmatter_headtext_yshift_dim { -6.5mm-\c_@@_potential_layoutoffset_dim }%
+\dim_const:Nn \c_@@_header_line_width_dim    { 0.25mm}
+\dim_const:Nn \c_@@_header_line_yshift_dim { -1mm-\c_@@_header_line_width_dim}%
+\dim_const:Nn \c_@@_footer_background_height_dim    { 10mm + \c_@@_potential_layoutoffset_dim }
+\dim_const:Nn \c_@@_front_matter_extra_innermargin_dim    { 28mm }
+\dim_const:Nn \c_@@_front_matter_extra_outermargin_dim    { 7mm }
 \dim_const:Nn \c_@@_inside_cover_offset_dim { \c_zero_dim }%
 % \dim_const:Nn \c_@@_inside_cover_offset_dim { 7.5mm }%
 \dim_const:Nn \c_@@_pictogram_width_dim { 23mm }%
 \dim_const:Nn \c_@@_header_xshift_dim { \c_@@_pictogram_width_dim-6mm }%
 \dim_const:Nn \c_@@_header_yshift_dim { 5mm }%
-\dim_const:Nn \c_@@_xshift_arccircle_A_dim { \c_@@_rubrics_abstract_width_dim+\c_@@_innermargin_dim+10mm+\c_@@_layoutoffset_dim }%
-\dim_const:Nn \c_@@_yshift_arccircle_A_dim { -22mm-\c_@@_layoutoffset_dim }%
+\dim_const:Nn \c_@@_xshift_arccircle_A_dim { \c_@@_rubrics_abstract_width_dim+\c_@@_innermargin_dim+10mm+\c_@@_potential_layoutoffset_dim }%
+\dim_const:Nn \c_@@_yshift_arccircle_A_dim { -22mm-\c_@@_potential_layoutoffset_dim }%
 \dim_const:Nn \c_@@_xshift_arccircle_B_dim {%
   (\c_@@_rubrics_abstract_width_dim+\c_@@_innermargin_dim)/2%
   % \c_@@_innermargin_dim+(\c_@@_rubrics_abstract_width_dim/2)%
   % \c_@@_xshift_arccircle_A_dim/2
 }%
-\dim_const:Nn \c_@@_yshift_arccircle_B_dim { -\c_@@_layoutoffset_dim }%
-\dim_const:Nn \c_@@_xshift_arccircle_C_dim { \c_@@_layoutoffset_dim-5mm }%
-\dim_const:Nn \c_@@_yshift_arccircle_C_dim { -19.75mm-\c_@@_layoutoffset_dim }%
+\dim_const:Nn \c_@@_yshift_arccircle_B_dim { -\c_@@_potential_layoutoffset_dim }%
+\dim_const:Nn \c_@@_xshift_arccircle_C_dim { \c_@@_potential_layoutoffset_dim-5mm }%
+\dim_const:Nn \c_@@_yshift_arccircle_C_dim { -19.75mm-\c_@@_potential_layoutoffset_dim }%
 \dim_const:Nn \c_@@_book_review_frontcover_extend_dim { 12mm }%
 \dim_const:Nn \c_@@_tcb_left_dim { 4mm }%
 \dim_const:Nn \c_@@_tcb_boxsep_dim { 1mm }%
@@ -1962,28 +2046,28 @@ This work consists of the file  gzt.dtx
 \bool_if:NTF {\g_@@_cover_bool} {
   \tl_const:Nn \c_@@_frontcover_geometry_tl {%
     ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
-    ,layoutvoffset=\c_@@_layoutoffset_dim
-    ,bindingoffset=\c_@@_bindingoffset_dim
+    ,layoutvoffset=\c_@@_potential_layoutoffset_dim
+    ,bindingoffset=\c_@@_potential_bindingoffset_dim
     ,top=\c_@@_topmargin_frontcover_dim
     ,headsep=\c_@@_headsep_frontcover_dim
     ,headheight=\c_@@_headheight_dim
     ,bottom=\c_zero_dim
     ,footskip=\c_zero_dim
     ,outer=\c_zero_dim
-    ,inner=\c_@@_layoutoffset_dim
+    ,inner=\c_@@_potential_layoutoffset_dim
     ,nomarginpar%
   }%
 }{
   \tl_const:Nn \c_@@_frontcover_geometry_tl {%
     ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
-    ,layoutoffset=\c_@@_layoutoffset_dim
-    ,bindingoffset=\c_@@_bindingoffset_dim
+    ,layoutoffset=\c_@@_potential_layoutoffset_dim
+    ,bindingoffset=\c_@@_potential_bindingoffset_dim
     ,top=\c_@@_topmargin_frontcover_dim
     ,headsep=\c_@@_headsep_frontcover_dim
     ,headheight=\c_@@_headheight_dim
     ,bottom=\c_zero_dim
     ,footskip=\c_zero_dim
-    ,hmargin=\c_@@_layoutoffset_dim
+    ,hmargin=\c_@@_potential_layoutoffset_dim
     ,nomarginpar%
   }%
 }
@@ -1995,22 +2079,22 @@ This work consists of the file  gzt.dtx
 \bool_if:NTF {\g_@@_cover_bool} {
   \tl_const:Nn \c_@@_inside_cover_geometry_tl {%
     ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
-    ,layoutvoffset=\c_@@_layoutoffset_dim
-    ,bindingoffset=\c_@@_bindingoffset_dim
+    ,layoutvoffset=\c_@@_potential_layoutoffset_dim
+    ,bindingoffset=\c_@@_potential_bindingoffset_dim
     ,top=\c_@@_topmargin_inside_cover_dim
     ,headheight=\c_@@_headheight_dim
     ,headsep=\c_@@_headsep_inside_frontcover_dim
     ,bottom=\c_@@_botmargin_dim
     ,footskip=\c_@@_footskip_dim
-    ,inner=\c_@@_innermargin_inside_cover_dim-\c_@@_layoutoffset_dim
-    ,outer=\c_@@_outermargin_inside_cover_dim+\c_@@_layoutoffset_dim
+    ,inner=\c_@@_innermargin_inside_cover_dim-\c_@@_potential_layoutoffset_dim
+    ,outer=\c_@@_outermargin_inside_cover_dim+\c_@@_potential_layoutoffset_dim
     ,nomarginpar%
   }%
 }{
   \tl_const:Nn \c_@@_inside_cover_geometry_tl {%
     ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
-    ,layoutoffset=\c_@@_layoutoffset_dim
-    ,bindingoffset=\c_@@_bindingoffset_dim
+    ,layoutoffset=\c_@@_potential_layoutoffset_dim
+    ,bindingoffset=\c_@@_potential_bindingoffset_dim
     ,top=\c_@@_topmargin_inside_cover_dim
     ,headheight=\c_@@_headheight_dim
     ,headsep=\c_@@_headsep_inside_frontcover_dim
@@ -2027,8 +2111,8 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_front_matter_geometry_tl {%
   ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
-  ,layoutoffset=\c_@@_layoutoffset_dim
-  % ,bindingoffset=\c_@@_bindingoffset_dim
+  ,layoutoffset=\c_@@_potential_layoutoffset_dim
+  % ,bindingoffset=\c_@@_potential_bindingoffset_dim
   ,top=\c_@@_topmargin_front_matter_dim%
   ,headheight=\c_@@_headheight_dim
   ,headsep=\c_@@_headsep_front_matter_dim
@@ -2044,8 +2128,8 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_main_geometry_tl {%
   ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
-  ,layoutoffset=\c_@@_layoutoffset_dim
-  % ,bindingoffset=\c_@@_bindingoffset_dim
+  ,layoutoffset=\c_@@_potential_layoutoffset_dim
+  % ,bindingoffset=\c_@@_potential_bindingoffset_dim
   ,top=\c_@@_topmargin_dim-15mm%
   ,headheight=\c_@@_headheight_dim
   ,headsep=\c_@@_headsep_dim-18mm
@@ -2060,8 +2144,8 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_backcover_geometry_tl {%
   ,layoutsize={\c_@@_layoutwidth_dim,\c_@@_layoutheight_dim}
-  ,layoutoffset=\c_@@_layoutoffset_dim
-  % ,bindingoffset=\c_@@_bindingoffset_dim
+  ,layoutoffset=\c_@@_potential_layoutoffset_dim
+  % ,bindingoffset=\c_@@_potential_bindingoffset_dim
   ,top=\c_@@_topmargin_backcover_dim%
   % ,top=\c_@@_topmargin_dim-15mm%
   % ,headheight=\c_@@_headheight_dim
@@ -2948,22 +3032,22 @@ This work consists of the file  gzt.dtx
   \exp_after:wN\newgeometry\exp_after:wN{\c_@@_frontcover_geometry_tl}%
   \noindent%
   \bool_if:NTF {\g_@@_cover_bool} {
-    \hspace*{-\c_@@_layoutoffset_dim}
+    \hspace*{-\c_@@_potential_layoutoffset_dim}
   }{
-    \hspace*{-2\c_@@_layoutoffset_dim}
+    \hspace*{-2\c_@@_potential_layoutoffset_dim}
   }
   \includegraphics[
   width=\c_@@_frontcover_image_width_dim
   % min~width=\paperwidth
-  % width=\c_@@_layoutwidth_dim + 2\c_@@_layoutoffset_dim
-  % min~size={\paperwidth}{\c_@@_frontcover_image_height_dim+\c_@@_layoutoffset_dim},
-  % max~size={\paperwidth}{\c_@@_frontcover_image_height_dim+\c_@@_layoutoffset_dim},
+  % width=\c_@@_layoutwidth_dim + 2\c_@@_potential_layoutoffset_dim
+  % min~size={\paperwidth}{\c_@@_frontcover_image_height_dim+\c_@@_potential_layoutoffset_dim},
+  % max~size={\paperwidth}{\c_@@_frontcover_image_height_dim+\c_@@_potential_layoutoffset_dim},
   % Clip*=0mm~40mm~211mm~160mm
   % Clip*=0mm~{\height-\c_@@_frontcover_image_height_dim}~{\paperwidth}~{\height}
   ]{\c_@@_issue_frontcover_image_path_string_tl}
   \begin{tikzpicture}[remember~picture, overlay]
     \coordinate (@@_circle_minitoc_center) at
-    ([xshift=\g_@@_minitoc_xshift_dim-\c_@@_layoutoffset_dim,yshift=\g_@@_minitoc_yshift_dim+\c_@@_layoutoffset_dim]current~page.south~east) ;
+    ([xshift=\g_@@_minitoc_xshift_dim-\c_@@_potential_layoutoffset_dim,yshift=\g_@@_minitoc_yshift_dim+\c_@@_potential_layoutoffset_dim]current~page.south~east) ;
     \node[name=@@_circle_minitoc,shape=circle,inner~sep=\c_zero_dim,fill=white,text~width=\g_@@_minitoc_circle_diameter_dim] at
     (@@_circle_minitoc_center) {};
     \node[text~width=\g_@@_minitoc_textwidth_dim,anchor=north~west] at
@@ -2983,15 +3067,15 @@ This work consists of the file  gzt.dtx
     \small
     \begin{tikzpicture}[remember~picture, overlay]
       \node[name=@@_binding_sw,inner~sep=\c_zero_dim,fill=white,rotate=90,anchor=west] at
-      ([xshift=0.45\c_@@_bindingoffset_dim,yshift=15mm+\c_@@_layoutoffset_dim]current~page.south~west) {
+      ([xshift=0.45\c_@@_potential_bindingoffset_dim,yshift=15mm+\c_@@_potential_layoutoffset_dim]current~page.south~west) {
         \No\int_use:N\g_@@_issue_number_int
       };
       \node[name=@@_binding_w,inner~sep=\c_zero_dim,fill=white,rotate=90] at
-      ([xshift=0.45\c_@@_bindingoffset_dim]current~page.west) {
+      ([xshift=0.45\c_@@_potential_bindingoffset_dim]current~page.west) {
         \MakeUppercase{\c_@@_journal_title_string_tl}
       };
       \node[name=@@_binding_nw,inner~sep=\c_zero_dim,fill=white,rotate=90,anchor=east] at
-      ([xshift=0.45\c_@@_bindingoffset_dim,yshift=-15mm-\c_@@_layoutoffset_dim]current~page.north~west) {
+      ([xshift=0.45\c_@@_potential_bindingoffset_dim,yshift=-15mm-\c_@@_potential_layoutoffset_dim]current~page.north~west) {
         \l_@@_uppercased_date_format\displaydate{@@_date}
       };
     \end{tikzpicture}
@@ -2999,7 +3083,7 @@ This work consists of the file  gzt.dtx
   \vfill%
   \noindent%
   \hspace*{10mm}%
-  \hspace*{-\c_@@_layoutoffset_dim}
+  \hspace*{-\c_@@_potential_layoutoffset_dim}
   \includegraphics[height=22.5mm]{\c_@@_smf_logo_file_string_tl}%
   \vfill%
   \clearpage%
@@ -3979,7 +4063,7 @@ This work consists of the file  gzt.dtx
 {%
   \begin{tikzpicture}[remember~picture,overlay]
     \draw[fill=@@_circlerule_color,draw=@@_circlerule_color,line~width=0.7mm]
-    ([xshift=-\c_@@_innermargin_dim-\c_@@_layoutoffset_dim]0,0 -| current~page.west) -- (\linewidth,0);%
+    ([xshift=-\c_@@_innermargin_dim-\c_@@_potential_layoutoffset_dim]0,0 -| current~page.west) -- (\linewidth,0);%
     \fill[@@_circlerule_color] (\linewidth-2\pgflinewidth,0) circle [radius=2.75mm];
   \end{tikzpicture}%
 }%
@@ -5111,17 +5195,17 @@ This work consists of the file  gzt.dtx
 % \bool_if:NT {\g_@@_for_printer_bool} {%
 %   \AddEverypageHook{%
 %     \tikz[remember~picture,overlay] {%
-%       \draw ([yshift=\c_@@_layoutoffset_dim]current~page.south~west) -- +(0.25,0);
-%       \draw ([xshift=\c_@@_layoutoffset_dim]current~page.south~west) -- +(0,0.25);
+%       \draw ([yshift=\c_@@_potential_layoutoffset_dim]current~page.south~west) -- +(0.25,0);
+%       \draw ([xshift=\c_@@_potential_layoutoffset_dim]current~page.south~west) -- +(0,0.25);
 %       %% lower right
-%       \draw ([yshift=\c_@@_layoutoffset_dim]current~page.south~east) -- +(-0.25,0);
-%       \draw ([xshift=-\c_@@_layoutoffset_dim-\c_@@_bindingoffset_dim]current~page.south~east) -- +(0,0.25);
+%       \draw ([yshift=\c_@@_potential_layoutoffset_dim]current~page.south~east) -- +(-0.25,0);
+%       \draw ([xshift=-\c_@@_potential_layoutoffset_dim-\c_@@_potential_bindingoffset_dim]current~page.south~east) -- +(0,0.25);
 %       %% upper left
-%       \draw ([yshift=-\c_@@_layoutoffset_dim]current~page.north~west) -- +(0.25,0);
-%       \draw ([xshift=\c_@@_layoutoffset_dim]current~page.north~west) -- +(0,-0.25);
+%       \draw ([yshift=-\c_@@_potential_layoutoffset_dim]current~page.north~west) -- +(0.25,0);
+%       \draw ([xshift=\c_@@_potential_layoutoffset_dim]current~page.north~west) -- +(0,-0.25);
 %       %% upper right
-%       \draw ([yshift=-\c_@@_layoutoffset_dim]current~page.north~east) -- +(-0.25,0);
-%       \draw ([xshift=-\c_@@_layoutoffset_dim-\c_@@_bindingoffset_dim]current~page.north~east) -- +(0,-0.25);
+%       \draw ([yshift=-\c_@@_potential_layoutoffset_dim]current~page.north~east) -- +(-0.25,0);
+%       \draw ([xshift=-\c_@@_potential_layoutoffset_dim-\c_@@_potential_bindingoffset_dim]current~page.north~east) -- +(0,-0.25);
 %     }%
 %   }%
 % }
