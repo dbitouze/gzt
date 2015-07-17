@@ -572,6 +572,7 @@
 \int_new:N \g__gzt_issue_number_int
 \int_new:N \g__gzt_issue_month_int
 \int_new:N \g__gzt_issue_year_int
+\tl_new:N \g__gzt_frontcover_image_options_tl
 \keys_define:nn { gzt/issuesetup }
 {
   number .int_gset:N = \g__gzt_issue_number_int,
@@ -580,7 +581,8 @@
   number .value_required:,
   month .value_required:,
   year .value_required:,
-  number .initial:n = 0
+  number .initial:n = 0,
+  frontcoverimageoptions .tl_gset:N = \g__gzt_frontcover_image_options_tl
 }
 \tl_new:N \l__gzt_journal_publisher_tl
 \tl_new:N \l__gzt_journal_address_tl
@@ -713,7 +715,7 @@
 \colorlet{__gzt_generic_light_color}{black!50}
 \colorlet{__gzt_dark_generic_light_color}{black!60}
 \colorlet{__gzt_description_label_light_color}{__gzt_dark_generic_light_color}
-\colorlet{__gzt_minitoc_color}{__gzt_dark_generic_light_color}
+\colorlet{__gzt_minitoc_color}{__gzt_generic_light_color}
 \colorlet{__gzt_cover_itemize_label_color}{__gzt_light_generic_dark_color}
 \colorlet{__gzt_default_text_color}{black}
 \colorlet{__gzt_head_text_color}{black!65}
@@ -1026,8 +1028,8 @@
   }{
     \hspace*{-2\c__gzt_potential_layoutoffset_dim}
   }
-  \includegraphics[
-  width=\c__gzt_frontcover_image_width_dim
+  \exp_after:wN \includegraphics \exp_after:wN [
+  \g__gzt_frontcover_image_options_tl
   % min~width=\paperwidth
   % width=\c__gzt_layoutwidth_dim + 2\c__gzt_potential_layoutoffset_dim
   % min~size={\paperwidth}{\c__gzt_frontcover_image_height_dim+\c__gzt_potential_layoutoffset_dim},
@@ -1255,7 +1257,7 @@
   \__gzt_people:nnnnnnnn {#2}{#3}{#4}{}{}{#1}{secretary}{}
 }
 \NewDocumentCommand \issuesetup { m } {
-  \keys_set:nn { gzt/issuesetup } { #1 }
+  \keys_set:nn { gzt/issuesetup } {frontcoverimageoptions={width=\c__gzt_frontcover_image_width_dim},#1}
 \hypersetup{pdftitle=\l__gzt_pdftitle_string_tl}
 \hypersetup{pdfauthor=\l__gzt_pdfauthor_string_tl}
   \int_compare:nNnT {\g__gzt_issue_number_int}<{1}
