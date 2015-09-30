@@ -726,6 +726,9 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \bool_new:N \g_@@_for_authors_bool
 \bool_new:N \g_@@_cover_bool
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \keys_define:nn { gzt }
 {
   pagegrid .dim_gset:N = \g_@@_pagegrid_dim,
@@ -794,11 +797,6 @@ This work consists of the file  gzt.dtx
 % \item Compile \TeX{} pictures stand-alone or as part of a document:
 %    \begin{macrocode}
 \RequirePackage[group=false]{standalone}%
-%    \end{macrocode}
-%
-% \item Extending \pkg{etoolbox}'s patching commands:
-%    \begin{macrocode}
-\RequirePackage{xpatch}%
 %    \end{macrocode}
 %
 % \item Tools to load and manipulate data:
