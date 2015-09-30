@@ -4313,14 +4313,14 @@ This work consists of the file  gzt.dtx
 % "\printauthorsdetails" is used). This should fix issue
 % \url{https://github.com/dbitouze/gzt/issues/36}.
 %    \begin{macrocode}
-\bool_if:nT { \g_@@_for_authors_bool }
-{
-  \AtEndDocument{%
-    \bool_if:NT {\g_@@_multicols_bool} {
-    \end{multicols}%
-  }
-}
-}
+%<class>\bool_if:nT { \g_@@_for_authors_bool }
+%<class>{
+%<class>  \AtEndDocument{%
+%<class>    \bool_if:NT {\g_@@_multicols_bool} {
+%<class>    \end{multicols}%
+%<class>  }
+%<class>}
+%<class>}
 %    \end{macrocode}
 % We load the configuration file, which has to be located in the \TeX{} search
 % path: at least one such a file is provided by the class and located in the
