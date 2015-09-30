@@ -70,7 +70,7 @@
   }
 \NeedsTeXFormat{LaTeX2e}
 \PassOptionsToClass{openany,english,french}{book}
-\LoadClassWithOptions { book }
+\LoadClass { book }
 \PassOptionsToPackage{table,cmyk}{xcolor}%
 \PassOptionsToPackage{export}{adjustbox}%
 \PassOptionsToPackage{english,french}{translator}
@@ -78,7 +78,6 @@
 \PassOptionsToPackage{english,french}{varioref}
 \PassOptionsToPackage{english,french}{cleveref}
 \RequirePackage[group=false]{standalone}%
-\RequirePackage{xpatch}%
 \RequirePackage{datatool}%
 \pdftex_if_engine:TF
   {
@@ -237,6 +236,7 @@
 \tl_const:Nn \c__gzt_tribute_rubric_string_tl {Carnet}
 \tl_const:Nn \c__gzt_books_rubric_string_tl {Livres}
 \tl_const:Nn \c__gzt_latex_rubric_string_tl {Astuces~\LaTeX{}}
+\tl_const:Nn \c__gzt_forum_rubric_string_tl {Tribune~libre}
 \tl_const:Nn \c__gzt_published_with_help_of_string_tl {Publi\'e~avec~le~concours~de~:}
 \tl_const:Nn \c__gzt_advertisement_directory_string_tl {advertisement/}
 \tl_const:Nn \c__gzt_advertisement_string_tl {Publicit\'e}
@@ -1733,14 +1733,6 @@
       \begin{multicols}{2}%
     }
   }
-}
-\bool_if:nT { \g__gzt_for_authors_bool }
-{
-  \AtEndDocument{%
-    \bool_if:NT {\g__gzt_multicols_bool} {
-    \end{multicols}%
-  }
-}
 }
 \AtEndPreamble{\file_input:n {\c__gzt_configuration_file_string_tl}}
 \@ifpackageloaded{etoc}{%
