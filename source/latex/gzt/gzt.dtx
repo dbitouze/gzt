@@ -1470,6 +1470,7 @@ This work consists of the file  gzt.dtx
 % \tl_const:Nn \c_@@_books_rubric_string_tl {Recension}
 \tl_const:Nn \c_@@_books_rubric_string_tl {Livres}
 \tl_const:Nn \c_@@_latex_rubric_string_tl {Astuces~\LaTeX{}}
+\tl_const:Nn \c_@@_forum_rubric_string_tl {Tribune~libre}
 \tl_const:Nn \c_@@_published_with_help_of_string_tl {Publi\'e~avec~le~concours~de~:}
 \tl_const:Nn \c_@@_advertisement_directory_string_tl {advertisement/}
 \tl_const:Nn \c_@@_advertisement_string_tl {Publicit\'e}
@@ -5522,6 +5523,10 @@ This work consists of the file  gzt.dtx
 \NewDocumentCommand \latextips {O{}}
 {
   \_@@_rubric:nnn {#1}{\c_@@_latex_rubric_string_tl}{}
+}
+\NewDocumentCommand \forum {O{}}
+{
+  \_@@_rubric:nnn {#1}{\c_@@_forum_rubric_string_tl}{picto-forum}
 }
 %    \end{macrocode}
 % \end{macro}
