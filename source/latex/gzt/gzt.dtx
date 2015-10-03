@@ -5861,6 +5861,17 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 %
+% We provide a public environment "inset" for insets that has the same layout as
+% minibiographies and acknowledgments. Its layout is based upon \pkg{tcolorbox}
+% features.
+%    \begin{macrocode}
+\DeclareTColorBox{inset}{ O{} }
+{
+  _@@_tcb_minibiographies_acknowledgments_style,
+  #1
+}
+%    \end{macrocode}
+%
 % We create a "bookreview" environment for the book reviews.
 %    \begin{macrocode}
 \NewDocumentEnvironment{bookreview}{ O{} m }
