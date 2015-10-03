@@ -6273,12 +6273,10 @@ This work consists of the file  gzt.dtx
     colback=@@_bibliography_minibios_acknowledgments_bg_color,
     breakable,
     boxrule=\c_zero_dim,
-    drop~lifted~shadow=black,
+    extras~unbroken~and~last={drop~lifted~shadow},
     sharp~corners=all,%
     skin=enhancedlast,
-    skin~first~is~subskin~of={enhancedmiddle}{no~shadow},
-    skin~middle~is~subskin~of={enhancedmiddle}{no~shadow},
-    skin~last~is~subskin~of={enhancedlast}{drop~lifted~shadow}
+    height~fixed~for=middle,
   }
 }
 \tcbset{%
