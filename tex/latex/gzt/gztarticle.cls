@@ -2669,6 +2669,11 @@
   __gzt_tcb_minibiographies_acknowledgments_style,
   #1
 }
+\DeclareTColorBox{inset}{ O{} }
+{
+  __gzt_tcb_minibiographies_acknowledgments_style,
+  #1
+}
 \NewDocumentEnvironment{bookreview}{ O{} m }
 {
   \keys_set:nn { gzt/bookreview } { #2 }
@@ -2915,12 +2920,10 @@
     colback=__gzt_bibliography_minibios_acknowledgments_bg_color,
     breakable,
     boxrule=\c_zero_dim,
-    drop~lifted~shadow=black,
+    extras~unbroken~and~last={drop~lifted~shadow},
     sharp~corners=all,%
     skin=enhancedlast,
-    skin~first~is~subskin~of={enhancedmiddle}{no~shadow},
-    skin~middle~is~subskin~of={enhancedmiddle}{no~shadow},
-    skin~last~is~subskin~of={enhancedlast}{drop~lifted~shadow}
+    height~fixed~for=middle,
   }
 }
 \tcbset{%
