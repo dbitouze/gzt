@@ -726,6 +726,7 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \bool_new:N \g_@@_for_authors_bool
 \bool_new:N \g_@@_cover_bool
+\bool_new:N \g_@@_inside_pages_bool
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -6033,10 +6034,14 @@ This work consists of the file  gzt.dtx
 % necessary and sufficient number of blank pages if it isn't the case (code
 % borrowed from \url{http://tex.stackexchange.com/a/83498/18401}).
 %    \begin{macrocode}
-\AtEndDocument{%
-  \prg_replicate:nn
-   { \int_mod:nn { 4 - \int_mod:nn { \getpagerefnumber{LastPage} } { 4 } } { 4 } }
-   { \thispagestyle{@@_blank_pages_ps}\null\clearpage }
+\bool_if:nF { \g_@@_for_authors_bool } {
+  \bool_if:nT { \g_@@_inside_pages_bool } {
+    \AtEndDocument{%
+      \prg_replicate:nn
+      { \int_mod:nn { 4 - \int_mod:nn { \getpagerefnumber{LastPage} } { 4 } } { 4 } }
+      { \thispagestyle{@@_blank_pages_ps}\null\clearpage }
+    }
+  }
 }
 %    \end{macrocode}
 %
