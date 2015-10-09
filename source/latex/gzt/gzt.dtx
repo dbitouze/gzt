@@ -868,6 +868,12 @@ This work consists of the file  gzt.dtx
 \RequirePackage{zref-totpages}
 %    \end{macrocode}
 %
+% \item Reference last page number (which is generally different from the total
+%   number of pages in the document):
+%    \begin{macrocode}
+\RequirePackage{lastpage}
+%    \end{macrocode}
+%
 % \item A new reference scheme for \LaTeX{}, providing the facilities of the
 %   \package{xr} and \package{xr-hyper} packages:
 %    \begin{macrocode}
@@ -5141,6 +5147,30 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 %
+% \subsection{For blank pages added in order to ensure document total page
+% numbers is a multiple of four}
+%
+%    \begin{macrocode}
+\newpagestyle{@@_blank_pages_ps}[]{%
+  \sethead
+  {}%
+  {}%
+  {}%
+  %
+  \setfoot%
+  [\c_@@_footer_size_font_tl\thepage]%
+  [%
+    \uppercase{\c_@@_footer_string_tl}
+  ]%
+  []%
+  {}%
+  {%
+    \uppercase{\c_@@_footer_string_tl}%
+  }%
+  {\c_@@_footer_size_font_tl\thepage}%
+}%
+%    \end{macrocode}
+%
 % \subsection{Inside back cover page style}
 %
 %    \begin{macrocode}
@@ -5997,6 +6027,17 @@ This work consists of the file  gzt.dtx
     \g_@@_display_backcover_tl
   }%
 }%
+%    \end{macrocode}
+%
+% The document total page numbers should be a multiple of four and we add the
+% necessary and sufficient number of blank pages if it isn't the case (code
+% borrowed from \url{http://tex.stackexchange.com/a/83498/18401}).
+%    \begin{macrocode}
+\AtEndDocument{%
+  \prg_replicate:nn
+   { \int_mod:nn { 4 - \int_mod:nn { \getpagerefnumber{LastPage} } { 4 } } { 4 } }
+   { \thispagestyle{@@_blank_pages_ps}\null\clearpage }
+}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
