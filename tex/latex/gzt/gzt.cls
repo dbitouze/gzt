@@ -151,6 +151,7 @@
 }
 \RequirePackage{adjustbox}%
 \RequirePackage{zref-totpages}
+\RequirePackage{lastpage}
 \RequirePackage{zref-xr}%
 \RequirePackage{ragged2e}%
 \RequirePackage{xspace}%
@@ -2545,6 +2546,24 @@
   }%
   {\c__gzt_footer_size_font_tl\thepage}%
 }
+\newpagestyle{__gzt_blank_pages_ps}[]{%
+  \sethead
+  {}%
+  {}%
+  {}%
+  %
+  \setfoot%
+  [\c__gzt_footer_size_font_tl\thepage]%
+  [%
+    \uppercase{\c__gzt_footer_string_tl}
+  ]%
+  []%
+  {}%
+  {%
+    \uppercase{\c__gzt_footer_string_tl}%
+  }%
+  {\c__gzt_footer_size_font_tl\thepage}%
+}%
 \newpagestyle{__gzt_inside_backcover_ps}[]{%
   \sethead%
   [
@@ -3138,6 +3157,11 @@
     \g__gzt_display_backcover_tl
   }%
 }%
+\AtEndDocument{%
+  \prg_replicate:nn
+   { \int_mod:nn { 4 - \int_mod:nn { \getpagerefnumber{LastPage} } { 4 } } { 4 } }
+   { \thispagestyle{__gzt_blank_pages_ps}\null\clearpage }
+}
 \pgfplotsset{%
   /pgf/number~format/.cd,
   use~comma,

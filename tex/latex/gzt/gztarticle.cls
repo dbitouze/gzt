@@ -93,6 +93,7 @@
 \RequirePackage{longtable}%
 \RequirePackage{adjustbox}%
 \RequirePackage{zref-totpages}
+\RequirePackage{lastpage}
 \RequirePackage{zref-xr}%
 \RequirePackage{ragged2e}%
 \RequirePackage{xspace}%
@@ -2248,6 +2249,24 @@
   }%
   {\c__gzt_footer_size_font_tl\thepage}%
 }
+\newpagestyle{__gzt_blank_pages_ps}[]{%
+  \sethead
+  {}%
+  {}%
+  {}%
+  %
+  \setfoot%
+  [\c__gzt_footer_size_font_tl\thepage]%
+  [%
+    \uppercase{\c__gzt_footer_string_tl}
+  ]%
+  []%
+  {}%
+  {%
+    \uppercase{\c__gzt_footer_string_tl}%
+  }%
+  {\c__gzt_footer_size_font_tl\thepage}%
+}%
 \newpagestyle{__gzt_inside_backcover_ps}[]{%
   \sethead%
   [
