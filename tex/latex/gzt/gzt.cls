@@ -91,6 +91,7 @@
 \dim_const:Nn \c__gzt_pagegrid_dim { 1mm}
 \bool_new:N \g__gzt_for_authors_bool
 \bool_new:N \g__gzt_cover_bool
+\bool_new:N \g__gzt_inside_pages_bool
 \keys_define:nn { gzt }
 {
   pagegrid .dim_gset:N = \g__gzt_pagegrid_dim,
@@ -3157,10 +3158,14 @@
     \g__gzt_display_backcover_tl
   }%
 }%
-\AtEndDocument{%
-  \prg_replicate:nn
-   { \int_mod:nn { 4 - \int_mod:nn { \getpagerefnumber{LastPage} } { 4 } } { 4 } }
-   { \thispagestyle{__gzt_blank_pages_ps}\null\clearpage }
+\bool_if:nF { \g__gzt_for_authors_bool } {
+  \bool_if:nT { \g__gzt_inside_pages_bool } {
+    \AtEndDocument{%
+      \prg_replicate:nn
+      { \int_mod:nn { 4 - \int_mod:nn { \getpagerefnumber{LastPage} } { 4 } } { 4 } }
+      { \thispagestyle{__gzt_blank_pages_ps}\null\clearpage }
+    }
+  }
 }
 \pgfplotsset{%
   /pgf/number~format/.cd,
