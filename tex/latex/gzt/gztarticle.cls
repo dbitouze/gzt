@@ -69,6 +69,11 @@
 ~(Author~version.)
   }
 \NeedsTeXFormat{LaTeX2e}
+\bool_new:N \g__gzt_for_authors_bool
+\bool_new:N \g__gzt_cover_bool
+\bool_new:N \g__gzt_inside_pages_bool
+\bool_gset_true:N \g__gzt_for_authors_bool%
+\bool_gset_true:N \g__gzt_inside_pages_bool%
 \PassOptionsToClass{openany,english,french}{book}
 \LoadClass { book }
 \PassOptionsToPackage{table,cmyk}{xcolor}%
@@ -264,6 +269,13 @@
 \tl_const:Nn \c__gzt_interview_title_string_tl {En~apart\'e~avec~}
 \tl_const:Nn \c__gzt_aside_string_tl {--}
 \tl_const:Nn \c__gzt_draftwatermark_string_tl {draft}
+\tl_const:Nn \c__gzt_compiled_string_tl {
+  \IfLanguageName{french}{
+    Compil\'e~le~
+  }{
+    Compiled~on~
+  }
+}
 \bool_new:N \g__gzt_frontcover_bool
 \bool_new:N \g__gzt_inside_frontcover_bool
 \bool_new:N \g__gzt_inside_backcover_bool
@@ -948,9 +960,9 @@
         \noindent%
           \tl_if_empty:NF \l__gzt_people_photo_tl
           {%
-          \begin{adjustbox}{valign=t,minipage=18mm}
-            \includegraphics[width=16mm]{\l__gzt_people_photo_tl}
-          \end{adjustbox}%
+            \begin{adjustbox}{valign=t,minipage=18mm}
+              \includegraphics[width=16mm]{\l__gzt_people_photo_tl}
+            \end{adjustbox}%
           }
           \quad%
           \begin{adjustbox}{valign=t,minipage=\linewidth-18mm-1em}
@@ -1731,9 +1743,9 @@
     \bool_if:nF { \g__gzt_multicols_bool || \g__gzt_rearviewmirror_rubric_bool }
     {
       \begin{multicols}{2}%
+      }
     }
   }
-}
 \AtEndPreamble{\file_input:n {\c__gzt_configuration_file_string_tl}}
 \@ifpackageloaded{etoc}{%
   \newif\ifShowPartPageInToc % used before \part{Livres}
@@ -2123,17 +2135,31 @@
     \tikz[remember~picture,overlay] {\g__gzt_mainmatter_oddpage_headrule_tl}
   }%
   %
-  \setfoot%
-  [\c__gzt_footer_size_font_tl\thepage]%
-  [%
+\bool_if:nTF { \g__gzt_for_authors_bool } {
+    \setfoot%
+    [\c__gzt_footer_size_font_tl\thepage]%
+    [%
     \uppercase{\c__gzt_footer_string_tl}
-  ]%
-  []%
-  {}%
-  {%
-    \uppercase{\c__gzt_footer_string_tl}%
-  }%
-  {\c__gzt_footer_size_font_tl\thepage}%
+    ]%
+    [\c__gzt_footer_size_font_tl \c__gzt_compiled_string_tl\today]%
+    {\c__gzt_footer_size_font_tl \c__gzt_compiled_string_tl\today}%
+    {%
+      \uppercase{\c__gzt_footer_string_tl}%
+    }%
+    {\c__gzt_footer_size_font_tl\thepage}%
+  }{
+    \setfoot%
+    [\c__gzt_footer_size_font_tl\thepage]%
+    [%
+    \uppercase{\c__gzt_footer_string_tl}
+    ]%
+    []%
+    {}%
+    {%
+      \uppercase{\c__gzt_footer_string_tl}%
+    }%
+    {\c__gzt_footer_size_font_tl\thepage}%
+  }
 }
 \NewDocumentCommand \acknowledgements { +m } {
   \__gzt_article_acknowledgements:n {#1}%
