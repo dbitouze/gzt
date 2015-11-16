@@ -1537,6 +1537,16 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_draftwatermark_string_tl {draft}
 %    \end{macrocode}
+% For the text accompagnying the date displayed in the footer of the authors' versions.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_compiled_string_tl {
+  \IfLanguageName{french}{
+    Compil\'e~le~
+  }{
+    Compiled~on~
+  }
+}
+%    \end{macrocode}
 %
 % % \begin{macro}{smf}
 % % \begin{macro}{issn}
@@ -5271,17 +5281,31 @@ This work consists of the file  gzt.dtx
     \tikz[remember~picture,overlay] {\g_@@_mainmatter_oddpage_headrule_tl}
   }%
   %
-  \setfoot%
-  [\c_@@_footer_size_font_tl\thepage]%
-  [%
+\bool_if:nTF { \g_@@_for_authors_bool } {
+    \setfoot%
+    [\c_@@_footer_size_font_tl\thepage]%
+    [%
     \uppercase{\c_@@_footer_string_tl}
-  ]%
-  []%
-  {}%
-  {%
-    \uppercase{\c_@@_footer_string_tl}%
-  }%
-  {\c_@@_footer_size_font_tl\thepage}%
+    ]%
+    [\c_@@_footer_size_font_tl \c_@@_compiled_string_tl\today]%
+    {\c_@@_footer_size_font_tl \c_@@_compiled_string_tl\today}%
+    {%
+      \uppercase{\c_@@_footer_string_tl}%
+    }%
+    {\c_@@_footer_size_font_tl\thepage}%
+  }{
+    \setfoot%
+    [\c_@@_footer_size_font_tl\thepage]%
+    [%
+    \uppercase{\c_@@_footer_string_tl}
+    ]%
+    []%
+    {}%
+    {%
+      \uppercase{\c_@@_footer_string_tl}%
+    }%
+    {\c_@@_footer_size_font_tl\thepage}%
+  }
 }
 %    \end{macrocode}
 %
