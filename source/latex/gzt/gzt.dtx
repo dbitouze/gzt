@@ -588,14 +588,6 @@ This work consists of the file  gzt.dtx
 \RequirePackage{xpatch}%
 %    \end{macrocode}
 %
-%    \begin{macrocode}
-%</class|class-article>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*class|class-article>
-%    \end{macrocode}
-%
 % We alter the behaviour of the internals of "\usetikzlibrary" so that the
 % \LaTeXe{} push/pop filename system is used (see
 % \url{http://tex.stackexchange.com/a/57428/18401}).
@@ -640,14 +632,6 @@ This work consists of the file  gzt.dtx
     \@popfilename
   }
   {}{}
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%</class|class-article>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*class|class-article>
 %    \end{macrocode}
 %
 % In order to avoid "__gzt" in the name of each internal (i.e. private) function
@@ -912,7 +896,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 % \item Extended implementation of the \LaTeX{} array and
-%   tabular–environments:
+%   tabular-environments:
 %    \begin{macrocode}
 \RequirePackage{array}
 %    \end{macrocode}
@@ -2941,9 +2925,9 @@ This work consists of the file  gzt.dtx
         \noindent%
           \tl_if_empty:NF \l_@@_people_photo_tl
           {%
-          \begin{adjustbox}{valign=t,minipage=18mm}
-            \includegraphics[width=16mm]{\l_@@_people_photo_tl}
-          \end{adjustbox}%
+            \begin{adjustbox}{valign=t,minipage=18mm}
+              \includegraphics[width=16mm]{\l_@@_people_photo_tl}
+            \end{adjustbox}%
           }
           \quad%
           \begin{adjustbox}{valign=t,minipage=\linewidth-18mm-1em}
@@ -4293,9 +4277,9 @@ This work consists of the file  gzt.dtx
     \bool_if:nF { \g_@@_multicols_bool || \g_@@_rearviewmirror_rubric_bool }
     {
       \begin{multicols}{2}%
+      }
     }
   }
-}
 %    \end{macrocode}
 % \end{macro}
 %
