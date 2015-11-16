@@ -686,6 +686,14 @@ This work consists of the file  gzt.dtx
 % \section{Class loading}
 %
 %    \begin{macrocode}
+\bool_new:N \g_@@_for_authors_bool
+\bool_new:N \g_@@_cover_bool
+\bool_new:N \g_@@_inside_pages_bool
+%<class-article>\bool_gset_true:N \g_@@_for_authors_bool%
+%<class-article>\bool_gset_true:N \g_@@_inside_pages_bool%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 %</class|class-article>
 %    \end{macrocode}
 %
@@ -706,12 +714,6 @@ This work consists of the file  gzt.dtx
 %   layout (most debugging purpose),
 % \item ...
 % \end{itemize}
-%
-%    \begin{macrocode}
-\bool_new:N \g_@@_for_authors_bool
-\bool_new:N \g_@@_cover_bool
-\bool_new:N \g_@@_inside_pages_bool
-%    \end{macrocode}
 %
 %    \begin{macrocode}
 \keys_define:nn { gzt }
