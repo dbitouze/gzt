@@ -4701,20 +4701,26 @@ This work consists of the file  gzt.dtx
       disable%
     }
   }
-  \bool_if:NTF {\g_@@_for_authors_bool} {
-    \thispagestyle{empty}
-    \includegraphics{gzt-logo}
-    \hfill
-    \includegraphics[height=22.5mm]{\c_@@_smf_logo_file_string_tl}%
-    \par
-    \vfill
-    \begin{adjustbox}{valign=c,minipage=\linewidth}
-      \Large%
-      \c_@@_preliminary_version_string_tl%
-    \end{adjustbox}
-    \vfill
-    \newpage
-  }{
+  % \bool_if:NTF {\g_@@_for_authors_bool} {
+  %   \thispagestyle{empty}
+  %   \includegraphics{gzt-logo}
+  %   \hfill
+  %   \includegraphics[height=22.5mm]{\c_@@_smf_logo_file_string_tl}%
+  %   \par
+  %   \vfill
+  %   \begin{adjustbox}{valign=c,minipage=\linewidth}
+  %     \Large%
+  %     \c_@@_preliminary_version_string_tl%
+  %   \end{adjustbox}
+  %   \vfill
+  %   \newpage
+  % }{
+  %   \bool_if:NF {\g_@@_inside_pages_bool} {
+  %     \g_@@_display_frontcover_tl
+  %     \g_@@_display_inside_frontcover_tl
+  %   }
+  % }
+  \bool_if:NF {\g_@@_for_authors_bool} {
     \bool_if:NF {\g_@@_inside_pages_bool} {
       \g_@@_display_frontcover_tl
       \g_@@_display_inside_frontcover_tl
