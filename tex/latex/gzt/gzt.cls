@@ -90,8 +90,10 @@
 \NeedsTeXFormat{LaTeX2e}
 \bool_new:N \g__gzt_for_authors_bool
 \bool_new:N \g__gzt_cover_bool
+\bool_new:N \g__gzt_coverpage_bool
 \bool_new:N \g__gzt_inside_pages_bool
 \dim_const:Nn \c__gzt_pagegrid_dim { 1mm}
+\tl_gset:Nn \g__gzt_frontcover_image_file_tl {\c__gzt_issue_frontcover_default_image_file_tl}
 \keys_define:nn { gzt }
 {
   pagegrid .dim_gset:N = \g__gzt_pagegrid_dim,
@@ -107,10 +109,15 @@
   %   \bool_gset_true:N \g__gzt_cover_bool%
   % },%
   forprinter .bool_gset:N = \g__gzt_for_printer_bool,
+  frontcoverimagefile .tl_gset:N = \g__gzt_frontcover_image_file_tl,
+  frontcoverimagefile .default:n = {frontcover},
   output .choice:,
   output / frontcover .code:n = {%
     \bool_gset_true:N \g__gzt_for_printer_bool%
     \bool_gset_true:N \g__gzt_cover_bool%
+  },%
+  output / coverpage .code:n = {%
+    \bool_gset_true:N \g__gzt_coverpage_bool%
   },%
   output / insidepages .code:n = {%
     \bool_gset_true:N \g__gzt_for_printer_bool%
@@ -196,7 +203,11 @@
 \RequirePackage{placeins}%
 \RequirePackage[hidelinks,hypertexnames=false]{hyperref}%
 \RequirePackage[numbered]{bookmark}%
+\RequirePackage[nowarn]{glossaries}%
 \RequirePackage{cleveref}%
+\makeglossaries
+\setglossarystyle{indexhypergroup}
+\setacronymstyle{long-sc-short}
 \pdftex_if_engine:T
   {
     \renewcommand\familydefault{\sfdefault}
@@ -224,8 +235,8 @@
 \tl_const:Nn \c__gzt_journal_title_string_tl {
   \c__gzt_journal_short_title_string_tl{}~des~Math\'ematiciens%
 }
-\tl_const:Nn \c__gzt_gzt_class_name_tl {gzt}
-\tl_const:Nn \c__gzt_gztarticle_class_name_tl {gztarticle}
+\tl_const:Nn \c__gzt_class_name_tl {gzt}
+\tl_const:Nn \c__gzt_article_class_name_tl {gztarticle}
 \tl_const:Nn \c__gzt_editors_in_chief_string_tl
 {
   \int_compare:nNnTF { \g__gzt_editors_in_chief_int } > { 1 }
@@ -269,10 +280,10 @@
 \tl_const:Nn \c__gzt_images_directory_string_tl {images}
 \tl_const:Nn \c__gzt_issue_images_path_string_tl {% \c__gzt_issue_path_string_tl/
   \c__gzt_images_directory_string_tl}
-\tl_const:Nn \c__gzt_issue_frontcover_image_file_string_tl {frontcover}
-\tl_const:Nn \c__gzt_issue_frontcover_image_path_string_tl {\c__gzt_issue_images_path_string_tl/\c__gzt_issue_frontcover_image_file_string_tl}
+\tl_const:Nn \c__gzt_issue_frontcover_default_image_file_tl {frontcover}
 \tl_const:Nn \c__gzt_issue_backcover_text_file_string_tl {backcover}
 \tl_const:Nn \c__gzt_backcover_page_file_string_tl {\c__gzt_backmatter_directory_string_tl/\c__gzt_issue_backcover_text_file_string_tl}
+\tl_const:Nn \c__gzt_acronyms_file_string_tl {\c__gzt_class_name_tl acronyms}
 \tl_const:Nn \c__gzt_authors_instructions_file_extension_tl {ain}
 \tl_const:Nn \c__gzt_authors_instructions_file_tl {\c_job_name_tl.\c__gzt_authors_instructions_file_extension_tl}
 \tl_const:Nn \c__gzt_about_frontcover_string_tl {\`A~propos~de~la~couverture.}
@@ -303,6 +314,7 @@
 \tl_const:Nn \c__gzt_published_with_help_of_string_tl {Publi\'e~avec~le~concours~de~:}
 \tl_const:Nn \c__gzt_advertisement_directory_string_tl {advertisement/}
 \tl_const:Nn \c__gzt_advertisement_string_tl {Publicit\'e}
+\tl_const:Nn \c__gzt_moralreport_rubric_string_tl {Rapport~moral}
 \tl_const:Nn \c__gzt_smf_short_string_tl {\textsc{smf}}
 \tl_const:Nn \c__gzt_smf_short_pdf_string_tl {SMF}
 \tl_const:Nn \c__gzt_smf_string_tl {Soci\'et\'e~Math\'ematique~de~France}
@@ -1106,15 +1118,7 @@
   }{
     \hspace*{-2\c__gzt_potential_layoutoffset_dim}
   }
-  \exp_after:wN \includegraphics \exp_after:wN [
-  \g__gzt_frontcover_image_options_tl
-  % min~width=\paperwidth
-  % width=\c__gzt_layoutwidth_dim + 2\c__gzt_potential_layoutoffset_dim
-  % min~size={\paperwidth}{\c__gzt_frontcover_image_height_dim+\c__gzt_potential_layoutoffset_dim},
-  % max~size={\paperwidth}{\c__gzt_frontcover_image_height_dim+\c__gzt_potential_layoutoffset_dim},
-  % Clip*=0mm~40mm~211mm~160mm
-  % Clip*=0mm~{\height-\c__gzt_frontcover_image_height_dim}~{\paperwidth}~{\height}
-  ]{\c__gzt_issue_frontcover_image_path_string_tl}
+  \exp_after:wN\includegraphics\exp_after:wN[\g__gzt_frontcover_image_options_tl]{\g__gzt_frontcover_image_file_tl}
   \begin{tikzpicture}[remember~picture, overlay]
     \coordinate (__gzt_circle_minitoc_center) at
     ([xshift=\g__gzt_minitoc_xshift_dim-\c__gzt_potential_layoutoffset_dim,yshift=\g__gzt_minitoc_yshift_dim+\c__gzt_potential_layoutoffset_dim]current~page.south~east) ;
@@ -1681,6 +1685,7 @@
   \FloatBarrier%
 \int_gincr:N \g__gzt_item_in_rubric_int
 \dim_set_eq:NN \parindent \c__gzt_original_parindent_dim
+\glsresetall
 \setcounter{section}{0}
 \setcounter{figure}{0}
 \setcounter{table}{0}
@@ -1962,6 +1967,9 @@
 }
 }
 \AtEndPreamble{\file_input:n {\c__gzt_configuration_file_string_tl}}
+\file_if_exist:nT { \c__gzt_acronyms_file_string_tl } {%
+  \AtEndPreamble{\loadglsentries{\c__gzt_acronyms_file_string_tl}}
+}
 \@ifpackageloaded{etoc}{%
   \newif\ifShowPartPageInToc % used before \part{Livres}
   \newtoks\toctabletok
@@ -2112,7 +2120,7 @@
 \cs_new_protected:Nn \__gzt_display_toc:
 {
   \__gzt_before_frontmatter_stuff: {}
-  \__gzt_boxed_issue_number:nn {\c__gzt_issue_frontcover_image_path_string_tl}{\c__gzt_toc_string_tl}
+  \__gzt_boxed_issue_number:nn {\g__gzt_frontcover_image_file_tl}{\c__gzt_toc_string_tl}
   \phantomsection
   \hypertarget{__gzt_toc}{}
   \bookmark[dest=__gzt_toc,level=part]{\c__gzt_toc_string_tl}
@@ -2267,7 +2275,11 @@
   \bool_if:NF {\g__gzt_for_authors_bool} {
     \bool_if:NF {\g__gzt_inside_pages_bool} {
       \g__gzt_display_frontcover_tl
-      \g__gzt_display_inside_frontcover_tl
+      \bool_if:NTF {\g__gzt_coverpage_bool} {
+        \AfterEndPreamble{\end{document}}
+      }{
+        \g__gzt_display_inside_frontcover_tl
+      }
     }
   }
 }
@@ -2755,6 +2767,14 @@
   }{
   }
 }
+\NewDocumentCommand \fullpageadvertisement { O{} m }
+{
+  \newpage
+  \thispagestyle{__gzt_advertisement_ps}
+  \begin{minipage}[c][\textheight][c]{\textwidth}%
+    \centering\includegraphics[max~size={\linewidth}{\textheight},#1]{#2}%
+  \end{minipage}%
+}
 \NewDocumentCommand \aboutfrontcover { O{} O{\c__gzt_about_frontcover_string_tl} m }
 {
   \__gzt_about_frontcover:nnn {#1}{#2}{#3}%
@@ -2831,6 +2851,10 @@
 \NewDocumentCommand \forum {O{}}
 {
   \__gzt_rubric:nnn {#1}{\c__gzt_forum_rubric_string_tl}{picto-forum}
+}
+\NewDocumentCommand \moralreport {O{}}
+{
+  \__gzt_rubric:nnn {#1}{\c__gzt_moralreport_rubric_string_tl}{\c__gzt_smf_logo_file_string_tl}
 }
 \DeclareCiteCommand{\citeinterviewee}{}{%
   \printnames{interviewee}%
@@ -2929,12 +2953,12 @@
 }
 \NewDocumentCommand \gztcl {}
 {%
-  \textsl{\texttt{\c__gzt_gzt_class_name_tl}}
+  \textsl{\texttt{\c__gzt_class_name_tl}}
   \xspace
 }
 \NewDocumentCommand \gztarticlecl {}
 {%
-  \textsl{\texttt{\c__gzt_gztarticle_class_name_tl}}
+  \textsl{\texttt{\c__gzt_article_class_name_tl}}
   \xspace
 }
 \NewDocumentCommand \century { s m } {%
@@ -3169,28 +3193,32 @@
     }
     \cleancustomization%
 }
-\bool_if:NF {\g__gzt_inside_pages_bool} {
-  \preto\@enddocumenthook{
-    \clearpage
-    \pagenumbering{roman}%
-    \addtocounter{page}{2}
-    \ifoddpage%
-    \else
-    \hbox{}
-    \fi
-    \newpage
-    \bool_gset_true:N \g__gzt_backmatter_bool
-    \g__gzt_display_inside_backcover_tl
-    \newpage
-    \g__gzt_display_backcover_tl
+\bool_if:NF {\g__gzt_coverpage_bool} {
+  \bool_if:NF {\g__gzt_inside_pages_bool} {
+    \preto\@enddocumenthook{
+      \clearpage
+      \pagenumbering{roman}%
+      \addtocounter{page}{2}
+      \ifoddpage%
+      \else
+      \hbox{}
+      \fi
+      \newpage
+      \bool_gset_true:N \g__gzt_backmatter_bool
+      \g__gzt_display_inside_backcover_tl
+      \newpage
+      \g__gzt_display_backcover_tl
+    }%
   }%
 }%
-\bool_if:nF { \g__gzt_for_authors_bool } {
-  \bool_if:nT { \g__gzt_inside_pages_bool } {
-    \AtEndDocument{%
-      \prg_replicate:nn
-      { \int_mod:nn { 4 - \int_mod:nn { \getpagerefnumber{LastPage} } { 4 } } { 4 } }
-      { \thispagestyle{__gzt_blank_pages_ps}\null\clearpage }
+\bool_if:NF {\g__gzt_coverpage_bool} {
+  \bool_if:nF { \g__gzt_for_authors_bool } {
+    \bool_if:nT { \g__gzt_inside_pages_bool } {
+      \AtEndDocument{%
+        \prg_replicate:nn
+        { \int_mod:nn { 4 - \int_mod:nn { \getpagerefnumber{LastPage} } { 4 } } { 4 } }
+        { \thispagestyle{__gzt_blank_pages_ps}\null\clearpage }
+      }
     }
   }
 }
