@@ -717,6 +717,7 @@ This work consists of the file  gzt.dtx
 % \end{itemize}
 %
 %    \begin{macrocode}
+\tl_gset:Nn \g_@@_frontcover_image_file_tl {\c_@@_issue_frontcover_default_image_file_tl}
 \keys_define:nn { gzt }
 {
   pagegrid .dim_gset:N = \g_@@_pagegrid_dim,
@@ -732,6 +733,8 @@ This work consists of the file  gzt.dtx
   %   \bool_gset_true:N \g_@@_cover_bool%
   % },%
   forprinter .bool_gset:N = \g_@@_for_printer_bool,
+  frontcoverimagefile .tl_gset:N = \g_@@_frontcover_image_file_tl,
+  frontcoverimagefile .default:n = {frontcover},
   output .choice:,
   output / frontcover .code:n = {%
     \bool_gset_true:N \g_@@_for_printer_bool%
@@ -3033,15 +3036,7 @@ This work consists of the file  gzt.dtx
   }{
     \hspace*{-2\c_@@_potential_layoutoffset_dim}
   }
-  \exp_after:wN \includegraphics \exp_after:wN [
-  \g_@@_frontcover_image_options_tl
-  % min~width=\paperwidth
-  % width=\c_@@_layoutwidth_dim + 2\c_@@_potential_layoutoffset_dim
-  % min~size={\paperwidth}{\c_@@_frontcover_image_height_dim+\c_@@_potential_layoutoffset_dim},
-  % max~size={\paperwidth}{\c_@@_frontcover_image_height_dim+\c_@@_potential_layoutoffset_dim},
-  % Clip*=0mm~40mm~211mm~160mm
-  % Clip*=0mm~{\height-\c_@@_frontcover_image_height_dim}~{\paperwidth}~{\height}
-  ]{\c_@@_issue_frontcover_image_path_string_tl}
+  \exp_after:wN\includegraphics\exp_after:wN[\g_@@_frontcover_image_options_tl]{\g_@@_frontcover_image_file_tl}
   \begin{tikzpicture}[remember~picture, overlay]
     \coordinate (@@_circle_minitoc_center) at
     ([xshift=\g_@@_minitoc_xshift_dim-\c_@@_potential_layoutoffset_dim,yshift=\g_@@_minitoc_yshift_dim+\c_@@_potential_layoutoffset_dim]current~page.south~east) ;
@@ -4506,7 +4501,7 @@ This work consists of the file  gzt.dtx
 \cs_new_protected:Nn \_@@_display_toc:
 {
   \_@@_before_frontmatter_stuff: {}
-  \@@_boxed_issue_number:nn {\c_@@_issue_frontcover_image_path_string_tl}{\c_@@_toc_string_tl}
+  \@@_boxed_issue_number:nn {\g_@@_frontcover_image_file_tl}{\c_@@_toc_string_tl}
   \phantomsection
   \hypertarget{@@_toc}{}
   \bookmark[dest=@@_toc,level=part]{\c_@@_toc_string_tl}
