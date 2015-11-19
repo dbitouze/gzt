@@ -5483,6 +5483,18 @@ This work consists of the file  gzt.dtx
 % \section{Miscellaneous public commands specific to the journal}
 %
 % We create miscellaneous public commands specific to the journal.
+%
+% \begin{macro}{\fullpageadvertisement}
+\NewDocumentCommand \fullpageadvertisement { O{} m }
+{
+  \newpage
+  \thispagestyle{@@_advertisement_ps}
+  \begin{minipage}[c][\textheight][c]{\textwidth}%
+    \centering\includegraphics[max~size={\linewidth}{\textheight},#1]{#2}%
+  \end{minipage}%
+}
+% \end{macro}
+%
 % \begin{macro}{\aboutfrontcover}
 %   For a few words about the front cover.
 %    \begin{macrocode}
