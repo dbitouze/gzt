@@ -1254,8 +1254,8 @@ This work consists of the file  gzt.dtx
 %
 % For the names of the underlying classes.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_gzt_class_name_tl {gzt}
-\tl_const:Nn \c_@@_gztarticle_class_name_tl {gztarticle}
+\tl_const:Nn \c_@@_class_name_tl {gzt}
+\tl_const:Nn \c_@@_article_class_name_tl {gztarticle}
 %    \end{macrocode}
 %
 % For the editor(s) in chief.
@@ -4313,6 +4313,7 @@ This work consists of the file  gzt.dtx
 %<class>}
 %<class>}
 %    \end{macrocode}
+%
 % We load the configuration file, which has to be located in the \TeX{} search
 % path: at least one such a file is provided by the class and located in the
 % same directory as the class file. This file is loaded at the end of preamble
@@ -5723,12 +5724,12 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \NewDocumentCommand \gztcl {}
 {%
-  \textsl{\texttt{\c_@@_gzt_class_name_tl}}
+  \textsl{\texttt{\c_@@_class_name_tl}}
   \xspace
 }
 \NewDocumentCommand \gztarticlecl {}
 {%
-  \textsl{\texttt{\c_@@_gztarticle_class_name_tl}}
+  \textsl{\texttt{\c_@@_article_class_name_tl}}
   \xspace
 }
 %    \end{macrocode}
