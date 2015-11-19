@@ -688,6 +688,7 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \bool_new:N \g_@@_for_authors_bool
 \bool_new:N \g_@@_cover_bool
+\bool_new:N \g_@@_coverpage_bool
 \bool_new:N \g_@@_inside_pages_bool
 %<class-article>\bool_gset_true:N \g_@@_for_authors_bool%
 %<class-article>\bool_gset_true:N \g_@@_inside_pages_bool%
@@ -735,6 +736,9 @@ This work consists of the file  gzt.dtx
   output / frontcover .code:n = {%
     \bool_gset_true:N \g_@@_for_printer_bool%
     \bool_gset_true:N \g_@@_cover_bool%
+  },%
+  output / coverpage .code:n = {%
+    \bool_gset_true:N \g_@@_coverpage_bool%
   },%
   output / insidepages .code:n = {%
     \bool_gset_true:N \g_@@_for_printer_bool%
@@ -4723,7 +4727,11 @@ This work consists of the file  gzt.dtx
   \bool_if:NF {\g_@@_for_authors_bool} {
     \bool_if:NF {\g_@@_inside_pages_bool} {
       \g_@@_display_frontcover_tl
-      \g_@@_display_inside_frontcover_tl
+      \bool_if:NTF {\g_@@_coverpage_bool} {
+        \AfterEndPreamble{\end{document}}
+      }{
+        \g_@@_display_inside_frontcover_tl
+      }
     }
   }
 }
@@ -6016,46 +6024,51 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 %
-% We automatically include the inside back cover and back cover pages at the end
-% of the document, the former containing some condensed instructions to
-% authors. But, this cannot be done within "\AtEndDocument" and
-% "\preto\@enddocumenthook" should be used instead (see
-% \url{http://tex.stackexchange.com/q/240318/18401}).
+% If we don't ask the cover page (only), the inside back cover and back cover
+% pages are automatically included at the end of the document, the former
+% containing some condensed instructions to authors. But, this cannot be done
+% within "\AtEndDocument" and "\preto\@enddocumenthook" should be used instead
+% (see \url{http://tex.stackexchange.com/q/240318/18401}).
 %    \begin{macrocode}
-\bool_if:NF {\g_@@_inside_pages_bool} {
-  \preto\@enddocumenthook{
-    \clearpage
+\bool_if:NF {\g_@@_coverpage_bool} {
+  \bool_if:NF {\g_@@_inside_pages_bool} {
+    \preto\@enddocumenthook{
+      \clearpage
 %    \end{macrocode}
 %
 % The inside front cover and front cover pages are numbered \enquote{i} and
 % \enquote{ii} hence the inside back cover and back cover pages are numbered
 % \enquote{iii} and \enquote{iv}.
 %    \begin{macrocode}
-    \pagenumbering{roman}%
-    \addtocounter{page}{2}
-    \ifoddpage%
-    \else
-    \hbox{}
-    \fi
-    \newpage
-    \bool_gset_true:N \g_@@_backmatter_bool
-    \g_@@_display_inside_backcover_tl
-    \newpage
-    \g_@@_display_backcover_tl
+      \pagenumbering{roman}%
+      \addtocounter{page}{2}
+      \ifoddpage%
+      \else
+      \hbox{}
+      \fi
+      \newpage
+      \bool_gset_true:N \g_@@_backmatter_bool
+      \g_@@_display_inside_backcover_tl
+      \newpage
+      \g_@@_display_backcover_tl
+    }%
   }%
 }%
 %    \end{macrocode}
 %
-% The document total page numbers should be a multiple of four and we add the
-% necessary and sufficient number of blank pages if it isn't the case (code
-% borrowed from \url{http://tex.stackexchange.com/a/83498/18401}).
+% If we don't ask the cover page (only), the document total page numbers should
+% be a multiple of four and we add the necessary and sufficient number of blank
+% pages if it isn't the case (code borrowed from
+% \url{http://tex.stackexchange.com/a/83498/18401}).
 %    \begin{macrocode}
-\bool_if:nF { \g_@@_for_authors_bool } {
-  \bool_if:nT { \g_@@_inside_pages_bool } {
-    \AtEndDocument{%
-      \prg_replicate:nn
-      { \int_mod:nn { 4 - \int_mod:nn { \getpagerefnumber{LastPage} } { 4 } } { 4 } }
-      { \thispagestyle{@@_blank_pages_ps}\null\clearpage }
+\bool_if:NF {\g_@@_coverpage_bool} {
+  \bool_if:nF { \g_@@_for_authors_bool } {
+    \bool_if:nT { \g_@@_inside_pages_bool } {
+      \AtEndDocument{%
+        \prg_replicate:nn
+        { \int_mod:nn { 4 - \int_mod:nn { \getpagerefnumber{LastPage} } { 4 } } { 4 } }
+        { \thispagestyle{@@_blank_pages_ps}\null\clearpage }
+      }
     }
   }
 }
