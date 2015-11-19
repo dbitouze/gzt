@@ -1458,6 +1458,7 @@ This work consists of the file  gzt.dtx
 \tl_const:Nn \c_@@_published_with_help_of_string_tl {Publi\'e~avec~le~concours~de~:}
 \tl_const:Nn \c_@@_advertisement_directory_string_tl {advertisement/}
 \tl_const:Nn \c_@@_advertisement_string_tl {Publicit\'e}
+\tl_const:Nn \c_@@_moralreport_rubric_string_tl {Rapport~moral}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -5574,6 +5575,10 @@ This work consists of the file  gzt.dtx
 \NewDocumentCommand \forum {O{}}
 {
   \_@@_rubric:nnn {#1}{\c_@@_forum_rubric_string_tl}{picto-forum}
+}
+\NewDocumentCommand \moralreport {O{}}
+{
+  \_@@_rubric:nnn {#1}{\c_@@_moralreport_rubric_string_tl}{\c_@@_smf_logo_file_string_tl}
 }
 %    \end{macrocode}
 % \end{macro}
