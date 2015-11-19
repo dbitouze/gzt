@@ -1393,13 +1393,16 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % For the name of the file containing the image of the current issue's front cover.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_issue_frontcover_image_file_string_tl {frontcover}
-\tl_const:Nn \c_@@_issue_frontcover_image_path_string_tl {\c_@@_issue_images_path_string_tl/\c_@@_issue_frontcover_image_file_string_tl}
+\tl_const:Nn \c_@@_issue_frontcover_default_image_file_tl {frontcover}
 %    \end{macrocode}
 % For the name of the file containing the text of the current issue's back cover.
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_issue_backcover_text_file_string_tl {backcover}
 \tl_const:Nn \c_@@_backcover_page_file_string_tl {\c_@@_backmatter_directory_string_tl/\c_@@_issue_backcover_text_file_string_tl}
+%    \end{macrocode}
+% For the name of the file containing the acronyms.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_acronyms_file_string_tl {\c_@@_class_name_tl acronyms}
 %    \end{macrocode}
 % For authors' instructions file.
 %    \begin{macrocode}
@@ -4312,6 +4315,13 @@ This work consists of the file  gzt.dtx
 % taken in account.
 %    \begin{macrocode}
 \AtEndPreamble{\file_input:n {\c_@@_configuration_file_string_tl}}
+%    \end{macrocode}
+%
+% We load the file where acronyms are defined.
+%    \begin{macrocode}
+\file_if_exist:nT { \c_@@_acronyms_file_string_tl } {%
+  \AtEndPreamble{\loadglsentries{\c_@@_acronyms_file_string_tl}}
+}
 %    \end{macrocode}
 %
 % We make use of \pkg{etoc} to perform the special layout of the table of
