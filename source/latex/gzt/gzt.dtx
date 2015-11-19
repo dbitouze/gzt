@@ -1096,10 +1096,10 @@ This work consists of the file  gzt.dtx
 \RequirePackage[numbered]{bookmark}%
 %    \end{macrocode}
 %
-% % \item Create glossaries and lists of acronyms:
-% %    \begin{macrocode}
-% \RequirePackage[nowarn]{glossaries}%
-% %    \end{macrocode}
+% \item Create glossaries and lists of acronyms:
+%    \begin{macrocode}
+\RequirePackage[nowarn]{glossaries}%
+%    \end{macrocode}
 %
 % \item Intelligent cross-referencing:
 %    \begin{macrocode}
@@ -1107,16 +1107,13 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % \end{enumerate}
 %
-% % Setings of the glossaries and acronyms.
-% %    \begin{macrocode}
-% \makeglossaries
-% % \loadglsentries{../glossaries/glossary}
-% % \loadglsentries{../glossaries/acronyms}
-% %
-% \setglossarystyle{indexhypergroup}
-% \setacronymstyle{long-sc-short}
-% \glsaddall
-% %    \end{macrocode}
+% Setings of the glossaries and acronyms.
+%    \begin{macrocode}
+\makeglossaries
+%
+\setglossarystyle{indexhypergroup}
+\setacronymstyle{long-sc-short}
+%    \end{macrocode}
 %
 % In case of \hologo{pdfTeX} engine, the document is by default in sans serif
 % and makes use of the \pkg{lmodern} for the \enquote{ttfamily} font.
