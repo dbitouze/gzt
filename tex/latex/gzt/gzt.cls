@@ -2767,13 +2767,32 @@
   }{
   }
 }
-\NewDocumentCommand \fullpageadvertisement { O{} m }
-{
+\cs_new_protected:Nn \__gzt_advertisement:nn
+ {
+   \vfill
+   \begin{center}
+     \dim_set:Nn \fboxsep {\c_zero_dim}
+     \fbox{%
+       \includegraphics[max~size={\linewidth}{\textheight},#1]{#2}
+     }
+   \end{center}
+   \vfill
+ }
+\NewDocumentCommand \advertisement { O{} m }
+ {
+   \__gzt_advertisement:nn {#1}{#2}
+ }
+\cs_new_protected:Nn \__gzt_fullpageadvertisement:nn
+ {
   \newpage
   \thispagestyle{__gzt_advertisement_ps}
   \begin{minipage}[c][\textheight][c]{\textwidth}%
     \centering\includegraphics[max~size={\linewidth}{\textheight},#1]{#2}%
   \end{minipage}%
+ }
+\NewDocumentCommand \fullpageadvertisement { O{} m }
+{
+   \__gzt_fullpageadvertisement:nn {#1}{#2}
 }
 \NewDocumentCommand \aboutfrontcover { O{} O{\c__gzt_about_frontcover_string_tl} m }
 {
