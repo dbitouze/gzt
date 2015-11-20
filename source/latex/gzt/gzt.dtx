@@ -5484,6 +5484,26 @@ This work consists of the file  gzt.dtx
 %
 % We create miscellaneous public commands specific to the journal.
 %
+% \begin{macro}{\advertisement}
+%   For a (not full page) advertisement.
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_advertisement:nn
+ {
+   \vfill
+   \begin{center}
+     \dim_set:Nn \fboxsep {\c_zero_dim}
+     \fbox{%
+       \includegraphics[max~size={\linewidth}{\textheight},#1]{#2}
+     }
+   \end{center}
+   \vfill
+ }
+\NewDocumentCommand \advertisement { O{} m }
+ {
+   \_@@_advertisement:nn {#1}{#2}
+ }
+% \end{macro}
+%
 % \begin{macro}{\fullpageadvertisement}
 \NewDocumentCommand \fullpageadvertisement { O{} m }
 {
