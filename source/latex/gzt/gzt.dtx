@@ -5505,13 +5505,19 @@ This work consists of the file  gzt.dtx
 % \end{macro}
 %
 % \begin{macro}{\fullpageadvertisement}
-\NewDocumentCommand \fullpageadvertisement { O{} m }
-{
+%   For a full page advertisement.
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_fullpageadvertisement:nn
+ {
   \newpage
   \thispagestyle{@@_advertisement_ps}
   \begin{minipage}[c][\textheight][c]{\textwidth}%
     \centering\includegraphics[max~size={\linewidth}{\textheight},#1]{#2}%
   \end{minipage}%
+ }
+\NewDocumentCommand \fullpageadvertisement { O{} m }
+{
+   \_@@_fullpageadvertisement:nn {#1}{#2}
 }
 % \end{macro}
 %
