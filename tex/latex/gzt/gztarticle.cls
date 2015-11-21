@@ -198,7 +198,7 @@
 \tl_const:Nn \c__gzt_editorinchief_signatory_string_tl {\c__gzt_editorinchief_string_tl~de~la~\c__gzt_journal_title_string_tl}
 \tl_const:Nn \c__gzt_toc_string_tl {Sommaire}
 \tl_const:Nn \c__gzt_president_message_string_tl {Mot~du~pr\'esident}
-\tl_const:Nn \c__gzt_president_signatory_string_tl {pr\'esident~de~la~\l__gzt_smf_short_string_tl}
+\tl_const:Nn \c__gzt_president_signatory_string_tl {pr\'esident~de~la~\g__gzt_smf_short_string_tl}
 \tl_const:Nn \c__gzt_editorinchief_message_date_string_tl {Le~\displaydate{__gzt_editorinchief_message_date}}
 \tl_const:Nn \c__gzt_president_message_date_string_tl {Le~}
 \tl_const:Nn \c__gzt_frontcover_header_string_tl {
@@ -207,6 +207,17 @@
   \textendash{}
   \space
   \No\int_use:N\g__gzt_issue_number_int%
+}
+\tl_const:Nn \c__gzt_pdftitle_string_tl {
+  \c__gzt_journal_title_string_tl
+  % \space
+  % \textendash{}
+  % \space
+  % \l__gzt_uppercased_date_format{\displaydate{__gzt_date}}
+  \space
+  \textendash{}
+  \space
+  N°\int_use:N\g__gzt_issue_number_int
 }
 \tl_const:Nn \c__gzt_frontmatter_directory_string_tl {frontmatter}
 \tl_const:Nn \c__gzt_backmatter_directory_string_tl {backmatter}
@@ -788,9 +799,9 @@
 \tl_const:Nn \c__gzt_footer_size_font_tl {
   \fontsize{\c__gzt_footer_height_font_dim}{\c_zero_dim}\selectfont%
 }
-\tl_new:N \l__gzt_smf_short_string_tl
-\tl_new:N \l__gzt_smf_string_tl
-\tl_set:Nn \l__gzt_smf_short_string_tl {
+\tl_new:N \g__gzt_smf_short_string_tl
+\tl_new:N \g__gzt_smf_string_tl
+\tl_gset:Nn \g__gzt_smf_short_string_tl {
   % \cs_if_exist:cTF {texorpdfstring}
   % {
     \texorpdfstring{\c__gzt_smf_short_string_tl}{\c__gzt_smf_short_pdf_string_tl}
@@ -798,7 +809,7 @@
   %   \c__gzt_smf_short_pdf_string_tl
   % }%
 }
-\tl_set:Nn \l__gzt_smf_string_tl {
+\tl_gset:Nn \g__gzt_smf_string_tl {
   % \cs_if_exist:cTF {texorpdfstring}
   % {
   % \texorpdfstring{Soci\'et\'e~Math\'ematique~de~France}{\c__gzt_smf_string_tl}
@@ -825,13 +836,19 @@
     \emph{\c__gzt_journal_title_string_tl}
   }%
 }
-\tl_new:N \l__gzt_pdftitle_string_tl
-\tl_new:N \l__gzt_pdfauthor_string_tl
-\tl_set:Nn \l__gzt_pdftile_string_tl {
-  \c__gzt_journal_title_string_tl\space--\space{}N°\int_use:N\g__gzt_issue_number_int
+\tl_new:N \g__gzt_pdftitle_string_tl
+\tl_new:N \g__gzt_pdfauthor_string_tl
+\tl_gset:Nn \g__gzt_pdftitle_string_tl {
+  \c__gzt_pdftitle_string_tl
 }
-\tl_set:Nn \l__gzt_pdfauthor_string_tl {
-  \l__gzt_smf_string_tl
+\tl_gset:Nn \g__gzt_pdfauthor_string_tl {
+  \g__gzt_smf_string_tl
+}
+\AtEndPreamble{%
+  \hypersetup{%
+    pdftitle=\g__gzt_pdftitle_string_tl,
+    pdfauthor=\g__gzt_pdfauthor_string_tl%
+  }
 }
 \DTLnewdb{__gzt_authors}
 \cs_new_protected:Nn \__gzt_authors:nnnnnn
@@ -1268,8 +1285,6 @@
 }
 \NewDocumentCommand \issuesetup { m } {
   \keys_set:nn { gzt/issuesetup } {frontcoverimageoptions={width=\c__gzt_frontcover_image_width_dim},#1}
-\hypersetup{pdftitle=\l__gzt_pdftitle_string_tl}
-\hypersetup{pdfauthor=\l__gzt_pdfauthor_string_tl}
   \int_compare:nNnT {\g__gzt_issue_number_int}<{1}
   {
     \int_set:Nn \g__gzt_issue_number_int { \c__gzt_first_issue_number_int }
@@ -1378,7 +1393,6 @@
   \tl_if_empty:NT \g__gzt_short_title_tl {%
     \tl_gset_eq:NN \g__gzt_short_title_tl \g__gzt_title_tl
   }
-    \hypersetup{pdftitle=\g__gzt_short_title_tl}
 }
 \tl_new:N \g__gzt_subtitle_tl
 \NewDocumentCommand \subtitle { o m } {
@@ -1612,7 +1626,6 @@
         }
       }
     }
-    \hypersetup{pdfauthor=\l__gzt_people_first_last_names_tl}
   }
   \end{adjustbox}
 }
@@ -1689,6 +1702,10 @@
       }
     }
     \bool_gset_false:N \g__gzt_previous_article_with_bibliography_or_minibio_bool
+\hypersetup{%
+    pdftitle=\g__gzt_short_title_tl,
+    pdfauthor=\citeauthor{\g__gzt_article_bib_key_tl}~(\l__gzt_people_first_last_names_tl
+  }
   \l__gzt_title_box_tl
   \normalsize%
   \nopagebreak[3]
@@ -1948,7 +1965,7 @@
   \__gzt_before_editorial_presidentmessage:nn {\c__gzt_smf_logo_file_string_tl}{\c__gzt_president_message_string_tl}
   \phantomsection
   \par%
-  \addcontentsline{toc}{part}{\l__gzt_smf_short_string_tl}%
+  \addcontentsline{toc}{part}{\g__gzt_smf_short_string_tl}%
   \addcontentsline{toc}{chapter}{\c__gzt_president_message_string_tl}%
 }
 \cs_new_protected:Nn \__gzt_after_display_presidentmessage:
@@ -2294,10 +2311,10 @@
 \NewDocumentCommand \smf { s } {
   \IfBooleanTF {#1}
   {
-    \l__gzt_smf_string_tl
+    \g__gzt_smf_string_tl
   }
   {
-    \l__gzt_smf_short_string_tl
+    \g__gzt_smf_short_string_tl
   }
   \xspace
 }
