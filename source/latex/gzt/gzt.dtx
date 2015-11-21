@@ -1345,7 +1345,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % For the president.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_president_signatory_string_tl {pr\'esident~de~la~\l_@@_smf_short_string_tl}
+\tl_const:Nn \c_@@_president_signatory_string_tl {pr\'esident~de~la~\g_@@_smf_short_string_tl}
 %    \end{macrocode}
 % For the date of the editor in chief's message.
 %    \begin{macrocode}
@@ -1363,6 +1363,20 @@ This work consists of the file  gzt.dtx
   \textendash{}
   \space
   \No\int_use:N\g_@@_issue_number_int%
+}
+%    \end{macrocode}
+% For the pdftitle text.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_pdftitle_string_tl {
+  \c_@@_journal_title_string_tl
+  % \space
+  % \textendash{}
+  % \space
+  % \l_@@_uppercased_date_format{\displaydate{@@_date}}
+  \space
+  \textendash{}
+  \space
+  N°\int_use:N\g_@@_issue_number_int
 }
 %    \end{macrocode}
 % For the name of the directory containing the editorial and the president message.
@@ -2659,9 +2673,9 @@ This work consists of the file  gzt.dtx
 %
 % We define some token lists for the long and short forms of \textsc{smf}.
 %    \begin{macrocode}
-\tl_new:N \l_@@_smf_short_string_tl
-\tl_new:N \l_@@_smf_string_tl
-\tl_set:Nn \l_@@_smf_short_string_tl {
+\tl_new:N \g_@@_smf_short_string_tl
+\tl_new:N \g_@@_smf_string_tl
+\tl_gset:Nn \g_@@_smf_short_string_tl {
   % \cs_if_exist:cTF {texorpdfstring}
   % {
     \texorpdfstring{\c_@@_smf_short_string_tl}{\c_@@_smf_short_pdf_string_tl}
@@ -2669,7 +2683,7 @@ This work consists of the file  gzt.dtx
   %   \c_@@_smf_short_pdf_string_tl
   % }%
 }
-\tl_set:Nn \l_@@_smf_string_tl {
+\tl_gset:Nn \g_@@_smf_string_tl {
   % \cs_if_exist:cTF {texorpdfstring}
   % {
   % \texorpdfstring{Soci\'et\'e~Math\'ematique~de~France}{\c_@@_smf_string_tl}
@@ -2702,15 +2716,25 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 %
-% We fix some strings for the PDF's metadata .
+% We fix some strings for the PDF's metadata.
 %    \begin{macrocode}
-\tl_new:N \l_@@_pdftitle_string_tl
-\tl_new:N \l_@@_pdfauthor_string_tl
-\tl_set:Nn \l_@@_pdftile_string_tl {
-  \c_@@_journal_title_string_tl\space--\space{}N°\int_use:N\g_@@_issue_number_int
+\tl_new:N \g_@@_pdftitle_string_tl
+\tl_new:N \g_@@_pdfauthor_string_tl
+\tl_gset:Nn \g_@@_pdftitle_string_tl {
+  \c_@@_pdftitle_string_tl
 }
-\tl_set:Nn \l_@@_pdfauthor_string_tl {
-  \l_@@_smf_string_tl
+\tl_gset:Nn \g_@@_pdfauthor_string_tl {
+  \g_@@_smf_string_tl
+}
+%    \end{macrocode}
+%
+% We fix some of the PDF's metadata .
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \hypersetup{%
+    pdftitle=\g_@@_pdftitle_string_tl,
+    pdfauthor=\g_@@_pdfauthor_string_tl%
+  }
 }
 %    \end{macrocode}
 %
@@ -3322,12 +3346,6 @@ This work consists of the file  gzt.dtx
 % Its keys are set (only "number", "month" and "year" are relevant here).
 %    \begin{macrocode}
   \keys_set:nn { gzt/issuesetup } {frontcoverimageoptions={width=\c_@@_frontcover_image_width_dim},#1}
-%    \end{macrocode}
-%
-% We fix some of the PDF's metadata .
-%    \begin{macrocode}
-\hypersetup{pdftitle=\l_@@_pdftitle_string_tl}
-\hypersetup{pdfauthor=\l_@@_pdfauthor_string_tl}
 %    \end{macrocode}
 %
 % We use here the fact that, if the "number", "month" or "year" options are not
@@ -4578,7 +4596,7 @@ This work consists of the file  gzt.dtx
   \_@@_before_editorial_presidentmessage:nn {\c_@@_smf_logo_file_string_tl}{\c_@@_president_message_string_tl}
   \phantomsection
   \par%
-  \addcontentsline{toc}{part}{\l_@@_smf_short_string_tl}%
+  \addcontentsline{toc}{part}{\g_@@_smf_short_string_tl}%
   \addcontentsline{toc}{chapter}{\c_@@_president_message_string_tl}%
 }
 \cs_new_protected:Nn \_@@_after_display_presidentmessage:
@@ -5702,10 +5720,10 @@ This work consists of the file  gzt.dtx
 \NewDocumentCommand \smf { s } {
   \IfBooleanTF {#1}
   {
-    \l_@@_smf_string_tl
+    \g_@@_smf_string_tl
   }
   {
-    \l_@@_smf_short_string_tl
+    \g_@@_smf_short_string_tl
   }
   \xspace
 }
