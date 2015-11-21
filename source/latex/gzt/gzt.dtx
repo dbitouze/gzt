@@ -2726,11 +2726,7 @@ This work consists of the file  gzt.dtx
 \tl_gset:Nn \g_@@_pdfauthor_string_tl {
   \g_@@_smf_string_tl
 }
-%    \end{macrocode}
-%
-% We fix some of the PDF's metadata .
-%    \begin{macrocode}
-\AtBeginDocument{%
+\AtEndPreamble{%
   \hypersetup{%
     pdftitle=\g_@@_pdftitle_string_tl,
     pdfauthor=\g_@@_pdfauthor_string_tl%
@@ -3619,7 +3615,6 @@ This work consists of the file  gzt.dtx
   \tl_if_empty:NT \g_@@_short_title_tl {%
     \tl_gset_eq:NN \g_@@_short_title_tl \g_@@_title_tl
   }
-%<class-article>    \hypersetup{pdftitle=\g_@@_short_title_tl}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -4136,7 +4131,6 @@ This work consists of the file  gzt.dtx
         }
       }
     }
-%<class-article>    \hypersetup{pdfauthor=\l_@@_people_first_last_names_tl}
   }
   \end{adjustbox}
 }
@@ -4216,11 +4210,28 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
+%<class-article>\hypersetup{%
+%<class-article>    pdftitle=\g_@@_short_title_tl,
+%<class-article>    pdfauthor=\citeauthor{\g_@@_article_bib_key_tl}~(\l_@@_people_first_last_names_tl
+%<class-article>  }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 %</class|class-article>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
 %<*class>
+%    \end{macrocode}
+%
+% We fix some of the PDF's metadata .
+%    \begin{macrocode}
+\bool_if:NT {\g_@@_for_authors_bool} {
+  \hypersetup{%
+    pdftitle=\g_@@_short_title_tl,
+    pdfauthor=\l_@@_people_first_last_names_tl
+  }
+}
 %    \end{macrocode}
 %
 % Here, we put the \pkg{TikZ}'s picture of the \enquote{bullet and rule}
@@ -6171,7 +6182,9 @@ This work consists of the file  gzt.dtx
     }
   },%
 }%
+%    \end{macrocode}
 %
+%    \begin{macrocode}
 \ProcessKeysOptions { gztarticle }
 %    \end{macrocode}
 %
