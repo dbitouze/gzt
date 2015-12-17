@@ -4317,12 +4317,12 @@ This work consists of the file  gzt.dtx
 % We set "\parindent" to zero in \enquote{Interview} rubric.
 %    \begin{macrocode}
     \dim_zero:N \parindent
-    \tl_if_empty:NF \g_@@_people_photo_tl
-    {
-      \begin{adjustbox}{center}
-        \includegraphics[height=50mm]{\g_@@_people_photo_tl}
-      \end{adjustbox}
-    }
+    % \tl_if_empty:NF \l_@@_people_photo_tl
+    % {
+    %   \begin{adjustbox}{center}
+    %     \includegraphics[height=50mm]{\l_@@_people_photo_tl}
+    %   \end{adjustbox}
+    % }
   }
   \color{@@_default_text_color}%
   \IfBooleanF {#1}%

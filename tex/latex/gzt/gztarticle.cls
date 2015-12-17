@@ -1748,12 +1748,12 @@
   \bool_if:nT \g__gzt_interview_rubric_bool
   {
     \dim_zero:N \parindent
-    \tl_if_empty:NF \g__gzt_people_photo_tl
-    {
-      \begin{adjustbox}{center}
-        \includegraphics[height=50mm]{\g__gzt_people_photo_tl}
-      \end{adjustbox}
-    }
+    % \tl_if_empty:NF \l__gzt_people_photo_tl
+    % {
+    %   \begin{adjustbox}{center}
+    %     \includegraphics[height=50mm]{\l__gzt_people_photo_tl}
+    %   \end{adjustbox}
+    % }
   }
   \color{__gzt_default_text_color}%
   \IfBooleanF {#1}%
