@@ -2042,6 +2042,15 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\c_@@_authors_photos_width_dim}
+%    \begin{macrocode}
+\dim_const:Nn \c_@@_authors_photos_width_dim {16mm}
+\dim_const:Nn \c_@@_authors_photos_box_width_dim {\c_@@_authors_photos_width_dim
+  + 2mm}
+\dim_new:N \l_@@_minibio_width_dim
+%    \end{macrocode}
+% \end{macro}
+%
 % We set the default geometry of the page.
 %    \begin{macrocode}
 \geometry{%
@@ -2784,11 +2793,11 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_display_author:nnnnn
 {
-  \begin{tabular}[t]{p{18mm}p{0.75\linewidth}}
+  \begin{tabular}[t]{p{\c_@@_authors_photos_box_width_dim}p{0.75\linewidth}}
     \tl_if_empty:nF {#5}
     {%
     \begin{adjustbox}{valign=t}
-      \includegraphics[width=16mm]{#5}
+      \includegraphics[width=\c_@@_authors_photos_width_dim]{#5}
     \end{adjustbox}%
     }
     &
@@ -2962,18 +2971,19 @@ This work consists of the file  gzt.dtx
     }{
       \tl_if_in:NnTF \l_@@_people_role_tl { author } {
         \footnotesize%
-        \noindent%
+        % \noindent%
+        \dim_set:Nn \l_@@_minibio_width_dim {\linewidth-1em - \c_@@_authors_photos_box_width_dim}
         \tl_if_empty:NTF \l_@@_people_photo_tl
         {%
-          \begin{adjustbox}{valign=t,minipage=\linewidth-1em}
-          }{%
-            \begin{adjustbox}{valign=t,minipage=18mm}
-              \includegraphics[width=16mm]{\l_@@_people_photo_tl}
-            \end{adjustbox}%
-            \quad%
-            \begin{adjustbox}{valign=t,minipage=\linewidth-18mm-1em}
-            }
-            \begin{description}[leftmargin=1em,style=nextline]
+          \dim_add:Nn \l_@@_minibio_width_dim {\c_@@_authors_photos_box_width_dim}
+        }{%
+          \begin{adjustbox}{valign=t,minipage=\c_@@_authors_photos_box_width_dim}
+            \includegraphics[width=\c_@@_authors_photos_width_dim]{\l_@@_people_photo_tl}
+          \end{adjustbox}%
+          \quad%
+        }
+        \begin{adjustbox}{valign=t,minipage=\l_@@_minibio_width_dim}
+          \begin{description}[leftmargin=1em,style=nextline]
             \item[%
               \textcolor{@@_people_color}{%
                 \_@@_citeauthor_no_firstinits:n {\c_@@_issue_bib_key_tl -#1- \exp_not:V\DTLcurrentindex}%
@@ -3459,7 +3469,7 @@ This work consists of the file  gzt.dtx
   }
   \IfNoValueF {#1}
   {
-    \keys_set:nn { gzt/authors } { #1 }
+    \keys_set:nn { gzt/interviewees } { #1 }
   }
   \tl_set:Nn \l_@@_people_first_last_name_tl {#2}
   \_@@_people:nVVVVnxV
@@ -3471,7 +3481,7 @@ This work consists of the file  gzt.dtx
   {}
   {interviewee-art-\int_use:N \g_@@_articles_int}
   {}
-  \maketitle
+  % \maketitle
 }
 %    \end{macrocode}
 % \end{macro}
@@ -4145,14 +4155,12 @@ This work consists of the file  gzt.dtx
   {%
     \begin{adjustbox}{minipage=\g_@@_abstract_box_width_dim,max~width=\g_@@_abstract_box_width_dim,valign=t}
       \mbox{}
-      \tl_if_exist:NTF \g_@@_abstract_body_tl
+      \tl_if_exist:NT \g_@@_abstract_body_tl
       {%
         \raggedright%
         \bfseries%
         \color{@@_article_abstract_color}%
         \g_@@_abstract_body_tl
-      }
-      {%
       }%
     \end{adjustbox}
   }%
@@ -4212,10 +4220,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<class-article>\hypersetup{%
-%<class-article>    pdftitle=\g_@@_short_title_tl,
-%<class-article>    pdfauthor=\citeauthor{\g_@@_article_bib_key_tl}~(\l_@@_people_first_last_names_tl
-%<class-article>  }
+%<class-article>\hypersetup{pdftitle=\g_@@_short_title_tl,pdfauthor=\citeauthor{\g_@@_article_bib_key_tl}~(\l_@@_people_first_last_names_tl)}
 %    \end{macrocode}
 %
 %    \begin{macrocode}

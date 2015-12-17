@@ -570,6 +570,10 @@
 \dim_const:Nn \c__gzt_minitoc_from_circle_yshift_dim {-\c__gzt_minitoc_from_circle_xshift_dim}
 \dim_const:Nn \c__gzt_footer_height_font_dim {3mm}
 \dim_const:Nn \c__gzt_minitoc_list_labelsep_dim {1em}
+\dim_const:Nn \c__gzt_authors_photos_width_dim {16mm}
+\dim_const:Nn \c__gzt_authors_photos_box_width_dim {\c__gzt_authors_photos_width_dim
+  + 2mm}
+\dim_new:N \l__gzt_minibio_width_dim
 \geometry{%
   papersize={\c__gzt_paperwidth_dim,\c__gzt_paperheight_dim}
 }
@@ -940,11 +944,11 @@
 \cs_generate_variant:Nn \__gzt_authors:nnnnnn { nVVVVV }
 \cs_new_protected:Nn \__gzt_display_author:nnnnn
 {
-  \begin{tabular}[t]{p{18mm}p{0.75\linewidth}}
+  \begin{tabular}[t]{p{\c__gzt_authors_photos_box_width_dim}p{0.75\linewidth}}
     \tl_if_empty:nF {#5}
     {%
     \begin{adjustbox}{valign=t}
-      \includegraphics[width=16mm]{#5}
+      \includegraphics[width=\c__gzt_authors_photos_width_dim]{#5}
     \end{adjustbox}%
     }
     &
@@ -1052,18 +1056,19 @@
     }{
       \tl_if_in:NnTF \l__gzt_people_role_tl { author } {
         \footnotesize%
-        \noindent%
+        % \noindent%
+        \dim_set:Nn \l__gzt_minibio_width_dim {\linewidth-1em - \c__gzt_authors_photos_box_width_dim}
         \tl_if_empty:NTF \l__gzt_people_photo_tl
         {%
-          \begin{adjustbox}{valign=t,minipage=\linewidth-1em}
-          }{%
-            \begin{adjustbox}{valign=t,minipage=18mm}
-              \includegraphics[width=16mm]{\l__gzt_people_photo_tl}
-            \end{adjustbox}%
-            \quad%
-            \begin{adjustbox}{valign=t,minipage=\linewidth-18mm-1em}
-            }
-            \begin{description}[leftmargin=1em,style=nextline]
+          \dim_add:Nn \l__gzt_minibio_width_dim {\c__gzt_authors_photos_box_width_dim}
+        }{%
+          \begin{adjustbox}{valign=t,minipage=\c__gzt_authors_photos_box_width_dim}
+            \includegraphics[width=\c__gzt_authors_photos_width_dim]{\l__gzt_people_photo_tl}
+          \end{adjustbox}%
+          \quad%
+        }
+        \begin{adjustbox}{valign=t,minipage=\l__gzt_minibio_width_dim}
+          \begin{description}[leftmargin=1em,style=nextline]
             \item[%
               \textcolor{__gzt_people_color}{%
                 \__gzt_citeauthor_no_firstinits:n {\c__gzt_issue_bib_key_tl -#1- \exp_not:V\DTLcurrentindex}%
@@ -1410,7 +1415,7 @@
   }
   \IfNoValueF {#1}
   {
-    \keys_set:nn { gzt/authors } { #1 }
+    \keys_set:nn { gzt/interviewees } { #1 }
   }
   \tl_set:Nn \l__gzt_people_first_last_name_tl {#2}
   \__gzt_people:nVVVVnxV
@@ -1422,7 +1427,7 @@
   {}
   {interviewee-art-\int_use:N \g__gzt_articles_int}
   {}
-  \maketitle
+  % \maketitle
 }
 \NewDocumentCommand \academicsignature { m } {
   \__gzt_display_academic_signature:n {#1}
@@ -1839,14 +1844,12 @@
   {%
     \begin{adjustbox}{minipage=\g__gzt_abstract_box_width_dim,max~width=\g__gzt_abstract_box_width_dim,valign=t}
       \mbox{}
-      \tl_if_exist:NTF \g__gzt_abstract_body_tl
+      \tl_if_exist:NT \g__gzt_abstract_body_tl
       {%
         \raggedright%
         \bfseries%
         \color{__gzt_article_abstract_color}%
         \g__gzt_abstract_body_tl
-      }
-      {%
       }%
     \end{adjustbox}
   }%
