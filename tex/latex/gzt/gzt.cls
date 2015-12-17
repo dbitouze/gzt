@@ -1053,14 +1053,16 @@
       \tl_if_in:NnTF \l__gzt_people_role_tl { author } {
         \footnotesize%
         \noindent%
-          \tl_if_empty:NF \l__gzt_people_photo_tl
-          {%
+        \tl_if_empty:NTF \l__gzt_people_photo_tl
+        {%
+          \begin{adjustbox}{valign=t,minipage=\linewidth-1em}
+          }{%
             \begin{adjustbox}{valign=t,minipage=18mm}
               \includegraphics[width=16mm]{\l__gzt_people_photo_tl}
             \end{adjustbox}%
-          }
-          \quad%
-          \begin{adjustbox}{valign=t,minipage=\linewidth-18mm-1em}
+            \quad%
+            \begin{adjustbox}{valign=t,minipage=\linewidth-18mm-1em}
+            }
             \begin{description}[leftmargin=1em,style=nextline]
             \item[%
               \textcolor{__gzt_people_color}{%
