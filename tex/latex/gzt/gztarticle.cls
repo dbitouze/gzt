@@ -1208,41 +1208,32 @@
 \tl_new:N \g__gzt_display_inside_backcover_tl%
 \tl_gset:Nn \g__gzt_display_inside_backcover_tl {%
   \bool_gset_true:N \g__gzt_inside_backcover_bool%
+  \cleardoublepage%
   \pagestyle{__gzt_inside_backcover_ps}%
   \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_inside_cover_geometry_tl}%
-  % \file_if_exist:nT { \c__gzt_authors_instructions_file_tl } {%
-    \bool_if:NTF {\g__gzt_no_inside_backcover_bool} {
-      \hbox{}
-    }{%
-      \small%
-      \begin{__gzt_inside_cover_tcb}[__gzt_tcb_inside_backcover_style]
-        % \small%
-        % Page~
-        % \ifoddpage%
-        % im
-        % \fi
-        % paire.\par{}
-        \file_if_exist:nT { \c__gzt_authors_instructions_file_tl } {%
-          % \begin{multicols}{2}
-          %   \setlength{\columnsep}{1mm}
-          \file_input:n {\c__gzt_authors_instructions_file_tl}
-          % \end{multicols}
-          % \setlength{\columnseprule}{1pt}
-          \tcblower
-        }
-        \begin{description}[leftmargin=1em]
-        \item[\c__gzt_latexclass_string_tl{}~:]
-          \__gzt_display_people_by_role:n { classdesigner }
-        \item[\c__gzt_artistic_director_string_tl{}~:]
-          \__gzt_display_people_by_role:n { graphicdesigner }
-        \item[\c__gzt_printer_string_tl{}~:] \g__gzt_printer_text_tl
-        \end{description}
-        \g__gzt_font_designer_text_tl
-      \end{__gzt_inside_cover_tcb}
-    }
-  % }{%
-  %   \hbox{}
-  % }
+  \bool_if:NTF {\g__gzt_no_inside_backcover_bool} {
+    \hbox{}
+  }{%
+    \small%
+    \begin{__gzt_inside_cover_tcb}[__gzt_tcb_inside_backcover_style]
+      \file_if_exist:nT { \c__gzt_authors_instructions_file_tl } {%
+        % \begin{multicols}{2}
+        %   \setlength{\columnsep}{1mm}
+        \file_input:n {\c__gzt_authors_instructions_file_tl}
+        % \end{multicols}
+        % \setlength{\columnseprule}{1pt}
+        \tcblower
+      }
+      \begin{description}[leftmargin=1em]
+      \item[\c__gzt_latexclass_string_tl{}~:]
+        \__gzt_display_people_by_role:n { classdesigner }
+      \item[\c__gzt_artistic_director_string_tl{}~:]
+        \__gzt_display_people_by_role:n { graphicdesigner }
+      \item[\c__gzt_printer_string_tl{}~:] \g__gzt_printer_text_tl
+      \end{description}
+      \g__gzt_font_designer_text_tl
+    \end{__gzt_inside_cover_tcb}
+  }
   \bool_gset_false:N \g__gzt_inside_backcover_bool
 }
 \tl_new:N \g__gzt_display_backcover_tl%
@@ -1534,6 +1525,22 @@
   ,\l__gzt_people_role_tl=role%
 }{%
   \tl_if_in:NnT \l__gzt_people_role_tl { author } {
+    \DTLiffirstrow{%
+      \tl_put_right:Nx
+      \l__gzt_people_first_last_names_tl
+      {\exp_not:V\l__gzt_people_first_last_name_tl}
+    }{
+      \tl_put_right:Nx
+      \l__gzt_people_first_last_names_tl
+      {~and~\exp_not:V\l__gzt_people_first_last_name_tl}
+    }
+  }
+}
+\DTLforeach*[\DTLiseq{\l__gzt_people_role_tl}{interviewee-art-\int_use:N \g__gzt_articles_int}]{people}{%
+  \l__gzt_people_first_last_name_tl=first-last-name%
+  ,\l__gzt_people_role_tl=role%
+}{%
+  \tl_if_in:NnT \l__gzt_people_role_tl { interviewee } {
     \DTLiffirstrow{%
       \tl_put_right:Nx
       \l__gzt_people_first_last_names_tl
