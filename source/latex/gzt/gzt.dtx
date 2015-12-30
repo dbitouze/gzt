@@ -747,8 +747,14 @@ This work consists of the file  gzt.dtx
   output / web .code:n = {%
   },%
 }%
-\bool_gset_true:N \g_@@_no_inside_backcover_bool
+%    \end{macrocode}
 %
+% If we want to disable the inside backcover.
+%    \begin{macrocode}
+% \bool_gset_true:N \g_@@_no_inside_backcover_bool
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \ProcessKeysOptions { gzt }
 %    \end{macrocode}
 %
@@ -3213,41 +3219,32 @@ This work consists of the file  gzt.dtx
 \tl_new:N \g_@@_display_inside_backcover_tl%
 \tl_gset:Nn \g_@@_display_inside_backcover_tl {%
   \bool_gset_true:N \g_@@_inside_backcover_bool%
+  \cleardoublepage%
   \pagestyle{@@_inside_backcover_ps}%
   \exp_after:wN\newgeometry\exp_after:wN{\c_@@_inside_cover_geometry_tl}%
-  % \file_if_exist:nT { \c_@@_authors_instructions_file_tl } {%
-    \bool_if:NTF {\g_@@_no_inside_backcover_bool} {
-      \hbox{}
-    }{%
-      \small%
-      \begin{_@@_inside_cover_tcb}[_@@_tcb_inside_backcover_style]
-        % \small%
-        % Page~
-        % \ifoddpage%
-        % im
-        % \fi
-        % paire.\par{}
-        \file_if_exist:nT { \c_@@_authors_instructions_file_tl } {%
-          % \begin{multicols}{2}
-          %   \setlength{\columnsep}{1mm}
-          \file_input:n {\c_@@_authors_instructions_file_tl}
-          % \end{multicols}
-          % \setlength{\columnseprule}{1pt}
-          \tcblower
-        }
-        \begin{description}[leftmargin=1em]
-        \item[\c_@@_latexclass_string_tl{}~:]
-          \@@_display_people_by_role:n { classdesigner }
-        \item[\c_@@_artistic_director_string_tl{}~:]
-          \@@_display_people_by_role:n { graphicdesigner }
-        \item[\c_@@_printer_string_tl{}~:] \g_@@_printer_text_tl
-        \end{description}
-        \g_@@_font_designer_text_tl
-      \end{_@@_inside_cover_tcb}
-    }
-  % }{%
-  %   \hbox{}
-  % }
+  \bool_if:NTF {\g_@@_no_inside_backcover_bool} {
+    \hbox{}
+  }{%
+    \small%
+    \begin{_@@_inside_cover_tcb}[_@@_tcb_inside_backcover_style]
+      \file_if_exist:nT { \c_@@_authors_instructions_file_tl } {%
+        % \begin{multicols}{2}
+        %   \setlength{\columnsep}{1mm}
+        \file_input:n {\c_@@_authors_instructions_file_tl}
+        % \end{multicols}
+        % \setlength{\columnseprule}{1pt}
+        \tcblower
+      }
+      \begin{description}[leftmargin=1em]
+      \item[\c_@@_latexclass_string_tl{}~:]
+        \@@_display_people_by_role:n { classdesigner }
+      \item[\c_@@_artistic_director_string_tl{}~:]
+        \@@_display_people_by_role:n { graphicdesigner }
+      \item[\c_@@_printer_string_tl{}~:] \g_@@_printer_text_tl
+      \end{description}
+      \g_@@_font_designer_text_tl
+    \end{_@@_inside_cover_tcb}
+  }
   \bool_gset_false:N \g_@@_inside_backcover_bool
 }
 %    \end{macrocode}
