@@ -726,12 +726,6 @@ This work consists of the file  gzt.dtx
     \bool_gset_true:N \g_@@_for_authors_bool%
     \bool_gset_true:N \g_@@_inside_pages_bool%
   },%
-  % insidepages .bool_gset:N = \g_@@_inside_pages_bool,
-  % noinsidebackcover .bool_gset:N = \g_@@_no_inside_backcover_bool,
-  % cover .code:n = {%
-  %   \bool_gset_true:N \g_@@_for_printer_bool%
-  %   \bool_gset_true:N \g_@@_cover_bool%
-  % },%
   forprinter .bool_gset:N = \g_@@_for_printer_bool,
   frontcoverimagefile .tl_gset:N = \g_@@_frontcover_image_file_tl,
   frontcoverimagefile .default:n = {frontcover},
@@ -4050,6 +4044,22 @@ This work consists of the file  gzt.dtx
     }
   }
 }
+\DTLforeach*[\DTLiseq{\l_@@_people_role_tl}{interviewee-art-\int_use:N \g_@@_articles_int}]{people}{%
+  \l_@@_people_first_last_name_tl=first-last-name%
+  ,\l_@@_people_role_tl=role%
+}{%
+  \tl_if_in:NnT \l_@@_people_role_tl { interviewee } {
+    \DTLiffirstrow{%
+      \tl_put_right:Nx
+      \l_@@_people_first_last_names_tl
+      {\exp_not:V\l_@@_people_first_last_name_tl}
+    }{
+      \tl_put_right:Nx
+      \l_@@_people_first_last_names_tl
+      {~and~\exp_not:V\l_@@_people_first_last_name_tl}
+    }
+  }
+}
 %    \end{macrocode}
 %
 % We now populate the bibiliographic file.
@@ -6120,20 +6130,6 @@ This work consists of the file  gzt.dtx
 \bool_if:NF {\g_@@_coverpage_bool} {
   \bool_if:NF {\g_@@_inside_pages_bool} {
     \preto\@enddocumenthook{
-      \clearpage
-%    \end{macrocode}
-%
-% The inside front cover and front cover pages are numbered \enquote{i} and
-% \enquote{ii} hence the inside back cover and back cover pages are numbered
-% \enquote{iii} and \enquote{iv}.
-%    \begin{macrocode}
-      \pagenumbering{roman}%
-      \addtocounter{page}{2}
-      \ifoddpage%
-      \else
-      \hbox{}
-      \fi
-      \newpage
       \bool_gset_true:N \g_@@_backmatter_bool
       \g_@@_display_inside_backcover_tl
       \newpage
@@ -6509,7 +6505,7 @@ This work consists of the file  gzt.dtx
 \addtolength{\skip\footins}{.25\baselineskip}
 %    \end{macrocode}
 %
-% We change the default horizontal space between coloumns in multicolumn mode.
+% We change the default horizontal space between columns in multicolumn mode.
 %    \begin{macrocode}
 \setlength{\columnsep}{7mm}%
 %    \end{macrocode}
