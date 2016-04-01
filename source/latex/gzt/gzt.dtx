@@ -901,7 +901,11 @@ This work consists of the file  gzt.dtx
 %
 % \item Programmable bibliographies and citations:
 %    \begin{macrocode}
-\RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
+\@ifpackagelater{biblatex}{2016/01/01}{%
+  \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,giveninits,autolang=other]{biblatex}%
+}{
+  \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
+}
 %    \end{macrocode}
 %
 % \item Extended implementation of the \LaTeX{} array and
@@ -3878,11 +3882,24 @@ This work consists of the file  gzt.dtx
 \tl_new:N \g_@@_citeauthor_tl%
 \tl_new:N \g_@@_citeinterviewee_tl%
 %
+\tl_new:N \g_@@_blx_given_first_inits_tl%
+\@ifpackagelater{biblatex}{2016/01/01}{%
+  \tl_set:Nn \g_@@_blx_given_first_inits_false_tl
+  {%
+    \togglefalse{blx@giveninits}%
+  }
+}{
+  \tl_set:Nn \g_@@_blx_given_first_inits_false_tl
+  {%
+    \togglefalse{blx@firstinits}%
+  }
+}
+%
 \cs_new_protected:Nn \_@@_citeauthor_no_firstinits:n {%
   \tl_gset:Nn \g_@@_citeauthor_tl {%
     \DeclareNameAlias{labelname}{default}%
     \group_begin:
-    \togglefalse{blx@firstinits}%
+    \g_@@_blx_given_first_inits_false_tl
     \citeauthor{#1}
     \group_end:
   }%
@@ -5679,7 +5696,7 @@ This work consists of the file  gzt.dtx
 }
 {}{}
 \DeclareCiteCommand{\citereviewer}{}{%
-  \togglefalse{blx@firstinits}%
+  \g_@@_blx_given_first_inits_false_tl
   \printnames{reviewer}%
 }
 {}{}
@@ -6029,7 +6046,7 @@ This work consists of the file  gzt.dtx
   \begin{_@@_book_review}[#1]
     \xpatchfieldformat{title}{mkbibemph}{textbf}{}{}%
     \xpretonameformat{author}{\color{@@_people_color}}{}{}%
-    \togglefalse{blx@firstinits}%
+    \g_@@_blx_given_first_inits_false_tl
     \noindent\fullcite{\g_@@_bookreview_bibkey_tl}
     \vspace{10mm}
     \tcblower
@@ -6238,11 +6255,22 @@ This work consists of the file  gzt.dtx
 % We create a name format that prints the initial(s) of the first name(s) before
 % last name of a cited author.
 %    \begin{macrocode}
-\DeclareNameFormat{firstinits-last}{%
-  \usebibmacro{name:first-last}{#1}{#4}{#5}{#7}%
-  \usebibmacro{name:andothers}%
+\@ifpackagelater{biblatex}{2016/01/01}{%
+  \DeclareNameFormat{giveninits-last}{%
+    \nameparts{#1}
+    \usebibmacro{name:given-family}
+    {\namepartfamily}
+    {\namepartgiveni}
+    {\namepartprefix}
+    {\namepartsuffix}%
+  }
+}{
+  \DeclareNameFormat{giveninits-last}{%
+    \usebibmacro{name:first-last}{#1}{#4}{#5}{#7}%
+    \usebibmacro{name:andothers}%
+  }
 }
-\DeclareNameAlias{labelname}{firstinits-last}
+\DeclareNameAlias{labelname}{giveninits-last}
 %    \end{macrocode}
 %
 % We ensure the space between initial(s) and last name is unbreakable.
