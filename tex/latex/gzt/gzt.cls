@@ -159,7 +159,11 @@
 \RequirePackage{textcase}%
 \RequirePackage{epigraph}%
 \RequirePackage[autostyle]{csquotes}%
-\RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
+\@ifpackagelater{biblatex}{2016/01/01}{%
+  \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,giveninits,autolang=other]{biblatex}%
+}{
+  \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
+}
 \RequirePackage{array}
 \RequirePackage{booktabs}
 \RequirePackage{tabularx}
@@ -1653,11 +1657,23 @@
 \tl_new:N \g__gzt_citeauthor_no_firstinits%
 \tl_new:N \g__gzt_citeauthor_tl%
 \tl_new:N \g__gzt_citeinterviewee_tl%
+\tl_new:N \g__gzt_blx_given_first_inits_tl%
+\@ifpackagelater{biblatex}{2016/01/01}{%
+  \tl_set:Nn \g__gzt_blx_given_first_inits_false_tl
+  {%
+    \togglefalse{blx@giveninits}%
+  }
+}{
+  \tl_set:Nn \g__gzt_blx_given_first_inits_false_tl
+  {%
+    \togglefalse{blx@firstinits}%
+  }
+}
 \cs_new_protected:Nn \__gzt_citeauthor_no_firstinits:n {%
   \tl_gset:Nn \g__gzt_citeauthor_tl {%
     \DeclareNameAlias{labelname}{default}%
     \group_begin:
-    \togglefalse{blx@firstinits}%
+    \g__gzt_blx_given_first_inits_false_tl
     \citeauthor{#1}
     \group_end:
   }%
@@ -2750,17 +2766,20 @@
 }
 \let\printauthorsdetails\printminibios
 \cs_set_eq:NN \__gzt_printbibliography \printbibliography
-\RenewDocumentCommand \printbibliography { O{} } {
+\RenewDocumentCommand \printbibliography { s O{} } {
   \bool_if:NT {\g__gzt_multicols_bool} {
     \end{multicols}%
   }
   \FloatBarrier%
   \begin{__gzt_bibliography_tcbox}
-    \__gzt_printbibliography[heading=subbibliography,resetnumbers,#1]
+    \__gzt_printbibliography[heading=subbibliography,resetnumbers,#2]
   \end{__gzt_bibliography_tcbox}
   %
-  \nopagebreak[0]
-  \printauthorsdetails
+  \IfBooleanF {#1}
+  {
+    \nopagebreak[0]
+    \printauthorsdetails
+  }
 }
 \deftranslation[to=French]{__gzt_century}{si\`ecle}%
 \deftranslation[to=English]{__gzt_century}{century}%
@@ -2906,7 +2925,7 @@
 }
 {}{}
 \DeclareCiteCommand{\citereviewer}{}{%
-  \togglefalse{blx@firstinits}%
+  \g__gzt_blx_given_first_inits_false_tl
   \printnames{reviewer}%
 }
 {}{}
@@ -3172,7 +3191,7 @@
   \begin{__gzt_book_review}[#1]
     \xpatchfieldformat{title}{mkbibemph}{textbf}{}{}%
     \xpretonameformat{author}{\color{__gzt_people_color}}{}{}%
-    \togglefalse{blx@firstinits}%
+    \g__gzt_blx_given_first_inits_false_tl
     \noindent\fullcite{\g__gzt_bookreview_bibkey_tl}
     \vspace{10mm}
     \tcblower
@@ -3268,11 +3287,22 @@
 \defbibheading{bibassection}[\bibname]{\section*{#1}}%
 \renewcommand{\bibfont}{\normalfont\footnotesize}
 \exp_after:wN\addbibresource\exp_after:wN{\c__gzt_issue_bib_path_string_tl}
-\DeclareNameFormat{firstinits-last}{%
-  \usebibmacro{name:first-last}{#1}{#4}{#5}{#7}%
-  \usebibmacro{name:andothers}%
+\@ifpackagelater{biblatex}{2016/01/01}{%
+  \DeclareNameFormat{giveninits-last}{%
+    \nameparts{#1}
+    \usebibmacro{name:given-family}
+    {\namepartfamily}
+    {\namepartgiveni}
+    {\namepartprefix}
+    {\namepartsuffix}%
+  }
+}{
+  \DeclareNameFormat{giveninits-last}{%
+    \usebibmacro{name:first-last}{#1}{#4}{#5}{#7}%
+    \usebibmacro{name:andothers}%
+  }
 }
-\DeclareNameAlias{labelname}{firstinits-last}
+\DeclareNameAlias{labelname}{giveninits-last}
 \renewcommand*\bibnamedelimc{\addnbspace}
 \renewcommand*\bibnamedelimd{\addnbspace}
 \renewbibmacro{in:}{%
