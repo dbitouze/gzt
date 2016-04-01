@@ -5466,7 +5466,7 @@ This work consists of the file  gzt.dtx
 % \end{itemize}
 %    \begin{macrocode}
 \cs_set_eq:NN \_@@_printbibliography \printbibliography
-\RenewDocumentCommand \printbibliography { O{} } {
+\RenewDocumentCommand \printbibliography { s O{} } {
   \bool_if:NT {\g_@@_multicols_bool} {
     \end{multicols}%
   }
@@ -5479,11 +5479,14 @@ This work consists of the file  gzt.dtx
   \FloatBarrier%
 % }%
   \begin{_@@_bibliography_tcbox}
-    \_@@_printbibliography[heading=subbibliography,resetnumbers,#1]
+    \_@@_printbibliography[heading=subbibliography,resetnumbers,#2]
   \end{_@@_bibliography_tcbox}
   %
-  \nopagebreak[0]
-  \printauthorsdetails
+  \IfBooleanF {#1}
+  {
+    \nopagebreak[0]
+    \printauthorsdetails
+  }
 }
 %    \end{macrocode}
 % \end{macro}
