@@ -901,10 +901,11 @@ This work consists of the file  gzt.dtx
 %
 % \item Programmable bibliographies and citations:
 %    \begin{macrocode}
+\RequirePackage[backend=biber,datamodel=gzt,defernumbers=true,autolang=other]{biblatex}%
 \@ifpackagelater{biblatex}{2016/01/01}{%
-  \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,giveninits,autolang=other]{biblatex}%
+  \ExecuteBibliographyOptions{giveninits}
 }{
-  \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
+  \ExecuteBibliographyOptions{firstinits}
 }
 %    \end{macrocode}
 %

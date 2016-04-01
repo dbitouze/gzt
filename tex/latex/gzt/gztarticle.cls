@@ -105,10 +105,11 @@
 \RequirePackage{textcase}%
 \RequirePackage{epigraph}%
 \RequirePackage[autostyle]{csquotes}%
+\RequirePackage[backend=biber,datamodel=gzt,defernumbers=true,autolang=other]{biblatex}%
 \@ifpackagelater{biblatex}{2016/01/01}{%
-  \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,giveninits,autolang=other]{biblatex}%
+  \ExecuteBibliographyOptions{giveninits}
 }{
-  \RequirePackage[datamodel=gzt,backend=biber,defernumbers=true,firstinits,autolang=other]{biblatex}%
+  \ExecuteBibliographyOptions{firstinits}
 }
 \RequirePackage{array}
 \RequirePackage{booktabs}
