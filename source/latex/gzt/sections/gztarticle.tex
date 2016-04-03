@@ -390,7 +390,7 @@ d'intervalles : le flot de Teichmüller. [...]
 \end{bodycode}
 
 \begin{dbwarning}{Insertion manuelle d'espacements inutile}{}
-  On évitera de modifier l'agencement les questions et réponses en insérant
+  On évitera de modifier l'agencement des questions et réponses en insérant
   manuellement des espacements horizontaux ou verticaux
   (\docAuxCommand*{hspace}, \docAuxCommand*{hskip}, \docAuxCommand*{vspace},
   \docAuxCommand*{vskip}, etc.).
@@ -408,7 +408,7 @@ recueilli les propos peuvent être signalées dans le résumé (cf. environnemen
 \maketitle
 \end{bodycode}
 
-\section{Outils communs à tous types d'articles, fournis par \gztauthor}
+\section{Outils communs à tous types d'articles, fournis par \texorpdfstring{\gztauthor}{la classe}}
 \label{sec-outils-communs-tous}
 
 Cette section donne une liste exhaustive des outils (commandes et
@@ -550,13 +550,15 @@ le \Package*{biblatex} et le moteur \hologo{biber}. Leur usage est détaillé da
     fichiers sont d'extension \file{.bib}.}, une base bibliographique.
 
   Nous conseillons pour ce faire de recourir à un logiciel dédié, par exemple
-  \href{http://jabref.sourceforge.net/}{\program{JabRef}} à configurer en se
-  rendant dans le menu \menu{Options>Preferences} et, dans l'onglet :
+  \href{http://jabref.sourceforge.net/}{\program{JabRef}}
+  à configurer\footnote{La version décrite ici est la 3.2.} en se rendant
+  dans le menu :
   \begin{itemize}
-  \item \menu{Général}\footnote{On pourra en profiter pour changer la langue de
-      l'interface dans la liste déroulante \menu{Language}.}, en choisissant
-    \menu{UTF8} dans la liste déroulante \menu{Default encoding} ;
-  \item \menu{Advanced}, en cochant l'option \menu{BibLaTeX mode} ;
+  \item \enquote{\menuentry{File}} et en sélectionnant \enquote{\menuentry{BibLaTeX mode}} ;
+  \item \enquote{\menuentry{Options>Preferences}} puis dans l'onglet \enquote{\menuentry{General}},
+    en choisissant \enquote{\menuentry{UTF8}} dans la liste déroulante \enquote{\menuentry{Default
+      encoding}}\footnote{On pourra en profiter pour changer la langue de
+      l'interface dans la liste déroulante \enquote{\menuentry{Language}}.}.
   \end{itemize}
 
   On n'oubliera pas de donner à chaque entrée bibliographique une \meta{clé}
@@ -590,10 +592,14 @@ le \Package*{biblatex} et le moteur \hologo{biber}. Leur usage est détaillé da
 
 \begin{docCommand}{printbibliography}{}
   Cette commande produit la liste des références bibliographiques saisies selon
-  la syntaxe du \Package*{biblatex}. Elle a été redéfinie de sorte
-  à automatiquement afficher, en sus de la bibliographie, les
-  \hyperref[sec-auteurs-details]{détails complémentaires sur les auteurs} (s'ils
-  ont été renseignés).
+  la syntaxe du \Package*{biblatex}.
+  Cette commande est fournie sous deux formes, non étoilée et étoilée :
+  \begin{description}
+  \item[sous sa forme non étoilée :] elle affiche, en sus des références bibliographiques,
+    les \hyperref[sec-auteurs-details]{détails complémentaires sur les auteurs}
+    (s'ils ont été renseignés) ;
+  \item[sous sa forme étoilée :] elle n'affiche que les références bibliographiques.
+  \end{description}
 \end{docCommand}
 
 \subsection{Commandes diverses}
@@ -874,8 +880,8 @@ auteur.
   Tout espace métrisable séquentiellement compact est compact.
 \end{theorem}
 \begin{definition}[congruence modulo $n$]
-  Soit $n$ un entier supérieur ou égal à 2. Deux entiers $a$ et $b$ sont dits
-  congruents modulo $n$ si $a - b \in n\Z$
+  Soit $n$ un entier supérieur ou égal à $2$. Deux entiers $a$ et $b$
+  sont dits congruents modulo $n$ si $a - b \in n\Z$
 \end{definition}
 \begin{remark*}
   \[
