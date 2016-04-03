@@ -7,7 +7,7 @@
 %% gzt.dtx  (with options: `class-article')
 %% -----------------------------------------------------------------------------
 %% gzt --- SMF bundle of classes for the French journal "La Gazette des
-%%         Math'ematiciens", version 0.9
+%%         Math'ematiciens", version 0.95
 %% 
 %% E-mail: denis.bitouze@lmpa.univ-littoral.fr
 %% Released under the LaTeX Project Public License v1.3c or later
@@ -1731,7 +1731,7 @@
       }
     }
     \bool_gset_false:N \g__gzt_previous_article_with_bibliography_or_minibio_bool
-\hypersetup{pdftitle=\g__gzt_short_title_tl,pdfauthor=\citeauthor{\g__gzt_article_bib_key_tl}~(\l__gzt_people_first_last_names_tl)}
+\hypersetup{pdftitle=\g__gzt_short_title_tl,pdfauthor=\l__gzt_people_first_last_names_tl}
   \l__gzt_title_box_tl
   \normalsize%
   \nopagebreak[3]
