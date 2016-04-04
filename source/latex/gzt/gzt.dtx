@@ -38,7 +38,7 @@ yourself, running `tex gzt.dtx` will extract the package whereas
 
 Typesetting the documentation also requires a number of packages in addition to
 those needed to use the `gzt` classes.  To compile the documentation without
-error, you will need, among others, my personal package `denisbdoc` for
+error, you will need, among others, my personal (dirty) package `denisbdoc` for
 documenting the classes I've written.
 %</readme>
 %<*internal>
@@ -95,6 +95,7 @@ This work consists of the file  gzt.dtx
 \def\GZT@classname{\jobname}
 \def\GZT@logo{\GZT@classname-logo}
 \def\GZT@addons{addons}
+\def\GZT@documentation{documentation}
 \usedir{/}
 \generate{
   \nopreamble\nopostamble
@@ -118,13 +119,17 @@ This work consists of the file  gzt.dtx
   \file{\GZT@classname.drv}{\from{\jobname.dtx}{driver}}%
   \nopreamble\nopostamble
   \file{\GZT@logo.tex}{\from{\jobname.dtx}{class-logo}}%
-  \file{lstlang0.sty}{\from{\jobname.dtx}{class-lstlang0}}
-  \file{latexmkrc}{\from{\jobname.dtx}{class-latexmkrc}}
 }%
 \usedir{doc/latex/\GZT@classname}
 \generate{
   \nopreamble\nopostamble
   \file{README.md}{\from{\jobname.dtx}{readme}}
+}%
+\usedir{doc/latex/\GZT@classname/\GZT@documentation}
+\generate{
+  \nopreamble\nopostamble
+  \file{latexmkrc}{\from{\jobname.dtx}{latexmkrc}}
+  \file{lstlang0.sty}{\from{\jobname.dtx}{class-lstlang0}}
 }%
 \usedir{doc/latex/\GZT@classname/\GZT@addons/completion}
 \generate{%
@@ -7023,6 +7028,35 @@ This work consists of the file  gzt.dtx
 %
 %    \begin{macrocode}
 %</class-logo>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*latexmkrc>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+$pdf_mode = 1;
+
+$bibtex_use = 1;
+$bibtex = 'biber %O %B';
+
+
+$makeindex = 'texindy -L french';
+
+add_cus_dep('idx', 'ind', 0, 'texindy');
+sub texindy{
+    system("texindy -L french \"$_[0].idx\"");
+}
+
+push @generated_exts, "aux", "idx", "ind", "lo*", "out", "toc", "acn", "acr",
+"alg", "bbl", "bcf", "fls", "gl*", "ist", "run.xml", "sbl*", "sl*", "sym*",
+"xdy", "unq", "mw", "*~" ;
+
+$clean_ext = "synctex.gz* run.xml tex.bak bbl bcf fdb_latexmk run tdo listing"
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</latexmkrc>
 %    \end{macrocode}
 %
 % \subsection{Local language definitions for \Package{listings}}
