@@ -1,0 +1,18 @@
+$pdf_mode = 1;
+
+$bibtex_use = 1;
+$bibtex = 'biber %O %B';
+
+$makeindex = 'texindy -L french';
+
+add_cus_dep('idx', 'ind', 0, 'texindy');
+sub texindy{
+    system("texindy -L french \"$_[0].idx\"");
+}
+
+push @generated_exts, "aux", "idx", "ind", "lo*", "out", "toc", "acn", "acr",
+"alg", "bbl", "bcf", "fls", "gl*", "ist", "run.xml", "sbl*", "sl*", "sym*",
+"xdy", "unq", "mw", "*~" ;
+
+$clean_ext = "synctex.gz* run.xml tex.bak bbl bcf fdb_latexmk run tdo listing"
+
