@@ -279,7 +279,7 @@
   \space
   \textendash{}
   \space
-  N°\int_use:N\g__gzt_issue_number_int
+  N^^c2^^b0\int_use:N\g__gzt_issue_number_int
 }
 \tl_const:Nn \c__gzt_frontmatter_directory_string_tl {frontmatter}
 \tl_const:Nn \c__gzt_backmatter_directory_string_tl {backmatter}
@@ -3489,7 +3489,7 @@
   }
   \bfseries
 }
-\DeclarePlainStyle{«~}{~»}{`}{'}
+\DeclarePlainStyle{^^c2^^ab~}{~^^c2^^bb}{`}{'}
 \setcounter{topnumber}{3}
 \renewcommand{\topfraction}{0.8}
 \addtolength{\skip\footins}{.25\baselineskip}

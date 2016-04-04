@@ -1,8 +1,8 @@
-gzt - Support for the French journal "La Gazette des Mathématiciens"
+gzt - Support for the French journal "La Gazette des Math^^c3^^a9maticiens"
 =====================================================================
 
 The `gzt` bundle provides LaTeX classes for the French journal "La Gazette des
-mathématiciens".
+math^^c3^^a9maticiens".
 
 Installation
 ------------
@@ -14,6 +14,6 @@ yourself, running `tex gzt.dtx` will extract the package whereas
 
 Typesetting the documentation also requires a number of packages in addition to
 those needed to use the `gzt` classes.  To compile the documentation without
-error, you will need, among others, my personal package `denisbdoc` for
+error, you will need, among others, my personal (dirty) package `denisbdoc` for
 documenting the classes I've written.
 
