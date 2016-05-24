@@ -123,7 +123,7 @@ This work consists of the file  gzt.dtx
 \usedir{doc/latex/\GZT@classname}
 \generate{
   \nopreamble\nopostamble
-  \file{README.md}{\from{\jobname.dtx}{readme}}
+  % \file{README.md}{\from{\jobname.dtx}{readme}}
 }%
 \usedir{doc/latex/\GZT@classname/\GZT@documentation}
 \generate{
@@ -131,11 +131,11 @@ This work consists of the file  gzt.dtx
   \file{latexmkrc}{\from{\jobname.dtx}{latexmkrc}}
   \file{lstlang0.sty}{\from{\jobname.dtx}{class-lstlang0}}
 }%
-\usedir{doc/latex/\GZT@classname/\GZT@addons/completion}
-\generate{%
-  \nopreamble\nopostamble
-  \file{\GZT@classname.cwl}{\from{\jobname.dtx}{class-cwl}}
-}%
+% \usedir{doc/latex/\GZT@classname/\GZT@addons/completion}
+% \generate{%
+%   \nopreamble\nopostamble
+%   \file{\GZT@classname.cwl}{\from{\jobname.dtx}{class-cwl}}
+% }%
 \ifx\fmtname\nameofplainTeX
   \expandafter\endbatchfile
 \else
