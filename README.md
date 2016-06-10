@@ -1,8 +1,8 @@
-gzt - Support for the French journal "La Gazette des Math^^c3^^a9maticiens"
+gzt - Support for the French journal "La Gazette des Mathématiciens"
 =====================================================================
 
 The `gzt` bundle provides LaTeX classes for the French journal "La Gazette des
-math^^c3^^a9maticiens".
+mathématiciens".
 
 Installation
 ------------
