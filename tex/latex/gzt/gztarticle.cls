@@ -2149,6 +2149,42 @@
     /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure\space\textendash{}\space}}}},%
 }
 \ExplSyntaxOn
+\newpagestyle{__gzt_frontmatter_ps}[]{%
+  \widenhead*{\c__gzt_front_matter_extra_innermargin_dim}{\c__gzt_front_matter_extra_outermargin_dim}
+  \sethead%
+  [
+    \tikz[remember~picture,overlay] {%
+      \g__gzt_frontmatter_page_headrule_tl%
+      \g__gzt_frontmatter_headtext_tl%
+    }%
+  ]%
+  []%
+  []%
+  {}%
+  {
+    \tikz[remember~picture,overlay] {%
+      \g__gzt_frontmatter_page_headrule_tl%
+      \g__gzt_frontmatter_headtext_tl%
+    }%
+  }%
+  {}%
+  %
+  \setfoot%
+  [\c__gzt_footer_size_font_tl\thepage]%
+  [%
+    \uppercase{\c__gzt_footer_string_tl}
+  ]%
+  [
+  \c__gzt_footer_size_font_tl \c__gzt_compiled_string_tl\today
+  ]%
+  {
+    \c__gzt_footer_size_font_tl \c__gzt_compiled_string_tl\today
+  }%
+  {%
+    \uppercase{\c__gzt_footer_string_tl}%
+  }%
+  {\c__gzt_footer_size_font_tl\thepage}%
+}%
 \AddEverypageHook{%
     \bool_if:NF {\g__gzt_advertisement_bool} {
       \tikz[remember~picture,overlay] { \g__gzt_background_footer_tl }%

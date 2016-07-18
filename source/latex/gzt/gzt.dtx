@@ -5102,6 +5102,14 @@ This work consists of the file  gzt.dtx
 }%
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
+%
 % \subsection{Front matter page style}
 %
 %    \begin{macrocode}
@@ -5130,13 +5138,25 @@ This work consists of the file  gzt.dtx
   [%
     \uppercase{\c_@@_footer_string_tl}
   ]%
-  []%
-  {}%
+  [
+%<class-article>  \c_@@_footer_size_font_tl \c_@@_compiled_string_tl\today
+  ]%
+  {
+%<class-article>    \c_@@_footer_size_font_tl \c_@@_compiled_string_tl\today
+  }%
   {%
     \uppercase{\c_@@_footer_string_tl}%
   }%
   {\c_@@_footer_size_font_tl\thepage}%
 }%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
 %    \end{macrocode}
 %
 % \subsection{Rubric first page style}

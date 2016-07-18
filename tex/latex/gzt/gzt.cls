@@ -2535,8 +2535,10 @@
   [%
     \uppercase{\c__gzt_footer_string_tl}
   ]%
-  []%
-  {}%
+  [
+  ]%
+  {
+  }%
   {%
     \uppercase{\c__gzt_footer_string_tl}%
   }%
