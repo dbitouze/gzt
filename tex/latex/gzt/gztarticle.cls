@@ -61,8 +61,8 @@
 \ExplSyntaxOn
 \ProvidesExplClass
   {gztarticle}
-  {2016/06/10}
-  {0.95a}
+  {2016/10/24}
+  {0.95b}
   {
     SMF~class~for~the~French~journal^^J
     "La~Gazette~des~Math'ematiciens".
