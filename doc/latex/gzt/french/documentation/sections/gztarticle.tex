@@ -141,10 +141,19 @@ occurrences de cette commande.
   \end{enumerate}
 \end{dbwarning}
 
-\begin{dbremark}{Affichage des prénoms et noms du ou des auteurs}{}
+\begin{dbwarning}{Affichage des prénoms et noms du ou des auteurs}{}
   Pour que les prénoms et noms du ou des auteurs soient affichés, il est
-  nécessaire de recourir à la commande habituelle \refCom{maketitle}.
-\end{dbremark}
+  nécessaire :
+  \begin{enumerate}
+  \item de recourir à la commande habituelle \refCom{maketitle} ;
+  \item de procéder à une suite de compilations\suitecompilations{} :
+    \begin{enumerate}
+    \item \hologo{pdfLaTeX} ;
+    \item \hologo{biber} ;
+    \item \hologo{pdfLaTeX}.
+    \end{enumerate}
+  \end{enumerate}
+\end{dbwarning}
 
 \subsubsection{Auteur(s) : détails}
 \label{sec-auteurs-details}
@@ -584,10 +593,7 @@ le \Package*{biblatex} et le moteur \hologo{biber}. Leur usage est détaillé da
     suivante.
   \end{enumerate}
 \item Procéder à une suite de compilations \hologo{pdfLaTeX}, \hologo{biber} et
-  \hologo{pdfLaTeX}\footnote{Pour automatiser ces compilations, on pourra
-    recourir au \enquote{compilateur} \program{latexmk}, fourni par toute
-    distribution \TeX{} moderne, en s'aidant du fichier de configuration
-    \file{latexmkrc} joint à la présente classe.}.
+  \hologo{pdfLaTeX}\suitecompilations.
 \end{enumerate}
 
 \begin{docCommand}{printbibliography}{}
