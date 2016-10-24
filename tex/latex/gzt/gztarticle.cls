@@ -1470,7 +1470,7 @@
 \@ifpackagelater{biblatex}{2016/01/01}{%
   \tl_set:Nn \g__gzt_blx_given_first_inits_false_tl
   {%
-    \togglefalse{blx@giveninits}%
+    \togglefalse{abx@bool@giveninits}%
   }
 }{
   \tl_set:Nn \g__gzt_blx_given_first_inits_false_tl
