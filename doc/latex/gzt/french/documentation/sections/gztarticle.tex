@@ -853,19 +853,20 @@ avec :
 \end{description}
 
 \begin{gzttable}[label=env-theorems,title=Environnements de type \enquote{théorème} fournis]
-  \begin{tabular}{ll}
-    Environnement/Alias       & Titre en français/en anglais \\\toprule
-    |theoreme|/|theorem|      & Théorème/Theorem          \\\midrule
-    |corollaire|/|corollary|  & Corollaire/Corollary      \\\midrule
-    |conjecture|              & Conjecture                \\\midrule
-    |proposition|             & Proposition               \\\midrule
-    |lemme|/|lemma|           & Lemme/Lemma               \\\midrule
-    |axiome|/|axiom|          & Axiome/Axiom              \\\midrule[.75pt]
-    |definition|/|definition| & Définition/Definition     \\\midrule
-    |remarque|/|remark|       & Remarque/Remark           \\\midrule
-    |exemple|/|example|       & Exemple/Example           \\\midrule
-    |notation|                & Notation                  \\\midrule[.75pt]
-    |preuve|/|proof|          & Preuve/Proof              \\\bottomrule
+  \begin{tabular}{llll}
+    \multicolumn{2}{c}{Environnement}           & \multicolumn{2}{c}{Titre}              \\
+    Nom                                         & Alias       & En français & En anglais \\\toprule
+    |theoreme|                                  & |theorem|   & Théorème    & Theorem    \\\midrule
+    |corollaire|                                & |corollary| & Corollaire  & Corollary  \\\midrule
+    \multicolumn{2}{c}{\lstinline+conjecture+}  & \multicolumn{2}{c}{Conjecture}         \\\midrule
+    \multicolumn{2}{c}{\lstinline+proposition+} & \multicolumn{2}{c}{Proposition}        \\\midrule
+    |lemme|                                     & |lemma|     & Lemme       & Lemma      \\\midrule
+    |axiome|                                    & |axiom|     & Axiome      & Axiom      \\\midrule\midrule
+    \multicolumn{2}{c}{\lstinline+definition+}  & Définition  & Definition               \\\midrule
+    |remarque|                                  & |remark|    & Remarque    & Remark     \\\midrule
+    |exemple|                                   & |example|   & Exemple     & Example    \\\midrule
+    \multicolumn{2}{c}{\lstinline+notation+}    & \multicolumn{2}{c}{Notation}           \\\midrule
+    |preuve|                                    & |proof|     & Preuve      & Proof      \\\bottomrule
   \end{tabular}
 \end{gzttable}
 
@@ -908,11 +909,11 @@ en forme variables. La \gztauthorcl{} fournit effectivement trois styles de
 
 \begin{gzttable}[label=env-theorems-styles,title=Styles de \enquote{théorèmes} fournis]
 \begin{tabular}{lp{3cm}p{3cm}p{5.5cm}}
-Style                 & Titre récurrent                  & Contenu                           & Théorèmes concernés                                               \\\toprule
+Style                 & Titre récurrent                  & Contenu                            & Théorèmes concernés                         \\\toprule
 \docValue{theorem}    & gras                             & italique
-                                                                                             & théorèmes, corollaires, conjectures, propositions, lemmes, axiomes \\\midrule
-\docValue{definition} & gras                             & romain                            & définitions, remarques, exemples, notations                       \\\midrule
-\docValue{proof}      & italique, non gras, non numéroté & romain, terminé par un carré noir & preuves                                                           \\\bottomrule
+                      & théorèmes, corollaires, conjectures, propositions, lemmes, axiomes                                                  \\\midrule
+\docValue{definition} & gras                             & romain                             & définitions, remarques, exemples, notations \\\midrule
+\docValue{proof}      & italique, non gras, non numéroté & romain, terminé par un carré blanc & preuves                                     \\\bottomrule
 \end{tabular}
 \end{gzttable}
 
@@ -1395,11 +1396,9 @@ d'article standard\footnote{Où les commandes et environnement moins fréquents
   title={\attachfiletextlink\ \attachfile{\attachfilename}}%
 }
 
-\iffalse
 %%% Local Variables:
 %%% mode: latex
 %%% eval: (latex-mode)
 %%% ispell-local-dictionary: "fr_FR"
-%%% TeX-master: "../gzt.tex"
+%%% TeX-master: "../gzt-fr.tex"
 %%% End:
-\fi
