@@ -1,0 +1,1404 @@
+\section{Introduction}
+\label{sec-introduction}
+
+\begin{dbremark}{Documentation : travail en cours}{}
+  La présente documentation est un travail en cours. Nous remercions d'avance
+  les lecteurs qui ont des remarques à formuler ou qui trouveront des erreurs de
+  nous les signaler à l'adresse courriel figurant en fin de document.
+\end{dbremark}
+
+La \smf fournit la classe \LaTeX{} \gztauthor{} destinée aux auteurs souhaitant
+publier un article dans la
+\href{http://smf4.emath.fr/Publications/Gazette/}{\gzt*{}}. Cette classe a pour
+but :
+\begin{enumerate}
+\item de reproduire fidèlement la maquette de la \gzt{}, permettant ainsi aux
+  auteurs de pouvoir travailler la mise en page de leur document dans des
+  conditions (quasi-)réelles ;
+\item de fournir un certain nombre d'outils (commandes et environnements)
+  destinés à faciliter la composition de documents, notamment ceux contenant des
+  formules de mathématiques.
+\end{enumerate}
+
+\section{Avertissements préliminaires}
+\label{sec-avert-prel}
+
+\begin{dbwarning}{Codage d'entrée \protect\lstinline+UTF-8+ obligatoire}{}
+  La \gztauthorcl{} de la \gzt{} repose de façon cruciale sur un codage
+  d'entrée en |UTF-8| :
+  \begin{itemize}
+  \item elle charge le \Package{inputenc}\footnote{%
+      Il convient donc de \emph{ne pas} charger ce package : on se reportera
+      à la \vref{sec-canevas-de-fichier} pour un canevas de fichier source
+      destiné à la \gzt{} et notamment pour un préambule typique.%
+      %
+    } avec l'option \docAuxKey{utf8} ;
+  \item elle suppose que les fichiers sources \file{.tex} sont effectivement
+    codés en |UTF-8| : on veillera donc à ce que l'éditeur utilisé soit réglé
+    sur ce codage d'entrée.
+  \end{itemize}
+\end{dbwarning}
+
+\begin{dbwarning}{Format et compilation \hologo{pdfLaTeX}}{}
+  La composition des numéros de la \gzt*{} met en œuvre :
+  \begin{itemize}
+  \item le format \hologo{LaTeX}\footnote{Sous sa version \hologo{LaTeXe}, la
+      plus courante de nos jours.}. On évitera donc les commandes des autres
+    formats tels que \hologo{plainTeX} ;
+  \item le compilateur \hologo{pdfLaTeX}. En particulier, le compilateur
+    \hologo{LaTeX} n'étant pas utilisé :
+    \begin{enumerate}
+    \item les formats d'images acceptés sont \format{jpg}, \format{png} et
+      \format{pdf}\footnote{Le format recommandé est \format{pdf} car il est
+        vectoriel si bien que la qualité des images n'est pas dégradée en cas de
+        redimensionnement.}. Le \Format{eps}, quoique indirectement
+      supporté, est déconseillé ;
+    \item le code \program{PostScript}, notamment via \program{PSTricks}, n'est
+      pas directement pris en charge. Bien qu'il soit accepté, il est à éviter
+      dans la mesure du possible.
+    \end{enumerate}
+  \end{itemize}
+\end{dbwarning}
+
+\begin{dbremark}{Composition par défaut en bi-colonne}{}
+  Sauf cas particuliers, tous les articles de la \gzt{} sont composés en mode
+  bi-colonne.
+\end{dbremark}
+
+\section{Article standard}
+\label{sec-article-standard}
+
+Nous commençons par décrire les éléments caractéristiques d'un article standard.
+
+\subsection{Préparation du \enquote{titre} de l'article}
+\label{sec-prep-de-lart}
+
+Cette section liste les commandes, options et environnement permettant de
+\emph{préparer} le \enquote{titre} de l'article ainsi que son éventuelle partie
+finale.
+
+\subsubsection{Titre, sous-titre}
+\label{sec-titre}
+
+\begin{docCommand}[doc description=\mandatory]{title}{\oarg{option}\marg{titre}}
+  Cette commande définit le \meta{titre} de l'article. Celui-ci apparaît alors
+  en début d'article et aussi comme métadonnée \enquote{Titre} du fichier
+  \textsc{pdf} correspondant.
+\end{docCommand}
+
+\begin{docCommand}{subtitle}{\oarg{option}\marg{sous-titre}}
+  Cette commande définit l'éventuel \meta{sous-titre} de l'article. Celui-ci
+  est automatiquement ajouté au titre.
+\end{docCommand}
+
+Les commandes \refCom{title} et \refCom{subtitle} admettent un argument
+optionnel permettant de spécifier un (sous-)titre court au moyen de la clé
+\refKey{short}.
+
+\begin{docKey}{short}{=\meta{(sous-)titre court}}{pas de valeur par défaut,
+    initialement vide}
+  Cette clé définit un (sous-)titre \enquote{court} de l'article qui figure
+  alors à la place du (sous-)titre \enquote{normal} dans le sommaire et en titre
+  courant\footnote{En entête.}.
+\end{docKey}
+
+\begin{bodycode}
+\title[short=Les travaux de Martin \surname{Hairer}]{Martin \surname{Hairer},
+  l'équation de KPZ et les structures de régularité}
+\end{bodycode}
+
+\begin{dbremark}{Affichage des titre et sous-titre}{}
+  Pour que les titre et sous-titre soient affichés, il est nécessaire de
+  recourir à la commande habituelle \refCom{maketitle}.
+\end{dbremark}
+
+\subsubsection{Auteur(s)}
+\label{sec-auteurs}
+
+Un auteur d'article est spécifié au moyen de la commande \refCom{author}
+suivante. En cas d'auteurs multiples, il  suffit de recourir à plusieurs
+occurrences de cette commande.
+
+\begin{docCommand}{author}{\oarg{options}\brackets{\meta{Nom}, \meta{Prénom}}}
+  Cette commande, facultative, définit un auteur d'article.
+\end{docCommand}
+%
+\begin{dbwarning}{Format des prénom et nom de l'auteur}{}
+  On veillera à ce que :
+  \begin{enumerate}
+  \item la saisie des prénom et nom de l'auteur soit conforme à la syntaxe
+    (identique à celle de \hologo{BibTeX} et \package{biblatex}) :
+    %
+\begin{bodycode}[listing options={showspaces}]
+"\meta{Nom}", "\meta{Prénom}"
+\end{bodycode}
+    %
+  \item les éventuels accents figurent dans les \meta{Prénom} et
+    \meta{Nom} ;
+  \item le \meta{Nom} \emph{ne} soit \emph{pas} saisi en capitales
+    (sauf pour la ou les majuscules) car il sera automatiquement
+    composé en petites capitales.
+  \end{enumerate}
+\end{dbwarning}
+
+\begin{dbwarning}{Affichage des prénoms et noms du ou des auteurs}{}
+  Pour que les prénoms et noms du ou des auteurs soient affichés, il est
+  nécessaire :
+  \begin{enumerate}
+  \item de recourir à la commande habituelle \refCom{maketitle} ;
+  \item de procéder à une suite de compilations\suitecompilations{} :
+    \begin{enumerate}
+    \item \hologo{pdfLaTeX} ;
+    \item \hologo{biber} ;
+    \item \hologo{pdfLaTeX}.
+    \end{enumerate}
+  \end{enumerate}
+\end{dbwarning}
+
+\subsubsection{Auteur(s) : détails}
+\label{sec-auteurs-details}
+
+La commande \refCom{author} admet un argument optionnel permettant, pour chaque
+auteur, de spécifier un certain nombre de détails complémentaires : son affiliation, sa
+photo, son email, sa page Web, sa biographie express au moyen des clés
+respectives % (à séparer par des virgules)
+\refKey{affiliation}, \refKey{photo}, \refKey{email}, \refKey{webpage} et
+\refKey{minibio} :
+\begin{bodycode}
+\author[%
+  affiliation="\marg{affiliation(s)}",%
+  photo="\meta{photo}",%
+  email="\meta{email}",%
+  webpage="\meta{page Web}",%
+  minibio="\marg{biographie express}"%
+]{"\meta{Nom}", "\meta{Prénom}"}
+\end{bodycode}
+
+\begin{docKey}{affiliation}{={\marg{affiliation(s)}}}{pas de valeur par défaut,
+    initialement vide}
+  Cette clé permet de spécifier une ou plusieurs affiliations. En cas
+  d'affiliations multiples, celles-ci peuvent être séparées par la commande
+  \docAuxCommand*{newline}.
+\end{docKey}
+
+\begin{docKey}{photo}{={\meta{photo}}}{pas de valeur par défaut,
+    initialement vide}
+  Cette clé permet de spécifier la photographie de l'auteur au moyen d'un
+  fichier image\footnote{Si ce fichier ne figure pas dans le dossier courant, il
+    faut faire figurer le chemin (relatif) y menant.}.
+\end{docKey}
+
+\begin{docKey}{email}{={\meta{email}}}{pas de valeur par défaut,
+    initialement vide}
+  Cette clé permet de spécifier l'adresse courriel de l'auteur.
+\end{docKey}
+
+\begin{docKey}{webpage}{={\meta{page Web}}}{pas de valeur par défaut,
+    initialement vide}
+  Cette clé permet de spécifier la page Web de l'auteur.
+\end{docKey}
+
+\begin{docKey}{minibio}{={\marg{biographie express}}}{pas de valeur par défaut,
+    initialement vide}
+  Cette clé permet de spécifier la biographie express de l'auteur.
+\end{docKey}
+
+\begin{dbwarning}{Paires d'accolades
+    % des clés \refKey{affiliation} et \refKey{minibio}
+    (relativement) obligatoires}{}
+  Au cas (probable) où les valeurs \meta{affiliation(s)} et \meta{biographie
+    express} des clés \refKey{affiliation} et \refKey{minibio} contiennent des
+  virgules, les paires d'accolades les entourant sont obligatoires.
+\end{dbwarning}
+
+\begin{dbwarning}{Courriels et pages Web à saisir tels quels}{}
+  Les valeurs \meta{email} et \meta{webpage} des clés \refKey{email} et
+  \refKey{webpage} doivent être saisies telles quelles, sans recours aucun aux
+  commandes \refCom{url}, \docAuxCommand{href} ou assimilées des packages
+  \package{url} ou \package{hyperref}.
+\end{dbwarning}
+
+\begin{dbremark}{Affichage des détails complémentaires sur les auteurs}{}
+  Pour que les détails complémentaires précédents soient affichés, il est
+  nécessaire de recourir aux commandes \refCom{printauthorsdetails} ou
+  \refCom{printbibliography}, destinées à être utilisées en fin d'article.
+
+  Ces commandes affichent également d'éventuels remerciements à spécifier au
+  moyen de la commande \refCom{acknowledgements} suivante.
+\end{dbremark}
+
+\begin{docCommand}{acknowledgements}{\marg{remerciements}}
+  Cette commande, facultative, permet de spécifier des \meta{remerciements} pour
+  un article.
+\begin{bodycode}
+\acknowledgements{%
+  L'auteur remercie Frédéric Patras, pour les nombreuses discussions qu'il
+  a eues avec lui sur le sujet. Il remercie également le relecteur anonyme,
+  qui a lu le texte avec un très grand soin, et dont les commentaires et
+  suggestions ont été très utiles.%
+}
+\end{bodycode}
+\end{docCommand}
+
+\subsubsection{Résumé}
+\label{sec-resume}
+
+\begin{docEnvironment}[doclang/environment content=résumé]{abstract}{}
+  Cet environnement, facultatif, est destiné à recevoir le \meta{résumé} de
+  l'article.
+\end{docEnvironment}
+
+\subsection{Production du titre de l'article}
+\label{sec-creation-du-titre}
+
+Le titre proprement dit de l'article, regroupant tous les éléments saisis à la
+\vref{sec-prep-de-lart}, est produit par la commande standard
+\refCom{maketitle}.
+
+\begin{docCommand}[doc description=\mandatory]{maketitle}{}
+  Cette commande \emph{produit} l'affichage du \enquote{titre} de l'article,
+  c'est-à-dire :
+  \begin{itemize}
+  \item son titre et son éventuel sous-titre (commandes \refCom{title} et
+    \refCom{subtitle}) ;
+  \item son ou ses éventuels auteurs, sous la forme de leurs noms et
+    prénoms\footnote{Les prénoms sont alors abrégés au moyen de leurs
+      initiales.} (commande(s) \refCom{author}) ;
+  \item son éventuel résumé (environnement \refEnv{abstract}).
+  \end{itemize}
+\end{docCommand}
+
+L'exemple suivant\footnote{Les commandes \refCom{surname} et \refCom{enquote}
+  qui y figurent sont documentées plus loin.} illustre la plupart des commandes
+et options vues jusqu'ici.
+
+\begin{bodycode}
+\title[short=Les travaux de Manjul \surname{Bhargava}]{Manjul \surname{Bhargava},
+  anneaux de petit rang et courbes elliptiques}
+%
+\author[%
+  affiliation={%
+    Univ. Bordeaux, IMB, UMR 5251, F-33400 Talence, France\newline%
+    CNRS, IMB, UMR 5251, F-33400 Talence, France\newline%
+    INRIA, F-33400 Talence, France%
+  },%
+  photo=Belabas,%
+  email=Karim.Belabas@math.u-bordeaux.fr,%
+  minibio={%
+    Karim Belabas est professeur à l'université de Bordeaux.  Ses centres
+    d'intérêts sont la théorie des nombres sous toutes ses formes et le calcul
+    formel.  Il développe le système libre PARI/GP.%
+  }%
+]{Belabas, Karim}
+%
+\author[%
+  affiliation={%
+    Laboratoire de Mathématiques de Besançon, Facultés des sciences et techniques,
+    CNRS, UMR 6623, 16 route de Gray, 25030 Besançon, France%
+  },%
+  photo=Delaunay,%
+  email=Christophe.Delaunay@univ-fcomte.fr,%
+  minibio={%
+    Christophe Delaunay est professeur à l'université de Franche-Comté et membre
+    du laboratoire de mathématiques de Besançon. Il est spécialiste de théorie des
+    nombres.%
+  }%
+]{Delaunay, Christophe}
+%
+\begin{abstract}
+  Manjul Bhargava a reçu la médaille Fields au congrès international de Séoul
+  \enquote{pour avoir développé de nouvelles méthodes en géométrie des nombres,
+    qu'il a appliquées au comptage des anneaux de petit rang et pour borner le
+    rang moyen de courbes elliptiques}. Cet article est un survol d'une partie
+  de ses travaux.
+\end{abstract}
+%
+\maketitle
+\end{bodycode}
+
+\subsection{Affichage des détails complémentaires sur les auteurs}
+
+\begin{docCommand}{printauthorsdetails}{}
+  Cette commande, facultative, \emph{produit} l'affichage :
+  \begin{itemize}
+  \item des détails complémentaires sur les auteurs (options
+    \refKey{affiliation}, \refKey{photo}, \refKey{email}, \refKey{webpage} et
+    \refKey{minibio}) ;
+  \item des éventuels remerciements (commande \refCom{acknowledgements}) ;
+  \end{itemize}
+  tels que définis à la \vref{sec-auteurs-details}.
+\end{docCommand}
+
+\begin{dbwarning}{Commande \protect\docAuxCommand*{printauthorsdetails} inutile
+    en cas de bibliographie}{}
+  En cas de bibliographie (cf. commande \refCom{printbibliography}), l'usage de
+  la commande \refCom{printauthorsdetails} est inutile car l'affichage des
+  détails complémentaires sur les auteurs est alors automatique.
+\end{dbwarning}
+
+\section{Article sans auteur mais avec signature \enquote{académique}}
+\label{sec-article-sans-auteur}
+
+Les articles standard précédents sont écrits par une ou plusieurs personnes
+physiques clairement identifiées en tant qu'auteurs.
+
+D'autres types d'articles n'ont pas véritablement d'auteurs mais sont plutôt
+\enquote{signés} par, par exemple, un comité. Pour ce type d'article, on ne
+recourra pas à la commande \refCom{author}, mais plutôt à la commande
+\refCom{academicsignature} suivante.
+
+\begin{docCommand}{academicsignature}{\marg{signature}}
+  Cette commande permet de spécifier une \meta{signature} académique.
+\begin{bodycode}
+\academicsignature{%
+  Au nom du comité éditorial, Serge Nicaise (éditeur en chef) et Nicolas
+  Wicker (directeur technique).%
+}
+\end{bodycode}
+\end{docCommand}
+
+\begin{dbwarning}{Commande \protect\docAuxCommand*{academicsignature} à effet \enquote{immédiat}}{}
+  La commande \refCom{author} \enquote{prépare} un auteur qui n'est affiché que
+  là où est employée la commande \refCom{maketitle}. Au contraire, la commande
+  \refCom{academicsignature} affiche \enquote{immédiatement} la \meta{signature}
+  passée en argument.
+\end{dbwarning}
+
+\section{Articles de type \enquote{entretien}}
+\label{sec-entretiens}
+
+Les entretiens sont caractérisés par l'alternance de questions et de
+réponses. Les questions, qui doivent être composées de façon spécifique, sont
+à passer en argument de la commande \refCom{question} suivante.
+
+\begin{docCommand}{question}{\marg{question}}
+  Cette commande permet de spécifier une \meta{question}.
+\end{docCommand}
+
+\begin{dbremark}{Composition des réponses aux questions}{}
+  Les réponses aux questions ne nécessitant pas de mise en page particulière,
+  elles seront insérées telles quelles.
+\end{dbremark}
+
+\begin{bodycode}
+\question{Ton sujet principal est celui des systèmes dynamiques, mais quels
+  sont les autres thèmes qui t'intéressent ?}
+
+L'étude des systèmes dynamiques est un sujet qui peut être abordé de façon les
+plus diverses.  Certains les considèrent d'un point de vue combinatoire,
+d'autres sont plus axés sur les probabilités ou encore sur l'analyse. [...]
+Mais si mes capacités d'analystes n'avaient pu se réaliser dans les systèmes
+dynamiques j'aurais fait autre chose.
+
+\question{Parmi ses lauréats de cette édition, on compte deux dynamiciens :
+  Maryam Mirzakhani et toi.  Quelles sont les différences entre vos
+  approches ?}
+
+Ces travaux sont principalement concentrés sur un objet lié aux échanges
+d'intervalles : le flot de Teichmüller. [...]
+\end{bodycode}
+
+\begin{dbwarning}{Insertion manuelle d'espacements inutile}{}
+  On évitera de modifier l'agencement des questions et réponses en insérant
+  manuellement des espacements horizontaux ou verticaux
+  (\docAuxCommand*{hspace}, \docAuxCommand*{hskip}, \docAuxCommand*{vspace},
+  \docAuxCommand*{vskip}, etc.).
+\end{dbwarning}
+
+Les entretiens sont des articles en général sans auteur mais les personnes ayant
+recueilli les propos peuvent être signalées dans le résumé (cf. environnement
+\refEnv{abstract}), par exemple ainsi :
+
+\begin{bodycode}
+\title{Entretien avec Artur \surname{Avila}}
+\begin{abstract}
+  Propos recueillis à Séoul, pendant l'ICM, par Boris Adamczewski et Gaël Octavia.
+\end{abstract}
+\maketitle
+\end{bodycode}
+
+\section{Outils communs à tous types d'articles, fournis par \texorpdfstring{\gztauthor}{la classe}}
+\label{sec-outils-communs-tous}
+
+Cette section donne une liste exhaustive des outils (commandes et
+environnements) fournis par la \gztauthorcl.
+
+\subsection{Images et tableaux}
+\label{sec-images-tableaux}
+
+Les images et tableaux destinés à illustrer le corps d'un article doivent être
+insérés dans les environnements \refEnv{gztfigure}, \refEnv{gztfigure*},
+\refEnv{gzttable} et \refEnv{gzttable*}, analogues, décrits dans cette section.
+
+\subsubsection{Images}
+\label{sec-images}
+
+Une image est incluse au moyen de la commande standard
+\docAuxCommand{includegraphics}\footnote{Il est possible de passer à cette
+  commande toutes ses options définies par le \Package{graphicx}.} mais celle-ci
+doit être employée dans l'un des deux environnements \refEnv{gztfigure} et
+\refEnv{gztfigure*} suivants.
+
+\begin{docEnvironment}[doclang/environment content=image incluse avec \docAuxCommand{includegraphics}]{gztfigure}{\oarg{option(s)}}
+  Cet environnement insère l'image :
+  \begin{itemize}
+  \item \emph{à l'emplacement où il est utilisé} ;
+  \item dans un cadre de largeur la ligne courante, donc notamment de la largeur
+    de la ligne d'une colonne en mode bi-colonne.
+  \end{itemize}
+\end{docEnvironment}
+
+\begin{docEnvironment}[doclang/environment content=image incluse avec \docAuxCommand{includegraphics}]{gztfigure*}{\oarg{option(s)}}
+  Cet environnement insère l'image :
+  \begin{itemize}
+  \item en haut de la page où il a été employé, donc probablement \emph{pas}
+    à l'emplacement où il est utilisé (il s'agit d'une figure
+    \enquote{flottante}) ;
+  \item dans un cadre de largeur celle de l'empagement, donc à cheval sur les
+    deux colonnes en mode bi-colonne.
+  \end{itemize}
+\end{docEnvironment}
+
+\subsubsection{Tableaux}
+\label{sec-tableaux}
+
+Un tableau est créé au moyen de l'environnement standard
+\docAuxEnvironment{tabular}\footnote{Il est recommandé de faire usage du
+  \Package*{booktabs} pour produire des tableaux plus lisibles.} mais celui-ci
+doit être employé dans l'un des deux environnements \refEnv{gzttable} et
+\refEnv{gzttable*} suivants.
+
+\begin{docEnvironment}[doclang/environment content=tableau créé avec \docAuxEnvironment{tabular}]{gzttable}{\oarg{option(s)}}
+  Cet environnement insère le tableau :
+  \begin{itemize}
+  \item \emph{à l'emplacement où il est utilisé} ;
+  \item dans un cadre de largeur la ligne courante, donc notamment de la largeur
+    de la ligne d'une colonne en mode bi-colonne.
+  \end{itemize}
+\end{docEnvironment}
+
+\begin{docEnvironment}[doclang/environment content=tableau créé avec \docAuxEnvironment{tabular}]{gzttable*}{\oarg{option(s)}}
+  Cet environnement insère le tableau :
+  \begin{itemize}
+  \item en haut de la page où il a été employé, donc probablement \emph{pas}
+    à l'emplacement où il est utilisé (il s'agit d'un tableau
+    \enquote{flottant}) ;
+  \item dans un cadre de largeur celle de l'empagement, donc à cheval sur les
+    deux colonnes en mode bi-colonne.
+  \end{itemize}
+\end{docEnvironment}
+
+\subsubsection{Options}
+\label{sec-options-gzt}
+
+Les environnements \refEnv{gztfigure}, \refEnv{gztfigure*}, \refEnv{gzttable} et
+\refEnv{gzttable*} admettent en argument optionnel :
+\begin{itemize}
+\item la plupart des (très nombreuses) options de l'environnement
+  \docAuxEnvironment{tcolorbox} du \Package*{tcolorbox}. On retiendra notamment
+  les options suivantes :
+\begin{docKey}{title}{=\meta{titre}}{pas de valeur par défaut,
+    initialement vide}
+  Cette clé permet de spécifier l'éventuel \meta{titre} (ou légende).
+\end{docKey}
+\begin{docKey}{label}{=\meta{label}}{pas de valeur par défaut, initialement
+    vide}
+  Cette clé permet de spécifier l'éventuel \meta{label} de l'image, de sorte
+  à y faire référence, notamment au moyen de la commande \refCom{vref}.
+\end{docKey}
+\item la clé \refKey{copyright} suivante :\begin{docKey}{copyright}{=\meta{titulaire}}{pas de valeur par défaut, initialement
+    vide}
+  Cette clé permet de spécifier un éventuel \meta{titulaire} de
+  \emph{copyright}.
+\end{docKey}
+\end{itemize}
+
+Les exemples suivants illustrent les environnements et options qui viennent
+d'être vus.
+\begin{bodycode}[listing options={deletekeywords={[1]{exemple,title,label}},morekeywords={[2]{title,label}}}]
+L'exemple avec $a=-1$ et $b=0$ donne la courbe de la \vref{elliptique}.
+%
+\begin{gztfigure}[title=Courbe elliptique correspondant à l'équation
+  $y^2=x^3-x$,label=elliptique]
+  \includegraphics[width=\linewidth]{courbe-elliptique}
+\end{gztfigure}
+\end{bodycode}
+
+\begin{bodycode}[listing options={morekeywords={[2]title,label},deletekeywords={[3]section}}]
+En analysant les chiffres des \vref{recru-mc-25,recru-mc-26} correspondant au
+recrutement des maîtres de conférences, on voit que la proportion des femmes
+recrutées est [...]
+%
+\begin{gzttable*}[label=recru-mc-25,title=Recrutement des maîtres de
+  conférences section 25]
+  \begin{tabular}{|l|cccccc|}
+    \hline
+    & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 \\ \hline
+    [...]
+  \end{tabular}
+\end{gzttable*}
+%
+\begin{gzttable*}[label=recru-mc-26,title=Recrutement des maîtres de
+  conférences section 26]
+  \begin{tabular}{|l|cccccc|}
+    \hline
+    & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 \\ \hline
+    [...]
+  \end{tabular}
+\end{gzttable*}
+\end{bodycode}
+
+\subsection{Bibliographie}
+\label{sec-bibliographie}
+
+Pour composer les bibliographies, la \gzt{} recourt aux outils modernes que sont
+le \Package*{biblatex} et le moteur \hologo{biber}. Leur usage est détaillé dans
+\autocite{Bitouze} et peut être brièvement résumé comme suit.
+\begin{enumerate}
+\item Construire, dans un \meta{fichier bibliographique}\footnote{De tels
+    fichiers sont d'extension \file{.bib}.}, une base bibliographique.
+
+  Nous conseillons pour ce faire de recourir à un logiciel dédié, par exemple
+  \href{http://jabref.sourceforge.net/}{\program{JabRef}}
+  à configurer\footnote{La version décrite ici est la 3.2.} en se rendant
+  dans le menu :
+  \begin{itemize}
+  \item \enquote{\menuentry{File}} et en sélectionnant \enquote{\menuentry{BibLaTeX mode}} ;
+  \item \enquote{\menuentry{Options>Preferences}} puis dans l'onglet \enquote{\menuentry{General}},
+    en choisissant \enquote{\menuentry{UTF8}} dans la liste déroulante \enquote{\menuentry{Default
+      encoding}}\footnote{On pourra en profiter pour changer la langue de
+      l'interface dans la liste déroulante \enquote{\menuentry{Language}}.}.
+  \end{itemize}
+
+  On n'oubliera pas de donner à chaque entrée bibliographique une \meta{clé}
+  permettant de l'identifier de façon unique dans la base
+  bibliographique\footnote{Sous \program{JabRef}, on pourra se faire aider pour
+    cela par l'icône en forme de \enquote{baguette magique}.}.
+\item Dans le fichier source \file{.tex} :
+  \begin{enumerate}
+  \item \emph{En préambule}, utiliser la commande \docAuxCommand{addbibresource}
+    pour indiquer le \meta{fichier bibliographique} à considérer :
+\begin{preamblecode}[listing options={moretexcs={addbibresource}}]
+\addbibresource{"\meta{fichier bibliographique}".bib}
+\end{preamblecode}
+  \item Dans le corps du document, utiliser la commande
+    \docAuxCommand{autocite}\footnote{De préférence à la commande
+      \docAuxCommand{cite}.} du \Package*{biblatex} pour citer les références
+    bibliographiques (pourvue d'une \meta{clé}) :
+\begin{bodycode}[listing options={moretexcs={autocite}}]
+\autocite{"\meta{clé}"}
+\end{bodycode}
+  \item À la fin du document, faire figurer la liste des références
+    bibliographiques au moyen de la commande \refCom{printbibliography}
+    suivante.
+  \end{enumerate}
+\item Procéder à une suite de compilations \hologo{pdfLaTeX}, \hologo{biber} et
+  \hologo{pdfLaTeX}\suitecompilations.
+\end{enumerate}
+
+\begin{docCommand}{printbibliography}{}
+  Cette commande produit la liste des références bibliographiques saisies selon
+  la syntaxe du \Package*{biblatex}.
+  Cette commande est fournie sous deux formes, non étoilée et étoilée :
+  \begin{description}
+  \item[sous sa forme non étoilée :] elle affiche, en sus des références bibliographiques,
+    les \hyperref[sec-auteurs-details]{détails complémentaires sur les auteurs}
+    (s'ils ont été renseignés) ;
+  \item[sous sa forme étoilée :] elle n'affiche que les références bibliographiques.
+  \end{description}
+\end{docCommand}
+
+\subsection{Commandes diverses}
+\label{sec-commandes-diverses}
+
+La \gztauthorcl{} fournit des commandes généralistes ou propres aux
+mathématiques destinées à faciliter la saisie d'un article à paraître dans la
+\gzt{}.
+
+\subsubsection{Commandes généralistes}
+\label{sec-comm-gener}
+
+\begin{docCommand}{smf}{}
+  Cette commande produit l'acronyme \textsc{smf} de la Société Mathématique de
+  France.
+\end{docCommand}
+
+\begin{docCommand}{gzt}{}
+  Cette commande :
+  \begin{description}
+  \item[sous sa forme non étoilée :] produit l'abréviation \enquote{\gzt}.
+  \item[sous sa forme étoilée :] produit la forme complète \enquote{\gzt*}.
+  \end{description}
+\end{docCommand}
+
+\begin{docCommand}{cad}{}
+  Cette commande :
+  \begin{description}
+  \item[sous sa forme non étoilée :] produit l'abréviation \enquote{c.-à-d.}.
+  \item[sous sa forme étoilée :] produit la forme complète
+    \enquote{c'est-à-dire}.
+  \end{description}
+\end{docCommand}
+
+\begin{docCommand}{Cad}{}
+  Cette commande :
+  \begin{description}
+  \item[sous sa forme non étoilée :] produit l'abréviation \enquote{C.-à-d.}.
+  \item[sous sa forme étoilée :] produit la forme complète
+    \enquote{C'est-à-dire}.
+  \end{description}
+\end{docCommand}
+
+\begin{docCommand}{surname}{\marg{nom de famille}}
+  Cette commande compose le \meta{nom de famille} en petites capitales.
+  \begin{dbwarning}{Petites capitales : à employer avec parcimonie}{}
+    \begin{itemize}
+    \item De manière générale, quand elles sont appliquées aux noms de
+      personnes, les petites capitales doivent ne s'appliquer qu'au nom de
+      famille, et notamment \emph{pas} aux prénoms.
+    \item Pour un article de la \gzt{}, on évitera d'appliquer systématiquement
+      les petites capitales (et donc la commande \refCom{surname}) à tous les
+      noms de famille : on les réservera aux noms d'auteurs, notamment à ceux
+      spécialement mis à l'honneur, par exemple s'ils figurent dans le titre
+      d'un article.
+    \end{itemize}
+  \end{dbwarning}
+\end{docCommand}
+
+\begin{docCommand}{century}{\marg{numéro}}
+  Cette commande affiche le \meta{numéro}\footnote{Ce numéro doit être un nombre
+    entier relatif non nul.} ordinal d'un siècle en chiffre romain composé en
+  petites capitales, suivi du suffixe constitué, selon que la langue en cours
+  est le français ou l'anglais :
+  \begin{itemize}
+  \item du mot \enquote{siècle} puis, si \meta{numéro} $<0$, de l'expression
+    \enquote{avant J.-C.}\footnote{Sauf si le caractère qui suit est un point,
+      auquel cas l'expression est \enquote{avant J.-C}.} ;
+  \item du mot \enquote{century} puis, si \meta{numéro} $<0$, de l'expression
+    \enquote{BC}.
+  \end{itemize}
+  Ainsi :
+\begin{bodycode}[listing and text]
+Au \century{8}, [...]. Auparavant, au \century{1}, [...]. Il en fût de même au
+\century{-3} et au \century{-2}.
+\end{bodycode}
+  Cette commande dispose également d'une version étoilée ne faisant figurer
+  le suffixe que si \meta{numéro} $<0$, à utiliser par exemple dans un cas tel
+  que le suivant :
+\begin{bodycode}[listing and text]
+Toute la poésie du \century*{19} mérite d'être lue.
+\end{bodycode}
+\end{docCommand}
+
+\begin{docCommand}{aside}{\marg{texte}}
+  Cette commande permet de composer du \meta{texte} entre tirets longs, pour une
+  \enquote{incise} (un peu à la manière de parenthèses).
+  \begin{description}
+  \item[Sous sa forme non étoilée,] elle insère le \meta{texte} entre deux
+    tirets longs.
+  \item[Sous sa forme étoilée,] elle fait (seulement) précéder le \meta{texte}
+    d'un tiret, ce qui est à utiliser en fin de phrase.
+  \end{description}
+  Ainsi :
+\begin{bodycode}[listing and text]
+Des expériences \aside{dans le monde \enquote{réel}} ont même été suscitées
+par des expériences numériques.
+\end{bodycode}
+  et :
+\begin{bodycode}[listing and text]
+On soupçonne que non \aside*{par exemple on s'attend à ce que $1/\pi$ ne
+soit pas une période}.
+\end{bodycode}
+\end{docCommand}
+
+% ^^A smf,cad,Cad,gzt,century,aside
+
+\subsubsection{Commandes propres aux mathématiques}
+\label{sec-comm-propr-aux}
+
+La \gztauthorcl{} :
+\begin{itemize}
+\item charge les packages :
+  \begin{itemize}
+  \item \package*{kpfonts} qui fournit tous les symboles standard, y compris
+    ceux du \Package{amssymb}, mais en propose également de nombreux autres ;
+  \item \package*{mathtools} qui lui-même charge \package*{amsmath} (mais en
+    l'étendant et en corrigeant certains de ses défauts), si bien que toutes les
+    commandes de ces deux packages sont disponibles ;
+  \item \package*{mathrsfs} qui fournit de jolies lettres calligraphiques (via
+    la commande \docAuxCommand{mathscr}) ;
+  \end{itemize}
+\item redéfinit certaines commandes et en fournit quelques nouvelles, listées
+  ci-dessous ;
+\item fournit (en s'appuyant sur les packages \package*{amsthm} et
+  \package*{thmtools}) des environnements de type \enquote{théorème} classiques,
+  listés ci-dessous.
+\end{itemize}
+
+\paragraph{Ensembles courants}
+
+\begin{docCommand}{N}{}
+  Cette commande affiche l'ensemble des nombres entiers positifs :
+  \enquote{$\mathbb{N}$}.
+\end{docCommand}
+
+\begin{docCommand}{Z}{}
+  Cette commande affiche l'ensemble des nombres entiers relatifs :
+  \enquote{$\mathbb{Z}$}.
+\end{docCommand}
+
+\begin{docCommand}{D}{}
+  Cette commande affiche l'ensemble des nombres décimaux :
+  \enquote{$\mathbb{D}$}.
+\end{docCommand}
+
+\begin{docCommand}{Q}{}
+  Cette commande affiche l'ensemble des nombres rationnels :
+  \enquote{$\mathbb{Q}$}.
+\end{docCommand}
+
+\begin{docCommand}{R}{}
+  Cette commande affiche l'ensemble des nombres réels : \enquote{$\mathbb{R}$}.
+\end{docCommand}
+
+\begin{docCommand}{C}{}
+  Cette commande affiche l'ensemble des nombres complexes :
+  \enquote{$\mathbb{C}$}.
+\end{docCommand}
+
+\begin{docCommand}{K}{}
+  Cette commande peut être utilisée pour dénoter un corps quelconque. Elle
+  affiche \enquote{$\mathbb{K}$}.
+\end{docCommand}
+
+\paragraph{Fonctions trigonométriques circulaires et hyperboliques, directes et
+  réciproques}
+
+\begin{docCommand}{cotan}{}
+  Cette commande affiche la cotangente : \enquote{$\cotan$}.
+\end{docCommand}
+
+\begin{docCommand}{arccos}{}
+  Cette commande affiche (la détermination principale de) l'arc cosinus :
+  \enquote{$\arccos$} ou
+  \enquote{\selectlanguage{english}$\arccos$\selectlanguage{french}} selon que
+  la langue en cours est le français ou l'anglais.
+\end{docCommand}
+
+\begin{docCommand}{arcsin}{}
+  Cette commande affiche (la détermination principale de) l'arc sinus :
+  \enquote{$\arcsin$} ou
+  \enquote{\selectlanguage{english}$\arcsin$\selectlanguage{french}} selon que
+  la langue en cours est le français ou l'anglais.
+\end{docCommand}
+
+\begin{docCommand}{arctan}{}
+  Cette commande affiche (la détermination principale de) l'arc tangente :
+  \enquote{$\arctan$} ou
+  \enquote{\selectlanguage{english}$\arctan$\selectlanguage{french}} selon que
+  la langue en cours est le français ou l'anglais.
+\end{docCommand}
+
+\begin{docCommand}{ch}{}
+  Cette commande affiche le cosinus hyperbolique : \enquote{$\ch$}.
+\end{docCommand}
+
+\begin{docCommand}{sh}{}
+  Cette commande affiche le sinus hyperbolique : \enquote{$\sh$}.
+\end{docCommand}
+
+\begin{docCommand}{tanh}{}
+  Cette commande affiche la tangente hyperbolique : \enquote{$\tanh$} ou
+  \enquote{\selectlanguage{english}$\tanh$\selectlanguage{french}} selon que la
+  langue en cours est le français ou l'anglais.
+  \begin{dbremark}{Pas de commande \protect\lstinline+\\th+ pour la tangente
+      hyperbolique}{}
+    La commande |\th| est déjà définie dans \LaTeX{} et ne peut donc pas être
+    utilisée pour la tangente hyperbolique.
+  \end{dbremark}
+\end{docCommand}
+
+\paragraph{Fonctions diverses}
+
+\begin{docCommand}{log}{}
+  Cette commande :
+  \begin{description}
+  \item[sous sa forme non étoilée :] produit \enquote{$\log$}.
+  \item[sous sa forme étoilée :] produit \enquote{$\log*$}.
+  \end{description}
+\end{docCommand}
+
+\begin{docCommand}{lg}{}
+  Cette commande :
+  \begin{description}
+  \item[sous sa forme non étoilée :] produit \enquote{$\lg$}.
+  \item[sous sa forme étoilée :] produit \enquote{$\lg*$}.
+  \end{description}
+\end{docCommand}
+
+\paragraph{Théorèmes et objets analogues}
+
+Pour faciliter la composition des théorèmes et objets analogues, la
+\gztauthorcl{} fournit des environnements prêts à l'emploi et permet d'en créer
+de nouveaux si besoin est (cf. commande \refCom{newtheorem}).
+
+Le \vref{env-theorems} liste les théorèmes et objets analogues disponibles
+%
+avec :
+\begin{description}
+\item[en colonne~1] le nom de l'environnement \LaTeX{} correspondant, et son
+  éventuel alias (utilisables indifféremment) ;
+\item[en colonne~2] les titres récurrents correspondants selon que la langue en
+  cours est le français ou l'anglais.
+\end{description}
+
+\begin{gzttable}[label=env-theorems,title=Environnements de type \enquote{théorème} fournis]
+  \begin{tabular}{llll}
+    \multicolumn{2}{c}{Environnement}           & \multicolumn{2}{c}{Titre}              \\
+    Nom                                         & Alias       & En français & En anglais \\\toprule
+    |theoreme|                                  & |theorem|   & Théorème    & Theorem    \\\midrule
+    |corollaire|                                & |corollary| & Corollaire  & Corollary  \\\midrule
+    \multicolumn{2}{c}{\lstinline+conjecture+}  & \multicolumn{2}{c}{Conjecture}         \\\midrule
+    \multicolumn{2}{c}{\lstinline+proposition+} & \multicolumn{2}{c}{Proposition}        \\\midrule
+    |lemme|                                     & |lemma|     & Lemme       & Lemma      \\\midrule
+    |axiome|                                    & |axiom|     & Axiome      & Axiom      \\\midrule\midrule
+    \multicolumn{2}{c}{\lstinline+definition+}  & Définition  & Definition               \\\midrule
+    |remarque|                                  & |remark|    & Remarque    & Remark     \\\midrule
+    |exemple|                                   & |example|   & Exemple     & Example    \\\midrule
+    \multicolumn{2}{c}{\lstinline+notation+}    & \multicolumn{2}{c}{Notation}           \\\midrule
+    |preuve|                                    & |proof|     & Preuve      & Proof      \\\bottomrule
+  \end{tabular}
+\end{gzttable}
+
+\begin{dbremark}{\enquote{Théorèmes} non numérotés : versions étoilées des
+    environnements}{}
+  Tous les environnements \LaTeX{} du \vref{env-theorems} admettent une version
+  étoilée produisant des occurrences \emph{non} numérotées du \enquote{théorème}
+  correspondant.
+\end{dbremark}
+
+Ces environnements s'emploient de façon classique, c'est-à-dire comme tout
+environnement \LaTeX{}. Ils disposent cependant d'un argument optionnel
+permettant de préciser le \enquote{théorème}, par exemple en spécifiant son
+auteur.
+
+\begin{bodycode}[listing and text]
+\begin{theorem}
+  Tout espace métrisable séquentiellement compact est compact.
+\end{theorem}
+\begin{definition}[congruence modulo $n$]
+  Soit $n$ un entier supérieur ou égal à $2$. Deux entiers $a$ et $b$
+  sont dits congruents modulo $n$ si $a - b \in n\Z$
+\end{definition}
+\begin{remark*}
+  \[
+  e^{i\pi}+1=0.
+  \]
+\end{remark*}
+\begin{proof}
+  Tout ce qui est rare est cher. Or un cheval bon marché est rare. Donc un
+  cheval bon marché est cher.
+\end{proof}
+\end{bodycode}
+
+On remarque dans l'exemple précédent que les \enquote{théorèmes} ont des mises
+en forme variables. La \gztauthorcl{} fournit effectivement trois styles de
+\enquote{théorèmes}, \docValue{theorem}, \docValue{definition} et
+\docValue{proof}, dont les caractéristiques sont indiquées au
+\vref{env-theorems-styles}.
+
+\begin{gzttable}[label=env-theorems-styles,title=Styles de \enquote{théorèmes} fournis]
+\begin{tabular}{lp{3cm}p{3cm}p{5.5cm}}
+Style                 & Titre récurrent                  & Contenu                            & Théorèmes concernés                         \\\toprule
+\docValue{theorem}    & gras                             & italique
+                      & théorèmes, corollaires, conjectures, propositions, lemmes, axiomes                                                  \\\midrule
+\docValue{definition} & gras                             & romain                             & définitions, remarques, exemples, notations \\\midrule
+\docValue{proof}      & italique, non gras, non numéroté & romain, terminé par un carré blanc & preuves                                     \\\bottomrule
+\end{tabular}
+\end{gzttable}
+
+% \begin{description}
+% \item[\docValue{theorem} :]\
+%   \begin{enumerate}
+%   \item le titre récurrent (et l'éventuelle précision) est en gras ;
+%   \item le contenu est en italique.
+%   \end{enumerate}
+%   Ce style est appliqué aux environnements \enquote{de type théorème}, \cad*{}
+%   les théorèmes, corollaires, conjectures, propositions, lemmes et axiomes.
+% \item[\docValue{definition} :]\
+%   \begin{enumerate}
+%   \item le titre récurrent (et l'éventuelle précision) est en gras ;
+%   \item le contenu \emph{n'est pas} en italique.
+%   \end{enumerate}
+%   Ce style est appliqué aux environnements \enquote{de type définition}, \cad*{}
+%   les définitions, remarques, exemples et notations.
+% \item[\docValue{proof} :]\
+%   \begin{enumerate}
+%   \item le titre récurrent (et l'éventuelle précision) \emph{n'est pas} en gras,
+%     est en italique et n'est \emph{jamais} numéroté ;
+%   \item le contenu \emph{n'est pas} en italique et se termine par un carré noir
+%     en fin de ligne.
+%   \end{enumerate}
+%   Ce style est appliqué aux environnements \enquote{de type preuve},
+%   \cad*{}... les preuves.
+% \end{description}
+
+Si les environnements de \enquote{théorème} fournis par la classe ne suffisent
+pas, la commande \refCom{newtheorem} permet d'en créer de nouveaux.
+
+\begin{docCommand}{newtheorem}{\oarg{option(s)}\marg{nom}}
+  Cette commande crée un nouvel environnement \LaTeX{}, \meta{nom}, destiné à la
+  composition d'un \enquote{théorème} dont, par défaut :
+  \begin{itemize}
+  \item le titre récurrent est \meta{Nom}\footnote{\Cad*{}, quelle que soit la
+      langue en cours, le \meta{nom} de l'environnement \LaTeX{} dont l'initiale
+      est en majuscule.} ;
+  \item le style est \docValue{theorem}.
+  \end{itemize}
+  Cette commande crée également l'environnement \meta{nom}* produisant des
+  occurrences \emph{non} numérotées de ce \enquote{théorème}.
+
+  Si les valeurs par défaut du titre récurrent (\meta{Nom}) ou du style
+  (\docValue{theorem}) ne conviennent pas, il suffit spécifier celles souhaitées
+  en \meta{option(s)} au moyen des clés \refKey{frenchtitle},
+  \refKey{englishtitle} et \refKey{style} suivantes.
+  \begin{docKey}{frenchtitle}{={\meta{titre récurrent en français}}}{pas de
+      valeur par défaut, initialement vide}
+    Cette clé permet de spécifier un \meta{titre récurrent en français}
+    différent de \meta{Nom}.
+  \end{docKey}
+  \begin{docKey}{englishtitle}{={\meta{titre récurrent en anglais}}}{pas de
+      valeur par défaut, initialement vide}
+    Cette clé permet de spécifier un \meta{titre récurrent en anglais} différent
+    de \meta{Nom}.
+  \end{docKey}
+  \begin{docKey}{style}{=\docValue{theorem}\textbar\docValue{definition}\textbar\docValue{proof}}{pas
+      de valeur par défaut, initialement \docValue{theorem}}
+    Cette clé permet de spécifier le style du \enquote{théorème} à créer, au
+    moyen des valeurs \docValue{theorem}, \docValue{definition} et
+    \docValue{proof}.
+  \end{docKey}
+
+\newtheorem{article}
+\newtheorem[frenchtitle=Fait,style=definition]{fact}
+\begin{preamblecode}[listing options={deletekeywords={[1]{definition}},morekeywords={[3]{definition}}}]
+\newtheorem{article}
+\newtheorem[frenchtitle=Fait,style=definition]{fact}
+\end{preamblecode}
+\begin{bodycode}[listing and text]
+\begin{article}[dit premier]
+Les hommes naissent et demeurent libres et égaux en droits\ldots{}
+\end{article}
+\begin{fact*}
+Tout ce qui est rare est cher.
+\end{fact*}
+\begin{fact}
+Un cheval bon marché est rare.
+\end{fact}
+\end{bodycode}
+\end{docCommand}
+
+\subsubsection{Code informatique}
+\label{sec-commande-pour-code}
+
+La \gztauthorcl{} fournit des outils permettant de faire aisément figurer du
+code informatique, notamment du code \LaTeX{} :
+\begin{itemize}
+\item l'environnement \refEnv{gztcode} pour des listings ;
+\item la commande \refCom{gztverb} pour de courts extraits, notamment amenés
+  à figurer dans des phrases.
+\end{itemize}
+
+\begin{docEnvironment}[doclang/environment content=listing]{gztcode}{\oarg{option(s)}}
+  Cet environnement permet de faire figurer un listing de code informatique dans
+  une boîte colorée.
+\begin{bodycode}[listing and text]
+Nous préconisons l'environnement \verb|align*| :
+\begin{gztcode}
+\begin{align*}
+  a & = a\\
+  b & = b
+\end{align*}
+\end{gztcode}
+\end{bodycode}
+\end{docEnvironment}
+
+L'environnement \refEnv{gztcode} admet en argument optionnel la plupart des
+(très nombreuses) options de l'environnement \docAuxEnvironment{tcblisting} du
+\Package*{tcolorbox}. On retiendra notamment les options suivantes.
+
+\begin{docKey}{title}{=\meta{titre}}{pas de valeur par défaut,
+    initialement vide}
+  Cette clé permet de donner un \meta{titre} au listing.
+\begin{bodycode}[listing and text,listing options={morekeywords={[2]title}}]
+Nous préconisons l'environnement \verb|align*| :
+\begin{gztcode}[title=Alignement d'équations]
+\begin{align*}
+  a & = a\\
+  b & = b
+\end{align*}
+\end{gztcode}
+\end{bodycode}
+\end{docKey}
+
+\begin{docKey}{listing and text}{}{}
+  Cette clé permet de, dans la boîte colorée, faire figurer en partie :
+  \begin{itemize}
+  \item haute, le listing ;
+  \item basse, son résultat compilé par \LaTeX{}.
+  \end{itemize}
+  % ^^A
+  \begin{dbwarning}{Option \protect\refKey*{listing and text} : seulement pour
+      du code \LaTeX{}}{}
+    L'option \refKey{listing and text} n'a de sens que pour un listing de code
+    \LaTeX{}.
+  \end{dbwarning}
+\begin{tcboutputlisting}
+\begin{gztcode}[listing and text]
+L'environnement \verb|eqnarray| est obsolète et nous préconisons plutôt
+\verb|align| :
+
+\begin{minipage}[t]{0.4\linewidth}
+  Avec l'environnement \verb|eqnarray*| :
+  \begin{eqnarray*}
+    a & = & a\\
+    b & = & b
+  \end{eqnarray*}
+\end{minipage}
+\hspace{1cm}
+\begin{minipage}[t]{0.4\linewidth}
+  Avec l'environnement \verb|align*| :
+  \begin{align*}
+    a & = a\\
+    b & = b
+  \end{align*}
+\end{minipage}
+\end{gztcode}
+\end{tcboutputlisting}
+L'exemple suivant illustre l'usage de cette option\conseilslatex{}. Le
+code :
+\tcbinputlisting{codes,listing only,listing options={deletekeywords={listing}}}
+donne :
+\input{\jobname.listing}
+\end{docKey}
+
+L'environnement \refEnv{gztcode} permet d'afficher du code informatique
+arbitraire.  Mais, dans les listings précédents, on constate que certaines
+commandes \LaTeX{} sont mises en évidence, en l'occurrence en gras. Ceci
+provient du fait que l'environnement \refEnv{gztcode} est configuré pour, par
+défaut, colorer syntaxiquement le code \LaTeX{}. Mais d'autres langages sont
+pris en charge.
+
+\begin{dbremark}{Environnement \protect\refEnv*{gztcode} : pas seulement pour le
+    code \LaTeX{}}{}
+  L'environnement \refEnv{gztcode} permet de colorer syntaxiquement le code
+  informatique de tout langage connu du \Package*{listings}. Pour ce faire, il
+  suffit de le spécifier (selon la syntaxe de ce package) en argument de
+  l'option \refKey{listing options} suivante.
+\end{dbremark}
+
+\begin{docKey}{listing options}{}{}
+  Cette clé de l'environnement \refEnv{gztcode} permet de passer au listing
+  toute option connue du \Package*{listings}, notamment le langage sous-jacent
+  au moyen de l'option \docAuxKey{language}.
+\lstset{escapechar={},escapeinside={}}
+\begin{bodycode}[listing and text]
+\lstdefinestyle{mon-style}{%
+  language=Python,%
+  basicstyle=\ttfamily,%
+  keywordstyle=\color{magenta},%
+  commentstyle=\color{gray}\itshape,%
+  stringstyle=\color{cyan}%
+}
+%
+\begin{gztcode}[listing options={style=mon-style}]
+"""Calcul de la factorielle""" # En python
+def factorielle(x):
+  if x < 2:
+    return 1
+  else:
+    return x * factorielle(x-1)
+\end{gztcode}
+\end{bodycode}
+\lstset{escapechar="}
+\end{docKey}
+
+\begin{docCommand}{gztverb}{\marg{code}}
+  Cette commande permet d'afficher \emph{verbatim}\footnote{\Cad*{} tel quel,
+    sans être interprété par \LaTeX{}.} un (court) extrait de \meta{code} passé en
+  argument.
+
+  L'exemple suivant illustre l'usage de cette commande\conseilslatex.
+\begin{bodycode}[listing and text,colback=white,listing options={deletekeywords={listing},deletekeywords={[3]style}}]
+Dans le cas de \LaTeX, les commandes de style de caractères \gztverb{\bf},
+\gztverb{\it}, \gztverb{\sf}, \gztverb{\tt}, \gztverb{\sc}, \gztverb{\sl},
+\gztverb{\rm} sont désormais à proscrire. Elles doivent être remplacées par
+les commutateurs, respectivement \gztverb{\bfseries}, \gztverb{\itshape},
+\gztverb{\sffamily}, \gztverb{\ttfamily}, \gztverb{\scshape},
+\gztverb{\slshape}, \gztverb{\rmfamily}.
+\end{bodycode}
+\end{docCommand}
+
+\section{Autres outils communs à tous types d'articles}
+\label{sec-outils-communs-tous-1}
+
+Cette section donne une liste d'outils (commandes et environnements) fournis par
+des packages automatiquement chargés par la \gztauthorcl\footnote{La
+  \vref{sec-packages-charges-par} liste ceux dont les fonctionnalités peuvent
+  être utiles aux auteurs.}.
+
+\begin{dbwarning}{Liste des fonctionnalités des packages tiers non exhaustive}{}
+  Cette liste est \emph{non exhaustive} :
+  \begin{itemize}
+  \item seule une infime partie des packages existants est chargée par la
+    classe ;
+  \item seuls certains packages chargés par la classe sont cités ;
+  \item seules certaines fonctionnalités des packages cités sont décrites. Le
+    lecteur souhaitant en savoir davantage est invité à lire la documentation de
+    ces packages.
+  \end{itemize}
+\end{dbwarning}
+
+\subsection{Guillemets, citations}
+\label{sec-guillemets-citations}
+
+Le \Package*{csquotes} est dédié aux citations, formelles et informelles,
+d'extraits de textes. Il propose notamment la commande \refCom{enquote}
+suivante, simple d'emploi.
+
+\begin{docCommand}{enquote}{\marg{texte}}
+  Cette commande compose le \meta{texte} entre guillemets, automatiquement
+  adaptés :
+  \begin{itemize}
+  \item aux standards typographiques de la langue en cours. On pourra donc
+    l'utiliser dès que du texte est à mettre entre guillemets ;
+  \item au niveau (1 ou 2) de \enquote{citation} en cas d'emboîtement. On
+    pourra donc également l'utiliser dès que du texte est à citer de façon
+    informelle.
+  \end{itemize}
+\begin{bodycode}[listing and text]
+Il lui répondit: \enquote{Courteline disait: \enquote{Passer pour un idiot aux
+    yeux d'un imbécile est une volupté de fin gourmet.}}
+\end{bodycode}
+\end{docCommand}
+
+\begin{docCommand}{textelp}{\marg{texte}}
+  Cette commande est à employer pour signifier une omission, avec éventuel ajout
+  de \meta{texte}.
+
+  Cf. \vref{sec-epigraphes} pour un exemple d'utilisation de cette commande.
+\end{docCommand}
+
+(\textsc{À suivre...})
+
+\subsection{Adresses Web (\enquote{\textsc{url}})}
+\label{sec-url}
+
+Le \Package*{hyperref} fournit (entre autres) la commande \refCom{url} qui permet
+de facilement afficher des adresses Web (aussi appelées \enquote{\textsc{url}}),
+même si elles comportent des caractères spéciaux de \TeX{} (|#|, |_|, |~|,
+\lstinline[commentstyle={}]+%+, |&|, etc.).
+
+\begin{docCommand}{url}{\marg{adresse Web}}
+  Cette commande affiche l'\meta{adresse Web} saisie \emph{telle
+    quelle}\footnote{Notamment sans faire précéder les éventuels caractères
+    spéciaux qu'elle contient de la commande d'échappement
+    \protect\lstinline+\\+.} et fait d'elle un lien hypertexte.
+\begin{bodycode}[listing and text,listing options={deletekeywords={[2]{url}},deletekeywords={[1]{math}}}]
+Pour plus d'information, nous renvoyons à notre site Web
+\url{http://math.univ-lille1.fr/~nwejm/}.
+\end{bodycode}
+\begin{bodycode}[listing and text,listing options={deletekeywords={[2]{url}},deletekeywords={[1]{exemple}}}]
+Par exemple, \url{www.cnrs.fr/insmi/IMG/pdf/Parite_ReunionDU290312.pdf}.
+\end{bodycode}
+\end{docCommand}
+
+\subsection{Graphiques de très haute qualité}
+\label{sec-graphiques-de-tres}
+
+Le \Package*{pgfplots} permet de créer aisément des graphiques (de dimensions
+$2$ ou $3$) de très haute qualité, que ce soit pour représenter des fonctions ou
+des jeux de données.
+
+(\textsc{À suivre...})
+
+\subsection{Références croisées}
+\label{sec-references-croisees}
+
+Le \Package*{cleveref}, utilisé conjointement avec le \Package*{varioref}, rend la
+commande \refCom{vref} de ce dernier très puissante.
+
+\begin{docCommand}{vref}{\marg{label}}
+  Cette commande affiche le numéro de la référence labellisée par \meta{label}
+  et :
+  \begin{itemize}
+  \item affiche (ou pas selon le contexte) la page où se situe cette
+    référence\footnote{Fonctionnalité fournie par le \Package{varioref}.} ;
+  \item détecte automatiquement la nature de la référence (section, tableau,
+    figure, équation, théorème, etc.) et fait précéder le numéro de celle-ci du
+    mot clé correspondant\footnote{Fonctionnalité fournie par le
+      \Package{cleveref}.} ;
+  \item fait de la référence un lien hypertexte\footnote{Fonctionnalité fournie
+      par le \Package{hyperref}.}.
+  \end{itemize}
+\begin{bodycode}[listing and text,listing options={deletekeywords={[2]url,[1]math}}]
+[...] on se reportera à la \vref{sec-canevas-de-fichier} pour un canevas de
+fichier source [...]
+\end{bodycode}
+\end{docCommand}
+
+\subsection{Épigraphes}
+\label{sec-epigraphes}
+
+Le \Package*{epigraph} permet de composer des épigraphes au moyen de la commande
+\refCom{epigraph}.
+
+\begin{docCommand}{epigraph}{\marg{épigraphe}{\marg{source}}}
+  Cette commande\footnote{Légèrement redéfinie par la \gztauthorcl.} compose un
+  \meta{épigraphe} et sa \meta{source} (qui peut éventuellement être vide).
+\end{docCommand}
+
+\begin{bodycode}[listing and text]
+\epigraph{%
+  Parce qu'un secret, ce n'est pas quelque chose qui ne se raconte pas. \textelp{}%
+}{%
+  César\\M. \textsc{Pagnol}, \emph{César}. Livre de Poche~161, p.~115%
+}
+\end{bodycode}
+
+\begin{dbremark}{Source de l'épigraphe en entrée bibliographique}{}
+  La source de l'épigraphe pourra faire l'objet d'une entrée bibliographique en
+  vue d'être citée en 2\ieme{} argument de \refCom{epigraph} au moyen de la
+  commande \lstinline[moretexcs={fullcite}]+\fullcite+ du \Package*{biblatex}
+  (cf. \vref{sec-bibliographie}).%
+  \footnote{%
+    \lstset{deletekeywords={options},deletekeywords={[2]skipbib},morekeywords={[2]{options}},morekeywords={[3]skipbib}}%
+    Dans le fichier \hologo{BibTeX}, on ajoutera à cette entrée la ligne
+    %
+    \protect\lstinline+options = \{skipbib\}+
+    %
+    pour éviter que cette source figure dans la liste des
+    références bibliographiques.%
+  }
+\end{dbremark}
+
+% Dans le source \hologo{BibTeX} de l'exemple suivant, on notera la ligne
+% \lstinline|options = {skipbib}| permettant d'éviter que la source de l'épigraphe
+% ne figure dans la liste des références bibliographiques.
+% \begin{preamblecode}[title=Source \hologo{BibTeX}]
+% @book{pagnol,
+%   title                    = {César},
+%   author                   = {Pagnol, Marcel},
+%   number                   = {161},
+%   pages                    = {115},
+%   series                   = {Livre de poche},
+%   options                  = {skipbib}
+% }
+% \end{preamblecode}
+% \begin{bodycode}[listing and text,listing options={deletekeywords={options,[2]number}}]
+% \epigraph{Je ne peux pas vous le dire à tous à la fois, et si vite que ça. Parce
+%   qu'un secret, ce n'est pas quelque chose qui ne se raconte pas. Mais c'est une
+%   chose qu'on se raconte à voix basse, et séparément.}{César\\\fullcite{pagnol}}
+% \end{bodycode}
+
+
+\subsection{Listes en ligne}
+\label{sec-listes-en-ligne}
+
+Le lecteur est certainement familier des environnements
+\docAuxEnvironment{itemize}, \docAuxEnvironment{enumerate} et
+\docAuxEnvironment{description} permettant de créer des listes respectivement
+\enquote{à puces}, \enquote{numérotées} et \enquote{de description}. Le
+\Package*{enumitem} fournit des versions étoilées de ces environnements qui
+composent ces listes \enquote{en ligne}, \cad*{} au sein d'un même
+paragraphe\footnote{Le but premier de ce package est de personnaliser les listes
+  mais cela est déconseillé dans le cadre de la \gzt{} car cela pourrait
+  contrevenir à la marche typographique qu'elle a adoptée.}.
+
+\begin{docEnvironment}[doclang/environment content=liste]{itemize*}{}
+  Cet environnement compose une liste \enquote{à puces} en ligne.
+\end{docEnvironment}
+
+\begin{docEnvironment}[doclang/environment content=liste]{enumerate*}{}
+  Cet environnement compose une liste \enquote{numérotée} en ligne.
+\end{docEnvironment}
+
+\begin{docEnvironment}[doclang/environment content=liste]{description*}{}
+  Cet environnement compose une liste \enquote{de description} en ligne.
+\end{docEnvironment}
+
+\begin{bodycode}[listing and text,listing options={deletekeywords={[1]math,[2]url}}]
+\begin{enumerate}
+\item Les données que j'ai rassemblées [...]
+\item Les données que j'ai recueillies sont
+  \begin{enumerate*}
+  \item disponibles publiquement sur internet : [...] ;
+  \item accessibles par Wikipédia, [...] ;
+  \item pour 60 des conférenciers [...].
+  \end{enumerate*}
+\end{enumerate}
+\end{bodycode}
+
+\section{Canevas de fichier source typique}
+\label{sec-canevas-de-fichier}
+
+\newcommand{\attachfilename}{mon-article.tex}%
+\newcommand{\attachfiletextlink}{Canevas de fichier source typique}%
+\tcbset{listing file=\attachfilename}%
+\begin{tcboutputlisting}
+\documentclass{gztarticle}
+%
+% Indiquer le (chemin vers le) fichier .bib utilisé.
+\addbibresource{.bib}
+%
+\begin{document}
+\title{}
+% \subtitle[short=]{}
+%
+\author[%
+  affiliation={%
+  },%
+  photo=,%
+  email=,%
+  webpage=,%
+  minibio={%
+  }%
+]{}
+%
+% \acknowledgements{%
+% }
+%
+% \begin{abstract}
+% \end{abstract}
+%
+\maketitle
+%
+% Ici vient le contenu de l'article.
+
+%
+\printbibliography % ou \printauthorsdetails
+\end{document}
+\end{tcboutputlisting}
+%
+Pour le lecteur souhaitant écrire un article pour la \gzt*{}, un modèle typique
+d'article standard\footnote{Où les commandes et environnement moins fréquents
+  ont été mis en commentaire.} est :
+\begin{itemize}
+\item reproduit ci-dessous ;
+\item attaché à la version \format{pdf} du présent document et atteignable par
+  simple clic sur l'icône ci-dessous.
+\end{itemize}
+%
+\tcbinputlisting{%
+  codes,
+  listing only,%
+  listing options={moretexcs={addbibresource}},%
+  title={\attachfiletextlink\ \attachfile{\attachfilename}}%
+}
+
+%%% Local Variables:
+%%% mode: latex
+%%% eval: (latex-mode)
+%%% ispell-local-dictionary: "fr_FR"
+%%% TeX-master: "../gzt-fr.tex"
+%%% End:

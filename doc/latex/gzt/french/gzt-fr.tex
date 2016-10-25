@@ -1,0 +1,110 @@
+\documentclass{gztarticle}
+\usepackage{denisbdoc}
+\usepackage[firstpage]{draftwatermark}
+%
+\indexsetup{level=\section*,toclevel=section,noclearpage,firstpagestyle=__gzt_mainmatter_ps}
+\makeindex[columns=3]
+\tcbset{index format=off}
+%
+\etocsettocstyle{\section*{\contentsname}}{}%
+\etocsetstyle {section}
+{}
+{\leavevmode\leftskip 0cm\relax}
+{\bfseries\normalsize\makebox[.6cm][l]{\etocnumber}%
+  \etocname\nobreak\hfill\nobreak%
+  \makebox[.5cm][r]{%
+    \etocpage%
+  }%
+  \par%
+}
+{\medskip}
+\etocsetstyle {subsection}
+{}
+{\leavevmode\leftskip .6cm\relax }
+{\mdseries\normalsize\makebox[1cm][l]{\etocnumber}%
+  \etocname\nobreak\leaders\etoctoclineleaders\hfill\nobreak
+  \makebox[.5cm][r]{%
+    \etocpage%
+  }%
+  \par%
+}
+{}
+%
+\ExplSyntaxOn
+\renewpagestyle{__gzt_mainmatter_ps}[]{%
+  \widenhead{\c_zero_dim}{\c_zero_dim}
+  \sethead%
+  [
+  \tikz[remember~picture,overlay] {\g__gzt_mainmatter_evenpage_headrule_tl}
+  ]%
+  [%
+  \adjustbox{raise={\c__gzt_header_yshift_dim}{\height}}{%
+    \large\bfseries\scshape\color{__gzt_rubric_head_text_color}\g__gzt_short_title_tl%
+    }%
+    ]%
+  []%
+  {}%
+  {%
+    \adjustbox{raise={\c__gzt_header_yshift_dim}{\height}}{%
+      \bfseries\color{__gzt_rubric_head_text_color}\sectiontitle%
+    }
+  }%
+  {
+    \tikz[remember~picture,overlay] {\g__gzt_mainmatter_oddpage_headrule_tl}
+  }%
+  \setfoot%
+  [\c__gzt_footer_size_font_tl\thepage]%
+  [%
+    \uppercase{\c__gzt_footer_string_tl}
+  ]%
+  []%
+  {}%
+  {%
+    \uppercase{\c__gzt_footer_string_tl}%
+  }%
+  {\c__gzt_footer_size_font_tl\thepage}%
+}
+\ExplSyntaxOff
+%
+\lstMakeShortInline[style=dbtex]|
+%
+\SetWatermarkColor{gray!10}%
+\SetWatermarkFontSize{30mm}%
+\SetWatermarkText{\MakeUppercase{travail en cours}}%
+%
+\addbibresource{gzt-fr.bib}
+%
+\begin{document}
+\title[short=Documentation de la classe de la \emph{Gazette} destinée aux
+auteurs]{Documentation de la classe \LaTeX{} de la \gzt*{} destinée aux
+  auteurs}
+\subtitle[short=Version 0.95b (24 octobre 2016)]{\bigskip\Large Version 0.95b en date du 24 octobre 2016}
+%
+\author[%
+affiliation={%
+  Université du Littoral Côte d'Opale, Laboratoire de mathématiques pures et
+  appliquées%
+},%
+photo=denis,%
+email=denis.bitouze@lmpa.univ-littoral.fr,%
+webpage=http://gte.univ-littoral.fr/members/dbitouze/pub/latex/,%
+]{Bitouzé, Denis}
+%
+\maketitle*
+%
+\localtableofcontents
+%
+\input{sections/fixed-footnotes}
+\input{sections/gztarticle}
+\input{sections/packages-charges}
+\input{sections/notations}
+%
+\printindex
+%
+\printbibliography
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
