@@ -6054,6 +6054,22 @@ This work consists of the file  gzt.dtx
   ,title={\space}%
 }
 %
+\DeclareTColorBox{gztframe}{ O{} }
+{
+  ,width=\linewidth%
+  ,_@@_tcb_floats_style%
+  ,#1%
+  ,notitle%
+}
+\DeclareTColorBox{gztframe*}{ O{} }
+{
+  ,float*
+  ,width=\textwidth%
+  ,_@@_tcb_floats_style%
+  ,#1%
+  ,notitle%
+}
+%
 \DeclareTColorBox{gztscan}{ O{} }
 {
   #1%

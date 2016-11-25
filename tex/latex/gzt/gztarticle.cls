@@ -2579,6 +2579,21 @@
   ,#1%
   ,title={\space}%
 }
+\DeclareTColorBox{gztframe}{ O{} }
+{
+  ,width=\linewidth%
+  ,__gzt_tcb_floats_style%
+  ,#1%
+  ,notitle%
+}
+\DeclareTColorBox{gztframe*}{ O{} }
+{
+  ,float*
+  ,width=\textwidth%
+  ,__gzt_tcb_floats_style%
+  ,#1%
+  ,notitle%
+}
 \DeclareTColorBox{gztscan}{ O{} }
 {
   #1%

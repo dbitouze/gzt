@@ -423,18 +423,37 @@ recueilli les propos peuvent être signalées dans le résumé (cf. environnemen
 Cette section donne une liste exhaustive des outils (commandes et
 environnements) fournis par la \gztauthorcl.
 
-\subsection{Images et tableaux}
+\subsection{Images, tableaux et cadres}
 \label{sec-images-tableaux}
 
-Les images et tableaux destinés à illustrer le corps d'un article doivent être
-insérés dans les environnements :
+La \gztauthorcl{} fournit des environnements :
 \begin{itemize}
-\item \refEnv{gztfigure}, \refEnv{gztfigure*}, \refEnv{gztfigure-},
-  \refEnv{gztfigure*-} ;
-\item \refEnv{gzttable}, \refEnv{gzttable*}, \refEnv{gzttable-},
-  \refEnv{gzttable*-} ;
+\item spécifiques aux images et tableaux :
+  \begin{itemize}
+  \item \refEnv{gztfigure}, \refEnv{gztfigure*}, \refEnv{gztfigure-},
+    \refEnv{gztfigure*-} ;
+  \item \refEnv{gzttable}, \refEnv{gzttable*}, \refEnv{gzttable-},
+    \refEnv{gzttable*-} ;
+  \end{itemize}
+\item plus neutres permettant de placer du contenu dans des cadres :
+  \refEnv{gztframe} et \refEnv{gztframe*}.
 \end{itemize}
-analogues, décrits dans cette section.
+
+% Les images et tableaux destinés à illustrer ou à synthétiser un article doivent
+% être insérés dans les environnements :
+% \begin{itemize}
+% \item \refEnv{gztfigure}, \refEnv{gztfigure*}, \refEnv{gztfigure-},
+%   \refEnv{gztfigure*-} ;
+% \item \refEnv{gzttable}, \refEnv{gzttable*}, \refEnv{gzttable-},
+%   \refEnv{gzttable*-} ;
+% \end{itemize}
+% analogues, décrits dans cette section.
+%
+% La \gztauthorcl{} fournit en outre les environnements plus neutres
+% \refEnv{gztframe} et \refEnv{gztframe*} qui permettent de placer du contenu dans
+% des cadres.
+
+Tous ces environnements acceptent des options décrites \vref{sec-options-gzt}.
 
 \subsubsection{Images}
 \label{sec-images}
@@ -530,6 +549,43 @@ doit être employé dans l'un des deux environnements \refEnv{gzttable} et
 \item que l'intitulé \enquote{Tableau} et le numéro du tableau ;
 \item notamment pas de titre (même si spécifié au moyen de la clé \refKey{title}).
 \end{itemize}
+\end{docEnvironment}
+
+\subsubsection{Cadres}
+\label{sec-cadres}
+
+Le contenu\footnote{Notamment des images et, le cas échéant, des tableaux.} devant être
+encadré le sera au moyen de l'un des deux environnements \refEnv{gztframe} et
+\refEnv{gztframe*} suivants.
+
+\begin{docEnvironment}[doclang/environment content=contenu à encadrer]{gztframe}{\oarg{option(s)}}
+  Cet environnement insère le \meta{contenu à encadrer} :
+  \begin{itemize}
+  \item \emph{à l'emplacement où il est utilisé} ;
+  \item dans un cadre
+    \begin{itemize}
+    \item de largeur la ligne courante, donc notamment de la largeur de la ligne
+      d'une colonne en mode bi-colonne ;
+    \item dépourvu de zone de titre (même si un titre est spécifié au moyen de
+      la clé \refKey{title}).
+    \end{itemize}
+  \end{itemize}
+\end{docEnvironment}
+
+\begin{docEnvironment}[doclang/environment content=contenu à encadrer]{gztframe*}{\oarg{option(s)}}
+  Cet environnement insère le tableau :
+  \begin{itemize}
+  \item en haut de la page où il a été employé, donc probablement \emph{pas}
+    à l'emplacement où il est utilisé (il s'agit d'un cadre
+    \enquote{flottant}) ;
+  \item dans un cadre :
+    \begin{itemize}
+    \item de largeur celle de l'empagement, donc à cheval sur les deux colonnes
+      en mode bi-colonne ;
+    \item dépourvu de zone de titre (même si un titre est spécifié au moyen de
+      la clé \refKey{title}).
+    \end{itemize}
+  \end{itemize}
 \end{docEnvironment}
 
 \subsubsection{Options}
