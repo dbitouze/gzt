@@ -404,9 +404,9 @@
 \dim_const:Nn \c__gzt_bindingoffset_d_dim {4.1mm}
 \dim_const:Nn \c__gzt_bindingoffset_e_dim {4.5mm}
 \dim_const:Nn \c__gzt_bindingoffset_f_dim {5mm}
-\zexternaldocument[self]{\jobname}%
 \int_new:N \g__gzt_total_pages_number_int%
 \int_new:N \g__gzt_total_inside_pages_number_int%
+\zexternaldocument[self]{\jobname}%
 \int_gset:Nn \g__gzt_total_pages_number_int { \zref@extractdefault{selfLastPage}{abspage}{0} }
 \int_gset:Nn \g__gzt_total_inside_pages_number_int { \g__gzt_total_pages_number_int - 4 }
 \int_compare:nNnTF {\g__gzt_total_inside_pages_number_int}<{\c__gzt_thresold_a_int}
@@ -2403,12 +2403,18 @@
 \tcbset{%
   new/blend into/tables/.style={%
     use counter*=table,%
-    list inside=lot,
+    list inside=lot,%
     /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@table\space\textendash{}\space}}}},%
   new/blend into/figures/.style={%
     use counter*=figure,%
-    list inside=lof,
+    list inside=lof,%
     /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure\space\textendash{}\space}}}},%
+  new/blend into/tables-/.style={%
+    use counter*=table,%
+    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@table}}}},%
+  new/blend into/figures-/.style={%
+    use counter*=figure,%
+    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure}}}},%
 }
 \newcommand\gzt@arcthroughthreepoints[4][]%
 {
@@ -3121,38 +3127,63 @@
 }
 \DeclareTColorBox[blend~into=figures]{gztfigure}{ O{} }
 {
-  #1%
-  % ,title={#2}%
   ,width=\linewidth%
   ,__gzt_tcb_floats_style%
+  ,#1%
 }
 \DeclareTColorBox[blend~into=figures]{gztfigure*}{ O{} }
 {
-  #1%
   ,float*
-  % ,title={#2}%
   ,width=\textwidth%
   ,__gzt_tcb_floats_style%
+  ,#1%
+}
+\DeclareTColorBox[blend~into=figures-]{gztfigure-}{ O{} }
+{
+  ,width=\linewidth%
+  ,__gzt_tcb_floats_style%
+  ,#1%
+  ,title={\space}%
+}
+\DeclareTColorBox[blend~into=figures-]{gztfigure*-}{ O{} }
+{
+  ,float*
+  ,width=\textwidth%
+  ,__gzt_tcb_floats_style%
+  ,#1%
+  ,title={\space}%
 }
 \DeclareTColorBox[blend~into=tables]{gzttable}{ O{} }
 {
-  #1%
-  % ,title={#2}%
   ,width=\linewidth%
   ,__gzt_tcb_floats_style%
+  ,#1%
 }
 \DeclareTColorBox[blend~into=tables]{gzttable*}{ O{} }
 {
-  #1%
   ,float*
-  % ,title={#2}%
   ,width=\textwidth%
   ,__gzt_tcb_floats_style%
+  ,#1%
+}
+\DeclareTColorBox[blend~into=tables-]{gzttable-}{ O{} }
+{
+  ,width=\linewidth%
+  ,__gzt_tcb_floats_style%
+  ,#1%
+  ,title={\space}%
+}
+\DeclareTColorBox[blend~into=tables-]{gzttable*-}{ O{} }
+{
+  ,float*
+  ,width=\textwidth%
+  ,__gzt_tcb_floats_style%
+  ,#1%
+  ,title={\space}%
 }
 \DeclareTColorBox{gztscan}{ O{} }
 {
   #1%
-  % ,title={#2}%
   ,width=\textwidth%
   ,__gzt_tcb_floats_style%
   ,size=tight%
@@ -3377,13 +3408,6 @@
     ,center~upper%
     ,sharp~corners=all%
     ,boxrule=0.3mm%
-    ,separator~sign~dash
-    % ,attach~boxed~title~to~bottom~center
-    % ,minipage~boxed~title*=-6mm
-    % ,boxed~title~style={
-    % enhanced
-    % ,boxrule=0mm%
-    % ,sharp~corners=all%
   }%
 }
 \tcbset{%

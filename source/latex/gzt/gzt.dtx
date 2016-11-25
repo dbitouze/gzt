@@ -1763,9 +1763,9 @@ This work consists of the file  gzt.dtx
 % "\g_@@_total_page_number_int"), we need first to specify the
 % \enquote{external} document whom \File{.aux} will be read.
 %    \begin{macrocode}
-\zexternaldocument[self]{\jobname}%
 \int_new:N \g_@@_total_pages_number_int%
 \int_new:N \g_@@_total_inside_pages_number_int%
+\zexternaldocument[self]{\jobname}%
 %    \end{macrocode}
 %
 % We extract the total pages number thanks to "\zref@extractdefault" from
@@ -4948,12 +4948,23 @@ This work consists of the file  gzt.dtx
 \tcbset{%
   new/blend into/tables/.style={%
     use counter*=table,%
-    list inside=lot,
+    list inside=lot,%
     /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@table\space\textendash{}\space}}}},%
   new/blend into/figures/.style={%
     use counter*=figure,%
-    list inside=lof,
+    list inside=lof,%
     /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure\space\textendash{}\space}}}},%
+%    \end{macrocode}
+% We create a \enquote{minus} version of each of the previous styles for floats
+% with number (and keywords) but without any caption: in such cases, the number
+% should not be followed by any separator.
+%    \begin{macrocode}
+  new/blend into/tables-/.style={%
+    use counter*=table,%
+    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@table}}}},%
+  new/blend into/figures-/.style={%
+    use counter*=figure,%
+    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure}}}},%
 }
 %    \end{macrocode}
 %
@@ -5983,43 +5994,69 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 %
-% We provide two public environments "gztfigure" and "gzttable" for the usual
-% floats. Their layout is based upon \pkg{tcolorbox} features.
+% We provide public environments "gztfigure" and "gzttable" (and friends) for
+% the usual floats. Their layout is based upon \pkg{tcolorbox} features.
 %    \begin{macrocode}
 \DeclareTColorBox[blend~into=figures]{gztfigure}{ O{} }
 {
-  #1%
-  % ,title={#2}%
   ,width=\linewidth%
   ,_@@_tcb_floats_style%
+  ,#1%
 }
 \DeclareTColorBox[blend~into=figures]{gztfigure*}{ O{} }
 {
-  #1%
   ,float*
-  % ,title={#2}%
   ,width=\textwidth%
   ,_@@_tcb_floats_style%
+  ,#1%
+}
+\DeclareTColorBox[blend~into=figures-]{gztfigure-}{ O{} }
+{
+  ,width=\linewidth%
+  ,_@@_tcb_floats_style%
+  ,#1%
+  ,title={\space}%
+}
+\DeclareTColorBox[blend~into=figures-]{gztfigure*-}{ O{} }
+{
+  ,float*
+  ,width=\textwidth%
+  ,_@@_tcb_floats_style%
+  ,#1%
+  ,title={\space}%
 }
 \DeclareTColorBox[blend~into=tables]{gzttable}{ O{} }
 {
-  #1%
-  % ,title={#2}%
   ,width=\linewidth%
   ,_@@_tcb_floats_style%
+  ,#1%
 }
 \DeclareTColorBox[blend~into=tables]{gzttable*}{ O{} }
 {
-  #1%
   ,float*
-  % ,title={#2}%
   ,width=\textwidth%
   ,_@@_tcb_floats_style%
+  ,#1%
 }
+\DeclareTColorBox[blend~into=tables-]{gzttable-}{ O{} }
+{
+  ,width=\linewidth%
+  ,_@@_tcb_floats_style%
+  ,#1%
+  ,title={\space}%
+}
+\DeclareTColorBox[blend~into=tables-]{gzttable*-}{ O{} }
+{
+  ,float*
+  ,width=\textwidth%
+  ,_@@_tcb_floats_style%
+  ,#1%
+  ,title={\space}%
+}
+%
 \DeclareTColorBox{gztscan}{ O{} }
 {
   #1%
-  % ,title={#2}%
   ,width=\textwidth%
   ,_@@_tcb_floats_style%
   ,size=tight%
@@ -6411,13 +6448,6 @@ This work consists of the file  gzt.dtx
     ,center~upper%
     ,sharp~corners=all%
     ,boxrule=0.3mm%
-    ,separator~sign~dash
-    % ,attach~boxed~title~to~bottom~center
-    % ,minipage~boxed~title*=-6mm
-    % ,boxed~title~style={
-    % enhanced
-    % ,boxrule=0mm%
-    % ,sharp~corners=all%
   }%
 }
 \tcbset{%
