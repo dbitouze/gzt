@@ -2584,7 +2584,7 @@
   ,width=\linewidth%
   ,__gzt_tcb_floats_style%
   ,#1%
-  ,notitle%
+  % ,notitle%
 }
 \DeclareTColorBox{gztframe*}{ O{} }
 {
@@ -2592,7 +2592,7 @@
   ,width=\textwidth%
   ,__gzt_tcb_floats_style%
   ,#1%
-  ,notitle%
+  % ,notitle%
 }
 \DeclareTColorBox{gztscan}{ O{} }
 {
