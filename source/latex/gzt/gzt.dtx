@@ -4939,26 +4939,11 @@ This work consists of the file  gzt.dtx
 \usetikzlibrary{babel,fadings,positioning,calc}
 %    \end{macrocode}
 %
-% We create a \pkg{tcolorbox}' skin, in order to apply (drop lifted) shadow only
-% to the last part of a breakable "tcolorbox" (see
-% \url{http://tex.stackexchange.com/a/223625/18401}):
-% The following is a temporary hack in order \pkg{tcolorbox}'s separator
-% sign for "blend into=..." floats is a dash.
-%    \begin{macrocode}
-\tcbset{%
-  new/blend into/tables/.style={%
-    use counter*=table,%
-    list inside=lot,%
-    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@table\space\textendash{}\space}}}},%
-  new/blend into/figures/.style={%
-    use counter*=figure,%
-    list inside=lof,%
-    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure\space\textendash{}\space}}}},%
-%    \end{macrocode}
 % We create a \enquote{minus} version of each of the previous styles for floats
 % with number (and keywords) but without any caption: in such cases, the number
 % should not be followed by any separator.
 %    \begin{macrocode}
+\tcbset{%
   new/blend into/tables-/.style={%
     use counter*=table,%
     /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@table}}}},%
@@ -6000,12 +5985,14 @@ This work consists of the file  gzt.dtx
 \DeclareTColorBox[blend~into=figures]{gztfigure}{ O{} }
 {
   ,width=\linewidth%
+  ,blend~before~title=dash
   ,_@@_tcb_floats_style%
   ,#1%
 }
 \DeclareTColorBox[blend~into=figures]{gztfigure*}{ O{} }
 {
   ,float*
+  ,blend~before~title=dash
   ,width=\textwidth%
   ,_@@_tcb_floats_style%
   ,#1%
@@ -6013,6 +6000,7 @@ This work consists of the file  gzt.dtx
 \DeclareTColorBox[blend~into=figures-]{gztfigure-}{ O{} }
 {
   ,width=\linewidth%
+  ,blend~before~title=dash
   ,_@@_tcb_floats_style%
   ,#1%
   ,title={\space}%
@@ -6021,6 +6009,7 @@ This work consists of the file  gzt.dtx
 {
   ,float*
   ,width=\textwidth%
+  ,blend~before~title=dash
   ,_@@_tcb_floats_style%
   ,#1%
   ,title={\space}%
@@ -6028,12 +6017,14 @@ This work consists of the file  gzt.dtx
 \DeclareTColorBox[blend~into=tables]{gzttable}{ O{} }
 {
   ,width=\linewidth%
+  ,blend~before~title=dash
   ,_@@_tcb_floats_style%
   ,#1%
 }
 \DeclareTColorBox[blend~into=tables]{gzttable*}{ O{} }
 {
   ,float*
+  ,blend~before~title=dash
   ,width=\textwidth%
   ,_@@_tcb_floats_style%
   ,#1%
@@ -6041,6 +6032,7 @@ This work consists of the file  gzt.dtx
 \DeclareTColorBox[blend~into=tables-]{gzttable-}{ O{} }
 {
   ,width=\linewidth%
+  ,blend~before~title=dash
   ,_@@_tcb_floats_style%
   ,#1%
   ,title={\space}%
@@ -6049,6 +6041,7 @@ This work consists of the file  gzt.dtx
 {
   ,float*
   ,width=\textwidth%
+  ,blend~before~title=dash
   ,_@@_tcb_floats_style%
   ,#1%
   ,title={\space}%
