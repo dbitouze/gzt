@@ -6443,8 +6443,15 @@ This work consists of the file  gzt.dtx
 % whom layout is based upon \pkg{tcolorbox} features.
 %    \begin{macrocode}
 \tcbset{
-  copyright/.style={overlay={\node[rotate=90,anchor=south~west,font=\tiny]
-      at (frame.south~east) {\copyright{}~#1};}}
+  copyright/.style={%
+    overlay={%
+      \node[rotate=90,anchor=south~west,font=\tiny] at (frame.south~east) {%
+        \begin{minipage}[t]{\tcbtextheight}
+          \copyright{}~#1%
+        \end{minipage}
+      };%
+    }%
+  }%
 }
 \tcbset{%
   _@@_tcb_floats_style/.style={%
