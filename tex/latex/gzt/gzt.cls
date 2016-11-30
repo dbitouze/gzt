@@ -2401,14 +2401,6 @@
 \tcbuselibrary{breakable,skins,hooks,xparse,theorems,listingsutf8}
 \usetikzlibrary{babel,fadings,positioning,calc}
 \tcbset{%
-  new/blend into/tables/.style={%
-    use counter*=table,%
-    list inside=lot,%
-    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@table\space\textendash{}\space}}}},%
-  new/blend into/figures/.style={%
-    use counter*=figure,%
-    list inside=lof,%
-    /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure\space\textendash{}\space}}}},%
   new/blend into/tables-/.style={%
     use counter*=table,%
     /tcb/code={\appto\tcb@new@colopt{,before title={\fnum@table}}}},%
@@ -3128,12 +3120,14 @@
 \DeclareTColorBox[blend~into=figures]{gztfigure}{ O{} }
 {
   ,width=\linewidth%
+  ,blend~before~title=dash
   ,__gzt_tcb_floats_style%
   ,#1%
 }
 \DeclareTColorBox[blend~into=figures]{gztfigure*}{ O{} }
 {
   ,float*
+  ,blend~before~title=dash
   ,width=\textwidth%
   ,__gzt_tcb_floats_style%
   ,#1%
@@ -3141,6 +3135,7 @@
 \DeclareTColorBox[blend~into=figures-]{gztfigure-}{ O{} }
 {
   ,width=\linewidth%
+  ,blend~before~title=dash
   ,__gzt_tcb_floats_style%
   ,#1%
   ,title={\space}%
@@ -3149,6 +3144,7 @@
 {
   ,float*
   ,width=\textwidth%
+  ,blend~before~title=dash
   ,__gzt_tcb_floats_style%
   ,#1%
   ,title={\space}%
@@ -3156,12 +3152,14 @@
 \DeclareTColorBox[blend~into=tables]{gzttable}{ O{} }
 {
   ,width=\linewidth%
+  ,blend~before~title=dash
   ,__gzt_tcb_floats_style%
   ,#1%
 }
 \DeclareTColorBox[blend~into=tables]{gzttable*}{ O{} }
 {
   ,float*
+  ,blend~before~title=dash
   ,width=\textwidth%
   ,__gzt_tcb_floats_style%
   ,#1%
@@ -3169,6 +3167,7 @@
 \DeclareTColorBox[blend~into=tables-]{gzttable-}{ O{} }
 {
   ,width=\linewidth%
+  ,blend~before~title=dash
   ,__gzt_tcb_floats_style%
   ,#1%
   ,title={\space}%
@@ -3177,6 +3176,7 @@
 {
   ,float*
   ,width=\textwidth%
+  ,blend~before~title=dash
   ,__gzt_tcb_floats_style%
   ,#1%
   ,title={\space}%
@@ -3409,8 +3409,15 @@
   }
 }
 \tcbset{
-  copyright/.style={overlay={\node[rotate=90,anchor=south~west,font=\tiny]
-      at (frame.south~east) {\copyright{}~#1};}}
+  copyright/.style={%
+    overlay={%
+      \node[rotate=90,anchor=south~west,font=\tiny] at (frame.south~east) {%
+        \begin{minipage}[t]{\tcbtextheight}
+          \copyright{}~#1%
+        \end{minipage}
+      };%
+    }%
+  }%
 }
 \tcbset{%
   __gzt_tcb_floats_style/.style={%
