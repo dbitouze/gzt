@@ -5985,74 +5985,42 @@ This work consists of the file  gzt.dtx
 \DeclareTColorBox[blend~into=figures]{gztfigure}{ O{} }
 {
   ,width=\linewidth%
-  ,blend~before~title=dash
+  ,blend~before~title=dash%
   ,_@@_tcb_floats_style%
   ,#1%
+  ,code={\ifdefempty{\kvtcb@title}{\tcbset{_@@_tcb_notitle}}{}}%
 }
 \DeclareTColorBox[blend~into=figures]{gztfigure*}{ O{} }
 {
   ,float*
-  ,blend~before~title=dash
+  ,blend~before~title=dash%
   ,width=\textwidth%
   ,_@@_tcb_floats_style%
   ,#1%
-}
-\DeclareTColorBox[blend~into=figures-]{gztfigure-}{ O{} }
-{
-  ,width=\linewidth%
-  ,blend~before~title=dash
-  ,_@@_tcb_floats_style%
-  ,#1%
-  ,title={\space}%
-}
-\DeclareTColorBox[blend~into=figures-]{gztfigure*-}{ O{} }
-{
-  ,float*
-  ,width=\textwidth%
-  ,blend~before~title=dash
-  ,_@@_tcb_floats_style%
-  ,#1%
-  ,title={\space}%
+  ,code={\ifdefempty{\kvtcb@title}{\tcbset{_@@_tcb_notitle}}{}}%
 }
 \DeclareTColorBox[blend~into=tables]{gzttable}{ O{} }
 {
   ,width=\linewidth%
-  ,blend~before~title=dash
+  ,blend~before~title=dash%
   ,_@@_tcb_floats_style%
   ,#1%
+  ,code={\ifdefempty{\kvtcb@title}{\tcbset{_@@_tcb_notitle}}{}}%
 }
 \DeclareTColorBox[blend~into=tables]{gzttable*}{ O{} }
 {
   ,float*
-  ,blend~before~title=dash
+  ,blend~before~title=dash%
   ,width=\textwidth%
   ,_@@_tcb_floats_style%
   ,#1%
+  ,code={\ifdefempty{\kvtcb@title}{\tcbset{_@@_tcb_notitle}}{}}%
 }
-\DeclareTColorBox[blend~into=tables-]{gzttable-}{ O{} }
-{
-  ,width=\linewidth%
-  ,blend~before~title=dash
-  ,_@@_tcb_floats_style%
-  ,#1%
-  ,title={\space}%
-}
-\DeclareTColorBox[blend~into=tables-]{gzttable*-}{ O{} }
-{
-  ,float*
-  ,width=\textwidth%
-  ,blend~before~title=dash
-  ,_@@_tcb_floats_style%
-  ,#1%
-  ,title={\space}%
-}
-%
 \DeclareTColorBox{gztframe}{ O{} }
 {
   ,width=\linewidth%
   ,_@@_tcb_floats_style%
   ,#1%
-  % ,notitle%
 }
 \DeclareTColorBox{gztframe*}{ O{} }
 {
@@ -6060,7 +6028,6 @@ This work consists of the file  gzt.dtx
   ,width=\textwidth%
   ,_@@_tcb_floats_style%
   ,#1%
-  % ,notitle%
 }
 %
 \DeclareTColorBox{gztscan}{ O{} }
@@ -6465,6 +6432,12 @@ This work consists of the file  gzt.dtx
     ,center~upper%
     ,sharp~corners=all%
     ,boxrule=0.3mm%
+  }%
+}
+\tcbset{%
+  _@@_tcb_notitle/.style={%
+    blend~before~title~code={##1}
+    ,title={\space}%
   }%
 }
 \tcbset{%

@@ -2518,73 +2518,42 @@
 \DeclareTColorBox[blend~into=figures]{gztfigure}{ O{} }
 {
   ,width=\linewidth%
-  ,blend~before~title=dash
+  ,blend~before~title=dash%
   ,__gzt_tcb_floats_style%
   ,#1%
+  ,code={\ifdefempty{\kvtcb@title}{\tcbset{__gzt_tcb_notitle}}{}}%
 }
 \DeclareTColorBox[blend~into=figures]{gztfigure*}{ O{} }
 {
   ,float*
-  ,blend~before~title=dash
+  ,blend~before~title=dash%
   ,width=\textwidth%
   ,__gzt_tcb_floats_style%
   ,#1%
-}
-\DeclareTColorBox[blend~into=figures-]{gztfigure-}{ O{} }
-{
-  ,width=\linewidth%
-  ,blend~before~title=dash
-  ,__gzt_tcb_floats_style%
-  ,#1%
-  ,title={\space}%
-}
-\DeclareTColorBox[blend~into=figures-]{gztfigure*-}{ O{} }
-{
-  ,float*
-  ,width=\textwidth%
-  ,blend~before~title=dash
-  ,__gzt_tcb_floats_style%
-  ,#1%
-  ,title={\space}%
+  ,code={\ifdefempty{\kvtcb@title}{\tcbset{__gzt_tcb_notitle}}{}}%
 }
 \DeclareTColorBox[blend~into=tables]{gzttable}{ O{} }
 {
   ,width=\linewidth%
-  ,blend~before~title=dash
+  ,blend~before~title=dash%
   ,__gzt_tcb_floats_style%
   ,#1%
+  ,code={\ifdefempty{\kvtcb@title}{\tcbset{__gzt_tcb_notitle}}{}}%
 }
 \DeclareTColorBox[blend~into=tables]{gzttable*}{ O{} }
 {
   ,float*
-  ,blend~before~title=dash
+  ,blend~before~title=dash%
   ,width=\textwidth%
   ,__gzt_tcb_floats_style%
   ,#1%
-}
-\DeclareTColorBox[blend~into=tables-]{gzttable-}{ O{} }
-{
-  ,width=\linewidth%
-  ,blend~before~title=dash
-  ,__gzt_tcb_floats_style%
-  ,#1%
-  ,title={\space}%
-}
-\DeclareTColorBox[blend~into=tables-]{gzttable*-}{ O{} }
-{
-  ,float*
-  ,width=\textwidth%
-  ,blend~before~title=dash
-  ,__gzt_tcb_floats_style%
-  ,#1%
-  ,title={\space}%
+  ,code={\ifdefempty{\kvtcb@title}{\tcbset{__gzt_tcb_notitle}}{}}%
 }
 \DeclareTColorBox{gztframe}{ O{} }
 {
   ,width=\linewidth%
   ,__gzt_tcb_floats_style%
   ,#1%
-  % ,notitle%
 }
 \DeclareTColorBox{gztframe*}{ O{} }
 {
@@ -2592,7 +2561,6 @@
   ,width=\textwidth%
   ,__gzt_tcb_floats_style%
   ,#1%
-  % ,notitle%
 }
 \DeclareTColorBox{gztscan}{ O{} }
 {
@@ -2814,6 +2782,12 @@
     ,center~upper%
     ,sharp~corners=all%
     ,boxrule=0.3mm%
+  }%
+}
+\tcbset{%
+  __gzt_tcb_notitle/.style={%
+    blend~before~title~code={##1}
+    ,title={\space}%
   }%
 }
 \tcbset{%
