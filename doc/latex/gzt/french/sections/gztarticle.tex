@@ -428,12 +428,10 @@ environnements) fournis par la \gztauthorcl.
 
 La \gztauthorcl{} fournit des environnements :
 \begin{itemize}
-\item spécifiques aux images et tableaux :
+\item spécifiques aux images et tableaux, respectivement :
   \begin{itemize}
-  \item \refEnv{gztfigure}, \refEnv{gztfigure*}, \refEnv{gztfigure-},
-    \refEnv{gztfigure*-} ;
-  \item \refEnv{gzttable}, \refEnv{gzttable*}, \refEnv{gzttable-},
-    \refEnv{gzttable*-} ;
+  \item \refEnv{gztfigure} et \refEnv{gztfigure*} ;
+  \item \refEnv{gzttable} et \refEnv{gzttable*} ;
   \end{itemize}
 \item plus neutres permettant de placer du contenu dans des cadres :
   \refEnv{gztframe} et \refEnv{gztframe*}.
@@ -442,10 +440,8 @@ La \gztauthorcl{} fournit des environnements :
 % Les images et tableaux destinés à illustrer ou à synthétiser un article doivent
 % être insérés dans les environnements :
 % \begin{itemize}
-% \item \refEnv{gztfigure}, \refEnv{gztfigure*}, \refEnv{gztfigure-},
-%   \refEnv{gztfigure*-} ;
-% \item \refEnv{gzttable}, \refEnv{gzttable*}, \refEnv{gzttable-},
-%   \refEnv{gzttable*-} ;
+% \item \refEnv{gztfigure}, \refEnv{gztfigure*} ;
+% \item \refEnv{gzttable}, \refEnv{gzttable*} ;
 % \end{itemize}
 % analogues, décrits dans cette section.
 %
@@ -458,14 +454,18 @@ Tous ces environnements acceptent des options décrites \vref{sec-options-gzt}.
 \subsubsection{Images}
 \label{sec-images}
 
-Une image est incluse au moyen de la commande standard
-\docAuxCommand{includegraphics}\footnote{Il est possible de passer à cette
-  commande toutes ses options définies par le \Package{graphicx}.} mais celle-ci
-doit être employée dans l'un des deux environnements \refEnv{gztfigure} et
-\refEnv{gztfigure*} (ou leurs analogues \refEnv{gztfigure-} et
-\refEnv{gztfigure*-}) suivants.
+Une image est incluse au moyen :
+\begin{itemize}
+\item soit de la commande standard \docAuxCommand{includegraphics}\footnote{Il
+    est possible de passer à cette commande toutes ses options définies par le
+    \Package{graphicx}.} ;
+\item soit de code \LaTeX{} de création de dessins\footnote{Cf. par exemple les
+    packages \package{TikZ} et dérivés.} ;
+\end{itemize}
+à insérer dans l'un des deux environnements \refEnv{gztfigure} et
+\refEnv{gztfigure*} suivants.
 
-\begin{docEnvironment}[doclang/environment content=image incluse avec \docAuxCommand{includegraphics}]{gztfigure}{\oarg{option(s)}}
+\begin{docEnvironment}[doclang/environment content=image]{gztfigure}{\oarg{option(s)}}
   Cet environnement insère l'image :
   \begin{itemize}
   \item \emph{à l'emplacement où il est utilisé} ;
@@ -474,7 +474,7 @@ doit être employée dans l'un des deux environnements \refEnv{gztfigure} et
   \end{itemize}
 \end{docEnvironment}
 
-\begin{docEnvironment}[doclang/environment content=image incluse avec \docAuxCommand{includegraphics}]{gztfigure*}{\oarg{option(s)}}
+\begin{docEnvironment}[doclang/environment content=image]{gztfigure*}{\oarg{option(s)}}
   Cet environnement insère l'image :
   \begin{itemize}
   \item en haut de la page où il a été employé, donc probablement \emph{pas}
@@ -485,24 +485,6 @@ doit être employée dans l'un des deux environnements \refEnv{gztfigure} et
   \end{itemize}
 \end{docEnvironment}
 
-\begin{docEnvironment}[doclang/environment content=image incluse avec \docAuxCommand{includegraphics}]{gztfigure-}{\oarg{option(s)}}
-  Cet environnement est analogue à \refEnv{gztfigure} sauf que la légende
-  correspondante ne contient :
-\begin{itemize}
-\item que l'intitulé \enquote{Figure} et le numéro de la figure ;
-\item notamment pas de titre (même si spécifié au moyen de la clé \refKey{title}).
-\end{itemize}
-\end{docEnvironment}
-
-\begin{docEnvironment}[doclang/environment content=image incluse avec \docAuxCommand{includegraphics}]{gztfigure*-}{\oarg{option(s)}}
-  Cet environnement est analogue à \refEnv{gztfigure*} sauf que la légende
-  correspondante ne contient :
-\begin{itemize}
-\item que l'intitulé \enquote{Figure} et le numéro de la figure ;
-\item notamment pas de titre (même si spécifié au moyen de la clé \refKey{title}).
-\end{itemize}
-\end{docEnvironment}
-
 \subsubsection{Tableaux}
 \label{sec-tableaux}
 
@@ -510,8 +492,7 @@ Un tableau est créé au moyen de l'environnement standard
 \docAuxEnvironment{tabular}\footnote{Il est recommandé de faire usage du
   \Package*{booktabs} pour produire des tableaux plus lisibles.} mais celui-ci
 doit être employé dans l'un des deux environnements \refEnv{gzttable} et
-\refEnv{gzttable*} (ou leurs analogues \refEnv{gzttable-} et
-\refEnv{gzttable*-}) suivants.
+\refEnv{gzttable*} suivants.
 
 \begin{docEnvironment}[doclang/environment content=tableau créé avec \docAuxEnvironment{tabular}]{gzttable}{\oarg{option(s)}}
   Cet environnement insère le tableau :
@@ -533,30 +514,14 @@ doit être employé dans l'un des deux environnements \refEnv{gzttable} et
   \end{itemize}
 \end{docEnvironment}
 
-\begin{docEnvironment}[doclang/environment content=tableau créé avec \docAuxEnvironment{tabular}]{gzttable-}{\oarg{option(s)}}
-  Cet environnement est analogue à \refEnv{gzttable} sauf que la légende
-  correspondante ne contient :
-\begin{itemize}
-\item que l'intitulé \enquote{Tableau} et le numéro du tableau ;
-\item notamment pas de titre (même si spécifié au moyen de la clé \refKey{title}).
-\end{itemize}
-\end{docEnvironment}
-
-\begin{docEnvironment}[doclang/environment content=tableau créé avec \docAuxEnvironment{tabular}]{gzttable*-}{\oarg{option(s)}}
-  Cet environnement est analogue à \refEnv{gzttable*} sauf que la légende
-  correspondante ne contient :
-\begin{itemize}
-\item que l'intitulé \enquote{Tableau} et le numéro du tableau ;
-\item notamment pas de titre (même si spécifié au moyen de la clé \refKey{title}).
-\end{itemize}
-\end{docEnvironment}
-
 \subsubsection{Cadres}
 \label{sec-cadres}
 
-Le contenu\footnote{Notamment des images et, le cas échéant, des tableaux.} devant être
-encadré le sera au moyen de l'un des deux environnements \refEnv{gztframe} et
-\refEnv{gztframe*} suivants.
+Le contenu
+% \footnote{Notamment des images et, le cas échéant, des tableaux.}
+devant être encadré mais sans être estampillé \enquote{Figure} ou
+\enquote{Tableau} le sera au moyen de l'un des deux environnements
+\refEnv{gztframe} et \refEnv{gztframe*} suivants.
 
 \begin{docEnvironment}[doclang/environment content=contenu à encadrer]{gztframe}{\oarg{option(s)}}
   Cet environnement insère le \meta{contenu à encadrer} :
@@ -573,7 +538,7 @@ encadré le sera au moyen de l'un des deux environnements \refEnv{gztframe} et
 \end{docEnvironment}
 
 \begin{docEnvironment}[doclang/environment content=contenu à encadrer]{gztframe*}{\oarg{option(s)}}
-  Cet environnement insère le tableau :
+  Cet environnement insère le \meta{contenu à encadrer} :
   \begin{itemize}
   \item en haut de la page où il a été employé, donc probablement \emph{pas}
     à l'emplacement où il est utilisé (il s'agit d'un cadre
@@ -593,10 +558,8 @@ encadré le sera au moyen de l'un des deux environnements \refEnv{gztframe} et
 
 Les environnements
 \begin{itemize}
-\item \refEnv{gztfigure}, \refEnv{gztfigure*}, \refEnv{gztfigure-},
-  \refEnv{gztfigure*-} ;
-\item \refEnv{gzttable}, \refEnv{gzttable*}, \refEnv{gzttable-},
-  \refEnv{gzttable*-} ;
+\item \refEnv{gztfigure} et \refEnv{gztfigure*} ;
+\item \refEnv{gzttable} et \refEnv{gzttable*} ;
 \end{itemize}
 admettent en argument optionnel :
 \begin{itemize}
@@ -609,8 +572,10 @@ admettent en argument optionnel :
 \end{docKey}
 \begin{docKey}{label}{=\meta{label}}{pas de valeur par défaut, initialement
     vide}
-  Cette clé permet de spécifier l'éventuel \meta{label} de l'image, de sorte
-  à y faire référence, notamment au moyen de la commande \refCom{vref}.
+  Cette clé permet de spécifier l'éventuel \meta{label} de l'image ou du
+  tableau\footnote{Option sans objet pour les environnements
+    \protect\refEnv{gztframe} et \protect\refEnv{gztframe*}.} de sorte à y faire
+  référence, notamment au moyen de la commande \refCom{vref}.
 \end{docKey}
 \item la clé \refKey{copyright} suivante :
   \begin{docKey}{copyright}{=\meta{titulaire}}{pas de valeur par défaut,
@@ -654,6 +619,20 @@ recrutées est [...]
   \end{tabular}
 \end{gzttable*}
 \end{bodycode}
+
+\begin{dbremark}{Zone de titre des figures, tableaux et cadres employés sans
+    option \refKey{title}}{}
+  Si l'option \refKey{title} n'est pas employée, la zone de titre :
+  \begin{itemize}
+  \item contient néanmoins le titre récurrent \enquote{Figure} ou
+    \enquote{Tableau} avec les environnements respectivement :
+    \begin{itemize}
+    \item \refEnv{gztfigure} et \refEnv{gztfigure*} ;
+    \item \refEnv{gzttable} et \refEnv{gzttable*} ;
+    \end{itemize}
+  \item est absente avec les environments \refEnv{gztframe} et \refEnv{gztframe*}
+  \end{itemize}
+\end{dbremark}
 
 \subsection{Bibliographie}
 \label{sec-bibliographie}
