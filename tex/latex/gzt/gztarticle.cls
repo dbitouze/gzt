@@ -2727,6 +2727,7 @@
     {\namepartgiveni}
     {\namepartprefix}
     {\namepartsuffix}%
+    \usebibmacro{name:andothers}%
   }
 }{
   \DeclareNameFormat{giveninits-last}{%
