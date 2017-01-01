@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %
-% File: gzt.dtx Copyright (C) 2014, 2015, 2016 by
+% File: gzt.dtx Copyright (C) 2014, 2015, 2016, 2017 by
 %  Denis Bitouz'e <denis.bitouze@lmpa.univ-littoral.fr>
 %
 % It may be distributed and/or modified under the conditions of the
@@ -806,7 +806,7 @@ This work consists of the file  gzt.dtx
 %   \pkg{fontspec}, convenient for both \hologo{XeLaTeX} and \hologo{LuaLaTeX},
 %   is loaded, with ligatures à la \TeX{} by default enabled.
 %    \begin{macrocode}
-\pdftex_if_engine:TF
+\sys_if_engine_pdftex:TF
   {
     \RequirePackage[T1]{fontenc}
     \RequirePackage[utf8]{inputenc}
@@ -2222,9 +2222,9 @@ This work consists of the file  gzt.dtx
 %
 % All these options, when used, must receive a value.
 %    \begin{macrocode}
-  number .value_required:,
-  month .value_required:,
-  year .value_required:,
+  number .value_required:n = true,
+  month .value_required:n = true,
+  year .value_required:n = true,
 %    \end{macrocode}
 %
 % If "number" option is not used, its initial value is set to $0$.
@@ -2297,14 +2297,14 @@ This work consists of the file  gzt.dtx
 %
 % All these options, when used, must receive a value.
 %    \begin{macrocode}
-  publisher .value_required:,
-  address .value_required:,
-  phone .value_required:,
-  fax .value_required:,
-  email .value_required:,
-  url .value_required:,
-  issn .value_required:,
-  isbn .value_required:,
+  publisher .value_required:n = true,
+  address .value_required:n = true,
+  phone .value_required:n = true,
+  fax .value_required:n = true,
+  email .value_required:n = true,
+  url .value_required:n = true,
+  issn .value_required:n = true,
+  isbn .value_required:n = true,
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2341,8 +2341,8 @@ This work consists of the file  gzt.dtx
 %
 % The following options, when used, must receive a value.
 %    \begin{macrocode}
-  short .value_required:,
-  minishort .value_required:,
+  short .value_required:n = true,
+  minishort .value_required:n = true,
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2374,8 +2374,8 @@ This work consists of the file  gzt.dtx
 %
 % The following options, when used, must receive a value.
 %    \begin{macrocode}
-  short .value_required:,
-  minishort .value_required:,
+  short .value_required:n = true,
+  minishort .value_required:n = true,
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2394,9 +2394,9 @@ This work consists of the file  gzt.dtx
 %
 % The following options, when used, must receive a value.
 %    \begin{macrocode}
-  abstract .value_required:,
-  title .value_required:,
-  pictogram .value_required:,
+  abstract .value_required:n = true,
+  title .value_required:n = true,
+  pictogram .value_required:n = true,
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2423,10 +2423,10 @@ This work consists of the file  gzt.dtx
 %
 % The following options, when used, must receive a value.
 %    \begin{macrocode}
-  diameter .value_required:,
-  textwidth .value_required:,
-  xshift .value_required:,
-  yshift .value_required:,
+  diameter .value_required:n = true,
+  textwidth .value_required:n = true,
+  xshift .value_required:n = true,
+  yshift .value_required:n = true,
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2451,11 +2451,11 @@ This work consists of the file  gzt.dtx
 %
 % All these options, when used, must receive a value.
 %    \begin{macrocode}
-  affiliation .value_required:,
-  email .value_required:,
-  minibio .value_required:,
-  photo .value_required:,
-  webpage .value_required:,
+  affiliation .value_required:n = true,
+  email .value_required:n = true,
+  minibio .value_required:n = true,
+  photo .value_required:n = true,
+  webpage .value_required:n = true,
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2491,8 +2491,8 @@ This work consists of the file  gzt.dtx
 %
 % All these options, when used, must receive a value.
 %    \begin{macrocode}
-  minibio .value_required:,
-  photo .value_required:,
+  minibio .value_required:n = true,
+  photo .value_required:n = true,
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2522,8 +2522,8 @@ This work consists of the file  gzt.dtx
 %
 % All these options, when used, must receive a value.
 %    \begin{macrocode}
-  frontcover .value_required:,
-  bibkey .value_required:,
+  frontcover .value_required:n = true,
+  bibkey .value_required:n = true,
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2553,8 +2553,8 @@ This work consists of the file  gzt.dtx
 %
 % All these options, when used, must receive a value.
 %    \begin{macrocode}
-  frontcover .value_required:,
-  bibkey .value_required:,
+  frontcover .value_required:n = true,
+  bibkey .value_required:n = true,
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2568,8 +2568,8 @@ This work consists of the file  gzt.dtx
 {
   frenchtitle .tl_set:N = \l_@@_newtheorem_frenchtitle_tl,
   englishtitle .tl_set:N = \l_@@_newtheorem_englishtitle_tl,
-  frenchtitle .value_required:,
-  englishtitle .value_required:,
+  frenchtitle .value_required:n = true,
+  englishtitle .value_required:n = true,
   %
   style .choice:,
   style / theorem .code:n = {\tl_set:Nn \l_@@_newtheorem_style_tl {theorem}},
