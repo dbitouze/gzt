@@ -190,11 +190,11 @@
       \medskip
       %
       \begin{center}
-        Prix~public~:\space
+        Prix~public~:\c_space_tl
         \EUR{\printfield{publicprice}}
-        \space\textendash\space Prix~membre~\smf{}~:\space
+        \c_space_tl\textendash\c_space_tl Prix~membre~\smf{}~:\c_space_tl
         \EUR{\printfield{smfprice}}
-        \space\textendash\space Frais~de~port~non~compris
+        \c_space_tl\textendash\c_space_tl Frais~de~port~non~compris
       \end{center}
     }
     \iffieldundef{englishabstract}
@@ -210,11 +210,11 @@
         \medskip
         %
         \begin{center}
-          Public~price:\space
+          Public~price:\c_space_tl
           \EUR{\printfield{publicprice}}
-          \space\textendash\space \smf{}~member~price:\space
+          \c_space_tl\textendash\c_space_tl \smf{}~member~price:\c_space_tl
           \EUR{\printfield{smfprice}}
-          \space\textendash\space Shipping~costs~not~included
+          \c_space_tl\textendash\c_space_tl Shipping~costs~not~included
         \end{center}
       \end{otherlanguage}
     }

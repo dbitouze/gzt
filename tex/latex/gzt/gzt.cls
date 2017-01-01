@@ -81,8 +81,8 @@
 \ExplSyntaxOn
 \ProvidesExplClass
   {gzt}
-  {2016/10/24}
-  {0.95b}
+  {2017/01/01}
+  {0.96}
   {
     SMF~class~for~the~French~journal^^J
     "La~Gazette~des~Math'ematiciens".
@@ -134,7 +134,7 @@
 \PassOptionsToPackage{english,french}{cleveref}
 \RequirePackage[group=false]{standalone}%
 \RequirePackage{datatool}%
-\pdftex_if_engine:TF
+\sys_if_engine_pdftex:TF
   {
     \RequirePackage[T1]{fontenc}
     \RequirePackage[utf8]{inputenc}
@@ -265,20 +265,20 @@
 \tl_const:Nn \c__gzt_president_message_date_string_tl {Le~}
 \tl_const:Nn \c__gzt_frontcover_header_string_tl {
   \l__gzt_uppercased_date_format\displaydate{__gzt_date}
-  \space
+  \c_space_tl
   \textendash{}
-  \space
+  \c_space_tl
   \No\int_use:N\g__gzt_issue_number_int%
 }
 \tl_const:Nn \c__gzt_pdftitle_string_tl {
   \c__gzt_journal_title_string_tl
-  % \space
+  % \c_space_tl
   % \textendash{}
-  % \space
+  % \c_space_tl
   % \l__gzt_uppercased_date_format{\displaydate{__gzt_date}}
-  \space
+  \c_space_tl
   \textendash{}
-  \space
+  \c_space_tl
   N°\int_use:N\g__gzt_issue_number_int
 }
 \tl_const:Nn \c__gzt_frontmatter_directory_string_tl {frontmatter}
@@ -305,8 +305,8 @@
   actuelle~n'est~pas~d{\'e}finitive\,:~votre~article~pourra~en~particulier~ne~pas~
   d{\'e}buter~en~haut~d'une~page.%
 }
-\tl_const:Nn \c__gzt_tellme_extra_title_string_tl {...\space}
-\tl_const:Nn \c__gzt_minitoc_rubric_title_separator_string_tl {\space\textendash}
+\tl_const:Nn \c__gzt_tellme_extra_title_string_tl {...\c_space_tl}
+\tl_const:Nn \c__gzt_minitoc_rubric_title_separator_string_tl {\c_space_tl\textendash}
 \tl_const:Nn \c__gzt_mathematics_rubric_string_tl {Math\'ematiques}
 \tl_const:Nn \c__gzt_dossier_rubric_string_tl {Dossier}
 \tl_const:Nn \c__gzt_community_rubric_string_tl {Vie~de~la~communaut\'e}
@@ -334,16 +334,16 @@
 \tl_const:Nn \c__gzt_footer_string_tl {
   \c__gzt_footer_size_font_tl
   \textcolor{__gzt_smf_number_color}{\MakeTextUppercase{\c__gzt_smf_short_string_tl}}
-  \space
+  \c_space_tl
   \textcolor{__gzt_date_color}{
-    \textendash{}\space
+    \textendash{}\c_space_tl
     \MakeTextUppercase{\c__gzt_journal_short_title_string_tl}
     \bool_if:nF { \g__gzt_inside_frontcover_bool || \g__gzt_backmatter_bool || \g__gzt_for_authors_bool }
     {
-      \space\textendash{}\space
+      \c_space_tl\textendash{}\c_space_tl
       \l__gzt_uppercased_date_format\displaydate{__gzt_date}
-      \space
-      \textendash{}\space
+      \c_space_tl
+      \textendash{}\c_space_tl
       \textcolor{__gzt_smf_number_color}{\No\int_use:N\g__gzt_issue_number_int}
     }
   }
@@ -681,9 +681,9 @@
   number .int_gset:N = \g__gzt_issue_number_int,
   month .int_gset:N = \g__gzt_issue_month_int,
   year .int_gset:N = \g__gzt_issue_year_int,
-  number .value_required:,
-  month .value_required:,
-  year .value_required:,
+  number .value_required:n = true,
+  month .value_required:n = true,
+  year .value_required:n = true,
   number .initial:n = 0,
   frontcoverimageoptions .tl_gset:N = \g__gzt_frontcover_image_options_tl
 }
@@ -705,39 +705,39 @@
   url .tl_set:N = \l__gzt_journal_url_tl,
   issn .tl_set:N = \l__gzt_journal_issn_tl,
   isbn .tl_set:N = \l__gzt_journal_isbn_tl,
-  publisher .value_required:,
-  address .value_required:,
-  phone .value_required:,
-  fax .value_required:,
-  email .value_required:,
-  url .value_required:,
-  issn .value_required:,
-  isbn .value_required:,
+  publisher .value_required:n = true,
+  address .value_required:n = true,
+  phone .value_required:n = true,
+  fax .value_required:n = true,
+  email .value_required:n = true,
+  url .value_required:n = true,
+  issn .value_required:n = true,
+  isbn .value_required:n = true,
 }
 \keys_define:nn { gzt/title }
 {
   short .tl_gset:N = \g__gzt_short_title_tl,
   minishort .tl_gset:N = \g__gzt_mini_short_title_tl,
   notintoc .bool_gset:N = \g__gzt_title_not_in_toc_bool,
-  short .value_required:,
-  minishort .value_required:,
+  short .value_required:n = true,
+  minishort .value_required:n = true,
 }
 \keys_define:nn { gzt/subtitle }
 {
   short .tl_gset:N = \g__gzt_short_subtitle_tl,
   minishort .tl_gset:N = \g__gzt_mini_short_subtitle_tl,
   notintoc .bool_gset:N = \g__gzt_subtitle_not_in_toc_bool,
-  short .value_required:,
-  minishort .value_required:,
+  short .value_required:n = true,
+  minishort .value_required:n = true,
 }
 \keys_define:nn { gzt/rubric }
 {
   abstract .tl_gset:N = \g__gzt_rubric_abstract_tl,
   title .tl_gset:N = \g__gzt_rubric_title_tl,
   pictogram .tl_gset:N = \g__gzt_rubric_pictofile_tl,
-  abstract .value_required:,
-  title .value_required:,
-  pictogram .value_required:,
+  abstract .value_required:n = true,
+  title .value_required:n = true,
+  pictogram .value_required:n = true,
 }
 \keys_define:nn { gzt/minitoc }
 {
@@ -747,10 +747,10 @@
   textwidth .dim_gset:N = \g__gzt_minitoc_textwidth_dim,
   xshift .dim_gset:N = \g__gzt_minitoc_xshift_dim,
   yshift .dim_gset:N = \g__gzt_minitoc_yshift_dim,
-  diameter .value_required:,
-  textwidth .value_required:,
-  xshift .value_required:,
-  yshift .value_required:,
+  diameter .value_required:n = true,
+  textwidth .value_required:n = true,
+  xshift .value_required:n = true,
+  yshift .value_required:n = true,
 }
 \keys_define:nn { gzt/authors }
 {
@@ -759,11 +759,11 @@
   minibio .tl_gset:N = \g__gzt_people_minibio_tl,
   photo .tl_gset:N = \g__gzt_people_photo_tl,
   webpage .tl_gset:N = \g__gzt_people_webpage_tl,
-  affiliation .value_required:,
-  email .value_required:,
-  minibio .value_required:,
-  photo .value_required:,
-  webpage .value_required:,
+  affiliation .value_required:n = true,
+  email .value_required:n = true,
+  minibio .value_required:n = true,
+  photo .value_required:n = true,
+  webpage .value_required:n = true,
 }
 \tl_new:N \g__gzt_interviewee_minibio_tl
 \tl_new:N \g__gzt_interviewee_photo_tl
@@ -772,8 +772,8 @@
 {
   minibio .tl_gset:N = \g__gzt_interviewee_minibio_tl,
   photo .tl_gset:N = \g__gzt_interviewee_photo_tl,
-  minibio .value_required:,
-  photo .value_required:,
+  minibio .value_required:n = true,
+  photo .value_required:n = true,
 }
 \tl_new:N \g__gzt_bookreview_frontcover_tl
 \tl_new:N \g__gzt_bookreview_bibkey_tl
@@ -781,8 +781,8 @@
 {
   frontcover .tl_gset:N = \g__gzt_bookreview_frontcover_tl,
   bibkey .tl_gset:N = \g__gzt_bookreview_bibkey_tl,
-  frontcover .value_required:,
-  bibkey .value_required:,
+  frontcover .value_required:n = true,
+  bibkey .value_required:n = true,
 }
 \tl_new:N \g__gzt_bookadvertisement_frontcover_tl
 \tl_new:N \g__gzt_bookadvertisement_bibkey_tl
@@ -790,16 +790,16 @@
 {
   frontcover .tl_gset:N = \g__gzt_bookadvertisement_frontcover_tl,
   bibkey .tl_gset:N = \g__gzt_bookadvertisement_bibkey_tl,
-  frontcover .value_required:,
-  bibkey .value_required:,
+  frontcover .value_required:n = true,
+  bibkey .value_required:n = true,
 }
 \tl_new:N \l__gzt_newtheorem_style_tl
 \keys_define:nn { gzt/newtheorem }
 {
   frenchtitle .tl_set:N = \l__gzt_newtheorem_frenchtitle_tl,
   englishtitle .tl_set:N = \l__gzt_newtheorem_englishtitle_tl,
-  frenchtitle .value_required:,
-  englishtitle .value_required:,
+  frenchtitle .value_required:n = true,
+  englishtitle .value_required:n = true,
   %
   style .choice:,
   style / theorem .code:n = {\tl_set:Nn \l__gzt_newtheorem_style_tl {theorem}},
@@ -1107,7 +1107,7 @@
           \exp_not:V\DTLcurrentindex}%
         \tl_if_empty:NF \l__gzt_people_email_tl
         {
-          \space(\href{mailto:\l__gzt_people_email_tl}{\nolinkurl{\l__gzt_people_email_tl}})
+          \c_space_tl(\href{mailto:\l__gzt_people_email_tl}{\nolinkurl{\l__gzt_people_email_tl}})
         }
       }
     }
@@ -1216,14 +1216,14 @@
       \item[\c__gzt_editorial_secretariat_string_tl{}~:] \ \par%
         \l__gzt_journal_publisher_tl%
         % \par%
-        \space\textendash{}\space%
+        \c_space_tl\textendash{}\c_space_tl%
         \__gzt_display_people_by_role:n { secretary }\par
         \l__gzt_journal_address_tl\par%
-        \c__gzt_phone_string_tl{}~:~\l__gzt_journal_phone_tl{} \space\textendash{}\space
+        \c__gzt_phone_string_tl{}~:~\l__gzt_journal_phone_tl{} \c_space_tl\textendash{}\c_space_tl
         \c__gzt_fax_string_tl{}~:~\l__gzt_journal_fax_tl\par%
         \href{mailto:\l__gzt_journal_email_tl}{\nolinkurl{\l__gzt_journal_email_tl}}%
         % \newline%
-        \space\textendash{}\space
+        \c_space_tl\textendash{}\c_space_tl
         \url{\l__gzt_journal_url_tl}
       \item[\c__gzt_publishingdirector_string_tl{}~:]
         \__gzt_display_people_by_role:n { president }
@@ -1257,7 +1257,7 @@
         \begin{description}[leftmargin=1em,font=\color{__gzt_about_frontcover_title_color}]
         \item[\g__gzt_about_frontcover_string_tl] \g__gzt_about_frontcover_tl
           \bool_if:NT {\g__gzt_credit_frontcover_bool} {
-            \space(\c__gzt_credit_frontcover_string_tl{}~:~%
+            \c_space_tl(\c__gzt_credit_frontcover_string_tl{}~:~%
             \DTLforeach*[\DTLiseq{\l__gzt_people_role_tl}{frontcovercredit}]{people}{%
               \l__gzt_firstlastname=first-last-name%
               ,\l__gzt_people_role_tl=role%
@@ -1832,7 +1832,7 @@
       \bool_if:NF {\g__gzt_subtitle_not_in_toc_bool} {
         \bool_if:nF { \tl_if_empty_p:N \g__gzt_short_subtitle_tl || \g__gzt_interview_rubric_bool || \g__gzt_rearviewmirror_rubric_bool }
         {
-          \space\textendash{}\space\g__gzt_short_subtitle_tl
+          \c_space_tl\textendash{}\c_space_tl\g__gzt_short_subtitle_tl
         }
       }
       \bool_if:nF { \tl_if_empty_p:N \l__gzt_people_first_last_names_tl || \g__gzt_interview_rubric_bool || \g__gzt_rearviewmirror_rubric_bool }
@@ -1841,10 +1841,10 @@
           \cs_if_exist:cTF {texorpdfstring}
           {
             \texorpdfstring{%
-              \space\textendash{}\space\citeauthor{\g__gzt_article_bib_key_tl}
+              \c_space_tl\textendash{}\c_space_tl\citeauthor{\g__gzt_article_bib_key_tl}
             }{}
           }{%
-            \space\textendash{}\space\citeauthor{\g__gzt_article_bib_key_tl}
+            \c_space_tl\textendash{}\c_space_tl\citeauthor{\g__gzt_article_bib_key_tl}
           }%
         }
       }
@@ -2225,7 +2225,7 @@
   \\[1.5mm]
   \hspace*{\fill}%
   \__gzt_display_people_by_role:n { president }%
-  ,\space
+  ,\c_space_tl
   \c__gzt_president_signatory_string_tl
   %
   \__gzt_after_frontmatter_stuff: {}
@@ -2801,7 +2801,7 @@
 {
   \translate{__gzt_century}%
   \int_compare:nNnT { #1 } < { 0 }{
-    \space
+    \c_space_tl
     \translate{__gzt_bc}
     \IfLanguageName {french}{
       \@ifnextchar.%
@@ -3343,9 +3343,9 @@
 }
 \renewbibmacro*{volume+number+eid}{%
   \printfield{volume}%
-  \setunit{\addcomma\space}%
+  \setunit{\addcomma\c_space_tl}%
   \printfield{number}%
-  \setunit{\addcomma\space}%
+  \setunit{\addcomma\c_space_tl}%
   \printfield{eid}}
 \DeclareFieldFormat[article]{volume}{\mkbibbold{#1}}
 \DeclareFieldFormat[book]{volume}{\mkbibbold{#1}}
@@ -3404,7 +3404,7 @@
 \tcbset{%
   __gzt_tcb_notitle/.style={%
     blend~before~title~code={##1}
-    ,title={\space}%
+    ,title={\c_space_tl}%
   }%
 }
 \tcbset{%
