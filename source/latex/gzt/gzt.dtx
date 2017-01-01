@@ -502,11 +502,11 @@ This work consists of the file  gzt.dtx
       \medskip
       %
       \begin{center}
-        Prix~public~:\space
+        Prix~public~:\c_space_tl
         \EUR{\printfield{publicprice}}
-        \space\textendash\space Prix~membre~\smf{}~:\space
+        \c_space_tl\textendash\c_space_tl Prix~membre~\smf{}~:\c_space_tl
         \EUR{\printfield{smfprice}}
-        \space\textendash\space Frais~de~port~non~compris
+        \c_space_tl\textendash\c_space_tl Frais~de~port~non~compris
       \end{center}
     }
     \iffieldundef{englishabstract}
@@ -522,11 +522,11 @@ This work consists of the file  gzt.dtx
         \medskip
         %
         \begin{center}
-          Public~price:\space
+          Public~price:\c_space_tl
           \EUR{\printfield{publicprice}}
-          \space\textendash\space \smf{}~member~price:\space
+          \c_space_tl\textendash\c_space_tl \smf{}~member~price:\c_space_tl
           \EUR{\printfield{smfprice}}
-          \space\textendash\space Shipping~costs~not~included
+          \c_space_tl\textendash\c_space_tl Shipping~costs~not~included
         \end{center}
       \end{otherlanguage}
     }
@@ -1365,9 +1365,9 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_frontcover_header_string_tl {
   \l_@@_uppercased_date_format\displaydate{@@_date}
-  \space
+  \c_space_tl
   \textendash{}
-  \space
+  \c_space_tl
   \No\int_use:N\g_@@_issue_number_int%
 }
 %    \end{macrocode}
@@ -1375,13 +1375,13 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_pdftitle_string_tl {
   \c_@@_journal_title_string_tl
-  % \space
+  % \c_space_tl
   % \textendash{}
-  % \space
+  % \c_space_tl
   % \l_@@_uppercased_date_format{\displaydate{@@_date}}
-  \space
+  \c_space_tl
   \textendash{}
-  \space
+  \c_space_tl
   N°\int_use:N\g_@@_issue_number_int
 }
 %    \end{macrocode}
@@ -1453,11 +1453,11 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % For the string that preceeds the title in the \enquote{Tell me} rubric.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_tellme_extra_title_string_tl {...\space}
+\tl_const:Nn \c_@@_tellme_extra_title_string_tl {...\c_space_tl}
 %    \end{macrocode}
 % For the separator between a rubric and an article's title in the minitoc.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_minitoc_rubric_title_separator_string_tl {\space\textendash}
+\tl_const:Nn \c_@@_minitoc_rubric_title_separator_string_tl {\c_space_tl\textendash}
 %    \end{macrocode}
 % For the miscellaneous rubrics.
 %    \begin{macrocode}
@@ -1523,16 +1523,16 @@ This work consists of the file  gzt.dtx
 \tl_const:Nn \c_@@_footer_string_tl {
   \c_@@_footer_size_font_tl
   \textcolor{@@_smf_number_color}{\MakeTextUppercase{\c_@@_smf_short_string_tl}}
-  \space
+  \c_space_tl
   \textcolor{@@_date_color}{
-    \textendash{}\space
+    \textendash{}\c_space_tl
     \MakeTextUppercase{\c_@@_journal_short_title_string_tl}
 %<class>    \bool_if:nF { \g_@@_inside_frontcover_bool || \g_@@_backmatter_bool || \g_@@_for_authors_bool }
 %<class>    {
-%<class>      \space\textendash{}\space
+%<class>      \c_space_tl\textendash{}\c_space_tl
 %<class>      \l_@@_uppercased_date_format\displaydate{@@_date}
-%<class>      \space
-%<class>      \textendash{}\space
+%<class>      \c_space_tl
+%<class>      \textendash{}\c_space_tl
 %<class>      \textcolor{@@_smf_number_color}{\No\int_use:N\g_@@_issue_number_int}
 %<class>    }
   }
@@ -3030,7 +3030,7 @@ This work consists of the file  gzt.dtx
           \exp_not:V\DTLcurrentindex}%
         \tl_if_empty:NF \l_@@_people_email_tl
         {
-          \space(\href{mailto:\l_@@_people_email_tl}{\nolinkurl{\l_@@_people_email_tl}})
+          \c_space_tl(\href{mailto:\l_@@_people_email_tl}{\nolinkurl{\l_@@_people_email_tl}})
         }
       }
     }
@@ -3157,14 +3157,14 @@ This work consists of the file  gzt.dtx
       \item[\c_@@_editorial_secretariat_string_tl{}~:] \ \par%
         \l_@@_journal_publisher_tl%
         % \par%
-        \space\textendash{}\space%
+        \c_space_tl\textendash{}\c_space_tl%
         \@@_display_people_by_role:n { secretary }\par
         \l_@@_journal_address_tl\par%
-        \c_@@_phone_string_tl{}~:~\l_@@_journal_phone_tl{} \space\textendash{}\space
+        \c_@@_phone_string_tl{}~:~\l_@@_journal_phone_tl{} \c_space_tl\textendash{}\c_space_tl
         \c_@@_fax_string_tl{}~:~\l_@@_journal_fax_tl\par%
         \href{mailto:\l_@@_journal_email_tl}{\nolinkurl{\l_@@_journal_email_tl}}%
         % \newline%
-        \space\textendash{}\space
+        \c_space_tl\textendash{}\c_space_tl
         \url{\l_@@_journal_url_tl}
       \item[\c_@@_publishingdirector_string_tl{}~:]
         \@@_display_people_by_role:n { president }
@@ -3198,7 +3198,7 @@ This work consists of the file  gzt.dtx
         \begin{description}[leftmargin=1em,font=\color{@@_about_frontcover_title_color}]
         \item[\g_@@_about_frontcover_string_tl] \g_@@_about_frontcover_tl
           \bool_if:NT {\g_@@_credit_frontcover_bool} {
-            \space(\c_@@_credit_frontcover_string_tl{}~:~%
+            \c_space_tl(\c_@@_credit_frontcover_string_tl{}~:~%
             \DTLforeach*[\DTLiseq{\l_@@_people_role_tl}{frontcovercredit}]{people}{%
               \l_@@_firstlastname=first-last-name%
               ,\l_@@_people_role_tl=role%
@@ -4152,7 +4152,7 @@ This work consists of the file  gzt.dtx
       \bool_if:NF {\g_@@_subtitle_not_in_toc_bool} {
         \bool_if:nF { \tl_if_empty_p:N \g_@@_short_subtitle_tl || \g_@@_interview_rubric_bool || \g_@@_rearviewmirror_rubric_bool }
         {
-          \space\textendash{}\space\g_@@_short_subtitle_tl
+          \c_space_tl\textendash{}\c_space_tl\g_@@_short_subtitle_tl
         }
       }
       \bool_if:nF { \tl_if_empty_p:N \l_@@_people_first_last_names_tl || \g_@@_interview_rubric_bool || \g_@@_rearviewmirror_rubric_bool }
@@ -4161,10 +4161,10 @@ This work consists of the file  gzt.dtx
           \cs_if_exist:cTF {texorpdfstring}
           {
             \texorpdfstring{%
-              \space\textendash{}\space\citeauthor{\g_@@_article_bib_key_tl}
+              \c_space_tl\textendash{}\c_space_tl\citeauthor{\g_@@_article_bib_key_tl}
             }{}
           }{%
-            \space\textendash{}\space\citeauthor{\g_@@_article_bib_key_tl}
+            \c_space_tl\textendash{}\c_space_tl\citeauthor{\g_@@_article_bib_key_tl}
           }%
         }
       }
@@ -4653,7 +4653,7 @@ This work consists of the file  gzt.dtx
   \\[1.5mm]
   \hspace*{\fill}%
   \@@_display_people_by_role:n { president }%
-  ,\space
+  ,\c_space_tl
   \c_@@_president_signatory_string_tl
   %
   \_@@_after_frontmatter_stuff: {}
@@ -5534,7 +5534,7 @@ This work consists of the file  gzt.dtx
 {
   \translate{_@@_century}%
   \int_compare:nNnT { #1 } < { 0 }{
-    \space
+    \c_space_tl
     \translate{_@@_bc}
 %    \end{macrocode}
 % In case of French language, we add a period just after \enquote{avant~J.-C},
@@ -6339,9 +6339,9 @@ This work consists of the file  gzt.dtx
 }
 \renewbibmacro*{volume+number+eid}{%
   \printfield{volume}%
-  \setunit{\addcomma\space}%
+  \setunit{\addcomma\c_space_tl}%
   \printfield{number}%
-  \setunit{\addcomma\space}%
+  \setunit{\addcomma\c_space_tl}%
   \printfield{eid}}
 \DeclareFieldFormat[article]{volume}{\mkbibbold{#1}}
 \DeclareFieldFormat[book]{volume}{\mkbibbold{#1}}
@@ -6437,7 +6437,7 @@ This work consists of the file  gzt.dtx
 \tcbset{%
   _@@_tcb_notitle/.style={%
     blend~before~title~code={##1}
-    ,title={\space}%
+    ,title={\c_space_tl}%
   }%
 }
 \tcbset{%
