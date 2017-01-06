@@ -57,7 +57,7 @@ available
 
 ## Templates and samples
 
-`gzt` comes with a template attached to the the documentation above..
+`gzt` comes with a template attached to the the documentation above.
 
 ## Questions and answers
 
