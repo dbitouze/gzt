@@ -1,4 +1,8 @@
 \documentclass{gztarticle}
+%
+\DTMsavedate{release-date}{2017-02-15}
+\newcommand{\releaseversion}{0.97}
+%
 \usepackage{denisbdoc}
 \usepackage[firstpage]{draftwatermark}
 %
@@ -78,7 +82,9 @@
 \title[short=Documentation de la classe de la \emph{Gazette} destinée aux
 auteurs]{Documentation de la classe \LaTeX{} de la \gzt*{} destinée aux
   auteurs}
-\subtitle[short=Version 0.96 (01/01/2017)]{\bigskip\Large Version 0.96 en date du 1\ier{} janvier 2017}
+\subtitle[Version \releaseversion{}
+(\DTMusedate{release-date})]{\bigskip\Large Version \releaseversion{} en date du
+  \DTMusedate{release-date}}%
 %
 \author[%
 affiliation={%
