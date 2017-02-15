@@ -114,6 +114,11 @@ This work consists of the file  gzt.dtx
   \nopreamble\nopostamble
   \file{\GZT@classname.cfg}{\from{\jobname.dtx}{configuration}}
 }%
+\usedir{tex/latex/\GZT@classname/images}
+\generate{%
+  \nopreamble\nopostamble
+  \file{README-PICTOGRAMS.md}{\from{\jobname.dtx}{readme-pictograms}}
+}%
 %</install>
 %<install>\endbatchfile
 %<*internal>
@@ -864,6 +869,11 @@ This work consists of the file  gzt.dtx
 \RequirePackage{adjustbox}%
 %    \end{macrocode}
 %
+% \item Packages and image files for MWEs (used in case of missing pictograms):
+%    \begin{macrocode}
+\RequirePackage{mwe}
+%    \end{macrocode}
+%
 % \item A new reference scheme for \LaTeX{}, giving the total number of pages in
 %   the document:
 %    \begin{macrocode}
@@ -1556,7 +1566,11 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % For the name of the file containing the \textsc{smf} logo.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_smf_logo_file_string_tl {logo_SMF}
+  \file_if_exist:nTF { logo_SMF.pdf }{%
+    \tl_const:Nn \c_@@_smf_logo_file_string_tl {logo_SMF}
+  }{
+    \tl_const:Nn \c_@@_smf_logo_file_string_tl {example-image}
+  }
 %    \end{macrocode}
 % For the name of the file containing the bibliography of the current issue.
 %    \begin{macrocode}
@@ -3785,7 +3799,11 @@ This work consists of the file  gzt.dtx
   \newpage%
   \tl_gclear:N \g_@@_rubric_abstract_tl
   \tl_gset:Nn \g_@@_rubric_title_tl {#2}
-  \tl_gset:Nn \g_@@_rubric_pictofile_tl {#3}
+  \file_if_exist:nTF { #3.pdf }{%
+    \tl_gset:Nn \g_@@_rubric_pictofile_tl {#3}
+  }{
+    \tl_gset:Nn \g_@@_rubric_pictofile_tl {example-image}
+  }
   \IfNoValueF {#1}
   {
     \keys_set:nn { gzt/rubric } { #1 }
@@ -7081,6 +7099,23 @@ This work consists of the file  gzt.dtx
 %
 %    \begin{macrocode}
 %</class-logo>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*readme-pictograms>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+# Pictograms possibly missing
+
+The current directory is supposed to contain the (files of the) logos and
+pictograms that illustrate the Gazette whole issues compiled by the SMF. As non
+free materials, they are likely to miss here and, in such a case, the `gzt`
+class will be replace them by a dummy image (borrowed from the `mwe` package).
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</readme-pictograms>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
