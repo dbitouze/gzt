@@ -1126,7 +1126,7 @@ This work consists of the file  gzt.dtx
 % and makes use of the \pkg{lmodern} for the \enquote{ttfamily} font.
 %
 %    \begin{macrocode}
-\pdftex_if_engine:T
+\sys_if_engine_pdftex:T
   {
     \renewcommand\familydefault{\sfdefault}
     \renewcommand{\ttdefault}{lmtt}
@@ -1428,7 +1428,7 @@ This work consists of the file  gzt.dtx
 % For authors' instructions file.
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_authors_instructions_file_extension_tl {ain}
-\tl_const:Nn \c_@@_authors_instructions_file_tl {\c_job_name_tl.\c_@@_authors_instructions_file_extension_tl}
+\tl_const:Nn \c_@@_authors_instructions_file_tl {\c_sys_jobname_str.\c_@@_authors_instructions_file_extension_tl}
 %    \end{macrocode}
 % For the few words about the front cover.
 %    \begin{macrocode}
@@ -1545,9 +1545,9 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % For the name of the file containing the bibliography of the current issue.
 %    \begin{macrocode}
-% \tl_const:Nn \c_@@_issue_bib_file_string_tl {issue-\c_job_name_tl.bib}
+% \tl_const:Nn \c_@@_issue_bib_file_string_tl {issue-\c_sys_jobname_str.bib}
 \tl_const:Nn \c_@@_issue_bib_file_suffix_string_tl {@@}
-\tl_const:Nn \c_@@_issue_bib_file_string_tl {\c_job_name_tl\c_@@_issue_bib_file_suffix_string_tl.bib}
+\tl_const:Nn \c_@@_issue_bib_file_string_tl {\c_sys_jobname_str\c_@@_issue_bib_file_suffix_string_tl.bib}
 \tl_const:Nn \c_@@_issue_bib_path_string_tl {\c_@@_issue_bib_file_string_tl}
 %    \end{macrocode}
 % For the prefix of the bibliographic key of each article.
