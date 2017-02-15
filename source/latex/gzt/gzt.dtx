@@ -1460,6 +1460,21 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_minitoc_rubric_title_separator_string_tl {\c_space_tl\textendash}
 %    \end{macrocode}
+% Names of the pictogram files.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_mathematics_pictogram_file_name_tl {picto-mathematics}
+\tl_const:Nn \c_@@_dossier_pictogram_file_name_tl {picto-dossier}
+\tl_const:Nn \c_@@_community_pictogram_file_name_tl {picto-hands}
+\tl_const:Nn \c_@@_interview_pictogram_file_name_tl {picto-interview}
+\tl_const:Nn \c_@@_teaching_pictogram_file_name_tl {picto-teaching}
+\tl_const:Nn \c_@@_parity_pictogram_file_name_tl {picto-parity}
+\tl_const:Nn \c_@@_tellme_pictogram_file_name_tl {picto-tellme}
+\tl_const:Nn \c_@@_information_pictogram_file_name_tl {picto-information}
+\tl_const:Nn \c_@@_rearviewmirror_pictogram_file_name_tl {picto-rearviewmirror}
+\tl_const:Nn \c_@@_tribute_pictogram_file_name_tl {picto-tribute}
+\tl_const:Nn \c_@@_books_pictogram_file_name_tl {picto-books}
+\tl_const:Nn \c_@@_forum_pictogram_file_name_tl {picto-forum}
+%    \end{macrocode}
 % For the miscellaneous rubrics.
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_mathematics_rubric_string_tl {Math\'ematiques}
@@ -5641,50 +5656,50 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \NewDocumentCommand \mathematics {O{}}
 {
-  \_@@_rubric:nnn {#1}{\c_@@_mathematics_rubric_string_tl}{picto-mathematics}
+  \_@@_rubric:nnn {#1}{\c_@@_mathematics_rubric_string_tl}{\c_@@_mathematics_pictogram_file_name_tl}
 }
 \NewDocumentCommand \dossier {O{}}
 {
-  \_@@_rubric:nnn {#1}{\c_@@_dossier_rubric_string_tl}{picto-dossier}
+  \_@@_rubric:nnn {#1}{\c_@@_dossier_rubric_string_tl}{\c_@@_dossier_pictogram_file_name_tl}
 }
 \NewDocumentCommand \community {O{}}
 {
-  \_@@_rubric:nnn {#1}{\c_@@_community_rubric_string_tl}{picto-hands}
+  \_@@_rubric:nnn {#1}{\c_@@_community_rubric_string_tl}{\c_@@_hands_pictogram_file_name_tl}
 }
 \NewDocumentCommand \interview {O{}}
 {
-  \_@@_rubric:nnn {#1}{\c_@@_interview_rubric_string_tl}{picto-interview}
+  \_@@_rubric:nnn {#1}{\c_@@_interview_rubric_string_tl}{\c_@@_interview_pictogram_file_name_tl}
   \bool_gset_true:N \g_@@_interview_rubric_bool
 }
 \NewDocumentCommand \teaching {O{}}
 {
-  \_@@_rubric:nnn {#1}{\c_@@_teaching_rubric_string_tl}{picto-teaching}
+  \_@@_rubric:nnn {#1}{\c_@@_teaching_rubric_string_tl}{\c_@@_teaching_pictogram_file_name_tl}
 }
 \NewDocumentCommand \parity {O{}}
 {
-  \_@@_rubric:nnn {#1}{\c_@@_parity_rubric_string_tl}{picto-parity}
+  \_@@_rubric:nnn {#1}{\c_@@_parity_rubric_string_tl}{\c_@@_parity_pictogram_file_name_tl}
 }
 \NewDocumentCommand \tellme {O{}}
 {
-  \_@@_rubric:nnn {#1}{\c_@@_tellme_rubric_string_tl}{picto-tellme}
+  \_@@_rubric:nnn {#1}{\c_@@_tellme_rubric_string_tl}{\c_@@_tellme_pictogram_file_name_tl}
   \bool_gset_true:N \g_@@_tellme_rubric_bool
 }
 \NewDocumentCommand \information {O{}}
 {
-  \_@@_rubric:nnn {#1}{\c_@@_information_rubric_string_tl}{picto-information}
+  \_@@_rubric:nnn {#1}{\c_@@_information_rubric_string_tl}{\c_@@_information_pictogram_file_name_tl}
 }
 \NewDocumentCommand \rearviewmirror {O{}}
 {
-  \_@@_rubric:nnn {#1}{\c_@@_rearviewmirror_rubric_string_tl}{picto-rearviewmirror}
+  \_@@_rubric:nnn {#1}{\c_@@_rearviewmirror_rubric_string_tl}{\c_@@_rearviewmirror_pictogram_file_name_tl}
   \bool_gset_true:N \g_@@_rearviewmirror_rubric_bool
 }
 \NewDocumentCommand \tribute {O{}}
 {
-  \_@@_rubric:nnn {#1}{\c_@@_tribute_rubric_string_tl}{picto-tribute}
+  \_@@_rubric:nnn {#1}{\c_@@_tribute_rubric_string_tl}{\c_@@_tribute_pictogram_file_name_tl}
 }
 \NewDocumentCommand \books {O{}}
 {
-  \_@@_rubric:nnn {#1}{\c_@@_books_rubric_string_tl}{picto-books}
+  \_@@_rubric:nnn {#1}{\c_@@_books_rubric_string_tl}{\c_@@_books_pictogram_file_name_tl}
   \bool_gset_true:N \g_@@_books_rubric_bool
   \vspace{1.5\c_@@_book_review_frontcover_extend_dim}
 }
@@ -5694,7 +5709,7 @@ This work consists of the file  gzt.dtx
 }
 \NewDocumentCommand \forum {O{}}
 {
-  \_@@_rubric:nnn {#1}{\c_@@_forum_rubric_string_tl}{picto-forum}
+  \_@@_rubric:nnn {#1}{\c_@@_forum_rubric_string_tl}{\c_@@_forum_pictogram_file_name_tl}
 }
 \NewDocumentCommand \moralreport {O{}}
 {
