@@ -7,9 +7,9 @@
 %% gzt.dtx  (with options: `class-article')
 %% -----------------------------------------------------------------------------
 %% gzt --- SMF bundle of classes for the French journal "La Gazette des
-%%         Math'ematiciens", version 0.95
+%%         Math'ematiciens", version 0.97
 %% 
-%% E-mail: denis.bitouze@lmpa.univ-littoral.fr
+%% E-mail: denis.bitouze@univ-littoral.fr
 %% Released under the LaTeX Project Public License v1.3c or later
 %% See http://www.latex-project.org/lppl.txt
 %% -----------------------------------------------------------------------------
@@ -61,8 +61,8 @@
 \ExplSyntaxOn
 \ProvidesExplClass
   {gztarticle}
-  {2017/01/01}
-  {0.96}
+  {2017/02/15}
+  {0.97}
   {
     SMF~class~for~the~French~journal^^J
     "La~Gazette~des~Math'ematiciens".
@@ -98,6 +98,7 @@
 \RequirePackage{graphicx}%
 \RequirePackage{longtable}%
 \RequirePackage{adjustbox}%
+\RequirePackage{mwe}
 \RequirePackage{zref-totpages}
 \RequirePackage{zref-xr}%
 \RequirePackage{ragged2e}%
@@ -130,7 +131,6 @@
 \RequirePackage[babel=true]{microtype}%
 \RequirePackage[nodayofweek]{datetime}%
 \RequirePackage[inline]{enumitem}%
-\RequirePackage{fixltx2e}%
 \RequirePackage{afterpage}
 \RequirePackage{xcolor}%
 \cs_set_eq:NN \__gzt_orig_preamblecmds \@preamblecmds
@@ -149,7 +149,7 @@
 \makeglossaries
 \setglossarystyle{indexhypergroup}
 \setacronymstyle{long-sc-short}
-\pdftex_if_engine:T
+\sys_if_engine_pdftex:T
   {
     \renewcommand\familydefault{\sfdefault}
     \renewcommand{\ttdefault}{lmtt}
@@ -237,7 +237,7 @@
 \tl_const:Nn \c__gzt_backcover_page_file_string_tl {\c__gzt_backmatter_directory_string_tl/\c__gzt_issue_backcover_text_file_string_tl}
 \tl_const:Nn \c__gzt_acronyms_file_string_tl {\c__gzt_class_name_tl acronyms}
 \tl_const:Nn \c__gzt_authors_instructions_file_extension_tl {ain}
-\tl_const:Nn \c__gzt_authors_instructions_file_tl {\c_job_name_tl.\c__gzt_authors_instructions_file_extension_tl}
+\tl_const:Nn \c__gzt_authors_instructions_file_tl {\c_sys_jobname_str.\c__gzt_authors_instructions_file_extension_tl}
 \tl_const:Nn \c__gzt_about_frontcover_string_tl {\`A~propos~de~la~couverture.}
 \tl_const:Nn \c__gzt_credit_frontcover_string_tl {cr\'edit}
 \tl_const:Nn \c__gzt_authors_instructions_string_tl {Instructions~aux~auteurs}
@@ -250,6 +250,18 @@
 }
 \tl_const:Nn \c__gzt_tellme_extra_title_string_tl {...\c_space_tl}
 \tl_const:Nn \c__gzt_minitoc_rubric_title_separator_string_tl {\c_space_tl\textendash}
+\tl_const:Nn \c__gzt_mathematics_pictogram_file_name_tl {picto-mathematics}
+\tl_const:Nn \c__gzt_dossier_pictogram_file_name_tl {picto-dossier}
+\tl_const:Nn \c__gzt_community_pictogram_file_name_tl {picto-hands}
+\tl_const:Nn \c__gzt_interview_pictogram_file_name_tl {picto-interview}
+\tl_const:Nn \c__gzt_teaching_pictogram_file_name_tl {picto-teaching}
+\tl_const:Nn \c__gzt_parity_pictogram_file_name_tl {picto-parity}
+\tl_const:Nn \c__gzt_tellme_pictogram_file_name_tl {picto-tellme}
+\tl_const:Nn \c__gzt_information_pictogram_file_name_tl {picto-information}
+\tl_const:Nn \c__gzt_rearviewmirror_pictogram_file_name_tl {picto-rearviewmirror}
+\tl_const:Nn \c__gzt_tribute_pictogram_file_name_tl {picto-tribute}
+\tl_const:Nn \c__gzt_books_pictogram_file_name_tl {picto-books}
+\tl_const:Nn \c__gzt_forum_pictogram_file_name_tl {picto-forum}
 \tl_const:Nn \c__gzt_mathematics_rubric_string_tl {Math\'ematiques}
 \tl_const:Nn \c__gzt_dossier_rubric_string_tl {Dossier}
 \tl_const:Nn \c__gzt_community_rubric_string_tl {Vie~de~la~communaut\'e}
@@ -283,9 +295,13 @@
     \MakeTextUppercase{\c__gzt_journal_short_title_string_tl}
   }
 }
-\tl_const:Nn \c__gzt_smf_logo_file_string_tl {logo_SMF}
+  \file_if_exist:nTF { logo_SMF.pdf }{%
+    \tl_const:Nn \c__gzt_smf_logo_file_string_tl {logo_SMF}
+  }{
+    \tl_const:Nn \c__gzt_smf_logo_file_string_tl {example-image}
+  }
 \tl_const:Nn \c__gzt_issue_bib_file_suffix_string_tl {__gzt}
-\tl_const:Nn \c__gzt_issue_bib_file_string_tl {\c_job_name_tl\c__gzt_issue_bib_file_suffix_string_tl.bib}
+\tl_const:Nn \c__gzt_issue_bib_file_string_tl {\c_sys_jobname_str\c__gzt_issue_bib_file_suffix_string_tl.bib}
 \tl_const:Nn \c__gzt_issue_bib_path_string_tl {\c__gzt_issue_bib_file_string_tl}
 \tl_const:Nn \c__gzt_issue_bib_key_tl {\int_use:N \g__gzt_issue_number_int}
 \tl_const:Nn \c__gzt_interview_title_string_tl {En~apart\'e~avec~}
