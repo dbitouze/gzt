@@ -20,6 +20,10 @@ the French journal
 
 Denis Bitouzé
 
+## Release
+
+2017/02/15 v0.97
+
 ## Copyright
 
 Copyright 2014-2017 Denis Bitouzé
@@ -61,9 +65,10 @@ available
 
 ## Questions and answers
 
-Users can ask questions about `gzt` e.g. on Q &
-A sites [in French](http://texnique.fr/osqa/tags/gzt/)
-and [in English](http://tex.stackexchange.com/questions/tagged/gzt).
+Users can ask questions about `gzt` e.g. on Q & A sites:
+
+- [in French](http://texnique.fr/osqa/tags/gzt/)
+- [in English](http://tex.stackexchange.com/questions/tagged/gzt)
 
 # Debug and feature requests
 
