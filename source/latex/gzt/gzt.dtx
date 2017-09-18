@@ -783,7 +783,7 @@ This work consists of the file  gzt.dtx
 % We define some class options:
 % \begin{itemize}
 % \item "pagegrid" in order to draw a grid on each page, in order to check the
-%   layout (most debugging purpose),
+%   layout (mostly for debugging purpose),
 % \item ...
 % \end{itemize}
 %
@@ -2700,7 +2700,7 @@ This work consists of the file  gzt.dtx
 \colorlet{@@_default_text_color}{black}
 \colorlet{@@_head_text_color}{black!65}
 \colorlet{@@_rubric_head_text_color}{@@_head_text_color}
-\colorlet{@@_bibliography_minibios_acknowledgments_bg_color}{black!10}
+\colorlet{@@_bibliography_minibios_acknowledgements_bg_color}{black!10}
 \colorlet{@@_headrule_color}{@@_generic_light_color!65}
 \colorlet{@@_circlerule_color}{@@_generic_dark_color!65}
 \colorlet{@@_frontmatter_text_color}{black!75}
@@ -2748,7 +2748,7 @@ This work consists of the file  gzt.dtx
 % \section{Miscellaneous patches}
 %
 % We patch the \pkg{biblatex}'s "refsection" environment definition by adding
-% a flag hat will be used to test wheter we are inside such an environment or
+% a flag that will be used to test wheter we are inside such an environment or
 % not.
 %    \begin{macrocode}
 \AtBeginEnvironment{multicols}{
@@ -4066,9 +4066,9 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 % We force all the previous floats to be processed before a new article starts
-% (this is already done in "bibliography_minibiographies_acknowledgments"
+% (this is already done in "bibliography_minibiographies_acknowledgements"
 % environment but is repeated here if what is before provides floats but neither
-% bibliography, \textsc{cv} nor acknowledgments).
+% bibliography, \textsc{cv} nor acknowledgements).
 %    \begin{macrocode}
   \FloatBarrier%
 %    \end{macrocode}
@@ -5525,10 +5525,10 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % We force all the previous floats to be processed no later on the page
 % following the beginning of the bibliography, \textsc{cv} or
-% acknowledgments.
+% acknowledgements.
 %    \begin{macrocode}
   \FloatBarrier%
-  \begin{_@@_minibiographies_acknowledgments_tcbox}
+  \begin{_@@_minibiographies_acknowledgements_tcbox}
     \@@_display_people_by_role:n { author-art-\int_use:N \g_@@_articles_int }
     \tl_if_empty:NF \g_@@_article_acknowledgements_tl
     {%
@@ -5539,7 +5539,7 @@ This work consists of the file  gzt.dtx
         \g_@@_article_acknowledgements_tl
       \end{adjustbox}
   }
-  \end{_@@_minibiographies_acknowledgments_tcbox}
+  \end{_@@_minibiographies_acknowledgements_tcbox}
   \bool_gset_true:N \g_@@_previous_article_with_bibliography_or_minibio_bool
   %
   \tl_gclear:N \g_@@_people_affiliation_tl
@@ -5571,7 +5571,7 @@ This work consists of the file  gzt.dtx
 % \item beforehand quit the multicolumn environment and enter in the
 % "_@@_bibliography_tcbox" environment (which gives a special layout to
 % bibliographies, \textsc{cv} and acknowledgements),
-% \item afterwards quit the "bibliography_minibiographies_acknowledgments" environment and enter in
+% \item afterwards quit the "bibliography_minibiographies_acknowledgements" environment and enter in
 %   the multicolumn environment.
 % \end{itemize}
 %    \begin{macrocode}
@@ -5583,7 +5583,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % We force all the previous floats to be processed no later on the page
 % following the beginning of the bibliography, \textsc{cv} or
-% acknowledgments.
+% acknowledgements.
 %    \begin{macrocode}
 % \afterpage{%
   \FloatBarrier%
@@ -6150,20 +6150,20 @@ This work consists of the file  gzt.dtx
   _@@_tcb_bibliography_style,
   #1
 }
-\DeclareTColorBox{_@@_minibiographies_acknowledgments_tcbox}{ O{} }
+\DeclareTColorBox{_@@_minibiographies_acknowledgements_tcbox}{ O{} }
 {
-  _@@_tcb_minibiographies_acknowledgments_style,
+  _@@_tcb_minibiographies_acknowledgements_style,
   #1
 }
 %    \end{macrocode}
 %
 % We provide a public environment "inset" for insets that has the same layout as
-% minibiographies and acknowledgments. Its layout is based upon \pkg{tcolorbox}
+% minibiographies and acknowledgements. Its layout is based upon \pkg{tcolorbox}
 % features.
 %    \begin{macrocode}
 \DeclareTColorBox{inset}{ O{} }
 {
-  _@@_tcb_minibiographies_acknowledgments_style,
+  _@@_tcb_minibiographies_acknowledgements_style,
   #1
 }
 %    \end{macrocode}
@@ -6594,7 +6594,7 @@ This work consists of the file  gzt.dtx
 }
 \tcbset{%
   _@@_tcb_bibliography_style/.style={%
-    colback=@@_bibliography_minibios_acknowledgments_bg_color,
+    colback=@@_bibliography_minibios_acknowledgements_bg_color,
     breakable,
     boxrule=\c_zero_dim,
     sharp~corners=all,%
@@ -6602,8 +6602,8 @@ This work consists of the file  gzt.dtx
   }
 }
 \tcbset{%
-  _@@_tcb_minibiographies_acknowledgments_style/.style={%
-    colback=@@_bibliography_minibios_acknowledgments_bg_color,
+  _@@_tcb_minibiographies_acknowledgements_style/.style={%
+    colback=@@_bibliography_minibios_acknowledgements_bg_color,
     breakable,
     boxrule=\c_zero_dim,
     extras~unbroken~and~last={drop~lifted~shadow},
