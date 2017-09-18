@@ -1223,6 +1223,8 @@ This work consists of the file  gzt.dtx
     ~`\int_use:N\c_@@_first_issue_number_int'.}
 \msg_new:nnnn{gzt}{unknown-choice}{Choice~`#3'~invalid!}
   {Please~specify~#1=#2.}
+\msg_new:nnnn{gzt}{configuration-file-missing}{File~`\c_@@_configuration_file_string_tl'~missing!}
+  {The~ whole~ issue~ may~ not~ be~ conform~ if~ `\c_@@_configuration_file_string_tl'~ is~ missing.}
 %    \end{macrocode}
 %
 % \section{Counters}
@@ -4469,13 +4471,17 @@ This work consists of the file  gzt.dtx
 %<class>}
 %    \end{macrocode}
 %
-% We load the configuration file, which has to be located in the \TeX{} search
-% path: at least one such a file is provided by the class and located in the
-% same directory as the class file. This file is loaded at the end of preamble
-% instead of begin of the document in order some settings needed in preamble are
-% taken in account.
+% We load the configuration file (only for the issue's class), which has to be
+% located in the \TeX{} search path: at least one such a file is provided by the
+% class and located in the same directory as the class file. This file is loaded
+% at the end of preamble instead of begin of the document in order some settings
+% needed in preamble are taken in account.
 %    \begin{macrocode}
-\AtEndPreamble{\file_input:n {\c_@@_configuration_file_string_tl}}
+%<class>\file_if_exist:nTF { \c_@@_configuration_file_string_tl } {%
+%<class>  \AtEndPreamble{\file_input:n {\c_@@_configuration_file_string_tl}}
+%<class>}{
+%<class>  \msg_error:nn { gzt } { configuration-file-missing }
+%<class>}
 %    \end{macrocode}
 %
 % We load the file where acronyms are defined.
