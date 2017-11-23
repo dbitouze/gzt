@@ -89,6 +89,7 @@
   }
 \NeedsTeXFormat{LaTeX2e}
 \bool_new:N \g__gzt_for_authors_bool
+\bool_new:N \g__gzt_for_printer_bool
 \bool_new:N \g__gzt_cover_bool
 \bool_new:N \g__gzt_coverpage_bool
 \bool_new:N \g__gzt_inside_pages_bool
@@ -221,6 +222,8 @@
     ~`\int_use:N\c__gzt_first_issue_number_int'.}
 \msg_new:nnnn{gzt}{unknown-choice}{Choice~`#3'~invalid!}
   {Please~specify~#1=#2.}
+\msg_new:nnnn{gzt}{configuration-file-missing}{File~`\c__gzt_configuration_file_string_tl'~missing!}
+  {The~ whole~ issue~ may~ not~ be~ conform~ if~ `\c__gzt_configuration_file_string_tl'~ is~ missing.}
 \int_new:N \g__gzt_editors_in_chief_int
 \int_new:N \g__gzt_item_in_rubric_int
 \int_new:N \g__gzt_articles_int
@@ -839,7 +842,7 @@
 \colorlet{__gzt_default_text_color}{black}
 \colorlet{__gzt_head_text_color}{black!65}
 \colorlet{__gzt_rubric_head_text_color}{__gzt_head_text_color}
-\colorlet{__gzt_bibliography_minibios_acknowledgments_bg_color}{black!10}
+\colorlet{__gzt_bibliography_minibios_acknowledgements_bg_color}{black!10}
 \colorlet{__gzt_headrule_color}{__gzt_generic_light_color!65}
 \colorlet{__gzt_circlerule_color}{__gzt_generic_dark_color!65}
 \colorlet{__gzt_frontmatter_text_color}{black!75}
@@ -2029,7 +2032,11 @@
   }
 }
 }
-\AtEndPreamble{\file_input:n {\c__gzt_configuration_file_string_tl}}
+\file_if_exist:nTF { \c__gzt_configuration_file_string_tl } {%
+  \AtEndPreamble{\file_input:n {\c__gzt_configuration_file_string_tl}}
+}{
+  \msg_error:nn { gzt } { configuration-file-missing }
+}
 \file_if_exist:nT { \c__gzt_acronyms_file_string_tl } {%
   \AtEndPreamble{\loadglsentries{\c__gzt_acronyms_file_string_tl}}
 }
@@ -2762,7 +2769,7 @@
     \end{multicols}%
   }
   \FloatBarrier%
-  \begin{__gzt_minibiographies_acknowledgments_tcbox}
+  \begin{__gzt_minibiographies_acknowledgements_tcbox}
     \__gzt_display_people_by_role:n { author-art-\int_use:N \g__gzt_articles_int }
     \tl_if_empty:NF \g__gzt_article_acknowledgements_tl
     {%
@@ -2773,7 +2780,7 @@
         \g__gzt_article_acknowledgements_tl
       \end{adjustbox}
   }
-  \end{__gzt_minibiographies_acknowledgments_tcbox}
+  \end{__gzt_minibiographies_acknowledgements_tcbox}
   \bool_gset_true:N \g__gzt_previous_article_with_bibliography_or_minibio_bool
   %
   \tl_gclear:N \g__gzt_people_affiliation_tl
@@ -3212,14 +3219,14 @@
   __gzt_tcb_bibliography_style,
   #1
 }
-\DeclareTColorBox{__gzt_minibiographies_acknowledgments_tcbox}{ O{} }
+\DeclareTColorBox{__gzt_minibiographies_acknowledgements_tcbox}{ O{} }
 {
-  __gzt_tcb_minibiographies_acknowledgments_style,
+  __gzt_tcb_minibiographies_acknowledgements_style,
   #1
 }
 \DeclareTColorBox{inset}{ O{} }
 {
-  __gzt_tcb_minibiographies_acknowledgments_style,
+  __gzt_tcb_minibiographies_acknowledgements_style,
   #1
 }
 \NewDocumentEnvironment{bookreview}{ O{} m }
@@ -3489,7 +3496,7 @@
 }
 \tcbset{%
   __gzt_tcb_bibliography_style/.style={%
-    colback=__gzt_bibliography_minibios_acknowledgments_bg_color,
+    colback=__gzt_bibliography_minibios_acknowledgements_bg_color,
     breakable,
     boxrule=\c_zero_dim,
     sharp~corners=all,%
@@ -3497,8 +3504,8 @@
   }
 }
 \tcbset{%
-  __gzt_tcb_minibiographies_acknowledgments_style/.style={%
-    colback=__gzt_bibliography_minibios_acknowledgments_bg_color,
+  __gzt_tcb_minibiographies_acknowledgements_style/.style={%
+    colback=__gzt_bibliography_minibios_acknowledgements_bg_color,
     breakable,
     boxrule=\c_zero_dim,
     extras~unbroken~and~last={drop~lifted~shadow},
