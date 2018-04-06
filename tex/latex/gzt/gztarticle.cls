@@ -69,11 +69,13 @@
 ~(Author~version.)
   }
 \NeedsTeXFormat{LaTeX2e}
+\bool_new:N \g__gzt_special_edition_bool
 \bool_new:N \g__gzt_for_authors_bool
 \bool_new:N \g__gzt_for_printer_bool
 \bool_new:N \g__gzt_cover_bool
 \bool_new:N \g__gzt_coverpage_bool
 \bool_new:N \g__gzt_inside_pages_bool
+\bool_new:N \g__gzt_no_inside_backcover_bool
 \bool_gset_true:N \g__gzt_for_authors_bool%
 \bool_gset_true:N \g__gzt_inside_pages_bool%
 \PassOptionsToClass{openany,english,french}{book}
@@ -120,7 +122,7 @@
 \RequirePackage{multirow}
 \RequirePackage{varioref}
 \RequirePackage{mathtools}
-\RequirePackage{mathrsfs}
+\RequirePackage{rsfso}
 \RequirePackage{esvect}
 \RequirePackage{everypage}
 \RequirePackage{translator}%
@@ -165,8 +167,6 @@
     ~`\int_use:N\c__gzt_first_issue_number_int'.}
 \msg_new:nnnn{gzt}{unknown-choice}{Choice~`#3'~invalid!}
   {Please~specify~#1=#2.}
-\msg_new:nnnn{gzt}{configuration-file-missing}{File~`\c__gzt_configuration_file_string_tl'~missing!}
-  {The~ whole~ issue~ may~ not~ be~ conform~ if~ `\c__gzt_configuration_file_string_tl'~ is~ missing.}
 \int_new:N \g__gzt_editors_in_chief_int
 \int_new:N \g__gzt_item_in_rubric_int
 \int_new:N \g__gzt_articles_int
@@ -191,6 +191,7 @@
 \tl_const:Nn \c__gzt_editorsinchief_string_tl {R\'edacteurs~en~chef }
 \tl_const:Nn \c__gzt_editors_string_tl {R\'edacteurs }
 \tl_const:Nn \c__gzt_editorial_board_string_tl {Comit\'e~de~r\'edaction}
+\tl_const:Nn \c__gzt_special_edition_editorial_board_string_tl {Num\'ero~sp\'ecial~de~la~Gazette~des~Math\'ematiciens~sous~la~direction~de~:}
 \tl_const:Nn \c__gzt_editorial_secretariat_string_tl {Secr\'etariat~de~r\'edaction}
 \tl_const:Nn \c__gzt_phone_string_tl {T\'el.}
 \tl_const:Nn \c__gzt_fax_string_tl {Fax}
@@ -202,20 +203,41 @@
 \tl_const:Nn \c__gzt_printer_string_tl {Impression}
 \tl_const:Nn \c__gzt_configuration_file_string_tl {gzt.cfg}
 \tl_const:Nn \c__gzt_artistic_director_string_tl {Conception~graphique}
-\tl_const:Nn \c__gzt_editorial_string_tl {\'Editorial}
+\AtEndPreamble{
+  \bool_if:NTF {\g__gzt_special_edition_bool} {
+    \tl_const:Nn \c__gzt_editorial_heading_string_tl {Avant-propos}
+  }{
+    \tl_const:Nn \c__gzt_editorial_heading_string_tl {\'Editorial}
+  }
+}
 \tl_const:Nn \c__gzt_editorinchief_signatory_string_tl {\c__gzt_editorinchief_string_tl~de~la~\c__gzt_journal_title_string_tl}
 \tl_const:Nn \c__gzt_toc_string_tl {Sommaire}
 \tl_const:Nn \c__gzt_president_message_string_tl {Mot~du~pr\'esident}
 \tl_const:Nn \c__gzt_president_signatory_string_tl {pr\'esident~de~la~\g__gzt_smf_short_string_tl}
 \tl_const:Nn \c__gzt_editorinchief_message_date_string_tl {Le~\displaydate{__gzt_editorinchief_message_date}}
 \tl_const:Nn \c__gzt_president_message_date_string_tl {Le~}
-\tl_const:Nn \c__gzt_frontcover_header_string_tl {
-  \l__gzt_uppercased_date_format\displaydate{__gzt_date}
-  \c_space_tl
-  \textendash{}
-  \c_space_tl
-  \No\int_use:N\g__gzt_issue_number_int%
+\tl_const:Nn \c__gzt_special_edition_string_tl {\c_space_tl{}sp{\'e}cial}
+\tl_const:Nn \c__gzt_long_special_edition_string_tl {Numéro\c__gzt_special_edition_string_tl}%
+\tl_const:Nn \c__gzt_short_special_edition_string_tl {\No{}\c__gzt_special_edition_string_tl}%
+\AtEndPreamble{
+  \tl_const:Nn \c__gzt_frontcover_header_string_tl {
+    \bool_if:NT {\g__gzt_special_edition_bool} {
+      \tl_upper_case:n {\c__gzt_long_special_edition_string_tl}
+      \medskip
+      \par
+      \normalsize
+    }
+    \l__gzt_uppercased_date_format\displaydate{__gzt_date}
+    \bool_if:NF {\g__gzt_special_edition_bool} {
+      \c_space_tl
+      \textendash{}
+      \c_space_tl
+      \No
+      \int_use:N\g__gzt_issue_number_int%
+    }
+  }
 }
+\clist_const:Nn \c__gzt__graphics_extensions_clist {png,PNG,jpg,JPG,jpeg,JPEG,pdf,PDF}
 \tl_const:Nn \c__gzt_pdftitle_string_tl {
   \c__gzt_journal_title_string_tl
   % \c_space_tl
@@ -225,7 +247,14 @@
   \c_space_tl
   \textendash{}
   \c_space_tl
-  N°\int_use:N\g__gzt_issue_number_int
+  N°
+  \bool_if:NTF {\g__gzt_special_edition_bool} {
+    \c__gzt_special_edition_string_tl
+    \c_space_tl
+    \g__gzt_special_edition_title_tl
+  }{
+    \int_use:N\g__gzt_issue_number_int
+  }
 }
 \tl_const:Nn \c__gzt_frontmatter_directory_string_tl {frontmatter}
 \tl_const:Nn \c__gzt_backmatter_directory_string_tl {backmatter}
@@ -238,6 +267,10 @@
 \tl_const:Nn \c__gzt_issue_frontcover_default_image_file_tl {frontcover}
 \tl_const:Nn \c__gzt_issue_backcover_text_file_string_tl {backcover}
 \tl_const:Nn \c__gzt_backcover_page_file_string_tl {\c__gzt_backmatter_directory_string_tl/\c__gzt_issue_backcover_text_file_string_tl}
+\tl_const:Nn \c__gzt_special_edition_backcover_text_file_string_tl {abstract_backcover}
+\tl_const:Nn \c__gzt_special_edition_backcover_page_file_string_tl {\c__gzt_backmatter_directory_string_tl/\c__gzt_special_edition_backcover_text_file_string_tl}
+\tl_const:Nn \c__gzt_special_edition_backcover_picture_string_tl {picture_backcover}
+\tl_const:Nn \c__gzt_special_edition_backcover_page_picture_string_tl {\c__gzt_backmatter_directory_string_tl/\c__gzt_special_edition_backcover_picture_string_tl}
 \tl_const:Nn \c__gzt_acronyms_file_string_tl {\c__gzt_class_name_tl acronyms}
 \tl_const:Nn \c__gzt_authors_instructions_file_extension_tl {ain}
 \tl_const:Nn \c__gzt_authors_instructions_file_tl {\c_sys_jobname_str.\c__gzt_authors_instructions_file_extension_tl}
@@ -306,7 +339,11 @@
 \tl_const:Nn \c__gzt_issue_bib_file_suffix_string_tl {__gzt}
 \tl_const:Nn \c__gzt_issue_bib_file_string_tl {\c_sys_jobname_str\c__gzt_issue_bib_file_suffix_string_tl.bib}
 \tl_const:Nn \c__gzt_issue_bib_path_string_tl {\c__gzt_issue_bib_file_string_tl}
-\tl_const:Nn \c__gzt_issue_bib_key_tl {\int_use:N \g__gzt_issue_number_int}
+\bool_if:NTF {\g__gzt_special_edition_bool} {
+  \tl_const:Nn \c__gzt_issue_bib_key_tl {\int_use:N \g__gzt_issue_number_int}
+}{
+  \tl_const:Nn \c__gzt_issue_bib_key_tl {special-edition}
+}
 \tl_const:Nn \c__gzt_interview_title_string_tl {En~apart\'e~avec~}
 \tl_const:Nn \c__gzt_aside_string_tl {--}
 \tl_const:Nn \c__gzt_draftwatermark_string_tl {draft}
@@ -329,6 +366,7 @@
 \bool_new:N \g__gzt_mainmatter_bool
 \bool_new:N \g__gzt_backmatter_bool
 \bool_new:N \g__gzt_backcover_bool
+\bool_new:N \g__gzt_frontcover_without_minitoc_bool
 \bool_new:N \g__gzt_previous_article_with_bibliography_or_minibio_bool
 \bool_new:N \g__gzt_advertisement_bool
 \bool_new:N \g__gzt_multicols_bool
@@ -537,7 +575,8 @@
     ,top=\c__gzt_topmargin_frontcover_dim
     ,headsep=\c__gzt_headsep_frontcover_dim
     ,headheight=\c__gzt_headheight_dim
-    ,bottom=\c_zero_dim
+    % ,bottom=\c_zero_dim
+    ,bottom=11mm
     ,footskip=\c_zero_dim
     ,outer=\c_zero_dim
     ,inner=\c__gzt_potential_layoutoffset_dim
@@ -551,7 +590,8 @@
     ,top=\c__gzt_topmargin_frontcover_dim
     ,headsep=\c__gzt_headsep_frontcover_dim
     ,headheight=\c__gzt_headheight_dim
-    ,bottom=\c_zero_dim
+    % ,bottom=\c_zero_dim
+    ,bottom=11mm
     ,footskip=\c_zero_dim
     ,hmargin=\c__gzt_potential_layoutoffset_dim
     ,nomarginpar%
@@ -623,6 +663,9 @@
   % ,footskip=\c__gzt_footskip_dim
   ,inner=\c__gzt_innermargin_backcover_dim
   ,outer=\c__gzt_outermargin_backcover_dim
+  ,nomarginpar
+  ,hcentering
+  ,twoside=false
 }
 \skip_const:Nn \c__gzt_editorial_presidentmessage_parskip_skip { 12pt plus 2pt minus .8pt }%
 \skip_const:Nn \c__gzt_mainmatter_parskip_skip { 2pt plus .5pt minus .2pt }%
@@ -812,6 +855,7 @@
 \colorlet{__gzt_book_review_frame_bg_color}{__gzt_generic_dark_color!8}
 \colorlet{__gzt_book_advertisement_bg_color}{white}
 \colorlet{__gzt_book_advertisement_frame_color}{__gzt_generic_dark_color}
+\colorlet{__gzt_default_cover_color}{white}
 \AtBeginEnvironment{multicols}{
   \bool_gset_true:N \g__gzt_multicols_bool
 }
@@ -1087,6 +1131,7 @@
   \bool_gset_true:N \g__gzt_frontcover_bool
   \pagenumbering{roman}%
   \pagestyle{__gzt_frontcover_ps}%
+  \pagecolor{\g__gzt_special_edition_color_tl}
   \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_frontcover_geometry_tl}%
   \noindent%
   \bool_if:NTF {\g__gzt_cover_bool} {
@@ -1098,14 +1143,14 @@
   \begin{tikzpicture}[remember~picture, overlay]
     \coordinate (__gzt_circle_minitoc_center) at
     ([xshift=\g__gzt_minitoc_xshift_dim-\c__gzt_potential_layoutoffset_dim,yshift=\g__gzt_minitoc_yshift_dim+\c__gzt_potential_layoutoffset_dim]current~page.south~east) ;
-    \node[name=__gzt_circle_minitoc,shape=circle,inner~sep=\c_zero_dim,fill=white,text~width=\g__gzt_minitoc_circle_diameter_dim] at
+    \node[name=__gzt_circle_minitoc,shape=circle,inner~sep=\c_zero_dim,fill=\g__gzt_special_edition_color_tl,text~width=\g__gzt_minitoc_circle_diameter_dim] at
     (__gzt_circle_minitoc_center) {};
     \node[text~width=\g__gzt_minitoc_textwidth_dim,anchor=north~west] at
     ([xshift=\c__gzt_minitoc_from_circle_xshift_dim,yshift=\c__gzt_minitoc_from_circle_yshift_dim]$ (__gzt_circle_minitoc.north)!.5!(__gzt_circle_minitoc.west) $)
     {
-      \large
-      \color{__gzt_minitoc_color}
-      \bool_if:NF {\g__gzt_frontcover_minitoc_tl} {
+      \bool_if:NF {\g__gzt_frontcover_without_minitoc_bool} {
+        \large
+        \color{__gzt_minitoc_color}
         \g__gzt_frontcover_minitoc_tl
       }
     };
@@ -1116,15 +1161,28 @@
   \bool_if:NT {\g__gzt_cover_bool} {
     \small
     \begin{tikzpicture}[remember~picture, overlay]
-      \node[name=__gzt_binding_sw,inner~sep=\c_zero_dim,fill=white,rotate=90,anchor=west] at
+      \node[name=__gzt_binding_sw,inner~sep=\c_zero_dim,fill=\g__gzt_special_edition_color_tl,rotate=90,anchor=west] at
       ([xshift=0.45\c__gzt_potential_bindingoffset_dim,yshift=15mm+\c__gzt_potential_layoutoffset_dim]current~page.south~west) {
-        \No\int_use:N\g__gzt_issue_number_int
+        \No
+        \bool_if:NTF {\g__gzt_special_edition_bool} {
+          \c__gzt_special_edition_string_tl
+        }{
+          \int_use:N\g__gzt_issue_number_int
+        }
       };
-      \node[name=__gzt_binding_w,inner~sep=\c_zero_dim,fill=white,rotate=90] at
+      \node[name=__gzt_binding_w,inner~sep=\c_zero_dim,fill=\g__gzt_special_edition_color_tl,rotate=90] at
       ([xshift=0.45\c__gzt_potential_bindingoffset_dim]current~page.west) {
-        \MakeUppercase{\c__gzt_journal_title_string_tl}
+        \bool_if:NTF {\g__gzt_special_edition_bool} {
+          \tl_if_exist:NTF \g__gzt_special_edition_short_title_tl {%
+            \g__gzt_special_edition_short_title_tl
+          }{
+            \g__gzt_special_edition_title_tl
+          }
+        }{
+          \MakeUppercase {\c__gzt_journal_title_string_tl}
+        }
       };
-      \node[name=__gzt_binding_nw,inner~sep=\c_zero_dim,fill=white,rotate=90,anchor=east] at
+      \node[name=__gzt_binding_nw,inner~sep=\c_zero_dim,fill=\g__gzt_special_edition_color_tl,rotate=90,anchor=east] at
       ([xshift=0.45\c__gzt_potential_bindingoffset_dim,yshift=-15mm-\c__gzt_potential_layoutoffset_dim]current~page.north~west) {
         \l__gzt_uppercased_date_format\displaydate{__gzt_date}
       };
@@ -1135,9 +1193,15 @@
   \hspace*{10mm}%
   \hspace*{-\c__gzt_potential_layoutoffset_dim}
   \includegraphics[height=22.5mm]{\c__gzt_smf_logo_file_string_tl}%
-  \vfill%
+  \bool_if:NT {\g__gzt_special_edition_bool} {
+    \hfill
+    \includegraphics[scale=1.2]{gzt-logo}
+    \hspace*{10mm}
+  }
+  % \vfill%
   \clearpage%
   \bool_gset_false:N \g__gzt_frontcover_bool
+  \nopagecolor
 }
 \tl_new:N \g__gzt_display_inside_frontcover_tl%
 \tl_gset:Nn \g__gzt_display_inside_frontcover_tl {%
@@ -1150,18 +1214,24 @@
   \begin{__gzt_inside_cover_tcb}[__gzt_tcb_inside_frontcover_style]
     \begin{multicols}{2}
       \setlength{\columnsep}{1mm}
-      \begin{description}[leftmargin=1em]
-      \item[\c__gzt_editors_in_chief_string_tl] \
-        \begin{description}[leftmargin=1em,style=nextline]
-          \__gzt_display_people_by_role:n {editorinchief}
-        \end{description}
-        \bigskip
-        \par
-      \item[\c__gzt_editors_string_tl] \
+      \bool_if:NTF {\g__gzt_special_edition_bool} {
         \begin{description}[leftmargin=1em,style=nextline]
           \__gzt_display_people_by_role:n {editor}
         \end{description}
-      \end{description}
+      }{%
+        \begin{description}[leftmargin=1em]
+        \item[\c__gzt_editors_in_chief_string_tl] \
+          \begin{description}[leftmargin=1em,style=nextline]
+            \__gzt_display_people_by_role:n {editorinchief}
+          \end{description}
+          \bigskip
+          \par
+        \item[\c__gzt_editors_string_tl] \
+          \begin{description}[leftmargin=1em,style=nextline]
+            \__gzt_display_people_by_role:n {editor}
+          \end{description}
+        \end{description}
+      }
     \end{multicols}
     \setlength{\columnseprule}{1pt}
     \tcblower
@@ -1240,10 +1310,10 @@
   }{%
     \small%
     \begin{__gzt_inside_cover_tcb}[__gzt_tcb_inside_backcover_style]
-      \file_if_exist:nT { \c__gzt_authors_instructions_file_tl } {%
+      \bool_if:NF {\g__gzt_special_edition_bool} {
         % \begin{multicols}{2}
         %   \setlength{\columnsep}{1mm}
-        \file_input:n {\c__gzt_authors_instructions_file_tl}
+        \file_if_exist_input:n {\c__gzt_authors_instructions_file_tl}
         % \end{multicols}
         % \setlength{\columnseprule}{1pt}
         \tcblower
@@ -1264,11 +1334,45 @@
 \tl_gset:Nn \g__gzt_display_backcover_tl {%
   \bool_gset_true:N \g__gzt_backcover_bool
   \pagestyle{__gzt_backcover_ps}%
+  \pagecolor{\g__gzt_special_edition_color_tl}
   \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_backcover_geometry_tl}%
-  \file_if_exist:nTF { \c__gzt_backcover_page_file_string_tl } {%
-    \file_input:n {\c__gzt_backcover_page_file_string_tl}
-  }{%
-    \hbox{}
+  \bool_if:NTF {\g__gzt_special_edition_bool} {
+    \mbox{}
+    \vfill
+    \clist_map_inline:Nn \c__gzt__graphics_extensions_clist{
+      \file_if_exist:nT {\c__gzt_issue_images_path_string_tl/\g__gzt_special_edition_backcover_image_tl.#1} {
+        \begin{center}
+          \includegraphics[width=.25\linewidth]{\g__gzt_special_edition_backcover_image_tl}
+        \end{center}
+        \bigskip
+        \clist_map_break:
+      }
+    }
+    \group_begin:
+    \leftskip.125\linewidth
+    \rightskip\leftskip
+    \file_if_exist_input:nF {\c__gzt_special_edition_backcover_page_file_string_tl}
+    {%
+      \c_empty_box
+    }
+    \par
+    \group_end:
+    \vfill
+    \clist_if_empty:NF \g__gzt_special_edition_logos_clist {
+      \vfill
+      \noindent
+      \clist_map_inline:Nn \g__gzt_special_edition_logos_clist {
+        \hfill
+        \includegraphics[height=2cm]{#1}
+        \hfill
+      }
+      \mbox{}
+    }
+  }{
+    \file_if_exist_input:nF {\c__gzt_backcover_page_file_string_tl}
+    {%
+      \hbox{}
+    }
   }
 }
 \NewDocumentCommand \editorinchief {ommm}
@@ -1341,6 +1445,11 @@
       \g__gzt_issue_age_in_years_int + \c__gzt_first_issue_year_int
     }
   }%
+}
+\NewDocumentCommand \specialeditionsetup { m } {
+  \bool_gset_true:N \g__gzt_special_edition_bool
+  \bool_gset_true:N \g__gzt_frontcover_without_minitoc_bool
+  \keys_set:nn { gzt/specialedition } {#1}
 }
 \NewDocumentCommand \journalsetup { m } {
   \keys_set:nn { gzt/journalsetup } { #1 }
@@ -1810,235 +1919,6 @@
 \file_if_exist:nT { \c__gzt_acronyms_file_string_tl } {%
   \AtEndPreamble{\loadglsentries{\c__gzt_acronyms_file_string_tl}}
 }
-\@ifpackageloaded{etoc}{%
-  \newif\ifShowPartPageInToc % used before \part{Livres}
-  \newtoks\toctabletok
-  \newcommand*\appendtotok[2]{% #1=toks variable, #2=macro, expands only once #2
-    #1\expandafter\expandafter\expandafter {\expandafter\the\expandafter #1#2}}
-  \newcommand*\PreparePart{%
-    \edef\toctablepiece {%
-      \ExceptFirstPart {\noexpand\\[-1.5mm]}%
-      \unexpanded{%
-        \color{__gzt_rubric_in_toc_color}\scshape\fontseries{bx}\selectfont%
-      }%
-      \unexpanded\expandafter{\etocthelinkedname}&
-      % \ifShowPartPageInToc
-      \unexpanded{\bfseries\color{__gzt_rubric_in_toc_color}}%
-      \unexpanded\expandafter{\etocthelinkedpage}%
-      % \fi
-      \noexpand\\}%
-    \gdef\ExceptFirstPart ##1{##1}%
-  }
-  \newcommand*\PrepareChapter{%
-    \edef\toctablepiece {%
-      \unexpanded{\color{__gzt_article_in_toc_color}\small}%
-      \unexpanded\expandafter{\etocthelinkedname}&
-      \unexpanded{\color{__gzt_article_in_toc_color}\small}
-      \unexpanded\expandafter{\etocthelinkedpage}%
-      \noexpand\\[1mm]}%
-  }
-  \etocsetstyle{part}{}{}
-  {\PreparePart \appendtotok\toctabletok\toctablepiece}
-  {}
-  \etocsetstyle{chapter}{}{}
-  {\PrepareChapter \appendtotok\toctabletok\toctablepiece}
-  {}
-  \etocsettocstyle
-  {%
-    \setlength\LTleft{\c_zero_dim}
-    \setlength\LTright{\c_zero_dim}
-    \gdef\ExceptFirstPart ##1{}%
-    \toctabletok {%\hypersetup{hidelinks}%
-      \begin{longtable}{@{\extracolsep{\fill}}p{115mm}@{\quad}!{\color{__gzt_rule_in_toc_color}\vrule width 0.2mm}@{}r@{}}}%
-        }
-        {\global\toctabletok\expandafter{%
-        \the\toctabletok\end{longtable}
-        }
-      }
-    }{}
-\tl_new:N \g__gzt_boxed_issue_number_tl%
-\tl_gset:Nn \g__gzt_boxed_issue_number_tl {%
-  \tcbox{\Large\No\g__gzt_issue_number_int}
-}
-\cs_new_protected:Nn \__gzt_boxed_issue_number:nn
-{
-  \noindent%
-  \raisebox{\baselineskip}{%
-    \tl_if_empty:nF {#1} {%
-      \makebox[\c_zero_dim][r]{%
-      % \hspace*{\l__gzt_thumbnail_width_dim}%
-        \begin{adjustbox}{valign=t}
-          \includegraphics[width=\l__gzt_thumbnail_width_dim]{#1}%
-        \end{adjustbox}%
-      }%
-    }%
-    \begin{adjustbox}{valign=t}
-      \begin{tcolorbox}[%
-        enhanced,%
-        title=\No\int_use:N \g__gzt_issue_number_int,%
-        fonttitle=\Large,%
-        colback=white,%
-        sharp~corners=all,%
-        height=33mm,%
-        boxrule=\c_zero_dim,%
-        % frame~hidden,%
-        attach~boxed~title~to~top~left,%
-        tikznode~boxed~title={minimum~width=\c__gzt_boxed_issue_number_width_dim},%
-        boxed~title~style={%
-          size=minimal,%
-          height=\c__gzt_boxed_issue_number_height_dim,%
-          center~upper,%
-          before={},%
-          colback=__gzt_boxed_issue_number_bg_color,%
-          sharp~corners=all,%
-          frame~hidden,%
-          valign=center,%
-        }%
-        ]
-        \__gzt_reflected_text:n { #2 }%
-      \end{tcolorbox}
-    \end{adjustbox}%
-  }%
-  \par%
-}
-\cs_new_protected:Nn \__gzt_before_frontmatter_stuff:
-{
-  \bool_gset_true:N \g__gzt_frontmatter_bool%
-  \pagestyle{__gzt_frontmatter_ps}%
-  \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_front_matter_geometry_tl}%
-}
-\cs_new_protected:Nn \__gzt_after_frontmatter_stuff:
-{
-  \color{__gzt_default_text_color}
-  \normalsize%
-  \clearpage%
-  \bool_gset_false:N \g__gzt_frontmatter_bool%
-}
-\cs_new_protected:Nn \__gzt_before_editorial_presidentmessage:nn
-{
-  \__gzt_before_frontmatter_stuff: {}
-  \__gzt_boxed_issue_number:nn {#1}{#2}
-  \color{__gzt_frontmatter_text_color}%
-  \fontsize{11}{13.6}\selectfont
-  \RaggedRight
-}
-\cs_new_protected:Nn \__gzt_after_editorial_presidentmessage:
-{
-  \justifying
-  \bigskip
-  \par
-}
-\cs_new_protected:Nn \__gzt_before_display_editorial:
-{
-  \__gzt_before_editorial_presidentmessage:nn {}{\c__gzt_editorial_string_tl}
-}
-\cs_new_protected:Nn \__gzt_after_display_editorial:
-{
-  \__gzt_after_editorial_presidentmessage: {}
-  \hspace*{\fill}%
-  \DTLforeach*[\DTLiseq{\l__gzt_people_role_tl}{editorinchief}]{people}{%
-    \l__gzt_firstlastname=first-last-name%
-    ,\l__gzt_people_role_tl=role%
-  }{%
-    \__gzt_citeauthor_no_firstinits:n {\c__gzt_issue_bib_key_tl -editorinchief- \exp_not:V\DTLcurrentindex}%
-  }
-  %
-  \__gzt_after_frontmatter_stuff: {}
-}
-\cs_new_protected:Nn \__gzt_display_editorial:
-{
-  \__gzt_before_display_editorial: {}
-  \file_input:n {\c__gzt_editorial_file_string_tl}
-  \__gzt_after_display_editorial: {}
-}
-\NewDocumentCommand \editorial {}
-{
-  \bool_if:NF {\g__gzt_for_authors_bool} {
-    \__gzt_display_editorial: {}
-  }
-}
-\cs_new_protected:Nn \__gzt_display_toc:
-{
-  \__gzt_before_frontmatter_stuff: {}
-  \__gzt_boxed_issue_number:nn {\g__gzt_frontcover_image_file_tl}{\c__gzt_toc_string_tl}
-  \phantomsection
-  \hypertarget{__gzt_toc}{}
-  \bookmark[dest=__gzt_toc,level=part]{\c__gzt_toc_string_tl}
-  \etocsettocdepth.toc{chapter}%
-  \tableofcontents
-  \the\toctabletok
-  \__gzt_after_frontmatter_stuff: {}
-}
-\NewDocumentCommand \gzttableofcontents {}
-{
-  \bool_if:NF {\g__gzt_for_authors_bool} {
-    \__gzt_display_toc: {}
-  }
-}
-\tl_new:N \g__gzt_frontcover_minitoc_tl%
-\tl_new:N \l__gzt_minitoc_label_tl%
-\cs_new_protected:Nn \__gzt_frontcover_minitoc:n
-{
-  \tl_gset:Nn \g__gzt_frontcover_minitoc_tl {#1}
-}
-\NewDocumentCommand \minitoc { O{} m }
-{
-  \keys_set:nn { gzt/minitoc } { #1 }
-  \__gzt_frontcover_minitoc:n {#2}
-}
-\newlist{__gzt_minitoc_list}{itemize}{1}
-\setlist[__gzt_minitoc_list]{itemsep=2ex,label=\textcolor{__gzt_cover_itemize_label_color}\textbullet}
-\NewDocumentEnvironment{minitoclist}{}
-{%
-  \cs_set_eq:NN \__gzt_orig_item \item
-  \RenewDocumentCommand \item { s O{} }{%
-    \tl_set:Nn \l__gzt_minitoc_label_tl {##2}
-    \__gzt_orig_item\textbf{##2}
-    \IfBooleanT {##1}
-    {
-      \c__gzt_minitoc_rubric_title_separator_string_tl
-    }
-  }
-  \begin{__gzt_minitoc_list}
-}{
-  \end{__gzt_minitoc_list}
-  \cs_set_eq:NN \item \__gzt_orig_item
-}
-\cs_new_protected:Nn \__gzt_before_display_presidentmessage:
-{
-  \__gzt_before_editorial_presidentmessage:nn {\c__gzt_smf_logo_file_string_tl}{\c__gzt_president_message_string_tl}
-  \phantomsection
-  \par%
-  \addcontentsline{toc}{part}{\g__gzt_smf_short_string_tl}%
-  \addcontentsline{toc}{chapter}{\c__gzt_president_message_string_tl}%
-}
-\cs_new_protected:Nn \__gzt_after_display_presidentmessage:
-{
-  \__gzt_after_editorial_presidentmessage: {}
-  %
-  \hspace*{\fill}%
-  \c__gzt_president_message_date_string_tl%
-  \displaydate{__gzt_president_message_date}%
-  \\[1.5mm]
-  \hspace*{\fill}%
-  \__gzt_display_people_by_role:n { president }%
-  ,\c_space_tl
-  \c__gzt_president_signatory_string_tl
-  %
-  \__gzt_after_frontmatter_stuff: {}
-}
-\cs_new_protected:Nn \__gzt_display_president_message:
-{
-  \__gzt_before_display_presidentmessage: {}
-  \file_input:n {\c__gzt_president_message_file_string_tl}
-  \__gzt_after_display_presidentmessage: {}
-}
-\NewDocumentCommand \presidentmessage {}
-{
-  \bool_if:NF {\g__gzt_for_authors_bool} {
-    \__gzt_display_president_message: {}
-  }
-}
 \titleformat{\chapter}%
 [block]
 {\Huge\bfseries}
@@ -2091,7 +1971,11 @@
 }
 \tl_new:N \l__gzt_frontmatter_head_text_tl
 \tl_set:Nn \l__gzt_frontmatter_head_text_tl {%
-  \includegraphics{gzt-logo}
+  \bool_if:NTF {\g__gzt_special_edition_bool} {
+    \g__gzt_special_edition_title_tl
+  }{
+    \includegraphics{gzt-logo}
+  }
 }
 \tl_new:N \g__gzt_frontmatter_page_headrule_tl
 \tl_gset:Nn \g__gzt_frontmatter_page_headrule_tl {%
@@ -2117,6 +2001,11 @@
     xshift=\c__gzt_frontmatter_headtext_o_xshift_dim,%
     yshift=\c__gzt_frontmatter_headtext_yshift_dim%
     ]current~page.north~east) {%
+      \Large
+      \bool_if:NT {\g__gzt_special_edition_bool} {
+        \c__gzt_short_special_edition_string_tl
+        \c_space_tl
+      }
       \l__gzt_frontmatter_head_text_tl
     }%
     ;
@@ -2132,6 +2021,11 @@
     xshift=\c__gzt_frontmatter_headtext_e_xshift_dim,%
     yshift=\c__gzt_frontmatter_headtext_yshift_dim%
     ]current~page.north~west) {%
+      \Large
+      \bool_if:NT {\g__gzt_special_edition_bool} {
+        \c__gzt_short_special_edition_string_tl
+        \c_space_tl
+      }
       \l__gzt_frontmatter_head_text_tl
     }%
     ;
@@ -2625,8 +2519,8 @@
     \xpatchfieldformat{title}{mkbibemph}{textbf}{}{}%
     \xpretonameformat{author}{\color{__gzt_people_color}}{}{}%
     \g__gzt_blx_given_first_inits_false_tl
-    \noindent\fullcite{\g__gzt_bookreview_bibkey_tl}
-    \vspace{10mm}
+    \noindent%
+    \parbox[][21.5mm][l]{\linewidth}{\fullcite{\g__gzt_bookreview_bibkey_tl}}
     \tcblower
 }{
   \begin{flushright}
@@ -2813,7 +2707,7 @@
     enhanced,%
     colback=__gzt_book_review_frame_bg_color,%
     breakable,%
-    height=50mm,%
+    % height=50mm,%
     boxrule=\c_zero_dim,
     sharp~corners=all,%
     skin=enhancedlast,
@@ -2858,13 +2752,32 @@
   __gzt_tcb_inside_frontcover_style/.style={%
     __gzt_tcb_inside_cover_style,
     enlarge~left~by=-\c__gzt_inside_cover_offset_dim,
-    title=\c__gzt_editorial_board_string_tl
   },
   __gzt_tcb_inside_backcover_style/.style={%
     __gzt_tcb_inside_cover_style,
     enlarge~left~by=\c__gzt_inside_cover_offset_dim,
-    title=\file_if_exist:nT { \c__gzt_authors_instructions_file_tl } {%
-      \c__gzt_authors_instructions_string_tl
+  }
+}
+\AtEndPreamble{%
+  \bool_if:NTF {\g__gzt_special_edition_bool} {
+    \tcbset{
+      __gzt_tcb_inside_frontcover_style/.append~style={%
+        title=\c__gzt_special_edition_editorial_board_string_tl
+      },
+      __gzt_tcb_inside_backcover_style/.append~style={%
+        notitle
+      },
+    }
+  }{
+    \tcbset{
+      __gzt_tcb_inside_frontcover_style/.append~style={%
+        title=\c__gzt_editorial_board_string_tl
+      },
+      __gzt_tcb_inside_backcover_style/.append~style={%
+        title=\file_if_exist:nT { \c__gzt_authors_instructions_file_tl } {%
+          \c__gzt_authors_instructions_string_tl
+        }
+      },
     }
   }
 }
@@ -2981,8 +2894,6 @@
   }
   % \tl_if_eq:VVF { \l__gzt_newtheorem_englishtitle_tl } { \MakeUppercase #2 }
   %   {%
-  %     \tl_show:N \l__gzt_newtheorem_englishtitle_tl
-  %     \tl_show:N \l__gzt_newtheorem_frenchtitle_tl
   %     \tl_if_eq:NNF { \l__gzt_newtheorem_frenchtitle_tl } { \l__gzt_newtheorem_englishtitle_tl }
   %     {%
   %     \tl_set:Nf \l__gzt_newtheorem_frenchtitle_tl {
@@ -2990,9 +2901,6 @@
   %     }
   %   }
   % }
-  % \tl_show:N \l__gzt_newtheorem_style_tl
-  % \tl_show:N \l__gzt_newtheorem_frenchtitle_tl
-  % \tl_show:N \l__gzt_newtheorem_englishtitle_tl
   \__gzt_new_theorem:nnVV {style=\l__gzt_newtheorem_style_tl}{#2}{\l__gzt_newtheorem_frenchtitle_tl}{\l__gzt_newtheorem_englishtitle_tl}
 }
 \newtheorem[frenchtitle=Th\'eor\`eme]{theorem}
