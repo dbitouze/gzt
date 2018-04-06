@@ -757,11 +757,14 @@ This work consists of the file  gzt.dtx
 % \section{Class loading}
 %
 %    \begin{macrocode}
+\bool_new:N \g_@@_special_edition_bool
 \bool_new:N \g_@@_for_authors_bool
 \bool_new:N \g_@@_for_printer_bool
 \bool_new:N \g_@@_cover_bool
 \bool_new:N \g_@@_coverpage_bool
 \bool_new:N \g_@@_inside_pages_bool
+%
+\bool_new:N \g_@@_no_inside_backcover_bool
 %<class-article>\bool_gset_true:N \g_@@_for_authors_bool%
 %<class-article>\bool_gset_true:N \g_@@_inside_pages_bool%
 %    \end{macrocode}
@@ -790,6 +793,9 @@ This work consists of the file  gzt.dtx
 %
 %    \begin{macrocode}
 \tl_gset:Nn \g_@@_frontcover_image_file_tl {\c_@@_issue_frontcover_default_image_file_tl}
+\tl_gset:Nn \g_@@_special_edition_color_tl {@@_default_cover_color}
+\clist_new:N \g_@@_special_edition_logos_clist
+%
 \keys_define:nn { gzt }
 {
   pagegrid .dim_gset:N = \g_@@_pagegrid_dim,
@@ -817,6 +823,35 @@ This work consists of the file  gzt.dtx
     \bool_gset_true:N \g_@@_for_printer_bool%
   },%
   output / web .code:n = {%
+  },%
+  specialedition .code:n = {
+    \bool_gset_true:N \g_@@_special_edition_bool
+    \bool_gset_true:N \g_@@_frontcover_without_minitoc_bool
+    \keys_set:nn { gzt / specialedition } {#1}
+  },
+  specialedition / color .code:n = {%
+    \tl_gset:Nn \g_@@_special_edition_color_tl {#1}
+  },%
+  specialedition / minitoc .code:n = {%
+    \bool_gset_false:N \g_@@_frontcover_without_minitoc_bool
+  },%
+  specialedition / logos .code:n = {%
+    \clist_gset:Nn \g_@@_special_edition_logos_clist {#1}
+  },%
+  specialedition / backcover~image .code:n = {%
+    \tl_gset:Nn \g_@@_special_edition_backcover_image_tl {#1}
+  },%
+  specialedition / title .code:n = {%
+    \tl_gset:Nn \g_@@_special_edition_title_tl {#1}
+  },%
+  specialedition / short~title .code:n = {%
+    \tl_gset:Nn \g_@@_special_edition_short_title_tl {#1}
+  },%
+  specialedition / editorial~heading .code:n = {%
+    \tl_gset:Nn \g_@@_special_edition_editorial_heading_tl {#1}
+  },%
+  specialedition / editorial~author .code:n = {%
+    \_@@_people:nnnnnnnn {#1}{}{}{}{}{}{editorinchief}{}
   },%
 }%
 %    \end{macrocode}
@@ -1361,6 +1396,10 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_editorial_board_string_tl {Comit\'e~de~r\'edaction}
 %    \end{macrocode}
+% For the editorial board of special_edition.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_special_edition_editorial_board_string_tl {Num\'ero~sp\'ecial~de~la~Gazette~des~Math\'ematiciens~sous~la~direction~de~:}
+%    \end{macrocode}
 % For the editorial_secretariat.
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_editorial_secretariat_string_tl {Secr\'etariat~de~r\'edaction}
@@ -1407,7 +1446,13 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % For the editorial.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_editorial_string_tl {\'Editorial}
+\AtEndPreamble{
+  \bool_if:NTF {\g_@@_special_edition_bool} {
+    \tl_const:Nn \c_@@_editorial_heading_string_tl {Avant-propos}
+  }{
+    \tl_const:Nn \c_@@_editorial_heading_string_tl {\'Editorial}
+  }
+}
 %    \end{macrocode}
 % For the editor in chief.
 %    \begin{macrocode}
@@ -1433,14 +1478,31 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_president_message_date_string_tl {Le~}
 %    \end{macrocode}
+% For the special editions.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_special_edition_string_tl {\c_space_tl{}sp{\'e}cial}
+\tl_const:Nn \c_@@_long_special_edition_string_tl {Numéro\c_@@_special_edition_string_tl}%
+\tl_const:Nn \c_@@_short_special_edition_string_tl {\No{}\c_@@_special_edition_string_tl}%
+%    \end{macrocode}
 % For the front cover header text.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_frontcover_header_string_tl {
-  \l_@@_uppercased_date_format\displaydate{@@_date}
-  \c_space_tl
-  \textendash{}
-  \c_space_tl
-  \No\int_use:N\g_@@_issue_number_int%
+\AtEndPreamble{
+  \tl_const:Nn \c_@@_frontcover_header_string_tl {
+    \bool_if:NT {\g_@@_special_edition_bool} {
+      \tl_upper_case:n {\c_@@_long_special_edition_string_tl}
+      \medskip
+      \par
+      \normalsize
+    }
+    \l_@@_uppercased_date_format\displaydate{@@_date}
+    \bool_if:NF {\g_@@_special_edition_bool} {
+      \c_space_tl
+      \textendash{}
+      \c_space_tl
+      \No
+      \int_use:N\g_@@_issue_number_int%
+    }
+  }
 }
 %    \end{macrocode}
 % For the pdftitle text.
@@ -1454,7 +1516,14 @@ This work consists of the file  gzt.dtx
   \c_space_tl
   \textendash{}
   \c_space_tl
-  N°\int_use:N\g_@@_issue_number_int
+  N°
+  \bool_if:NTF {\g_@@_special_edition_bool} {
+    \c_@@_special_edition_string_tl
+    \c_space_tl
+    \g_@@_special_edition_title_tl
+  }{
+    \int_use:N\g_@@_issue_number_int
+  }
 }
 %    \end{macrocode}
 % For the name of the directory containing the editorial and the president message.
@@ -1491,6 +1560,16 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_issue_backcover_text_file_string_tl {backcover}
 \tl_const:Nn \c_@@_backcover_page_file_string_tl {\c_@@_backmatter_directory_string_tl/\c_@@_issue_backcover_text_file_string_tl}
+%    \end{macrocode}
+% For the name of the file containing the text of the special issue's abstract back cover.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_special_edition_backcover_text_file_string_tl {abstract_backcover}
+\tl_const:Nn \c_@@_special_edition_backcover_page_file_string_tl {\c_@@_backmatter_directory_string_tl/\c_@@_special_edition_backcover_text_file_string_tl}
+%    \end{macrocode}
+% For the name of the file of the special issue's picture back cover.
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_special_edition_backcover_picture_string_tl {picture_backcover}
+\tl_const:Nn \c_@@_special_edition_backcover_page_picture_string_tl {\c_@@_backmatter_directory_string_tl/\c_@@_special_edition_backcover_picture_string_tl}
 %    \end{macrocode}
 % For the name of the file containing the acronyms.
 %    \begin{macrocode}
@@ -1618,9 +1697,11 @@ This work consists of the file  gzt.dtx
 %<class>    {
 %<class>      \c_space_tl\textendash{}\c_space_tl
 %<class>      \l_@@_uppercased_date_format\displaydate{@@_date}
-%<class>      \c_space_tl
-%<class>      \textendash{}\c_space_tl
-%<class>      \textcolor{@@_smf_number_color}{\No\int_use:N\g_@@_issue_number_int}
+%<class>      \bool_if:NF {\g_@@_special_edition_bool} {
+%<class>        \c_space_tl
+%<class>        \textendash{}\c_space_tl
+%<class>        \textcolor{@@_smf_number_color}{\No\int_use:N\g_@@_issue_number_int}
+%<class>      }
 %<class>    }
   }
 }
@@ -1642,7 +1723,11 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % For the prefix of the bibliographic key of each article.
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_issue_bib_key_tl {\int_use:N \g_@@_issue_number_int}
+\bool_if:NTF {\g_@@_special_edition_bool} {
+  \tl_const:Nn \c_@@_issue_bib_key_tl {\int_use:N \g_@@_issue_number_int}
+}{
+  \tl_const:Nn \c_@@_issue_bib_key_tl {special-edition}
+}
 %    \end{macrocode}
 % For the interview title.
 %    \begin{macrocode}
@@ -1711,6 +1796,7 @@ This work consists of the file  gzt.dtx
 \bool_new:N \g_@@_mainmatter_bool
 \bool_new:N \g_@@_backmatter_bool
 \bool_new:N \g_@@_backcover_bool
+\bool_new:N \g_@@_frontcover_without_minitoc_bool
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -2165,7 +2251,8 @@ This work consists of the file  gzt.dtx
     ,top=\c_@@_topmargin_frontcover_dim
     ,headsep=\c_@@_headsep_frontcover_dim
     ,headheight=\c_@@_headheight_dim
-    ,bottom=\c_zero_dim
+    % ,bottom=\c_zero_dim
+    ,bottom=11mm
     ,footskip=\c_zero_dim
     ,outer=\c_zero_dim
     ,inner=\c_@@_potential_layoutoffset_dim
@@ -2179,7 +2266,8 @@ This work consists of the file  gzt.dtx
     ,top=\c_@@_topmargin_frontcover_dim
     ,headsep=\c_@@_headsep_frontcover_dim
     ,headheight=\c_@@_headheight_dim
-    ,bottom=\c_zero_dim
+    % ,bottom=\c_zero_dim
+    ,bottom=11mm
     ,footskip=\c_zero_dim
     ,hmargin=\c_@@_potential_layoutoffset_dim
     ,nomarginpar%
@@ -2268,6 +2356,9 @@ This work consists of the file  gzt.dtx
   % ,footskip=\c_@@_footskip_dim
   ,inner=\c_@@_innermargin_backcover_dim
   ,outer=\c_@@_outermargin_backcover_dim
+  ,nomarginpar
+  ,hcentering
+  ,twoside=false
 }
 %    \end{macrocode}
 %
@@ -2738,6 +2829,7 @@ This work consists of the file  gzt.dtx
 \colorlet{@@_book_review_frame_bg_color}{@@_generic_dark_color!8}
 \colorlet{@@_book_advertisement_bg_color}{white}
 \colorlet{@@_book_advertisement_frame_color}{@@_generic_dark_color}
+\colorlet{@@_default_cover_color}{white}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -3159,6 +3251,7 @@ This work consists of the file  gzt.dtx
   \bool_gset_true:N \g_@@_frontcover_bool
   \pagenumbering{roman}%
   \pagestyle{@@_frontcover_ps}%
+  \pagecolor{\g_@@_special_edition_color_tl}
   \exp_after:wN\newgeometry\exp_after:wN{\c_@@_frontcover_geometry_tl}%
   \noindent%
   \bool_if:NTF {\g_@@_cover_bool} {
@@ -3170,14 +3263,15 @@ This work consists of the file  gzt.dtx
   \begin{tikzpicture}[remember~picture, overlay]
     \coordinate (@@_circle_minitoc_center) at
     ([xshift=\g_@@_minitoc_xshift_dim-\c_@@_potential_layoutoffset_dim,yshift=\g_@@_minitoc_yshift_dim+\c_@@_potential_layoutoffset_dim]current~page.south~east) ;
-    \node[name=@@_circle_minitoc,shape=circle,inner~sep=\c_zero_dim,fill=white,text~width=\g_@@_minitoc_circle_diameter_dim] at
+    \node[name=@@_circle_minitoc,shape=circle,inner~sep=\c_zero_dim,fill=\g_@@_special_edition_color_tl,text~width=\g_@@_minitoc_circle_diameter_dim] at
     (@@_circle_minitoc_center) {};
     \node[text~width=\g_@@_minitoc_textwidth_dim,anchor=north~west] at
     ([xshift=\c_@@_minitoc_from_circle_xshift_dim,yshift=\c_@@_minitoc_from_circle_yshift_dim]$ (@@_circle_minitoc.north)!.5!(@@_circle_minitoc.west) $)
     {
-      \large
-      \color{@@_minitoc_color}
-      \bool_if:NF {\g_@@_frontcover_minitoc_tl} {
+      % \bool_show:N \g_@@_frontcover_without_minitoc_bool
+      \bool_if:NF {\g_@@_frontcover_without_minitoc_bool} {
+        \large
+        \color{@@_minitoc_color}
         \g_@@_frontcover_minitoc_tl
       }
     };
@@ -3188,15 +3282,28 @@ This work consists of the file  gzt.dtx
   \bool_if:NT {\g_@@_cover_bool} {
     \small
     \begin{tikzpicture}[remember~picture, overlay]
-      \node[name=@@_binding_sw,inner~sep=\c_zero_dim,fill=white,rotate=90,anchor=west] at
+      \node[name=@@_binding_sw,inner~sep=\c_zero_dim,fill=\g_@@_special_edition_color_tl,rotate=90,anchor=west] at
       ([xshift=0.45\c_@@_potential_bindingoffset_dim,yshift=15mm+\c_@@_potential_layoutoffset_dim]current~page.south~west) {
-        \No\int_use:N\g_@@_issue_number_int
+        \No
+        \bool_if:NTF {\g_@@_special_edition_bool} {
+          \c_@@_special_edition_string_tl
+        }{
+          \int_use:N\g_@@_issue_number_int
+        }
       };
-      \node[name=@@_binding_w,inner~sep=\c_zero_dim,fill=white,rotate=90] at
+      \node[name=@@_binding_w,inner~sep=\c_zero_dim,fill=\g_@@_special_edition_color_tl,rotate=90] at
       ([xshift=0.45\c_@@_potential_bindingoffset_dim]current~page.west) {
-        \MakeUppercase{\c_@@_journal_title_string_tl}
+        \bool_if:NTF {\g_@@_special_edition_bool} {
+          \tl_if_exist:NTF \g_@@_special_edition_short_title_tl {%
+            \g_@@_special_edition_short_title_tl
+          }{
+            \g_@@_special_edition_title_tl
+          }
+        }{
+          \MakeUppercase {\c_@@_journal_title_string_tl}
+        }
       };
-      \node[name=@@_binding_nw,inner~sep=\c_zero_dim,fill=white,rotate=90,anchor=east] at
+      \node[name=@@_binding_nw,inner~sep=\c_zero_dim,fill=\g_@@_special_edition_color_tl,rotate=90,anchor=east] at
       ([xshift=0.45\c_@@_potential_bindingoffset_dim,yshift=-15mm-\c_@@_potential_layoutoffset_dim]current~page.north~west) {
         \l_@@_uppercased_date_format\displaydate{@@_date}
       };
@@ -3207,9 +3314,15 @@ This work consists of the file  gzt.dtx
   \hspace*{10mm}%
   \hspace*{-\c_@@_potential_layoutoffset_dim}
   \includegraphics[height=22.5mm]{\c_@@_smf_logo_file_string_tl}%
-  \vfill%
+  \bool_if:NT {\g_@@_special_edition_bool} {
+    \hfill
+    \includegraphics[scale=1.2]{gzt-logo}
+    \hspace*{10mm}
+  }
+  % \vfill%
   \clearpage%
   \bool_gset_false:N \g_@@_frontcover_bool
+  \nopagecolor
 }
 %    \end{macrocode}
 %
@@ -3228,18 +3341,24 @@ This work consists of the file  gzt.dtx
   \begin{_@@_inside_cover_tcb}[_@@_tcb_inside_frontcover_style]
     \begin{multicols}{2}
       \setlength{\columnsep}{1mm}
-      \begin{description}[leftmargin=1em]
-      \item[\c_@@_editors_in_chief_string_tl] \
-        \begin{description}[leftmargin=1em,style=nextline]
-          \@@_display_people_by_role:n {editorinchief}
-        \end{description}
-        \bigskip
-        \par
-      \item[\c_@@_editors_string_tl] \
+      \bool_if:NTF {\g_@@_special_edition_bool} {
         \begin{description}[leftmargin=1em,style=nextline]
           \@@_display_people_by_role:n {editor}
         \end{description}
-      \end{description}
+      }{%
+        \begin{description}[leftmargin=1em]
+        \item[\c_@@_editors_in_chief_string_tl] \
+          \begin{description}[leftmargin=1em,style=nextline]
+            \@@_display_people_by_role:n {editorinchief}
+          \end{description}
+          \bigskip
+          \par
+        \item[\c_@@_editors_string_tl] \
+          \begin{description}[leftmargin=1em,style=nextline]
+            \@@_display_people_by_role:n {editor}
+          \end{description}
+        \end{description}
+      }
     \end{multicols}
     \setlength{\columnseprule}{1pt}
     \tcblower
@@ -3324,10 +3443,10 @@ This work consists of the file  gzt.dtx
   }{%
     \small%
     \begin{_@@_inside_cover_tcb}[_@@_tcb_inside_backcover_style]
-      \file_if_exist:nT { \c_@@_authors_instructions_file_tl } {%
+      \bool_if:NF {\g_@@_special_edition_bool} {
         % \begin{multicols}{2}
         %   \setlength{\columnsep}{1mm}
-        \file_input:n {\c_@@_authors_instructions_file_tl}
+        \file_if_exist_input:n {\c_@@_authors_instructions_file_tl}
         % \end{multicols}
         % \setlength{\columnseprule}{1pt}
         \tcblower
@@ -3354,11 +3473,45 @@ This work consists of the file  gzt.dtx
 \tl_gset:Nn \g_@@_display_backcover_tl {%
   \bool_gset_true:N \g_@@_backcover_bool
   \pagestyle{@@_backcover_ps}%
+  \pagecolor{\g_@@_special_edition_color_tl}
   \exp_after:wN\newgeometry\exp_after:wN{\c_@@_backcover_geometry_tl}%
-  \file_if_exist:nTF { \c_@@_backcover_page_file_string_tl } {%
-    \file_input:n {\c_@@_backcover_page_file_string_tl}
-  }{%
-    \hbox{}
+  \bool_if:NTF {\g_@@_special_edition_bool} {
+    \mbox{}
+    \vfill
+    \clist_map_inline:Nn \c_@@__graphics_extensions_clist{
+      \file_if_exist:nT {\c_@@_issue_images_path_string_tl/\g_@@_special_edition_backcover_image_tl.#1} {
+        \begin{center}
+          \includegraphics[width=.25\linewidth]{\g_@@_special_edition_backcover_image_tl}
+        \end{center}
+        \bigskip
+        \clist_map_break:
+      }
+    }
+    \group_begin:
+    \leftskip.125\linewidth
+    \rightskip\leftskip
+    \file_if_exist_input:nF {\c_@@_special_edition_backcover_page_file_string_tl}
+    {%
+      \c_empty_box
+    }
+    \par
+    \group_end:
+    \vfill
+    \clist_if_empty:NF \g_@@_special_edition_logos_clist {
+      \vfill
+      \noindent
+      \clist_map_inline:Nn \g_@@_special_edition_logos_clist {
+        \hfill
+        \includegraphics[height=2cm]{#1}
+        \hfill
+      }
+      \mbox{}
+    }
+  }{
+    \file_if_exist_input:nF {\c_@@_backcover_page_file_string_tl}
+    {%
+      \hbox{}
+    }
   }
 }
 %    \end{macrocode}
@@ -3511,6 +3664,18 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 % \end{macro}
+%
+% \subsection{Special edition setup}
+%
+% \begin{macro}{\specialeditionsetup}
+%   We define the command that lets the user specify the special edition setup.
+%    \begin{macrocode}
+\NewDocumentCommand \specialeditionsetup { m } {
+  \bool_gset_true:N \g_@@_special_edition_bool
+  \bool_gset_true:N \g_@@_frontcover_without_minitoc_bool
+  \keys_set:nn { gzt/specialedition } {#1}
+}
+%    \end{macrocode}
 %
 % \subsection{Journal setup}
 %
@@ -3886,7 +4051,9 @@ This work consists of the file  gzt.dtx
     \int_zero:N \g_@@_item_in_rubric_int
     \phantomsection
     \par
-    \addcontentsline{toc}{part}{\g_@@_rubric_title_tl}
+    \bool_if:NF {\g_@@_special_edition_bool} {
+      \addcontentsline{toc}{part}{\g_@@_rubric_title_tl}
+    }
     \thispagestyle{@@_rubric_ps}
     \exp_after:wN\newgeometry\exp_after:wN{\c_@@_main_geometry_tl}%
     \tl_if_empty:NTF \g_@@_rubric_abstract_tl
@@ -4570,10 +4737,15 @@ This work consists of the file  gzt.dtx
         \end{adjustbox}%
       }%
     }%
+    \bool_if:NTF {\g_@@_special_edition_bool} {
+      \tl_set:Nn \l_tmpa_tl {\c_@@_short_special_edition_string_tl}
+    }{
+      \tl_set:Nn \l_tmpa_tl {\No\int_use:N\g_@@_issue_number_int}
+    }
     \begin{adjustbox}{valign=t}
       \begin{tcolorbox}[%
         enhanced,%
-        title=\No\int_use:N \g_@@_issue_number_int,%
+        title=\l_tmpa_tl,%\int_use:N \g_@@_issue_number_int,%
         fonttitle=\Large,%
         colback=white,%
         sharp~corners=all,%
@@ -4638,33 +4810,49 @@ This work consists of the file  gzt.dtx
 %
 % We create an internal function that displays the editorial.
 %    \begin{macrocode}
-\cs_new_protected:Nn \_@@_before_display_editorial:
+\cs_new_protected:Nn \_@@_before_display_editorial:n
 {
-  \_@@_before_editorial_presidentmessage:nn {}{\c_@@_editorial_string_tl}
+  \_@@_before_editorial_presidentmessage:nn {}{#1}
 }
 \cs_new_protected:Nn \_@@_after_display_editorial:
 {
   \_@@_after_editorial_presidentmessage: {}
   \hspace*{\fill}%
-  \DTLforeach*[\DTLiseq{\l_@@_people_role_tl}{editorinchief}]{people}{%
-    \l_@@_firstlastname=first-last-name%
-    ,\l_@@_people_role_tl=role%
-  }{%
-    \_@@_citeauthor_no_firstinits:n {\c_@@_issue_bib_key_tl -editorinchief- \exp_not:V\DTLcurrentindex}%
+  \bool_if:NTF {\g_@@_special_edition_bool} {
+    \AtNextCitekey{\defcounter{maxnames}{100}}
+    \_@@_citeauthor_no_firstinits:n {\c_@@_issue_bib_key_tl -editorinchief- 1}
+  }{
+    \DTLforeach*[\DTLiseq{\l_@@_people_role_tl}{editorinchief}]{people}{%
+      \l_@@_firstlastname=first-last-name%
+      ,\l_@@_people_role_tl=role%
+    }{%
+      \_@@_citeauthor_no_firstinits:n {\c_@@_issue_bib_key_tl -editorinchief- \exp_not:V\DTLcurrentindex}%
+    }
   }
   %
   \_@@_after_frontmatter_stuff: {}
 }
-\cs_new_protected:Nn \_@@_display_editorial:
+\cs_new_protected:Nn \_@@_display_editorial:n
 {
-  \_@@_before_display_editorial: {}
-  \file_input:n {\c_@@_editorial_file_string_tl}
+  \_@@_before_display_editorial:n {#1}
+  \file_if_exist_input:nF {\c_@@_editorial_file_string_tl}
+  {%
+    \msg_error:nn { gzt } { editorial-file-missing }
+  }
   \_@@_after_display_editorial: {}
 }
-\NewDocumentCommand \editorial {}
-{
-  \bool_if:NF {\g_@@_for_authors_bool} {
-    \_@@_display_editorial: {}
+\AtEndPreamble{%
+  \tl_set_eq:NN \g_@@_editorial_heading_tl \c_@@_editorial_heading_string_tl
+  \bool_if:NT {\g_@@_special_edition_bool} {
+    \tl_if_empty:NF \g_@@_special_edition_editorial_heading_tl {%
+      \tl_set_eq:NN \g_@@_editorial_heading_tl \g_@@_special_edition_editorial_heading_tl
+    }
+  }
+  \NewDocumentCommand \editorial { O{\g_@@_editorial_heading_tl} }
+  {
+    \bool_if:NF {\g_@@_for_authors_bool} {
+      \_@@_display_editorial:n {#1}
+    }
   }
 }
 %    \end{macrocode}
@@ -4679,7 +4867,11 @@ This work consists of the file  gzt.dtx
   \@@_boxed_issue_number:nn {\g_@@_frontcover_image_file_tl}{\c_@@_toc_string_tl}
   \phantomsection
   \hypertarget{@@_toc}{}
-  \bookmark[dest=@@_toc,level=part]{\c_@@_toc_string_tl}
+  \bool_if:NTF {\g_@@_special_edition_bool} {
+    \bookmark[dest=@@_toc,level=chapter]{\c_@@_toc_string_tl}
+  }{
+    \bookmark[dest=@@_toc,level=part]{\c_@@_toc_string_tl}
+  }
   \etocsettocdepth.toc{chapter}%
   \tableofcontents
   \the\toctabletok
@@ -4939,7 +5131,11 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_new:N \l_@@_frontmatter_head_text_tl
 \tl_set:Nn \l_@@_frontmatter_head_text_tl {%
-  \includegraphics{gzt-logo}
+  \bool_if:NTF {\g_@@_special_edition_bool} {
+    \g_@@_special_edition_title_tl
+  }{
+    \includegraphics{gzt-logo}
+  }
 }
 %    \end{macrocode}
 %
@@ -4983,6 +5179,11 @@ This work consists of the file  gzt.dtx
     xshift=\c_@@_frontmatter_headtext_o_xshift_dim,%
     yshift=\c_@@_frontmatter_headtext_yshift_dim%
     ]current~page.north~east) {%
+      \Large
+      \bool_if:NT {\g_@@_special_edition_bool} {
+        \c_@@_short_special_edition_string_tl
+        \c_space_tl
+      }
       \l_@@_frontmatter_head_text_tl
     }%
     ;
@@ -4998,6 +5199,11 @@ This work consists of the file  gzt.dtx
     xshift=\c_@@_frontmatter_headtext_e_xshift_dim,%
     yshift=\c_@@_frontmatter_headtext_yshift_dim%
     ]current~page.north~west) {%
+      \Large
+      \bool_if:NT {\g_@@_special_edition_bool} {
+        \c_@@_short_special_edition_string_tl
+        \c_space_tl
+      }
       \l_@@_frontmatter_head_text_tl
     }%
     ;
@@ -5147,6 +5353,10 @@ This work consists of the file  gzt.dtx
         \c_@@_frontcover_header_string_tl
       }\\[7mm]
       \adjustbox{scale=2.08}{
+        \huge
+        \bool_if:NT {\g_@@_special_edition_bool} {
+          \color{@@_generic_dark_color}
+        }
         \l_@@_frontmatter_head_text_tl
       }%
     }%
@@ -5727,11 +5937,22 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 % \begin{macro}{\rubric}
-%   For a \enquote{free} rubric.
+%   For a \enquote{free} rubric. In case of special edition, we set the rubric
+%   title first as empty and then as the special edition's title plus a constant
+%   string. Otherwise, this title is freely set.
 %    \begin{macrocode}
 \NewDocumentCommand \rubric {O{}mm}
 {
-  \_@@_rubric:nnn {#1}{#2}{#3}%
+  \bool_if:NTF {\g_@@_special_edition_bool} {
+    \_@@_rubric:nnn {#1}{#2}{#3}%
+    \tl_gset:Nn \g_@@_rubric_title_tl {%
+      \c_@@_short_special_edition_string_tl
+      \c_space_tl
+      \g_@@_special_edition_title_tl
+    }
+  }{
+    \_@@_rubric:nnn {#1}{#2}{#3}%
+  }
 }
 %    \end{macrocode}
 % \end{macro}
@@ -6589,13 +6810,32 @@ This work consists of the file  gzt.dtx
   _@@_tcb_inside_frontcover_style/.style={%
     _@@_tcb_inside_cover_style,
     enlarge~left~by=-\c_@@_inside_cover_offset_dim,
-    title=\c_@@_editorial_board_string_tl
   },
   _@@_tcb_inside_backcover_style/.style={%
     _@@_tcb_inside_cover_style,
     enlarge~left~by=\c_@@_inside_cover_offset_dim,
-    title=\file_if_exist:nT { \c_@@_authors_instructions_file_tl } {%
-      \c_@@_authors_instructions_string_tl
+  }
+}
+\AtEndPreamble{%
+  \bool_if:NTF {\g_@@_special_edition_bool} {
+    \tcbset{
+      _@@_tcb_inside_frontcover_style/.append~style={%
+        title=\c_@@_special_edition_editorial_board_string_tl
+      },
+      _@@_tcb_inside_backcover_style/.append~style={%
+        notitle
+      },
+    }
+  }{
+    \tcbset{
+      _@@_tcb_inside_frontcover_style/.append~style={%
+        title=\c_@@_editorial_board_string_tl
+      },
+      _@@_tcb_inside_backcover_style/.append~style={%
+        title=\file_if_exist:nT { \c_@@_authors_instructions_file_tl } {%
+          \c_@@_authors_instructions_string_tl
+        }
+      },
     }
   }
 }
