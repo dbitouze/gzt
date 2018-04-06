@@ -1168,11 +1168,6 @@ This work consists of the file  gzt.dtx
 \RequirePackage{tikzpagenodes}
 %    \end{macrocode}
 %
-% \item Tools for drawing Euclidean geometry:
-%    \begin{macrocode}
-%<class>\RequirePackage{tkz-euclide}
-%    \end{macrocode}
-%
 % \item Print page grid in background:
 %    \begin{macrocode}
 %<class>\RequirePackage[foreground]{pagegrid}%
@@ -1259,8 +1254,10 @@ This work consists of the file  gzt.dtx
     ~`\int_use:N\c_@@_first_issue_number_int'.}
 \msg_new:nnnn{gzt}{unknown-choice}{Choice~`#3'~invalid!}
   {Please~specify~#1=#2.}
-\msg_new:nnnn{gzt}{configuration-file-missing}{File~`\c_@@_configuration_file_string_tl'~missing!}
-  {The~ whole~ issue~ may~ not~ be~ conform~ if~ `\c_@@_configuration_file_string_tl'~ is~ missing.}
+%<class>\msg_new:nnnn{gzt}{configuration-file-missing}{File~`\c_@@_configuration_file_string_tl'~missing!}
+%<class>  {The~ whole~ issue~ may~ not~ be~ conform~ if~ `\c_@@_configuration_file_string_tl'~ is~ missing.}
+%<class>\msg_new:nnnn{gzt}{editorial-file-missing}{File~`\c_@@_editorial_file_string_tl'~missing!}
+%<class>  {The~ whole~ issue~ requires~ the~ `\c_@@_editorial_file_string_tl'~ file.}
 %    \end{macrocode}
 %
 % \section{Counters}
@@ -1348,7 +1345,7 @@ This work consists of the file  gzt.dtx
 % \begin{macro}{\c_@@_configuration_file_string_tl}
 % \begin{macro}{\c_@@_cover_string_tl}
 % \begin{macro}{\c_@@_artistic_director_string_tl}
-% \begin{macro}{\c_@@_editorial_string_tl}
+% \begin{macro}{\c_@@_editorial_heading_string_tl}
 % \begin{macro}{\c_@@_toc_string_tl}
 % \begin{macro}{\c_@@_message_string_tl}
 % \begin{macro}{\c_@@_president_signatory_string_tl}
@@ -1504,6 +1501,10 @@ This work consists of the file  gzt.dtx
     }
   }
 }
+%    \end{macrocode}
+% For the graphics extensions.
+%    \begin{macrocode}
+\clist_const:Nn \c_@@__graphics_extensions_clist {png,PNG,jpg,JPG,jpeg,JPEG,pdf,PDF}
 %    \end{macrocode}
 % For the pdftitle text.
 %    \begin{macrocode}
@@ -3268,7 +3269,6 @@ This work consists of the file  gzt.dtx
     \node[text~width=\g_@@_minitoc_textwidth_dim,anchor=north~west] at
     ([xshift=\c_@@_minitoc_from_circle_xshift_dim,yshift=\c_@@_minitoc_from_circle_yshift_dim]$ (@@_circle_minitoc.north)!.5!(@@_circle_minitoc.west) $)
     {
-      % \bool_show:N \g_@@_frontcover_without_minitoc_bool
       \bool_if:NF {\g_@@_frontcover_without_minitoc_bool} {
         \large
         \color{@@_minitoc_color}
@@ -3593,7 +3593,6 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 % Its keys are set (only "number", "month" and "year" are relevant here).
-%    \begin{macrocode}
   \keys_set:nn { gzt/issuesetup } {frontcoverimageoptions={width=\c_@@_frontcover_image_width_dim},#1}
 %    \end{macrocode}
 %
@@ -4624,19 +4623,34 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % \end{macro}
 %
+% We load the file where acronyms are defined.
+%    \begin{macrocode}
+\file_if_exist:nT { \c_@@_acronyms_file_string_tl } {%
+  \AtEndPreamble{\loadglsentries{\c_@@_acronyms_file_string_tl}}
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
 % In case of "forauthors" option, we close the "multicols" environment in case
 % it isn't closed (which happens if neither "\printbibliography" nor
 % "\printauthorsdetails" is used). This should fix issue
 % \url{https://github.com/dbitouze/gzt/issues/36}.
 %    \begin{macrocode}
-%<class>\bool_if:nT { \g_@@_for_authors_bool }
-%<class>{
-%<class>  \AtEndDocument{%
-%<class>    \bool_if:NT {\g_@@_multicols_bool} {
-%<class>    \end{multicols}%
-%<class>  }
-%<class>}
-%<class>}
+\bool_if:nT { \g_@@_for_authors_bool }
+{
+  \AtEndDocument{%
+    \bool_if:NT {\g_@@_multicols_bool} {
+      \end{multicols}%
+    }
+  }
+}
 %    \end{macrocode}
 %
 % We load the configuration file (only for the issue's class), which has to be
@@ -4645,17 +4659,11 @@ This work consists of the file  gzt.dtx
 % at the end of preamble instead of begin of the document in order some settings
 % needed in preamble are taken in account.
 %    \begin{macrocode}
-%<class>\file_if_exist:nTF { \c_@@_configuration_file_string_tl } {%
-%<class>  \AtEndPreamble{\file_input:n {\c_@@_configuration_file_string_tl}}
-%<class>}{
-%<class>  \msg_error:nn { gzt } { configuration-file-missing }
-%<class>}
-%    \end{macrocode}
-%
-% We load the file where acronyms are defined.
-%    \begin{macrocode}
-\file_if_exist:nT { \c_@@_acronyms_file_string_tl } {%
-  \AtEndPreamble{\loadglsentries{\c_@@_acronyms_file_string_tl}}
+\AtEndPreamble{
+  \file_if_exist_input:nF {\c_@@_configuration_file_string_tl}
+  {
+    \msg_error:nn { gzt } { configuration-file-missing }
+  }
 }
 %    \end{macrocode}
 %
@@ -4963,6 +4971,14 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
+%
 % \section{Chapter, sections, etc. customization}
 %
 % Thanks to \Pkg{titlesec}, the chapter, section, subsection and subsubsection
@@ -5031,7 +5047,7 @@ This work consists of the file  gzt.dtx
 % \begin{itemize}
 % \item set the graphic path,
 % \item set the page grid if the corresponding option has been passed,
-% \item display of the front cover and the inside front cover.
+% \item display the front cover and the inside front cover.
 % \end{itemize}
 %
 %    \begin{macrocode}
@@ -6405,8 +6421,8 @@ This work consists of the file  gzt.dtx
     \xpatchfieldformat{title}{mkbibemph}{textbf}{}{}%
     \xpretonameformat{author}{\color{@@_people_color}}{}{}%
     \g_@@_blx_given_first_inits_false_tl
-    \noindent\fullcite{\g_@@_bookreview_bibkey_tl}
-    \vspace{10mm}
+    \noindent%
+    \parbox[][21.5mm][l]{\linewidth}{\fullcite{\g_@@_bookreview_bibkey_tl}}
     \tcblower
 }{
   \begin{flushright}
@@ -6469,7 +6485,6 @@ This work consists of the file  gzt.dtx
 % customizations if any and, if necessary open and close the "refsection" and
 % "multicols" environments.
 %    \begin{macrocode}
-\cs_generate_variant:Nn \tl_if_eq:nnT { NnT }
 \NewDocumentCommand \gztinput { m m } {%
   \startcustomization%
   \bool_if:NF {\g_@@_refsection_bool} {
@@ -6765,7 +6780,7 @@ This work consists of the file  gzt.dtx
     enhanced,%
     colback=@@_book_review_frame_bg_color,%
     breakable,%
-    height=50mm,%
+    % height=50mm,%
     boxrule=\c_zero_dim,
     sharp~corners=all,%
     skin=enhancedlast,
@@ -7046,8 +7061,6 @@ This work consists of the file  gzt.dtx
   }
   % \tl_if_eq:VVF { \l_@@_newtheorem_englishtitle_tl } { \MakeUppercase #2 }
   %   {%
-  %     \tl_show:N \l_@@_newtheorem_englishtitle_tl
-  %     \tl_show:N \l_@@_newtheorem_frenchtitle_tl
   %     \tl_if_eq:NNF { \l_@@_newtheorem_frenchtitle_tl } { \l_@@_newtheorem_englishtitle_tl }
   %     {%
   %     \tl_set:Nf \l_@@_newtheorem_frenchtitle_tl {
@@ -7055,9 +7068,6 @@ This work consists of the file  gzt.dtx
   %     }
   %   }
   % }
-  % \tl_show:N \l_@@_newtheorem_style_tl
-  % \tl_show:N \l_@@_newtheorem_frenchtitle_tl
-  % \tl_show:N \l_@@_newtheorem_englishtitle_tl
   \_@@_new_theorem:nnVV {style=\l_@@_newtheorem_style_tl}{#2}{\l_@@_newtheorem_frenchtitle_tl}{\l_@@_newtheorem_englishtitle_tl}
 }
 %    \end{macrocode}
