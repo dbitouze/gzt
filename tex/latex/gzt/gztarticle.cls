@@ -7,7 +7,7 @@
 %% gzt.dtx  (with options: `class-article')
 %% -----------------------------------------------------------------------------
 %% gzt --- SMF bundle of classes for the French journal "La Gazette des
-%%         Math'ematiciens", version 0.97
+%%         Math'ematiciens", version 0.98
 %% 
 %% E-mail: denis.bitouze@univ-littoral.fr
 %% Released under the LaTeX Project Public License v1.3c or later
@@ -61,8 +61,8 @@
 \ExplSyntaxOn
 \ProvidesExplClass
   {gztarticle}
-  {2017/02/15}
-  {0.97}
+  {2018/04/07}
+  {0.98}
   {
     SMF~class~for~the~French~journal^^J
     "La~Gazette~des~Math'ematiciens".

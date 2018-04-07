@@ -8,11 +8,11 @@ the French journal
 - `gzt` for the complete issues of the journal, aimed for the Gazette's team,
 - `gztarticle`, intended for the authors who wish to publish an article in the
   Gazette. This class goal is to:
-    - faithfully reproduce the layout of the Gazette, thus enabling the authors
-      to be able to work their document in actual conditions,
-    - provide a number of tools (commands and environments) to facilitate the
-      drafting of documents, in particular those containing mathematical
-      formulas.
+   - faithfully reproduce the layout of the Gazette, thus enabling the authors
+     to be able to work their document in actual conditions,
+   - provide a number of tools (commands and environments) to facilitate the
+     drafting of documents, in particular those containing mathematical
+     formulas.
 
 # Copyright and Licence
 
@@ -22,11 +22,11 @@ Denis Bitouzé
 
 ## Release
 
-2017/02/15 v0.97
+2018/04/07 v0.98
 
 ## Copyright
 
-Copyright 2014-2017 Denis Bitouzé
+Copyright 2014-2018 Denis Bitouzé
 
 ## Licence
 
@@ -61,7 +61,7 @@ available
 
 ## Templates and samples
 
-`gzt` comes with a template attached to the the documentation above.
+`gzt` comes with a template attached to the documentation above.
 
 ## Questions and answers
 
