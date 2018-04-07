@@ -31,11 +31,11 @@ the French journal
 - `gzt` for the complete issues of the journal, aimed for the Gazette's team,
 - `gztarticle`, intended for the authors who wish to publish an article in the
   Gazette. This class goal is to:
-    - faithfully reproduce the layout of the Gazette, thus enabling the authors
-      to be able to work their document in actual conditions,
-    - provide a number of tools (commands and environments) to facilitate the
-      drafting of documents, in particular those containing mathematical
-      formulas.
+   - faithfully reproduce the layout of the Gazette, thus enabling the authors
+     to be able to work their document in actual conditions,
+   - provide a number of tools (commands and environments) to facilitate the
+     drafting of documents, in particular those containing mathematical
+     formulas.
 
 # Copyright and Licence
 
@@ -45,11 +45,11 @@ Denis Bitouzé
 
 ## Release
 
-2017/02/15 v0.97
+2018/04/07 v0.98
 
 ## Copyright
 
-Copyright 2014-2017 Denis Bitouzé
+Copyright 2014-2018 Denis Bitouzé
 
 ## Licence
 
@@ -84,7 +84,7 @@ available
 
 ## Templates and samples
 
-`gzt` comes with a template attached to the the documentation above.
+`gzt` comes with a template attached to the documentation above.
 
 ## Questions and answers
 
@@ -115,7 +115,7 @@ Suggestions and bug reports are welcome.
 % \input docstrip.tex
 \Msg{********************************************************}
 \Msg{* Installation}
-\Msg{* Class: gzt 2017/02/15 v0.97}
+\Msg{* Class: gzt 2018/04/07 v0.98}
 \Msg{* for the French journal}
 \Msg{* "La Gazette des Math'ematiciens" (DB)}
 \Msg{********************************************************}
@@ -124,7 +124,7 @@ Suggestions and bug reports are welcome.
 \preamble
 -----------------------------------------------------------------------------
 gzt --- SMF bundle of classes for the French journal "La Gazette des
-        Math'ematiciens", version 0.97
+        Math'ematiciens", version 0.98
 
 E-mail: denis.bitouze@univ-littoral.fr
 Released under the LaTeX Project Public License v1.3c or later
@@ -187,10 +187,10 @@ This work consists of the file  gzt.dtx
   \file{\GZT@logo.tex}{\from{\jobname.dtx}{class-logo}}%
 }%
 \usedir{doc/latex/\GZT@classname}
-\generate{
-  \nopreamble\nopostamble
-  \file{README.md}{\from{\jobname.dtx}{readme}}
-}%
+% \generate{
+%   \nopreamble\nopostamble
+%   \file{README.md}{\from{\jobname.dtx}{readme}}
+% }%
 \usedir{doc/latex/\GZT@classname/french}
 \generate{
   \nopreamble\nopostamble
@@ -214,6 +214,8 @@ This work consists of the file  gzt.dtx
 % \changes{v0.95b}{2016/10/24}{Fourth CTAN version}%
 % \changes{v0.96}{2017/01/01}{Fifth CTAN version}%
 % \changes{v0.97}{2017/02/15}{Sixth CTAN version}%
+% \changes{v0.98}{2018/04/07}{Seventh CTAN version. Implementation of special
+% editions.}%
 %
 % \CheckSum{4413}
 %
@@ -740,8 +742,8 @@ This work consists of the file  gzt.dtx
 \ProvidesExplClass
 %<class>  {gzt}
 %<class-article>  {gztarticle}
-  {2017/02/15}
-  {0.97}
+  {2018/04/07}
+  {0.98}
   {
     SMF~class~for~the~French~journal^^J
     "La~Gazette~des~Math'ematiciens".
