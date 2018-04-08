@@ -157,11 +157,6 @@ This work consists of the file  gzt.dtx
 \def\GZT@classname{\jobname}
 \def\GZT@logo{\GZT@classname-logo}
 \def\GZT@addons{addons}
-\usedir{.}
-\generate{
-  \nopreamble\nopostamble
-  \file{README.md}{\from{\jobname.dtx}{readme}}
-}%
 \usedir{tex/latex/\GZT@classname}
 \generate{%
   \file{\GZT@classname.cls}{\from{\jobname.dtx}{class}}
@@ -187,10 +182,10 @@ This work consists of the file  gzt.dtx
   \file{\GZT@logo.tex}{\from{\jobname.dtx}{class-logo}}%
 }%
 \usedir{doc/latex/\GZT@classname}
-% \generate{
-%   \nopreamble\nopostamble
-%   \file{README.md}{\from{\jobname.dtx}{readme}}
-% }%
+\generate{
+  \nopreamble\nopostamble
+  \file{README.md}{\from{\jobname.dtx}{readme}}
+}%
 \usedir{doc/latex/\GZT@classname/french}
 \generate{
   \nopreamble\nopostamble
