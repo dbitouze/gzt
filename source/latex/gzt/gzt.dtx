@@ -2175,7 +2175,7 @@ This work consists of the file  gzt.dtx
 % \begin{macro}{\c_@@_original_parindent_dim}
 %    \begin{macrocode}
 \dim_new:N \c_@@_original_parindent_dim
-\dim_set_eq:NN \c_@@_original_parindent_dim \parindent
+\dim_gset_eq:NN \c_@@_original_parindent_dim \parindent
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2196,10 +2196,10 @@ This work consists of the file  gzt.dtx
 \dim_new:N \g_@@_minitoc_textwidth_dim
 \dim_new:N \g_@@_minitoc_xshift_dim
 \dim_new:N \g_@@_minitoc_yshift_dim
-\dim_set:Nn \g_@@_minitoc_circle_diameter_dim {142mm}
-\dim_set:Nn \g_@@_minitoc_textwidth_dim {65mm}
-\dim_set:Nn \g_@@_minitoc_xshift_dim {-22mm}
-\dim_set:Nn \g_@@_minitoc_yshift_dim {30mm}
+\dim_gset:Nn \g_@@_minitoc_circle_diameter_dim {142mm}
+\dim_gset:Nn \g_@@_minitoc_textwidth_dim {65mm}
+\dim_gset:Nn \g_@@_minitoc_xshift_dim {-22mm}
+\dim_gset:Nn \g_@@_minitoc_yshift_dim {30mm}
 \dim_const:Nn \c_@@_minitoc_from_circle_xshift_dim {-15mm}
 \dim_const:Nn \c_@@_minitoc_from_circle_yshift_dim {-\c_@@_minitoc_from_circle_xshift_dim}
 %    \end{macrocode}
@@ -4144,7 +4144,7 @@ This work consists of the file  gzt.dtx
 %
 \tl_new:N \g_@@_blx_given_first_inits_tl%
 \@ifpackagelater{biblatex}{2016/01/01}{%
-  \tl_set:Nn \g_@@_blx_given_first_inits_false_tl
+  \tl_gset:Nn \g_@@_blx_given_first_inits_false_tl
   {%
     \togglefalse{abx@bool@giveninits}%
   }
@@ -6554,7 +6554,7 @@ This work consists of the file  gzt.dtx
 {
   editorial .code:n = {%
     \AtBeginDocument{%
-      \_@@_before_display_editorial: {}%
+      \_@@_before_display_editorial:n {}%
     }
     \AtEndDocument{%
       \_@@_after_display_editorial: {}%
