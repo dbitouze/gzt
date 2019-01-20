@@ -420,7 +420,10 @@
   \textcolor{__gzt_date_color}{
     \textendash{}\c_space_tl
     \MakeTextUppercase{\c__gzt_journal_short_title_string_tl}
-    \bool_if:nF { \g__gzt_inside_frontcover_bool || \g__gzt_backmatter_bool || \g__gzt_for_authors_bool }
+    % \bool_show:N \g__gzt_inside_frontcover_bool
+    % \bool_show:N \g__gzt_backmatter_bool
+    % \bool_show:N \g__gzt_for_authors_bool
+    \bool_if:nF { \g__gzt_inside_frontcover_bool || \g__gzt_backmatter_bool || {\int_compare_p:nNn {\g__gzt_issue_number_int}={0}} }
     {
       \c_space_tl\textendash{}\c_space_tl
       \l__gzt_uppercased_date_format\displaydate{__gzt_date}
@@ -449,10 +452,14 @@
 \tl_const:Nn \c__gzt_aside_string_tl {--}
 \tl_const:Nn \c__gzt_draftwatermark_string_tl {draft}
 \tl_const:Nn \c__gzt_compiled_string_tl {
-  \IfLanguageName{french}{
-    Compil\'e~le~
-  }{
-    Compiled~on~
+  \int_compare:nNnT {\g__gzt_issue_number_int}={0} {
+    \c__gzt_footer_size_font_tl
+    \IfLanguageName{french}{
+      Compil\'e~le~
+    }{
+      Compiled~on~
+    }
+    \today
   }
 }
 \bool_new:N \g__gzt_frontcover_bool
@@ -647,16 +654,16 @@
 \dim_set:Nn \l__gzt_thumbnail_width_dim {30mm}
 \dim_new:N \g__gzt_abstract_box_width_dim
 \dim_new:N \c__gzt_original_parindent_dim
-\dim_set_eq:NN \c__gzt_original_parindent_dim \parindent
+\dim_gset_eq:NN \c__gzt_original_parindent_dim \parindent
 \dim_new:N \l__gzt_between_rubric_head_text_and_abstract_dim
 \dim_new:N \g__gzt_minitoc_circle_diameter_dim
 \dim_new:N \g__gzt_minitoc_textwidth_dim
 \dim_new:N \g__gzt_minitoc_xshift_dim
 \dim_new:N \g__gzt_minitoc_yshift_dim
-\dim_set:Nn \g__gzt_minitoc_circle_diameter_dim {142mm}
-\dim_set:Nn \g__gzt_minitoc_textwidth_dim {65mm}
-\dim_set:Nn \g__gzt_minitoc_xshift_dim {-22mm}
-\dim_set:Nn \g__gzt_minitoc_yshift_dim {30mm}
+\dim_gset:Nn \g__gzt_minitoc_circle_diameter_dim {142mm}
+\dim_gset:Nn \g__gzt_minitoc_textwidth_dim {65mm}
+\dim_gset:Nn \g__gzt_minitoc_xshift_dim {-22mm}
+\dim_gset:Nn \g__gzt_minitoc_yshift_dim {30mm}
 \dim_const:Nn \c__gzt_minitoc_from_circle_xshift_dim {-15mm}
 \dim_const:Nn \c__gzt_minitoc_from_circle_yshift_dim {-\c__gzt_minitoc_from_circle_xshift_dim}
 \dim_const:Nn \c__gzt_footer_height_font_dim {3mm}
@@ -1830,7 +1837,7 @@
 \tl_new:N \g__gzt_citeinterviewee_tl%
 \tl_new:N \g__gzt_blx_given_first_inits_tl%
 \@ifpackagelater{biblatex}{2016/01/01}{%
-  \tl_set:Nn \g__gzt_blx_given_first_inits_false_tl
+  \tl_gset:Nn \g__gzt_blx_given_first_inits_false_tl
   {%
     \togglefalse{abx@bool@giveninits}%
   }
@@ -2932,8 +2939,8 @@
     [%
     \uppercase{\c__gzt_footer_string_tl}
     ]%
-    [\c__gzt_footer_size_font_tl \c__gzt_compiled_string_tl\today]%
-    {\c__gzt_footer_size_font_tl \c__gzt_compiled_string_tl\today}%
+    [\c__gzt_compiled_string_tl]%
+    {\c__gzt_compiled_string_tl}%
     {%
       \uppercase{\c__gzt_footer_string_tl}%
     }%

@@ -329,6 +329,19 @@
   \textcolor{__gzt_date_color}{
     \textendash{}\c_space_tl
     \MakeTextUppercase{\c__gzt_journal_short_title_string_tl}
+    % \bool_show:N \g__gzt_inside_frontcover_bool
+    % \bool_show:N \g__gzt_backmatter_bool
+    % \bool_show:N \g__gzt_for_authors_bool
+    \bool_if:nF { \g__gzt_inside_frontcover_bool || \g__gzt_backmatter_bool || {\int_compare_p:nNn {\g__gzt_issue_number_int}={0}} }
+    {
+      \c_space_tl\textendash{}\c_space_tl
+      \l__gzt_uppercased_date_format\displaydate{__gzt_date}
+      \bool_if:NF {\g__gzt_special_edition_bool} {
+        \c_space_tl
+        \textendash{}\c_space_tl
+        \textcolor{__gzt_smf_number_color}{\No\int_use:N\g__gzt_issue_number_int}
+      }
+    }
   }
 }
   \file_if_exist:nTF { logo_SMF.pdf }{%
@@ -348,10 +361,14 @@
 \tl_const:Nn \c__gzt_aside_string_tl {--}
 \tl_const:Nn \c__gzt_draftwatermark_string_tl {draft}
 \tl_const:Nn \c__gzt_compiled_string_tl {
-  \IfLanguageName{french}{
-    Compil\'e~le~
-  }{
-    Compiled~on~
+  \int_compare:nNnT {\g__gzt_issue_number_int}={0} {
+    \c__gzt_footer_size_font_tl
+    \IfLanguageName{french}{
+      Compil\'e~le~
+    }{
+      Compiled~on~
+    }
+    \today
   }
 }
 \bool_new:N \g__gzt_frontcover_bool
@@ -546,16 +563,16 @@
 \dim_set:Nn \l__gzt_thumbnail_width_dim {30mm}
 \dim_new:N \g__gzt_abstract_box_width_dim
 \dim_new:N \c__gzt_original_parindent_dim
-\dim_set_eq:NN \c__gzt_original_parindent_dim \parindent
+\dim_gset_eq:NN \c__gzt_original_parindent_dim \parindent
 \dim_new:N \l__gzt_between_rubric_head_text_and_abstract_dim
 \dim_new:N \g__gzt_minitoc_circle_diameter_dim
 \dim_new:N \g__gzt_minitoc_textwidth_dim
 \dim_new:N \g__gzt_minitoc_xshift_dim
 \dim_new:N \g__gzt_minitoc_yshift_dim
-\dim_set:Nn \g__gzt_minitoc_circle_diameter_dim {142mm}
-\dim_set:Nn \g__gzt_minitoc_textwidth_dim {65mm}
-\dim_set:Nn \g__gzt_minitoc_xshift_dim {-22mm}
-\dim_set:Nn \g__gzt_minitoc_yshift_dim {30mm}
+\dim_gset:Nn \g__gzt_minitoc_circle_diameter_dim {142mm}
+\dim_gset:Nn \g__gzt_minitoc_textwidth_dim {65mm}
+\dim_gset:Nn \g__gzt_minitoc_xshift_dim {-22mm}
+\dim_gset:Nn \g__gzt_minitoc_yshift_dim {30mm}
 \dim_const:Nn \c__gzt_minitoc_from_circle_xshift_dim {-15mm}
 \dim_const:Nn \c__gzt_minitoc_from_circle_yshift_dim {-\c__gzt_minitoc_from_circle_xshift_dim}
 \dim_const:Nn \c__gzt_footer_height_font_dim {3mm}
@@ -1484,6 +1501,36 @@
 \NewDocumentCommand \academicsignature { m } {
   \__gzt_display_academic_signature:n {#1}
 }
+\cs_new_protected:Nn \__gzt_uppercased_monthname_french:n
+{
+  \@orgargctr=#1\relax
+  \ifcase\@orgargctr
+  \PackageError{datetime}{Invalid~month~number~\the\@orgargctr}{%
+    Month~numbers~should~go~from~1~(janvier)~to~12~(decembre)}%
+  \or JANVIER%
+  \or F\'EVRIER%
+  \or MARS%
+  \or AVRIL%
+  \or MAI%
+  \or JUIN%
+  \or JUILLET%
+  \or AO\^UT%
+  \or SEPTEMBRE%
+  \or OCTOBRE%
+  \or NOVEMBRE%
+  \or D\'ECEMBRE%
+  \else
+  \PackageError{datetime}{Invalid~month~number~\the\@orgargctr}{%
+    Month~numbers~should~go~from~1~(janvier)~to~12~(decembre)}%
+  \fi
+}
+\newdate{__gzt_date}
+  {1}
+  {\int_use:N \g__gzt_issue_month_int}
+  {\int_use:N \g__gzt_issue_year_int}
+\newdateformat{l__gzt_uppercased_date_format}{
+  \__gzt_uppercased_monthname_french:n {\THEMONTH}~\THEYEAR
+}
 \AtBeginDocument{%
 \tl_new:N \g__gzt_bib_issue_date_tl
 \tl_gset:Nn \g__gzt_bib_issue_date_tl {
@@ -1596,7 +1643,7 @@
 \tl_new:N \g__gzt_citeinterviewee_tl%
 \tl_new:N \g__gzt_blx_given_first_inits_tl%
 \@ifpackagelater{biblatex}{2016/01/01}{%
-  \tl_set:Nn \g__gzt_blx_given_first_inits_false_tl
+  \tl_gset:Nn \g__gzt_blx_given_first_inits_false_tl
   {%
     \togglefalse{abx@bool@giveninits}%
   }
@@ -1919,6 +1966,128 @@
 \file_if_exist:nT { \c__gzt_acronyms_file_string_tl } {%
   \AtEndPreamble{\loadglsentries{\c__gzt_acronyms_file_string_tl}}
 }
+\tl_new:N \g__gzt_boxed_issue_number_tl%
+\tl_gset:Nn \g__gzt_boxed_issue_number_tl {%
+  \tcbox{\Large\No\g__gzt_issue_number_int}
+}
+\cs_new_protected:Nn \__gzt_boxed_issue_number:nn
+{
+  \noindent%
+  \raisebox{\baselineskip}{%
+    \tl_if_empty:nF {#1} {%
+      \makebox[\c_zero_dim][r]{%
+      % \hspace*{\l__gzt_thumbnail_width_dim}%
+        \begin{adjustbox}{valign=t}
+          \includegraphics[width=\l__gzt_thumbnail_width_dim]{#1}%
+        \end{adjustbox}%
+      }%
+    }%
+    \bool_if:NTF {\g__gzt_special_edition_bool} {
+      \tl_set:Nn \l_tmpa_tl {\c__gzt_short_special_edition_string_tl}
+    }{
+      \tl_set:Nn \l_tmpa_tl {\No\int_use:N\g__gzt_issue_number_int}
+    }
+    \begin{adjustbox}{valign=t}
+      \begin{tcolorbox}[%
+        enhanced,%
+        title=\l_tmpa_tl,%\int_use:N \g__gzt_issue_number_int,%
+        fonttitle=\Large,%
+        colback=white,%
+        sharp~corners=all,%
+        height=33mm,%
+        boxrule=\c_zero_dim,%
+        % frame~hidden,%
+        attach~boxed~title~to~top~left,%
+        tikznode~boxed~title={minimum~width=\c__gzt_boxed_issue_number_width_dim},%
+        boxed~title~style={%
+          size=minimal,%
+          height=\c__gzt_boxed_issue_number_height_dim,%
+          center~upper,%
+          before={},%
+          colback=__gzt_boxed_issue_number_bg_color,%
+          sharp~corners=all,%
+          frame~hidden,%
+          valign=center,%
+        }%
+        ]
+        \__gzt_reflected_text:n { #2 }%
+      \end{tcolorbox}
+    \end{adjustbox}%
+  }%
+  \par%
+}
+\cs_new_protected:Nn \__gzt_before_frontmatter_stuff:
+{
+  \bool_gset_true:N \g__gzt_frontmatter_bool%
+  \pagestyle{__gzt_frontmatter_ps}%
+  \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_front_matter_geometry_tl}%
+}
+\cs_new_protected:Nn \__gzt_after_frontmatter_stuff:
+{
+  \color{__gzt_default_text_color}
+  \normalsize%
+  \clearpage%
+  \bool_gset_false:N \g__gzt_frontmatter_bool%
+}
+\cs_new_protected:Nn \__gzt_before_editorial_presidentmessage:nn
+{
+  \__gzt_before_frontmatter_stuff: {}
+  \__gzt_boxed_issue_number:nn {#1}{#2}
+  \color{__gzt_frontmatter_text_color}%
+  \fontsize{11}{13.6}\selectfont
+  \RaggedRight
+}
+\cs_new_protected:Nn \__gzt_after_editorial_presidentmessage:
+{
+  \justifying
+  \bigskip
+  \par
+}
+\cs_new_protected:Nn \__gzt_before_display_editorial:n
+{
+  \__gzt_before_editorial_presidentmessage:nn {}{#1}
+}
+\cs_new_protected:Nn \__gzt_after_display_editorial:
+{
+  \__gzt_after_editorial_presidentmessage: {}
+  \hspace*{\fill}%
+  \bool_if:NTF {\g__gzt_special_edition_bool} {
+    \AtNextCitekey{\defcounter{maxnames}{100}}
+    \__gzt_citeauthor_no_firstinits:n {\c__gzt_issue_bib_key_tl -editorinchief- 1}
+  }{
+    \DTLforeach*[\DTLiseq{\l__gzt_people_role_tl}{editorinchief}]{people}{%
+      \l__gzt_firstlastname=first-last-name%
+      ,\l__gzt_people_role_tl=role%
+    }{%
+      \__gzt_citeauthor_no_firstinits:n {\c__gzt_issue_bib_key_tl -editorinchief- \exp_not:V\DTLcurrentindex}%
+    }
+  }
+  %
+  \__gzt_after_frontmatter_stuff: {}
+}
+\cs_new_protected:Nn \__gzt_display_editorial:n
+{
+  \__gzt_before_display_editorial:n {#1}
+  \file_if_exist_input:nF {\c__gzt_editorial_file_string_tl}
+  {%
+    \msg_error:nn { gzt } { editorial-file-missing }
+  }
+  \__gzt_after_display_editorial: {}
+}
+\AtEndPreamble{%
+  \tl_set_eq:NN \g__gzt_editorial_heading_tl \c__gzt_editorial_heading_string_tl
+  \bool_if:NT {\g__gzt_special_edition_bool} {
+    \tl_if_empty:NF \g__gzt_special_edition_editorial_heading_tl {%
+      \tl_set_eq:NN \g__gzt_editorial_heading_tl \g__gzt_special_edition_editorial_heading_tl
+    }
+  }
+  \NewDocumentCommand \editorial { O{\g__gzt_editorial_heading_tl} }
+  {
+    \bool_if:NF {\g__gzt_for_authors_bool} {
+      \__gzt_display_editorial:n {#1}
+    }
+  }
+}
 \titleformat{\chapter}%
 [block]
 {\Huge\bfseries}
@@ -2085,10 +2254,10 @@
     \uppercase{\c__gzt_footer_string_tl}
   ]%
   [
-  \c__gzt_footer_size_font_tl \c__gzt_compiled_string_tl\today
+\c__gzt_compiled_string_tl
   ]%
   {
-    \c__gzt_footer_size_font_tl \c__gzt_compiled_string_tl\today
+\c__gzt_compiled_string_tl
   }%
   {%
     \uppercase{\c__gzt_footer_string_tl}%
@@ -2132,8 +2301,8 @@
     [%
     \uppercase{\c__gzt_footer_string_tl}
     ]%
-    [\c__gzt_footer_size_font_tl \c__gzt_compiled_string_tl\today]%
-    {\c__gzt_footer_size_font_tl \c__gzt_compiled_string_tl\today}%
+    [\c__gzt_compiled_string_tl]%
+    {\c__gzt_compiled_string_tl}%
     {%
       \uppercase{\c__gzt_footer_string_tl}%
     }%
@@ -2566,7 +2735,7 @@
 {
   editorial .code:n = {%
     \AtBeginDocument{%
-      \__gzt_before_display_editorial: {}%
+      \__gzt_before_display_editorial:n {}%
     }
     \AtEndDocument{%
       \__gzt_after_display_editorial: {}%
