@@ -1691,16 +1691,16 @@ This work consists of the file  gzt.dtx
   \textcolor{@@_date_color}{
     \textendash{}\c_space_tl
     \MakeTextUppercase{\c_@@_journal_short_title_string_tl}
-%<class>    \bool_if:nF { \g_@@_inside_frontcover_bool || \g_@@_backmatter_bool || \g_@@_for_authors_bool }
-%<class>    {
-%<class>      \c_space_tl\textendash{}\c_space_tl
-%<class>      \l_@@_uppercased_date_format\displaydate{@@_date}
-%<class>      \bool_if:NF {\g_@@_special_edition_bool} {
-%<class>        \c_space_tl
-%<class>        \textendash{}\c_space_tl
-%<class>        \textcolor{@@_smf_number_color}{\No\int_use:N\g_@@_issue_number_int}
-%<class>      }
-%<class>    }
+    \bool_if:nF { \g_@@_inside_frontcover_bool || \g_@@_backmatter_bool || {\int_compare_p:nNn {\g_@@_issue_number_int}={0}} }
+    {
+      \c_space_tl\textendash{}\c_space_tl
+      \l_@@_uppercased_date_format\displaydate{@@_date}
+      \bool_if:NF {\g_@@_special_edition_bool} {
+        \c_space_tl
+        \textendash{}\c_space_tl
+        \textcolor{@@_smf_number_color}{\No\int_use:N\g_@@_issue_number_int}
+      }
+    }
   }
 }
 %    \end{macrocode}
@@ -1742,10 +1742,14 @@ This work consists of the file  gzt.dtx
 % For the text accompagnying the date displayed in the footer of the authors' versions.
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_compiled_string_tl {
-  \IfLanguageName{french}{
-    Compil\'e~le~
-  }{
-    Compiled~on~
+  \int_compare:nNnT {\g_@@_issue_number_int}={0} {
+    \c_@@_footer_size_font_tl
+    \IfLanguageName{french}{
+      Compil\'e~le~
+    }{
+      Compiled~on~
+    }
+    \today
   }
 }
 %    \end{macrocode}
@@ -3745,14 +3749,6 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % \end{macro}
 %
-%    \begin{macrocode}
-%</class|class-article>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*class>
-%    \end{macrocode}
-%
 % \section{Definition of the footer of the pages}
 %
 % \begin{macro}{@@_date}
@@ -3794,14 +3790,6 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-%
-%    \begin{macrocode}
-%</class>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*class|class-article>
-%    \end{macrocode}
 %
 % \section{(Re)Definition of document commands that identify the article}
 %
@@ -4719,6 +4707,14 @@ This work consists of the file  gzt.dtx
     }{}
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|class-article>
+%    \end{macrocode}
+%
 % \section{Special tools common to the editorial, the table of contents and the
 % president message}
 %
@@ -4860,6 +4856,14 @@ This work consists of the file  gzt.dtx
     }
   }
 }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class|class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
 %    \end{macrocode}
 %
 % \section{Displaying the table of contents}
@@ -5456,10 +5460,10 @@ This work consists of the file  gzt.dtx
     \uppercase{\c_@@_footer_string_tl}
   ]%
   [
-%<class-article>  \c_@@_footer_size_font_tl \c_@@_compiled_string_tl\today
+%<class-article>\c_@@_compiled_string_tl
   ]%
   {
-%<class-article>    \c_@@_footer_size_font_tl \c_@@_compiled_string_tl\today
+%<class-article>\c_@@_compiled_string_tl
   }%
   {%
     \uppercase{\c_@@_footer_string_tl}%
@@ -5710,8 +5714,8 @@ This work consists of the file  gzt.dtx
     [%
     \uppercase{\c_@@_footer_string_tl}
     ]%
-    [\c_@@_footer_size_font_tl \c_@@_compiled_string_tl\today]%
-    {\c_@@_footer_size_font_tl \c_@@_compiled_string_tl\today}%
+    [\c_@@_compiled_string_tl]%
+    {\c_@@_compiled_string_tl}%
     {%
       \uppercase{\c_@@_footer_string_tl}%
     }%
