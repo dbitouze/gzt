@@ -329,9 +329,6 @@
   \textcolor{__gzt_date_color}{
     \textendash{}\c_space_tl
     \MakeTextUppercase{\c__gzt_journal_short_title_string_tl}
-    % \bool_show:N \g__gzt_inside_frontcover_bool
-    % \bool_show:N \g__gzt_backmatter_bool
-    % \bool_show:N \g__gzt_for_authors_bool
     \bool_if:nF { \g__gzt_inside_frontcover_bool || \g__gzt_backmatter_bool || {\int_compare_p:nNn {\g__gzt_issue_number_int}={0}} }
     {
       \c_space_tl\textendash{}\c_space_tl
@@ -1059,9 +1056,12 @@
       }
       \tl_if_in:NnF \l__gzt_people_speciality { NoValue } { ~(\l__gzt_people_speciality) }
       ]
-      \l__gzt_people_affiliation_tl%
-      \newline%
-      \href{mailto:\l__gzt_people_email_tl}{\nolinkurl{\l__gzt_people_email_tl}}%
+      \mbox{}
+      \vbox_top:n {%
+        \l__gzt_people_affiliation_tl%
+        \newline%
+        \href{mailto:\l__gzt_people_email_tl}{\nolinkurl{\l__gzt_people_email_tl}}%
+      }
       \DTLiflastrow{%
       }{%
         \medskip%
@@ -1232,19 +1232,19 @@
     \begin{multicols}{2}
       \setlength{\columnsep}{1mm}
       \bool_if:NTF {\g__gzt_special_edition_bool} {
-        \begin{description}[leftmargin=1em,style=nextline]
+        \begin{description}[leftmargin=1em,style=nextline,labelindent=\c_zero_dim]
           \__gzt_display_people_by_role:n {editor}
         \end{description}
       }{%
         \begin{description}[leftmargin=1em]
         \item[\c__gzt_editors_in_chief_string_tl] \
-          \begin{description}[leftmargin=1em,style=nextline]
+          \begin{description}[leftmargin=1em,style=nextline,labelindent=\c_zero_dim]
             \__gzt_display_people_by_role:n {editorinchief}
           \end{description}
           \bigskip
           \par
         \item[\c__gzt_editors_string_tl] \
-          \begin{description}[leftmargin=1em,style=nextline]
+          \begin{description}[leftmargin=1em,style=nextline,labelindent=\c_zero_dim]
             \__gzt_display_people_by_role:n {editor}
           \end{description}
         \end{description}
