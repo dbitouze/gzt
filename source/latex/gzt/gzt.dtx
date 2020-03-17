@@ -1483,7 +1483,7 @@ This work consists of the file  gzt.dtx
 \AtEndPreamble{
   \tl_const:Nn \c_@@_frontcover_header_string_tl {
     \bool_if:NT {\g_@@_special_edition_bool} {
-      \tl_upper_case:n {\c_@@_long_special_edition_string_tl}
+      \text_uppercase:n {\c_@@_long_special_edition_string_tl}
       \medskip
       \par
       \normalsize
@@ -1686,11 +1686,11 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_footer_string_tl {
   \c_@@_footer_size_font_tl
-  \textcolor{@@_smf_number_color}{\MakeTextUppercase{\c_@@_smf_short_string_tl}}
+  \textcolor{@@_smf_number_color}{\text_uppercase:n {\c_@@_smf_short_string_tl}}
   \c_space_tl
   \textcolor{@@_date_color}{
     \textendash{}\c_space_tl
-    \MakeTextUppercase{\c_@@_journal_short_title_string_tl}
+    \text_uppercase:n {\c_@@_journal_short_title_string_tl}
     \bool_if:nF { \g_@@_inside_frontcover_bool || \g_@@_backmatter_bool || {\int_compare_p:nNn {\g_@@_issue_number_int}={0}} }
     {
       \c_space_tl\textendash{}\c_space_tl
@@ -3304,7 +3304,7 @@ This work consists of the file  gzt.dtx
             \g_@@_special_edition_title_tl
           }
         }{
-          \MakeUppercase {\c_@@_journal_title_string_tl}
+          \text_uppercase:n {\c_@@_journal_title_string_tl}
         }
       };
       \node[name=@@_binding_nw,inner~sep=\c_zero_dim,fill=\g_@@_special_edition_color_tl,rotate=90,anchor=east] at
@@ -6714,7 +6714,7 @@ This work consists of the file  gzt.dtx
 \@ifpackageloaded{draftwatermark}{%
   \SetWatermarkColor{gray!10}%
   \SetWatermarkFontSize{30mm}%
-  \SetWatermarkText{\MakeUppercase{\c_@@_draftwatermark_string_tl}}%
+  \SetWatermarkText{\text_uppercase:n{\c_@@_draftwatermark_string_tl}}%
 }{%
 }
 %    \end{macrocode}
@@ -7051,7 +7051,7 @@ This work consists of the file  gzt.dtx
   \tl_clear:N \l_@@_newtheorem_frenchtitle_tl
   \tl_clear:N \l_@@_newtheorem_englishtitle_tl
   \tl_set:Nn \l_@@_newtheorem_englishtitle_tl {
-    \MakeUppercase #2
+    \text_uppercase:n {#2}
   }
   \tl_set:Nf \l_@@_newtheorem_frenchtitle_tl {
     \l_@@_newtheorem_englishtitle_tl
