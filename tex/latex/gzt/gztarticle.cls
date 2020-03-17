@@ -7,7 +7,7 @@
 %% gzt.dtx  (with options: `class-article')
 %% -----------------------------------------------------------------------------
 %% gzt --- SMF bundle of classes for the French journal "La Gazette des
-%%         Math'ematiciens", version 0.98
+%%         Math'ematiciens", version 1.0.0
 %% 
 %% E-mail: denis.bitouze@univ-littoral.fr
 %% Released under the LaTeX Project Public License v1.3c or later
@@ -61,8 +61,8 @@
 \ExplSyntaxOn
 \ProvidesExplClass
   {gztarticle}
-  {2018/04/07}
-  {0.98}
+  {2020-03-17}
+  {1.0.0}
   {
     SMF~class~for~the~French~journal^^J
     "La~Gazette~des~Math'ematiciens".
@@ -222,7 +222,7 @@
 \AtEndPreamble{
   \tl_const:Nn \c__gzt_frontcover_header_string_tl {
     \bool_if:NT {\g__gzt_special_edition_bool} {
-      \tl_upper_case:n {\c__gzt_long_special_edition_string_tl}
+      \text_uppercase:n {\c__gzt_long_special_edition_string_tl}
       \medskip
       \par
       \normalsize
@@ -324,11 +324,11 @@
 \tl_const:Nn \c__gzt_Cad_string_tl {C'est-\`a-dire}
 \tl_const:Nn \c__gzt_footer_string_tl {
   \c__gzt_footer_size_font_tl
-  \textcolor{__gzt_smf_number_color}{\MakeTextUppercase{\c__gzt_smf_short_string_tl}}
+  \textcolor{__gzt_smf_number_color}{\text_uppercase:n {\c__gzt_smf_short_string_tl}}
   \c_space_tl
   \textcolor{__gzt_date_color}{
     \textendash{}\c_space_tl
-    \MakeTextUppercase{\c__gzt_journal_short_title_string_tl}
+    \text_uppercase:n {\c__gzt_journal_short_title_string_tl}
     \bool_if:nF { \g__gzt_inside_frontcover_bool || \g__gzt_backmatter_bool || {\int_compare_p:nNn {\g__gzt_issue_number_int}={0}} }
     {
       \c_space_tl\textendash{}\c_space_tl
@@ -1056,7 +1056,7 @@
       }
       \tl_if_in:NnF \l__gzt_people_speciality { NoValue } { ~(\l__gzt_people_speciality) }
       ]
-      \mbox{}
+      \leavevmode
       \vbox_top:n {%
         \l__gzt_people_affiliation_tl%
         \newline%
@@ -1196,7 +1196,7 @@
             \g__gzt_special_edition_title_tl
           }
         }{
-          \MakeUppercase {\c__gzt_journal_title_string_tl}
+          \text_uppercase:n {\c__gzt_journal_title_string_tl}
         }
       };
       \node[name=__gzt_binding_nw,inner~sep=\c_zero_dim,fill=\g__gzt_special_edition_color_tl,rotate=90,anchor=east] at
@@ -2088,6 +2088,41 @@
     }
   }
 }
+\cs_new_protected:Nn \__gzt_before_display_presidentmessage:
+{
+  \__gzt_before_editorial_presidentmessage:nn {\c__gzt_smf_logo_file_string_tl}{\c__gzt_president_message_string_tl}
+  \phantomsection
+  \par%
+  \addcontentsline{toc}{part}{\g__gzt_smf_short_string_tl}%
+  \addcontentsline{toc}{chapter}{\c__gzt_president_message_string_tl}%
+}
+\cs_new_protected:Nn \__gzt_after_display_presidentmessage:
+{
+  \__gzt_after_editorial_presidentmessage: {}
+  %
+  \hspace*{\fill}%
+  \c__gzt_president_message_date_string_tl%
+  \displaydate{__gzt_president_message_date}%
+  \\[1.5mm]
+  \hspace*{\fill}%
+  \__gzt_display_people_by_role:n { president }%
+  ,\c_space_tl
+  \c__gzt_president_signatory_string_tl
+  %
+  \__gzt_after_frontmatter_stuff: {}
+}
+\cs_new_protected:Nn \__gzt_display_president_message:
+{
+  \__gzt_before_display_presidentmessage: {}
+  \file_input:n {\c__gzt_president_message_file_string_tl}
+  \__gzt_after_display_presidentmessage: {}
+}
+\NewDocumentCommand \presidentmessage {}
+{
+  \bool_if:NF {\g__gzt_for_authors_bool} {
+    \__gzt_display_president_message: {}
+  }
+}
 \titleformat{\chapter}%
 [block]
 {\Huge\bfseries}
@@ -2251,7 +2286,7 @@
   \setfoot%
   [\c__gzt_footer_size_font_tl\thepage]%
   [%
-    \uppercase{\c__gzt_footer_string_tl}
+    \c__gzt_footer_string_tl
   ]%
   [
 \c__gzt_compiled_string_tl
@@ -2260,7 +2295,7 @@
 \c__gzt_compiled_string_tl
   }%
   {%
-    \uppercase{\c__gzt_footer_string_tl}%
+    \c__gzt_footer_string_tl%
   }%
   {\c__gzt_footer_size_font_tl\thepage}%
 }%
@@ -2299,24 +2334,24 @@
     \setfoot%
     [\c__gzt_footer_size_font_tl\thepage]%
     [%
-    \uppercase{\c__gzt_footer_string_tl}
+    \c__gzt_footer_string_tl
     ]%
     [\c__gzt_compiled_string_tl]%
     {\c__gzt_compiled_string_tl}%
     {%
-      \uppercase{\c__gzt_footer_string_tl}%
+      \c__gzt_footer_string_tl%
     }%
     {\c__gzt_footer_size_font_tl\thepage}%
   }{
     \setfoot%
     [\c__gzt_footer_size_font_tl\thepage]%
     [%
-    \uppercase{\c__gzt_footer_string_tl}
+    \c__gzt_footer_string_tl
     ]%
     []%
     {}%
     {%
-      \uppercase{\c__gzt_footer_string_tl}%
+      \c__gzt_footer_string_tl%
     }%
     {\c__gzt_footer_size_font_tl\thepage}%
   }
@@ -2825,7 +2860,7 @@
 \@ifpackageloaded{draftwatermark}{%
   \SetWatermarkColor{gray!10}%
   \SetWatermarkFontSize{30mm}%
-  \SetWatermarkText{\MakeUppercase{\c__gzt_draftwatermark_string_tl}}%
+  \SetWatermarkText{\text_uppercase:n{\c__gzt_draftwatermark_string_tl}}%
 }{%
 }
 \tikzset{
@@ -3049,7 +3084,7 @@
   \tl_clear:N \l__gzt_newtheorem_frenchtitle_tl
   \tl_clear:N \l__gzt_newtheorem_englishtitle_tl
   \tl_set:Nn \l__gzt_newtheorem_englishtitle_tl {
-    \MakeUppercase #2
+    \text_uppercase:n {#2}
   }
   \tl_set:Nf \l__gzt_newtheorem_frenchtitle_tl {
     \l__gzt_newtheorem_englishtitle_tl
