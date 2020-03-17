@@ -7454,10 +7454,7 @@ sub makeglossaries{
     system( "makeglossaries \"$_[0]\"" );
 }
 
-add_cus_dep('idx', 'ind', 0, 'texindy');
-sub texindy{
-    system("texindy -L french \"$_[0].idx\"");
-}
+$makeindex = 'texindy -L french;
 
 push @generated_exts, 'acn', 'acr', 'alg', 'bcf', 'fls', 'gl*', 'sbl*', 'sl*', 'sym*' ;
 
