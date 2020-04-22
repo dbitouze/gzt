@@ -2995,7 +2995,7 @@ This work consists of the file  gzt.dtx
 \cs_new_protected:Nn \@@_display_people_by_role:n
 {
   \DTLforeach*[\DTLiseq{\l_@@_people_role_tl}{#1}]{people}{%
-    \l_@@_firstlastname=first-last-name%
+    \l_@@_firstlastname_tl=first-last-name%
     ,\l_@@_people_affiliation_tl=affiliation%
     ,\l_@@_people_email_tl=email%
     ,\l_@@_people_minibio_tl=minibio%
@@ -3273,7 +3273,7 @@ This work consists of the file  gzt.dtx
           \bool_if:NT {\g_@@_credit_frontcover_bool} {
             \c_space_tl(\c_@@_credit_frontcover_string_tl{}~:~%
             \DTLforeach*[\DTLiseq{\l_@@_people_role_tl}{frontcovercredit}]{people}{%
-              \l_@@_firstlastname=first-last-name%
+              \l_@@_firstlastname_tl=first-last-name%
               ,\l_@@_people_role_tl=role%
             }{%
               \_@@_citeauthor_no_firstinits:n
@@ -4686,7 +4686,7 @@ This work consists of the file  gzt.dtx
     \_@@_citeauthor_no_firstinits:n {\c_@@_issue_bib_key_tl -editorinchief- 1}
   }{
     \DTLforeach*[\DTLiseq{\l_@@_people_role_tl}{editorinchief}]{people}{%
-      \l_@@_firstlastname=first-last-name%
+      \l_@@_firstlastname_tl=first-last-name%
       ,\l_@@_people_role_tl=role%
     }{%
       \_@@_citeauthor_no_firstinits:n {\c_@@_issue_bib_key_tl -editorinchief- \exp_not:V\DTLcurrentindex}%
