@@ -1652,9 +1652,9 @@ This work consists of the file  gzt.dtx
 % For the prefix of the bibliographic key of each article.
 %    \begin{macrocode}
 \bool_if:NTF {\g_@@_special_edition_bool} {
-  \tl_const:Nn \c_@@_issue_bib_key_tl {\int_use:N \g_@@_issue_number_int}
-}{
   \tl_const:Nn \c_@@_issue_bib_key_tl {special-edition}
+}{
+  \tl_const:Nn \c_@@_issue_bib_key_tl {\int_use:N \g_@@_issue_number_int}
 }
 %    \end{macrocode}
 % For the interview title.
