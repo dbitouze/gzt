@@ -2864,49 +2864,11 @@ This work consists of the file  gzt.dtx
 }
 %    \end{macrocode}
 %
-% \section{Database for the articles' authors}
-%
-% For this, and thanks to \Pkg{datatool}, we create a database of
-% \enquote{authors} of articles.
-%    \begin{macrocode}
-\DTLnewdb{_@@_authors}
-%    \end{macrocode}
-%
-% Then we create the internal "\_@@_authors" function that let us populate the
-% "_@@_authors" database. Each people will be identified by some identifiers:
-% \begin{itemize}
-% \item firstname and lastname, that should be at the biblatex name format
-% (\enquote{lastname, firstname}),
-% \item affiliation,
-% \item email,
-% \item minibio,
-% \item photo.
-% \end{itemize}
-%
-%    \begin{macrocode}
-\cs_new_protected:Nn \_@@_authors:nnnnnn
-  {
-    \DTLnewrow{_@@_authors}%
-    \DTLnewdbentry{_@@_authors}{first-last-name}{#1}%
-    \DTLnewdbentry{_@@_authors}{affiliation}{#2}%
-    \DTLnewdbentry{_@@_authors}{email}{#3}%
-    \DTLnewdbentry{_@@_authors}{minibio}{#4}%
-    \DTLnewdbentry{_@@_authors}{photo}{#5}%
-    \DTLnewdbentry{_@@_authors}{webpage}{#6}%
-  }
-%    \end{macrocode}
-%
 %    \begin{macrocode}
 \cs_new_protected:Nn \_@@_email:n
   {
     \href{mailto:#1}{\nolinkurl{#1}}%
   }
-%    \end{macrocode}
-%
-% We create a variant of this control sequence that passes the \emph{values} of the
-% variables involved (see \url{http://tex.stackexchange.com/a/214284/18401}).
-%    \begin{macrocode}
-\cs_generate_variant:Nn \_@@_authors:nnnnnn { nVVVVV }
 %    \end{macrocode}
 %
 % We create a function that displays the author(s) of an article with
@@ -2949,39 +2911,6 @@ This work consists of the file  gzt.dtx
 % variables involved (see \url{http://tex.stackexchange.com/a/214284/18401}).
 %    \begin{macrocode}
 \cs_generate_variant:Nn \@@_display_author:nnnnn { VVVVV }
-%    \end{macrocode}
-%
-% \section{Database for the interviewees}
-%
-% For this, and thanks to \Pkg{datatool}, we create a database of
-% \enquote{interviewees} of articles.
-%    \begin{macrocode}
-\DTLnewdb{_@@_interviewees}
-%    \end{macrocode}
-%
-% Then we create the internal "\_@@_interviewees" function that let us populate the
-% "_@@_interviewees" database. Each people will be identified by some identifiers:
-% \begin{itemize}
-% \item firstname and lastname, that should be at the biblatex name format
-% (\enquote{lastname, firstname}),
-% \item minibio,
-% \item photo.
-% \end{itemize}
-%
-%    \begin{macrocode}
-\cs_new_protected:Nn \_@@_interviewees:nnn
-  {
-    \DTLnewrow{_@@_interviewees}%
-    \DTLnewdbentry{_@@_interviewees}{first-last-name}{#1}%
-    \DTLnewdbentry{_@@_interviewees}{minibio}{#2}%
-    \DTLnewdbentry{_@@_interviewees}{photo}{#3}%
-  }
-%    \end{macrocode}
-%
-% We create a variant of this control sequence that passes the \emph{values} of the
-% variables involved (see \url{http://tex.stackexchange.com/a/214284/18401}).
-%    \begin{macrocode}
-\cs_generate_variant:Nn \_@@_interviewees:nnn { nVV }
 %    \end{macrocode}
 %
 % \section{Functions for specifiying the people involved in the journal}
