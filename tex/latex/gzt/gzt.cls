@@ -441,9 +441,9 @@
 \tl_const:Nn \c__gzt_issue_bib_file_string_tl {\c_sys_jobname_str\c__gzt_issue_bib_file_suffix_string_tl.bib}
 \tl_const:Nn \c__gzt_issue_bib_path_string_tl {\c__gzt_issue_bib_file_string_tl}
 \bool_if:NTF {\g__gzt_special_edition_bool} {
-  \tl_const:Nn \c__gzt_issue_bib_key_tl {\int_use:N \g__gzt_issue_number_int}
-}{
   \tl_const:Nn \c__gzt_issue_bib_key_tl {special-edition}
+}{
+  \tl_const:Nn \c__gzt_issue_bib_key_tl {\int_use:N \g__gzt_issue_number_int}
 }
 \tl_const:Nn \c__gzt_interview_title_string_tl {En~apart\'e~avec~}
 \tl_const:Nn \c__gzt_aside_string_tl {--}
@@ -1027,22 +1027,10 @@
     pdfauthor=\g__gzt_pdfauthor_string_tl%
   }
 }
-\DTLnewdb{__gzt_authors}
-\cs_new_protected:Nn \__gzt_authors:nnnnnn
-  {
-    \DTLnewrow{__gzt_authors}%
-    \DTLnewdbentry{__gzt_authors}{first-last-name}{#1}%
-    \DTLnewdbentry{__gzt_authors}{affiliation}{#2}%
-    \DTLnewdbentry{__gzt_authors}{email}{#3}%
-    \DTLnewdbentry{__gzt_authors}{minibio}{#4}%
-    \DTLnewdbentry{__gzt_authors}{photo}{#5}%
-    \DTLnewdbentry{__gzt_authors}{webpage}{#6}%
-  }
 \cs_new_protected:Nn \__gzt_email:n
   {
     \href{mailto:#1}{\nolinkurl{#1}}%
   }
-\cs_generate_variant:Nn \__gzt_authors:nnnnnn { nVVVVV }
 \cs_new_protected:Nn \__gzt_display_author:nnnnn
 {
   \begin{tabular}[t]{p{\c__gzt_authors_photos_box_width_dim}p{0.75\linewidth}}
@@ -1075,15 +1063,6 @@
   \end{tabular}
 }
 \cs_generate_variant:Nn \__gzt_display_author:nnnnn { VVVVV }
-\DTLnewdb{__gzt_interviewees}
-\cs_new_protected:Nn \__gzt_interviewees:nnn
-  {
-    \DTLnewrow{__gzt_interviewees}%
-    \DTLnewdbentry{__gzt_interviewees}{first-last-name}{#1}%
-    \DTLnewdbentry{__gzt_interviewees}{minibio}{#2}%
-    \DTLnewdbentry{__gzt_interviewees}{photo}{#3}%
-  }
-\cs_generate_variant:Nn \__gzt_interviewees:nnn { nVV }
 \DTLnewdb{people}
 \tl_new:N \l__gzt_crossref_tl
 \cs_new_protected:Nn \__gzt_people:nnnnnnnn
@@ -1131,7 +1110,7 @@
 \cs_new_protected:Nn \__gzt_display_people_by_role:n
 {
   \DTLforeach*[\DTLiseq{\l__gzt_people_role_tl}{#1}]{people}{%
-    \l__gzt_firstlastname=first-last-name%
+    \l__gzt_firstlastname_tl=first-last-name%
     ,\l__gzt_people_affiliation_tl=affiliation%
     ,\l__gzt_people_email_tl=email%
     ,\l__gzt_people_minibio_tl=minibio%
@@ -1153,26 +1132,29 @@
         \newline%
         \href{mailto:\l__gzt_people_email_tl}{\nolinkurl{\l__gzt_people_email_tl}}%
       }
-      \DTLiflastrow{%
-      }{%
-        \medskip%
-      }
+      \medskip%
     }{
       \tl_if_in:NnTF \l__gzt_people_role_tl { author } {
-        \footnotesize%
-        % \noindent%
-        \dim_set:Nn \l__gzt_minibio_width_dim {\linewidth-1em - \c__gzt_authors_photos_box_width_dim}
-        \tl_if_empty:NTF \l__gzt_people_photo_tl
-        {%
-          \dim_add:Nn \l__gzt_minibio_width_dim {\c__gzt_authors_photos_box_width_dim}
-        }{%
-          \begin{adjustbox}{valign=t,minipage=\c__gzt_authors_photos_box_width_dim}
-            \includegraphics[width=\c__gzt_authors_photos_width_dim]{\l__gzt_people_photo_tl}
-          \end{adjustbox}%
-          \quad%
-        }
-        \begin{adjustbox}{valign=t,minipage=\l__gzt_minibio_width_dim}
-          \begin{description}[leftmargin=1em,style=nextline]
+        \tl_if_empty:NF \l__gzt_firstlastname_tl {
+          \footnotesize%
+          % \noindent%
+          \DTLiffirstrow{%
+          }{
+            \DTLpar%
+            \medskip%
+          }
+          \dim_set:Nn \l__gzt_minibio_width_dim {\linewidth-1em - \c__gzt_authors_photos_box_width_dim}
+          \tl_if_empty:NTF \l__gzt_people_photo_tl
+          {%
+            \dim_add:Nn \l__gzt_minibio_width_dim {\c__gzt_authors_photos_box_width_dim}
+          }{%
+            \begin{adjustbox}{valign=t,minipage=\c__gzt_authors_photos_box_width_dim}
+              \includegraphics[width=\c__gzt_authors_photos_width_dim]{\l__gzt_people_photo_tl}
+            \end{adjustbox}%
+            \quad%
+          }
+          \begin{adjustbox}{valign=t,minipage=\l__gzt_minibio_width_dim}
+            \begin{description}[leftmargin=1em,style=nextline]
             \item[%
               \textcolor{__gzt_people_color}{%
                 \__gzt_citeauthor_no_firstinits:n {\c__gzt_issue_bib_key_tl -#1- \exp_not:V\DTLcurrentindex}%
@@ -1203,10 +1185,6 @@
               }
             \end{description}
           \end{adjustbox}
-        \DTLiflastrow{%
-        }{
-          \DTLpar%
-          \medskip%
         }
       }{
         \__gzt_citeauthor_no_firstinits:n {\c__gzt_issue_bib_key_tl -#1-
@@ -1391,7 +1369,7 @@
           \bool_if:NT {\g__gzt_credit_frontcover_bool} {
             \c_space_tl(\c__gzt_credit_frontcover_string_tl{}~:~%
             \DTLforeach*[\DTLiseq{\l__gzt_people_role_tl}{frontcovercredit}]{people}{%
-              \l__gzt_firstlastname=first-last-name%
+              \l__gzt_firstlastname_tl=first-last-name%
               ,\l__gzt_people_role_tl=role%
             }{%
               \__gzt_citeauthor_no_firstinits:n
@@ -1720,10 +1698,10 @@
   \SetParskip{\c__gzt_mainmatter_parskip_skip}
   \pagestyle{__gzt_mainmatter_ps}%
 }
-\tl_new:N \g__gzt_article_acknowledgements_tl%
+\tl_new:N \l__gzt_article_acknowledgements_tl%
 \cs_new_protected:Nn \__gzt_article_acknowledgements:n
 {
-  \tl_gset:Nn \g__gzt_article_acknowledgements_tl { #1 }
+  \tl_set:Nn \l__gzt_article_acknowledgements_tl { #1 }
 }
 \tl_new:N \g__gzt_about_frontcover_tl%
 \bool_new:N \g__gzt_credit_frontcover_bool%
@@ -2331,7 +2309,7 @@
     \__gzt_citeauthor_no_firstinits:n {\c__gzt_issue_bib_key_tl -editorinchief- 1}
   }{
     \DTLforeach*[\DTLiseq{\l__gzt_people_role_tl}{editorinchief}]{people}{%
-      \l__gzt_firstlastname=first-last-name%
+      \l__gzt_firstlastname_tl=first-last-name%
       ,\l__gzt_people_role_tl=role%
     }{%
       \__gzt_citeauthor_no_firstinits:n {\c__gzt_issue_bib_key_tl -editorinchief- \exp_not:V\DTLcurrentindex}%
@@ -2969,26 +2947,21 @@
   \FloatBarrier%
   \begin{__gzt_minibiographies_acknowledgements_tcbox}
     \__gzt_display_people_by_role:n { author-art-\int_use:N \g__gzt_articles_int }
-    \tl_if_empty:NF \g__gzt_article_acknowledgements_tl
+    \DTLsavelastrowcount{\__gzt_authors_number}
+    \tl_if_empty:NF \l__gzt_article_acknowledgements_tl
     {%
-      \par%
-      \bigskip%
+      \int_compare:nNnT {\__gzt_authors_number}>{0}
+      {
+        \par%
+        \bigskip%
+      }
       \begin{adjustbox}{valign=t,minipage=\linewidth}
         \color{__gzt_acknowledgements_color}%
-        \g__gzt_article_acknowledgements_tl
+        \l__gzt_article_acknowledgements_tl
       \end{adjustbox}
-  }
+    }
+    \bool_gset_true:N \g__gzt_previous_article_with_bibliography_or_minibio_bool
   \end{__gzt_minibiographies_acknowledgements_tcbox}
-  \bool_gset_true:N \g__gzt_previous_article_with_bibliography_or_minibio_bool
-  %
-  \tl_gclear:N \g__gzt_people_affiliation_tl
-  \tl_gclear:N \g__gzt_people_email_tl
-  \tl_gclear:N \g__gzt_people_minibio_tl
-  \tl_gclear:N \g__gzt_people_photo_tl
-  \tl_gclear:N \g__gzt_people_webpage_tl
-  \tl_gclear:N \g__gzt_article_acknowledgements_tl
-  \DTLgcleardb{__gzt_authors}
-  \DTLgcleardb{__gzt_interviewees}
 }
 \let\printauthorsdetails\printminibios
 \cs_set_eq:NN \__gzt_printbibliography \printbibliography
@@ -3487,6 +3460,12 @@
   \bool_gset_true:N \g__gzt_mainmatter_bool
 }
 \NewDocumentCommand \gztinput { m m } {%
+  \tl_gclear:N \g__gzt_people_affiliation_tl
+  \tl_gclear:N \g__gzt_people_email_tl
+  \tl_gclear:N \g__gzt_people_minibio_tl
+  \tl_gclear:N \g__gzt_people_photo_tl
+  \tl_gclear:N \g__gzt_people_webpage_tl
+  \tl_clear:N \l__gzt_article_acknowledgements_tl
   \startcustomization%
   \bool_if:NF {\g__gzt_refsection_bool} {
     \begin{refsection}
