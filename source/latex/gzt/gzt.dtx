@@ -3023,20 +3023,26 @@ This work consists of the file  gzt.dtx
       }
     }{
       \tl_if_in:NnTF \l_@@_people_role_tl { author } {
-        \footnotesize%
-        % \noindent%
-        \dim_set:Nn \l_@@_minibio_width_dim {\linewidth-1em - \c_@@_authors_photos_box_width_dim}
-        \tl_if_empty:NTF \l_@@_people_photo_tl
-        {%
-          \dim_add:Nn \l_@@_minibio_width_dim {\c_@@_authors_photos_box_width_dim}
-        }{%
-          \begin{adjustbox}{valign=t,minipage=\c_@@_authors_photos_box_width_dim}
-            \includegraphics[width=\c_@@_authors_photos_width_dim]{\l_@@_people_photo_tl}
-          \end{adjustbox}%
-          \quad%
-        }
-        \begin{adjustbox}{valign=t,minipage=\l_@@_minibio_width_dim}
-          \begin{description}[leftmargin=1em,style=nextline]
+        \tl_if_empty:NF \l_@@_firstlastname_tl {
+          \footnotesize%
+          % \noindent%
+          \DTLiffirstrow{%
+          }{
+            \DTLpar%
+            \medskip%
+          }
+          \dim_set:Nn \l_@@_minibio_width_dim {\linewidth-1em - \c_@@_authors_photos_box_width_dim}
+          \tl_if_empty:NTF \l_@@_people_photo_tl
+          {%
+            \dim_add:Nn \l_@@_minibio_width_dim {\c_@@_authors_photos_box_width_dim}
+          }{%
+            \begin{adjustbox}{valign=t,minipage=\c_@@_authors_photos_box_width_dim}
+              \includegraphics[width=\c_@@_authors_photos_width_dim]{\l_@@_people_photo_tl}
+            \end{adjustbox}%
+            \quad%
+          }
+          \begin{adjustbox}{valign=t,minipage=\l_@@_minibio_width_dim}
+            \begin{description}[leftmargin=1em,style=nextline]
             \item[%
               \textcolor{@@_people_color}{%
                 \_@@_citeauthor_no_firstinits:n {\c_@@_issue_bib_key_tl -#1- \exp_not:V\DTLcurrentindex}%
@@ -3067,10 +3073,6 @@ This work consists of the file  gzt.dtx
               }
             \end{description}
           \end{adjustbox}
-        \DTLiflastrow{%
-        }{
-          \DTLpar%
-          \medskip%
         }
       }{
         \_@@_citeauthor_no_firstinits:n {\c_@@_issue_bib_key_tl -#1-
@@ -3823,10 +3825,10 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\tl_new:N \g_@@_article_acknowledgements_tl%
+\tl_new:N \l_@@_article_acknowledgements_tl%
 \cs_new_protected:Nn \@@_article_acknowledgements:n
 {
-  \tl_gset:Nn \g_@@_article_acknowledgements_tl { #1 }
+  \tl_set:Nn \l_@@_article_acknowledgements_tl { #1 }
 }
 %    \end{macrocode}
 %
@@ -5626,31 +5628,21 @@ This work consists of the file  gzt.dtx
   \FloatBarrier%
   \begin{_@@_minibiographies_acknowledgements_tcbox}
     \@@_display_people_by_role:n { author-art-\int_use:N \g_@@_articles_int }
-    \tl_if_empty:NF \g_@@_article_acknowledgements_tl
+    \DTLsavelastrowcount{\_@@_authors_number}
+    \tl_if_empty:NF \l_@@_article_acknowledgements_tl
     {%
-      \par%
-      \bigskip%
+      \int_compare:nNnT {\_@@_authors_number}>{0}
+      {
+        \par%
+        \bigskip%
+      }
       \begin{adjustbox}{valign=t,minipage=\linewidth}
         \color{@@_acknowledgements_color}%
-        \g_@@_article_acknowledgements_tl
+        \l_@@_article_acknowledgements_tl
       \end{adjustbox}
-  }
+    }
+    \bool_gset_true:N \g_@@_previous_article_with_bibliography_or_minibio_bool
   \end{_@@_minibiographies_acknowledgements_tcbox}
-  \bool_gset_true:N \g_@@_previous_article_with_bibliography_or_minibio_bool
-  %
-  \tl_gclear:N \g_@@_people_affiliation_tl
-  \tl_gclear:N \g_@@_people_email_tl
-  \tl_gclear:N \g_@@_people_minibio_tl
-  \tl_gclear:N \g_@@_people_photo_tl
-  \tl_gclear:N \g_@@_people_webpage_tl
-  \tl_gclear:N \g_@@_article_acknowledgements_tl
-%    \end{macrocode}
-%
-% We clear the authors database for this new article (XXX: to be moved to the
-% authors' minibiographies area).
-%    \begin{macrocode}
-  \DTLgcleardb{_@@_authors}
-  \DTLgcleardb{_@@_interviewees}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -6349,6 +6341,12 @@ This work consists of the file  gzt.dtx
 % "multicols" environments.
 %    \begin{macrocode}
 \NewDocumentCommand \gztinput { m m } {%
+  \tl_gclear:N \g_@@_people_affiliation_tl
+  \tl_gclear:N \g_@@_people_email_tl
+  \tl_gclear:N \g_@@_people_minibio_tl
+  \tl_gclear:N \g_@@_people_photo_tl
+  \tl_gclear:N \g_@@_people_webpage_tl
+  \tl_clear:N \l_@@_article_acknowledgements_tl
   \startcustomization%
   \bool_if:NF {\g_@@_refsection_bool} {
     \begin{refsection}
