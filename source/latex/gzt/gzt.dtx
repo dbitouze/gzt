@@ -5740,6 +5740,7 @@ This work consists of the file  gzt.dtx
     \DTLsavelastrowcount{\_@@_authors_number}
     \tl_if_empty:NF \l_@@_article_acknowledgements_tl
     {%
+      \footnotesize
       \int_compare:nNnT {\_@@_authors_number}>{0}
       {
         \par%
@@ -5747,6 +5748,7 @@ This work consists of the file  gzt.dtx
       }
       \begin{adjustbox}{valign=t,minipage=\linewidth}
         \color{@@_acknowledgements_color}%
+        \setlength{\parskip}{\c_@@_mainmatter_parskip_skip}
         \l_@@_article_acknowledgements_tl
       \end{adjustbox}
     }
