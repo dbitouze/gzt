@@ -684,6 +684,7 @@ This work consists of the file  gzt.dtx
 % \section{Class loading}
 %
 %    \begin{macrocode}
+\bool_new:N \g_@@_moral_report_bool
 \bool_new:N \g_@@_special_edition_bool
 \bool_new:N \g_@@_for_authors_bool
 \bool_new:N \g_@@_for_printer_bool
@@ -694,6 +695,19 @@ This work consists of the file  gzt.dtx
 \bool_new:N \g_@@_no_inside_backcover_bool
 %<class-article>\bool_gset_true:N \g_@@_for_authors_bool%
 %<class-article>\bool_gset_true:N \g_@@_inside_pages_bool%
+%    \end{macrocode}
+%
+% We define some common code to the "moralreport" global option of "gzt" and
+% "gztarticle".
+%    \begin{macrocode}
+\tl_gset:Nn \g_@@_moral_report_common_option_tl {%
+  \AtEndPreamble {%
+    \bool_gset_true:N \g_@@_moral_report_bool
+    \bool_gset_true:N \g_@@_frontcover_without_minitoc_bool
+    \title[short={\bfseries\c_@@_moralreport_rubric_string_tl}]{}
+    \tl_gset:Nn \g_@@_rubric_title_tl {\c_@@_moralreport_rubric_string_tl}
+  }
+}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -780,7 +794,61 @@ This work consists of the file  gzt.dtx
   specialedition / editorial~author .code:n = {%
     \_@@_people:nnnnnnnn {#1}{}{}{}{}{}{editorinchief}{}
   },%
+  moralreport .code:n = {
+    \g_@@_moral_report_common_option_tl
+    \AtEndPreamble {%
+      \tl_gset:Nn \g_@@_pdftitle_string_tl {\c_@@_moralreport_rubric_string_tl}
+    }
+  },
 }%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\keys_define:nn { gztarticle }
+{
+  editorial .code:n = {%
+    \AtBeginDocument{%
+      \_@@_before_display_editorial:n {}%
+    }
+    \AtEndDocument{%
+      \_@@_after_display_editorial: {}%
+    }
+  },%
+  presidentmessage .code:n = {%
+    \AtBeginDocument{%
+      \_@@_before_display_presidentmessage: {}%
+    }
+    \AtEndDocument{%
+      \_@@_after_display_presidentmessage: {}%
+    }
+  },%
+  moralreport .code:n = {
+    \g_@@_moral_report_common_option_tl
+    \keys_set:nn { gztarticle / moralreport } {#1}
+  },
+  moralreport / title .code:n = {%
+    \tl_gset:Nn \g_@@_moral_report_title_tl {#1}
+  },%
+  moralreport / short~title .code:n = {%
+    \tl_gset:Nn \g_@@_moral_report_short_title_tl {#1}
+  },%
+}%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class-article>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
 %    \end{macrocode}
 %
 % If we want to disable the inside backcover.
@@ -1436,21 +1504,25 @@ This work consists of the file  gzt.dtx
 % For the pdftitle text.
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_pdftitle_string_tl {
-  \c_@@_journal_title_string_tl
-  % \c_space_tl
-  % \textendash{}
-  % \c_space_tl
-  % \l_@@_uppercased_date_format{\displaydate{@@_date}}
-  \c_space_tl
-  \textendash{}
-  \c_space_tl
-  N°
-  \bool_if:NTF {\g_@@_special_edition_bool} {
-    \c_@@_special_edition_string_tl
-    \c_space_tl
-    \g_@@_special_edition_title_tl
+  \bool_if:NTF {\g_@@_moral_report_bool} {
+    \c_@@_moralreport_rubric_string_tl
   }{
-    \int_use:N\g_@@_issue_number_int
+    \c_@@_journal_title_string_tl
+    % \c_space_tl
+    % \textendash{}
+    % \c_space_tl
+    % \l_@@_uppercased_date_format{\displaydate{@@_date}}
+    \c_space_tl
+    \textendash{}
+    \c_space_tl
+    N°
+    \bool_if:NTF {\g_@@_special_edition_bool} {
+      \c_@@_special_edition_string_tl
+      \c_space_tl
+      \g_@@_special_edition_title_tl
+    }{
+      \int_use:N\g_@@_issue_number_int
+    }
   }
 }
 %    \end{macrocode}
@@ -1620,15 +1692,19 @@ This work consists of the file  gzt.dtx
   \c_space_tl
   \textcolor{@@_date_color}{
     \textendash{}\c_space_tl
-    \text_uppercase:n {\c_@@_journal_short_title_string_tl}
-    \bool_if:nF { \g_@@_inside_frontcover_bool || \g_@@_backmatter_bool || {\int_compare_p:nNn {\g_@@_issue_number_int}={0}} }
-    {
-      \c_space_tl\textendash{}\c_space_tl
-      \l_@@_uppercased_date_format\displaydate{@@_date}
-      \bool_if:NF {\g_@@_special_edition_bool} {
-        \c_space_tl
-        \textendash{}\c_space_tl
-        \textcolor{@@_smf_number_color}{\No\int_use:N\g_@@_issue_number_int}
+    \bool_if:NTF {\g_@@_moral_report_bool} {
+      \text_uppercase:n { \c_@@_moralreport_rubric_string_tl }
+    }{
+      \text_uppercase:n {\c_@@_journal_short_title_string_tl}
+      \bool_if:nF { \g_@@_inside_frontcover_bool || \g_@@_backmatter_bool || {\int_compare_p:nNn {\g_@@_issue_number_int}={0}} }
+      {
+        \c_space_tl\textendash{}\c_space_tl
+        \l_@@_uppercased_date_format\displaydate{@@_date}
+        \bool_if:NF {\g_@@_special_edition_bool} {
+          \c_space_tl
+          \textendash{}\c_space_tl
+          \textcolor{@@_smf_number_color}{\No\int_use:N\g_@@_issue_number_int}
+        }
       }
     }
   }
@@ -3535,6 +3611,18 @@ This work consists of the file  gzt.dtx
   \bool_gset_true:N \g_@@_special_edition_bool
   \bool_gset_true:N \g_@@_frontcover_without_minitoc_bool
   \keys_set:nn { gzt/specialedition } {#1}
+}
+%    \end{macrocode}
+%
+% \subsection{Moral report setup}
+%
+% \begin{macro}{\moralreportsetup}
+%   We define the command that lets the user specify the moral report setup.
+%    \begin{macrocode}
+\NewDocumentCommand \moralreportsetup { m } {
+  \bool_gset_true:N \g_@@_moral_report_bool
+  \bool_gset_true:N \g_@@_frontcover_without_minitoc_bool
+  \keys_set:nn { gzt/moralreport } {#1}
 }
 %    \end{macrocode}
 %
@@ -6408,28 +6496,6 @@ This work consists of the file  gzt.dtx
 %
 %    \begin{macrocode}
 %<*class-article>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-\keys_define:nn { gztarticle }
-{
-  editorial .code:n = {%
-    \AtBeginDocument{%
-      \_@@_before_display_editorial:n {}%
-    }
-    \AtEndDocument{%
-      \_@@_after_display_editorial: {}%
-    }
-  },%
-  presidentmessage .code:n = {%
-    \AtBeginDocument{%
-      \_@@_before_display_presidentmessage: {}%
-    }
-    \AtEndDocument{%
-      \_@@_after_display_presidentmessage: {}%
-    }
-  },%
-}%
 %    \end{macrocode}
 %
 %    \begin{macrocode}
