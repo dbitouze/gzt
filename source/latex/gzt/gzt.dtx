@@ -4064,6 +4064,30 @@ This work consists of the file  gzt.dtx
 %<*class|class-article>
 %    \end{macrocode}
 %
+% We create a command for local (to a given article) tables of contents
+%    \begin{macrocode}
+\cs_new_protected:Nn \_@@_display_localtoc:
+{
+  \etocsettocstyle{\section*{\contentsname}}{}%
+  \etocsetstyle {section}
+  {}
+  {\leavevmode\leftskip 0cm\relax}
+  {\bfseries\normalsize\makebox[.6cm][l]{\etocnumber}%
+    \etocname\nobreak\hfill\nobreak%
+    \makebox[.5cm][r]{%
+      \etocpage%
+    }%
+    \par%
+  }
+  {\medskip}
+  \localtableofcontentswithrelativedepth{+1}
+}
+\NewDocumentCommand \gztlocaltableofcontents {}
+{
+  \_@@_display_localtoc: {}
+}
+%    \end{macrocode}
+%
 % We create two token lists that will contain:
 % \begin{enumerate}
 % \item the unique bibliographic key,
