@@ -7407,7 +7407,7 @@ sub makeglossaries{
     system( "makeglossaries \"$_[0]\"" );
 }
 
-$makeindex = 'texindy -L french;
+$makeindex = 'texindy -L french -C utf8';
 
 push @generated_exts, 'acn', 'acr', 'alg', 'bcf', 'fls', 'gl*', 'sbl*', 'sl*', 'sym*' ;
 
