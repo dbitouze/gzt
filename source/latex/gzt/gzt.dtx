@@ -6274,7 +6274,12 @@ This work consists of the file  gzt.dtx
   inputencoding=utf8/latin1
 }%
 \DeclareTotalTCBox{\gztverb}{ v }{verbatim,blank,fuzzy~halo=0pt~with~@@_light_generic_dark_color!8}{#1}
-\NewTCBListing{gztcode}{ O{} }{%
+%    \end{macrocode}
+%
+% The optional argument declaration must be prefixed with an "!" (see
+% \url{https://github.com/T-F-S/tcolorbox/issues/43}).
+%    \begin{macrocode}
+\NewTCBListing{gztcode}{ !O{} }{%
   listing~style=@@_lst_style,
   listing~only,
   enlarge~top~by=\medskipamount,
