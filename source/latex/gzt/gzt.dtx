@@ -710,7 +710,7 @@ This work consists of the file  gzt.dtx
 % "gztarticle".
 %    \begin{macrocode}
 \tl_gset:Nn \g_@@_moral_report_common_option_tl {%
-  \AtEndPreamble {%
+  \AddToHook{begindocument/before} {%
     \bool_gset_true:N \g_@@_moral_report_bool
     \bool_gset_true:N \g_@@_frontcover_without_minitoc_bool
     \title[short={\bfseries\c_@@_moralreport_rubric_string_tl}]{}
@@ -805,7 +805,7 @@ This work consists of the file  gzt.dtx
   },%
   moralreport .code:n = {
     \g_@@_moral_report_common_option_tl
-    \AtEndPreamble {%
+    \AddToHook{begindocument/before} {%
       \tl_gset:Nn \g_@@_pdftitle_string_tl {\c_@@_moralreport_rubric_string_tl}
     }
   },
@@ -824,18 +824,18 @@ This work consists of the file  gzt.dtx
 \keys_define:nn { gztarticle }
 {
   editorial .code:n = {%
-    \AtBeginDocument{%
+    \AddToHook{begindocument}{%
       \_@@_before_display_editorial:n {}%
     }
-    \AtEndDocument{%
+    \AddToHook{enddocument}{%
       \_@@_after_display_editorial: {}%
     }
   },%
   presidentmessage .code:n = {%
-    \AtBeginDocument{%
+    \AddToHook{begindocument}{%
       \_@@_before_display_presidentmessage: {}%
     }
-    \AtEndDocument{%
+    \AddToHook{enddocument}{%
       \_@@_after_display_presidentmessage: {}%
     }
   },%
@@ -1082,7 +1082,7 @@ This work consists of the file  gzt.dtx
 %
 % \item Hooks to do actions on every page or on the current page:
 %    \begin{macrocode}
-\RequirePackage{everypage}
+% \RequirePackage{everypage}
 %    \end{macrocode}
 %
 % \item For translating words in \LaTeX{}.
@@ -1447,7 +1447,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % For the editorial.
 %    \begin{macrocode}
-\AtEndPreamble{
+\AddToHook{begindocument/before}{
   \bool_if:NTF {\g_@@_special_edition_bool} {
     \tl_const:Nn \c_@@_editorial_heading_string_tl {Avant-propos}
   }{
@@ -1487,7 +1487,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 % For the front cover header text.
 %    \begin{macrocode}
-\AtEndPreamble{
+\AddToHook{begindocument/before}{
   \tl_const:Nn \c_@@_frontcover_header_string_tl {
     \bool_if:NT {\g_@@_special_edition_bool} {
       \text_uppercase:n {\c_@@_long_special_edition_string_tl}
@@ -2863,16 +2863,16 @@ This work consists of the file  gzt.dtx
 % a flag that will be used to test wheter we are inside such an environment or
 % not.
 %    \begin{macrocode}
-\AtBeginEnvironment{multicols}{
+\AddToHook{env/multicols/begin}{
   \bool_gset_true:N \g_@@_multicols_bool
 }
-\AtEndEnvironment{multicols}{
+\AddToHook{env/multicols/end}{
   \bool_gset_false:N \g_@@_multicols_bool
 }
-\AtBeginEnvironment{refsection}{
+\AddToHook{env/refsection/begin}{
   \bool_gset_true:N \g_@@_refsection_bool
 }
-\AtEndEnvironment{refsection}{
+\AddToHook{env/refsection/end}{
   \bool_gset_false:N \g_@@_refsection_bool
 }
 %    \end{macrocode}
@@ -2941,7 +2941,7 @@ This work consists of the file  gzt.dtx
 \tl_gset:Nn \g_@@_pdfauthor_string_tl {
   \g_@@_smf_string_tl
 }
-\AtEndPreamble{%
+\AddToHook{begindocument/before}{%
   \hypersetup{%
     pdftitle=\g_@@_pdftitle_string_tl,
     pdfauthor=\g_@@_pdfauthor_string_tl%
@@ -3762,7 +3762,7 @@ This work consists of the file  gzt.dtx
 % This can be done only at the beginning of the document, in order to know the
 % characteristics of the current issue.
 %    \begin{macrocode}
-\AtBeginDocument{%
+\AddToHook{begindocument}{%
 %    \end{macrocode}
 %
 % We first create a token list containing the date of the current issue formated
@@ -4595,7 +4595,7 @@ This work consists of the file  gzt.dtx
 % We load the file where acronyms are defined.
 %    \begin{macrocode}
 \file_if_exist:nT { \c_@@_acronyms_file_string_tl } {%
-  \AtEndPreamble{\loadglsentries{\c_@@_acronyms_file_string_tl}}
+  \AddToHook{begindocument/before}{\loadglsentries{\c_@@_acronyms_file_string_tl}}
 }
 %    \end{macrocode}
 %
@@ -4614,7 +4614,7 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
 \bool_if:nT { \g_@@_for_authors_bool }
 {
-  \AtEndDocument{%
+  \AddToHook{enddocument}{%
     \bool_if:NT {\g_@@_multicols_bool} {
       \end{multicols}%
     }
@@ -4628,7 +4628,7 @@ This work consists of the file  gzt.dtx
 % at the end of preamble instead of begin of the document in order some settings
 % needed in preamble are taken in account.
 %    \begin{macrocode}
-\AtEndPreamble{
+\AddToHook{begindocument/before}{
   \file_if_exist_input:nF {\c_@@_configuration_file_string_tl}
   {
     \msg_error:nn { gzt } { configuration-file-missing }
@@ -4826,7 +4826,7 @@ This work consists of the file  gzt.dtx
   }
   \_@@_after_display_editorial: {}
 }
-\AtEndPreamble{%
+\AddToHook{begindocument/before}{%
   \tl_set_eq:NN \g_@@_editorial_heading_tl \c_@@_editorial_heading_string_tl
   \bool_if:NT {\g_@@_special_edition_bool} {
     \tl_if_empty:NF \g_@@_special_edition_editorial_heading_tl {%
@@ -5036,7 +5036,7 @@ This work consists of the file  gzt.dtx
 % \end{itemize}
 %
 %    \begin{macrocode}
-\AtBeginDocument{%
+\AddToHook{begindocument}{%
   \graphicspath{{\c_@@_issue_images_path_string_tl//}{../\c_@@_issue_images_path_string_tl//}}
   % \glsdisablehyper
   \g_@@_mainmatter_switch_tl
@@ -5057,7 +5057,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\AtBeginDocument{%
+\AddToHook{begindocument}{%
   \dim_if_exist:NTF \g_@@_pagegrid_dim {%
     \pagegridsetup{%
       enable,%
@@ -5091,7 +5091,7 @@ This work consists of the file  gzt.dtx
     \bool_if:NF {\g_@@_inside_pages_bool} {
       \g_@@_display_frontcover_tl
       \bool_if:NTF {\g_@@_coverpage_bool} {
-        \AfterEndPreamble{\end{document}}
+        \AddToHook{begindocument/end}{\end{document}}
       }{
         \g_@@_display_inside_frontcover_tl
       }
@@ -5654,7 +5654,7 @@ This work consists of the file  gzt.dtx
 %
 % We draw a gray background at the bottom of each page, but the first one.
 %    \begin{macrocode}
-\AddEverypageHook{%
+\AddToHook{shipout/background}{
 %<class> \bool_if:nF { \g_@@_frontcover_bool || \g_@@_backcover_bool }{
     \bool_if:NF {\g_@@_advertisement_bool} {
       \tikz[remember~picture,overlay] { \g_@@_background_footer_tl }%
@@ -6499,12 +6499,13 @@ This work consists of the file  gzt.dtx
 % If we don't ask the cover page (only), the inside back cover and back cover
 % pages are automatically included at the end of the document, the former
 % containing some condensed instructions to authors. But, this cannot be done
-% within "\AtEndDocument" and "\preto\@enddocumenthook" should be used instead
-% (see \url{http://tex.stackexchange.com/q/240318/18401}).
+% within "\AddToHook{enddocument}" and "\preto\@enddocumenthook" should be used instead
+% (see \url{http://tex.stackexchange.com/q/240318/18401}). (Update (2021-02-14):
+% we now rely on the new ×\AddToHook{env/document/end}×.)
 %    \begin{macrocode}
 \bool_if:NF {\g_@@_coverpage_bool} {
   \bool_if:NF {\g_@@_inside_pages_bool} {
-    \preto\@enddocumenthook{
+    \AddToHook{enddocument/end}{
       \bool_gset_true:N \g_@@_backmatter_bool
       \g_@@_display_inside_backcover_tl
       \newpage
@@ -6522,7 +6523,7 @@ This work consists of the file  gzt.dtx
 \bool_if:NF {\g_@@_coverpage_bool} {
   \bool_if:nF { \g_@@_for_authors_bool } {
     \bool_if:nT { \g_@@_inside_pages_bool } {
-      \AtEndDocument{%
+      \AddToHook{enddocument}{%
         \prg_replicate:nn
         { \int_mod:nn { 4 - \int_mod:nn { \getpagerefnumber{LastPage} } { 4 } } { 4 } }
         { \thispagestyle{@@_blank_pages_ps}\null\clearpage }
@@ -6545,7 +6546,7 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\AtEndDocument{%
+\AddToHook{enddocument}{%
   \bool_if:NT {\g_@@_multicols_bool} {
   \end{multicols}%
   }
@@ -6797,7 +6798,7 @@ This work consists of the file  gzt.dtx
     enlarge~left~by=\c_@@_inside_cover_offset_dim,
   }
 }
-\AtEndPreamble{%
+\AddToHook{begindocument/before}{%
   \bool_if:NTF {\g_@@_special_edition_bool} {
     \tcbset{
       _@@_tcb_inside_frontcover_style/.append~style={%
