@@ -7,12 +7,14 @@
 %% gzt.dtx  (with options: `class')
 %% -----------------------------------------------------------------------------
 %% gzt --- SMF bundle of classes for the French journal "La Gazette des
-%%         Math'ematiciens", version 1.0.0
+%%         Math'ematiciens"
 %% 
 %% E-mail: denis.bitouze@univ-littoral.fr
 %% Released under the LaTeX Project Public License v1.3c or later
 %% See http://www.latex-project.org/lppl.txt
 %% -----------------------------------------------------------------------------
+\def\gztfileversion{1.0.1}
+\def\gztfiledate{2021-02-14}
 \def\sectioncommandslist{}%
 \let\saved@ifdefinable\@ifdefinable%
 \let\saved@@ifdefinable\@@ifdefinable%
@@ -81,13 +83,14 @@
 \ExplSyntaxOn
 \ProvidesExplClass
   {gzt}
-  {2020-03-17}
-  {1.0.0}
+  {\gztfiledate}
+  {\gztfileversion}
   {
     SMF~class~for~the~French~journal^^J
     "La~Gazette~des~Math'ematiciens".
   }
 \NeedsTeXFormat{LaTeX2e}
+\bool_new:N \g__gzt_moral_report_bool
 \bool_new:N \g__gzt_special_edition_bool
 \bool_new:N \g__gzt_for_authors_bool
 \bool_new:N \g__gzt_for_printer_bool
@@ -95,6 +98,14 @@
 \bool_new:N \g__gzt_coverpage_bool
 \bool_new:N \g__gzt_inside_pages_bool
 \bool_new:N \g__gzt_no_inside_backcover_bool
+\tl_gset:Nn \g__gzt_moral_report_common_option_tl {%
+  \AddToHook{begindocument/before} {%
+    \bool_gset_true:N \g__gzt_moral_report_bool
+    \bool_gset_true:N \g__gzt_frontcover_without_minitoc_bool
+    \title[short={\bfseries\c__gzt_moralreport_rubric_string_tl}]{}
+    \tl_gset:Nn \g__gzt_rubric_title_tl {\c__gzt_moralreport_rubric_string_tl}
+  }
+}
 \dim_const:Nn \c__gzt_pagegrid_dim { 1mm}
 \tl_gset:Nn \g__gzt_frontcover_image_file_tl {\c__gzt_issue_frontcover_default_image_file_tl}
 \tl_gset:Nn \g__gzt_special_edition_color_tl {__gzt_default_cover_color}
@@ -156,6 +167,12 @@
   specialedition / editorial~author .code:n = {%
     \__gzt_people:nnnnnnnn {#1}{}{}{}{}{}{editorinchief}{}
   },%
+  moralreport .code:n = {
+    \g__gzt_moral_report_common_option_tl
+    \AddToHook{begindocument/before} {%
+      \tl_gset:Nn \g__gzt_pdftitle_string_tl {\c__gzt_moralreport_rubric_string_tl}
+    }
+  },
 }%
 \ProcessKeysOptions { gzt }
 \PassOptionsToClass{openany,english,french}{book}
@@ -209,7 +226,6 @@
 \RequirePackage{mathtools}
 \RequirePackage{rsfso}
 \RequirePackage{esvect}
-\RequirePackage{everypage}
 \RequirePackage{translator}%
 \RequirePackage{geometry}
 \RequirePackage{babel}%
@@ -294,7 +310,7 @@
 \tl_const:Nn \c__gzt_printer_string_tl {Impression}
 \tl_const:Nn \c__gzt_configuration_file_string_tl {gzt.cfg}
 \tl_const:Nn \c__gzt_artistic_director_string_tl {Conception~graphique}
-\AtEndPreamble{
+\AddToHook{begindocument/before}{
   \bool_if:NTF {\g__gzt_special_edition_bool} {
     \tl_const:Nn \c__gzt_editorial_heading_string_tl {Avant-propos}
   }{
@@ -310,7 +326,7 @@
 \tl_const:Nn \c__gzt_special_edition_string_tl {\c_space_tl{}sp{\'e}cial}
 \tl_const:Nn \c__gzt_long_special_edition_string_tl {Numéro\c__gzt_special_edition_string_tl}%
 \tl_const:Nn \c__gzt_short_special_edition_string_tl {\No{}\c__gzt_special_edition_string_tl}%
-\AtEndPreamble{
+\AddToHook{begindocument/before}{
   \tl_const:Nn \c__gzt_frontcover_header_string_tl {
     \bool_if:NT {\g__gzt_special_edition_bool} {
       \text_uppercase:n {\c__gzt_long_special_edition_string_tl}
@@ -330,21 +346,25 @@
 }
 \clist_const:Nn \c__gzt__graphics_extensions_clist {png,PNG,jpg,JPG,jpeg,JPEG,pdf,PDF}
 \tl_const:Nn \c__gzt_pdftitle_string_tl {
-  \c__gzt_journal_title_string_tl
-  % \c_space_tl
-  % \textendash{}
-  % \c_space_tl
-  % \l__gzt_uppercased_date_format{\displaydate{__gzt_date}}
-  \c_space_tl
-  \textendash{}
-  \c_space_tl
-  N°
-  \bool_if:NTF {\g__gzt_special_edition_bool} {
-    \c__gzt_special_edition_string_tl
-    \c_space_tl
-    \g__gzt_special_edition_title_tl
+  \bool_if:NTF {\g__gzt_moral_report_bool} {
+    \c__gzt_moralreport_rubric_string_tl
   }{
-    \int_use:N\g__gzt_issue_number_int
+    \c__gzt_journal_title_string_tl
+    % \c_space_tl
+    % \textendash{}
+    % \c_space_tl
+    % \l__gzt_uppercased_date_format{\displaydate{__gzt_date}}
+    \c_space_tl
+    \textendash{}
+    \c_space_tl
+    N°
+    \bool_if:NTF {\g__gzt_special_edition_bool} {
+      \c__gzt_special_edition_string_tl
+      \c_space_tl
+      \g__gzt_special_edition_title_tl
+    }{
+      \int_use:N\g__gzt_issue_number_int
+    }
   }
 }
 \tl_const:Nn \c__gzt_frontmatter_directory_string_tl {frontmatter}
@@ -419,15 +439,19 @@
   \c_space_tl
   \textcolor{__gzt_date_color}{
     \textendash{}\c_space_tl
-    \text_uppercase:n {\c__gzt_journal_short_title_string_tl}
-    \bool_if:nF { \g__gzt_inside_frontcover_bool || \g__gzt_backmatter_bool || {\int_compare_p:nNn {\g__gzt_issue_number_int}={0}} }
-    {
-      \c_space_tl\textendash{}\c_space_tl
-      \l__gzt_uppercased_date_format\displaydate{__gzt_date}
-      \bool_if:NF {\g__gzt_special_edition_bool} {
-        \c_space_tl
-        \textendash{}\c_space_tl
-        \textcolor{__gzt_smf_number_color}{\No\int_use:N\g__gzt_issue_number_int}
+    \bool_if:NTF {\g__gzt_moral_report_bool} {
+      \text_uppercase:n { \c__gzt_moralreport_rubric_string_tl }
+    }{
+      \text_uppercase:n {\c__gzt_journal_short_title_string_tl}
+      \bool_if:nF { \g__gzt_inside_frontcover_bool || \g__gzt_backmatter_bool || {\int_compare_p:nNn {\g__gzt_issue_number_int}={0}} }
+      {
+        \c_space_tl\textendash{}\c_space_tl
+        \l__gzt_uppercased_date_format\displaydate{__gzt_date}
+        \bool_if:NF {\g__gzt_special_edition_bool} {
+          \c_space_tl
+          \textendash{}\c_space_tl
+          \textcolor{__gzt_smf_number_color}{\No\int_use:N\g__gzt_issue_number_int}
+        }
       }
     }
   }
@@ -961,16 +985,16 @@
 \colorlet{__gzt_book_advertisement_bg_color}{white}
 \colorlet{__gzt_book_advertisement_frame_color}{__gzt_generic_dark_color}
 \colorlet{__gzt_default_cover_color}{white}
-\AtBeginEnvironment{multicols}{
+\AddToHook{env/multicols/begin}{
   \bool_gset_true:N \g__gzt_multicols_bool
 }
-\AtEndEnvironment{multicols}{
+\AddToHook{env/multicols/end}{
   \bool_gset_false:N \g__gzt_multicols_bool
 }
-\AtBeginEnvironment{refsection}{
+\AddToHook{env/refsection/begin}{
   \bool_gset_true:N \g__gzt_refsection_bool
 }
-\AtEndEnvironment{refsection}{
+\AddToHook{env/refsection/end}{
   \bool_gset_false:N \g__gzt_refsection_bool
 }
 \tl_const:Nn \c__gzt_footer_size_font_tl {
@@ -1021,7 +1045,7 @@
 \tl_gset:Nn \g__gzt_pdfauthor_string_tl {
   \g__gzt_smf_string_tl
 }
-\AtEndPreamble{%
+\AddToHook{begindocument/before}{%
   \hypersetup{%
     pdftitle=\g__gzt_pdftitle_string_tl,
     pdfauthor=\g__gzt_pdfauthor_string_tl%
@@ -1105,7 +1129,9 @@
 \cs_new_protected:Nn \__gzt_display_academic_signature:n
 {
   \bigskip
+  \begin{__gzt_minibiographies_acknowledgements_tcbox}
     #1
+  \end{__gzt_minibiographies_acknowledgements_tcbox}
 }
 \cs_new_protected:Nn \__gzt_display_people_by_role:n
 {
@@ -1537,6 +1563,11 @@
   \bool_gset_true:N \g__gzt_frontcover_without_minitoc_bool
   \keys_set:nn { gzt/specialedition } {#1}
 }
+\NewDocumentCommand \moralreportsetup { m } {
+  \bool_gset_true:N \g__gzt_moral_report_bool
+  \bool_gset_true:N \g__gzt_frontcover_without_minitoc_bool
+  \keys_set:nn { gzt/moralreport } {#1}
+}
 \NewDocumentCommand \journalsetup { m } {
   \keys_set:nn { gzt/journalsetup } { #1 }
 }
@@ -1600,7 +1631,7 @@
 \newdateformat{l__gzt_uppercased_date_format}{
   \__gzt_uppercased_monthname_french:n {\THEMONTH}~\THEYEAR
 }
-\AtBeginDocument{%
+\AddToHook{begindocument}{%
 \tl_new:N \g__gzt_bib_issue_date_tl
 \tl_gset:Nn \g__gzt_bib_issue_date_tl {
   \int_use:N \g__gzt_issue_year_int-
@@ -1805,6 +1836,26 @@
     \bool_gset_false:N \g__gzt_rubric_bool%
   }
   \ignorespaces
+}
+\cs_new_protected:Nn \__gzt_display_localtoc:
+{
+  \etocsettocstyle{\section*{\contentsname}}{}%
+  \etocsetstyle {section}
+  {}
+  {\leavevmode\leftskip 0cm\relax}
+  {\bfseries\normalsize\makebox[.6cm][l]{\etocnumber}%
+    \etocname\nobreak\hfill\nobreak%
+    \makebox[.5cm][r]{%
+      \etocpage%
+    }%
+    \par%
+  }
+  {\medskip}
+  \localtableofcontentswithrelativedepth{+1}
+}
+\NewDocumentCommand \gztlocaltableofcontents {}
+{
+  \__gzt_display_localtoc: {}
 }
 \tl_new:N \g__gzt_article_bib_key_tl%
 \tl_new:N \l__gzt_people_first_last_names_tl
@@ -2157,17 +2208,17 @@
     }
   }
 \file_if_exist:nT { \c__gzt_acronyms_file_string_tl } {%
-  \AtEndPreamble{\loadglsentries{\c__gzt_acronyms_file_string_tl}}
+  \AddToHook{begindocument/before}{\loadglsentries{\c__gzt_acronyms_file_string_tl}}
 }
 \bool_if:nT { \g__gzt_for_authors_bool }
 {
-  \AtEndDocument{%
+  \AddToHook{enddocument}{%
     \bool_if:NT {\g__gzt_multicols_bool} {
       \end{multicols}%
     }
   }
 }
-\AtEndPreamble{
+\AddToHook{begindocument/before}{
   \file_if_exist_input:nF {\c__gzt_configuration_file_string_tl}
   {
     \msg_error:nn { gzt } { configuration-file-missing }
@@ -2327,7 +2378,7 @@
   }
   \__gzt_after_display_editorial: {}
 }
-\AtEndPreamble{%
+\AddToHook{begindocument/before}{%
   \tl_set_eq:NN \g__gzt_editorial_heading_tl \c__gzt_editorial_heading_string_tl
   \bool_if:NT {\g__gzt_special_edition_bool} {
     \tl_if_empty:NF \g__gzt_special_edition_editorial_heading_tl {%
@@ -2460,7 +2511,7 @@
 {}
 {\c_zero_dim}
 {}
-\AtBeginDocument{%
+\AddToHook{begindocument}{%
   \graphicspath{{\c__gzt_issue_images_path_string_tl//}{../\c__gzt_issue_images_path_string_tl//}}
   % \glsdisablehyper
   \g__gzt_mainmatter_switch_tl
@@ -2470,7 +2521,7 @@
   % \pagestyle{__gzt_mainmatter_ps}%
   \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_main_geometry_tl}%
 }
-\AtBeginDocument{%
+\AddToHook{begindocument}{%
   \dim_if_exist:NTF \g__gzt_pagegrid_dim {%
     \pagegridsetup{%
       enable,%
@@ -2504,7 +2555,7 @@
     \bool_if:NF {\g__gzt_inside_pages_bool} {
       \g__gzt_display_frontcover_tl
       \bool_if:NTF {\g__gzt_coverpage_bool} {
-        \AfterEndPreamble{\end{document}}
+        \AddToHook{begindocument/end}{\end{document}}
       }{
         \g__gzt_display_inside_frontcover_tl
       }
@@ -2878,7 +2929,7 @@
   {}%
   {}%
 }%
-\AddEverypageHook{%
+\AddToHook{shipout/background}{
  \bool_if:nF { \g__gzt_frontcover_bool || \g__gzt_backcover_bool }{
     \bool_if:NF {\g__gzt_advertisement_bool} {
       \tikz[remember~picture,overlay] { \g__gzt_background_footer_tl }%
@@ -2950,6 +3001,7 @@
     \DTLsavelastrowcount{\__gzt_authors_number}
     \tl_if_empty:NF \l__gzt_article_acknowledgements_tl
     {%
+      \footnotesize
       \int_compare:nNnT {\__gzt_authors_number}>{0}
       {
         \par%
@@ -2957,6 +3009,7 @@
       }
       \begin{adjustbox}{valign=t,minipage=\linewidth}
         \color{__gzt_acknowledgements_color}%
+        \setlength{\parskip}{\c__gzt_mainmatter_parskip_skip}
         \l__gzt_article_acknowledgements_tl
       \end{adjustbox}
     }
@@ -3317,7 +3370,7 @@
   inputencoding=utf8/latin1
 }%
 \DeclareTotalTCBox{\gztverb}{ v }{verbatim,blank,fuzzy~halo=0pt~with~__gzt_light_generic_dark_color!8}{#1}
-\NewTCBListing{gztcode}{ O{} }{%
+\NewTCBListing{gztcode}{ !O{} }{%
   listing~style=__gzt_lst_style,
   listing~only,
   enlarge~top~by=\medskipamount,
@@ -3488,7 +3541,7 @@
 }
 \bool_if:NF {\g__gzt_coverpage_bool} {
   \bool_if:NF {\g__gzt_inside_pages_bool} {
-    \preto\@enddocumenthook{
+    \AddToHook{enddocument/end}{
       \bool_gset_true:N \g__gzt_backmatter_bool
       \g__gzt_display_inside_backcover_tl
       \newpage
@@ -3499,7 +3552,7 @@
 \bool_if:NF {\g__gzt_coverpage_bool} {
   \bool_if:nF { \g__gzt_for_authors_bool } {
     \bool_if:nT { \g__gzt_inside_pages_bool } {
-      \AtEndDocument{%
+      \AddToHook{enddocument}{%
         \prg_replicate:nn
         { \int_mod:nn { 4 - \int_mod:nn { \getpagerefnumber{LastPage} } { 4 } } { 4 } }
         { \thispagestyle{__gzt_blank_pages_ps}\null\clearpage }
@@ -3675,7 +3728,7 @@
     enlarge~left~by=\c__gzt_inside_cover_offset_dim,
   }
 }
-\AtEndPreamble{%
+\AddToHook{begindocument/before}{%
   \bool_if:NTF {\g__gzt_special_edition_bool} {
     \tcbset{
       __gzt_tcb_inside_frontcover_style/.append~style={%
@@ -3797,7 +3850,7 @@
   \tl_clear:N \l__gzt_newtheorem_frenchtitle_tl
   \tl_clear:N \l__gzt_newtheorem_englishtitle_tl
   \tl_set:Nn \l__gzt_newtheorem_englishtitle_tl {
-    \text_uppercase:n {#2}
+    \text_titlecase:n {#2}
   }
   \tl_set:Nf \l__gzt_newtheorem_frenchtitle_tl {
     \l__gzt_newtheorem_englishtitle_tl
