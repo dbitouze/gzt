@@ -39,21 +39,24 @@ Gazette des Mathématiciens”](https://smf.emath.fr/les-publications/la-gazette
   \expandafter\begingroup
 \fi
 %</internal>
+%<*class|class-article|install>
+\def\gztfileversion{1.0.1}
+\def\gztfiledate{2021-02-14}
+%</class|class-article|install>
 %<*install>
 \input l3docstrip.tex
 % \input docstrip.tex
-\Msg{********************************************************}
+\Msg{**************************************************************}
 \Msg{* Installation}
-\Msg{* Class: gzt 2020-03-17 v1.0.0}
-\Msg{* for the French journal}
-\Msg{* "La Gazette des Math'ematiciens" (DB)}
-\Msg{********************************************************}
+\Msg{* Class: gzt \gztfiledate\space v\gztfileversion}
+\Msg{* for the French journal "La Gazette des Math'ematiciens" (DB)}
+\Msg{**************************************************************}
 \keepsilent
 \askforoverwritefalse
 \preamble
 -----------------------------------------------------------------------------
 gzt --- SMF bundle of classes for the French journal "La Gazette des
-        Math'ematiciens", version 1.0.0
+        Math'ematiciens"
 
 E-mail: denis.bitouze@univ-littoral.fr
 Released under the LaTeX Project Public License v1.3c or later
@@ -667,8 +670,8 @@ This work consists of the file  gzt.dtx
 \ProvidesExplClass
 %<class>  {gzt}
 %<class-article>  {gztarticle}
-  {2020-03-17}
-  {1.0.0}
+  {\gztfiledate}
+  {\gztfileversion}
   {
     SMF~class~for~the~French~journal^^J
     "La~Gazette~des~Math'ematiciens".
