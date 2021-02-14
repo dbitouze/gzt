@@ -102,7 +102,7 @@ optionnel permettant de spécifier un (sous-)titre court au moyen de la clé
   courant\footnote{En entête.}.
 \end{docKey}
 
-\begin{bodycode}
+\begin{bodycode}[listing options={deletekeywords={[1]{exemple,title,label}}}]
 \title[short=Les travaux de Martin \surname{Hairer}]{Martin \surname{Hairer},
   l'équation de KPZ et les structures de régularité}
 \end{bodycode}
@@ -116,7 +116,7 @@ optionnel permettant de spécifier un (sous-)titre court au moyen de la clé
 \label{sec-auteurs}
 
 Un auteur d'article est spécifié au moyen de la commande \refCom{author}
-suivante. En cas d'auteurs multiples, il  suffit de recourir à plusieurs
+suivante. En cas d'auteurs multiples, il suffit de recourir à plusieurs
 occurrences de cette commande.
 
 \begin{docCommand}{author}{\oarg{options}\brackets{\meta{Nom}, \meta{Prénom}}}
@@ -272,7 +272,7 @@ L'exemple suivant\footnote{Les commandes \refCom{surname} et \refCom{enquote}
   qui y figurent sont documentées plus loin.} illustre la plupart des commandes
 et options vues jusqu'ici.
 
-\begin{bodycode}
+\begin{bodycode}[listing options={deletekeywords={[2]{article}}}]
 \title[short=Les travaux de Manjul \surname{Bhargava}]{Manjul \surname{Bhargava},
   anneaux de petit rang et courbes elliptiques}
 %
@@ -423,8 +423,17 @@ recueilli les propos peuvent être signalées dans le résumé (cf. environnemen
 Cette section donne une liste exhaustive des outils (commandes et
 environnements) fournis par la \gztauthorcl.
 
+\subsection{Table des matières locale}
+\label{sec:table-des-matieres}
+
+\begin{docCommand}{gztlocaltableofcontents}{}
+  Cette commande, facultative, permet de faire figurer une table des matières
+  locale à un article.
+\end{docCommand}
+
+Une telle table des matières n'affiche que les sections de l'article.
+
 \subsection{Images, tableaux et cadres}
-\label{sec-images-tableaux}
 
 La \gztauthorcl{} fournit des environnements :
 \begin{itemize}
@@ -448,127 +457,131 @@ La \gztauthorcl{} fournit des environnements :
 % La \gztauthorcl{} fournit en outre les environnements plus neutres
 % \refEnv{gztframe} et \refEnv{gztframe*} qui permettent de placer du contenu dans
 % des cadres.
+%
+% Tous ces environnements acceptent des options décrites \vref{sec-options-gzt}.
 
-Tous ces environnements acceptent des options décrites \vref{sec-options-gzt}.
+\begin{docEnvironments}[
+  doclang/environment content=image,
+  doc parameter = \oarg{options}
+  ]{
+    {
+      doc name=gztfigure,
+      doclang/environment content=image,
+    },
+    {
+      doc name=gztfigure*,
+      doclang/environment content=image,
+    },
+    {
+      doc name=gzttable,
+      doclang/environment content=tableau,
+    },
+    {
+      doc name=gzttable*,
+      doclang/environment content=tableau,
+    },
+    {
+      doc name=gztframe,
+      doclang/environment content=contenu à encadrer,
+    },
+    {
+      doc name=gztframe*,
+      doclang/environment content=contenu à encadrer,
+    }
+  }
+  Ces environnements insèrent l'\meta{image}, le \meta{tableau} ou le
+  \meta{contenu à encadrer}\footnote{Mais sans être estampillé \enquote{Figure}
+    ou \enquote{Tableau}.} dans un cadre :
+  \begin{description}
+  \item[de largeur :]\leavevmode
+    \begin{description}
+    \item[versions non étoilées :] celle de la ligne courante, donc notamment
+      celle de la ligne d'une colonne en mode bi-colonne ;
+    \item[versions étoilées :] celle de l'empagement, donc
+      à cheval sur les deux colonnes en mode bi-colonne ;
+    \end{description}
+  \item[placé :]\leavevmode
+    \begin{description}
+    \item[versions non étoilées :] là où l'environnement a été
+      utilisé\footnote{Il s'agit d'un environnement \enquote{non flottant}.} ;
+    \item[versions étoilées :] si possible en haut de la page où l'environnement
+      a été utilisé\footnote{Il s'agit d'un environnement \phantom{non}
+        \enquote{flottant}.}.
+    \end{description}
+  \end{description}
+\end{docEnvironments}
 
-\subsubsection{Images}
-\label{sec-images}
+% \begin{docEnvironment}[doclang/environment content=tableau créé avec \docAuxEnvironment{tabular}]{gzttable}{\oarg{option(s)}}
+%   Cet environnement insère le tableau :
+%   \begin{itemize}
+%   \item \emph{à l'emplacement où il est utilisé} ;
+%   \item dans un cadre de largeur la ligne courante, donc notamment de la largeur
+%     de la ligne d'une colonne en mode bi-colonne.
+%   \end{itemize}
+% \end{docEnvironment}
+%
+% \begin{docEnvironment}[doclang/environment content=tableau créé avec \docAuxEnvironment{tabular}]{gzttable*}{\oarg{option(s)}}
+%   Cet environnement insère le tableau :
+%   \begin{itemize}
+%   \item en haut de la page où il a été employé, donc probablement \emph{pas}
+%     à l'emplacement où il est utilisé (il s'agit d'un tableau
+%     \enquote{flottant}) ;
+%   \item dans un cadre de largeur celle de l'empagement, donc à cheval sur les
+%     deux colonnes en mode bi-colonne.
+%   \end{itemize}
+% \end{docEnvironment}
+%
+% \subsubsection{Cadres}
+% \label{sec-cadres}
+%
+% Le contenu
+% % \footnote{Notamment des images et, le cas échéant, des tableaux.}
+% devant être encadré mais sans être estampillé \enquote{Figure} ou
+% \enquote{Tableau} le sera au moyen de l'un des deux environnements
+% \refEnv{gztframe} et \refEnv{gztframe*} suivants.
+%
+% \begin{docEnvironment}[doclang/environment content=contenu à encadrer]{gztframe}{\oarg{option(s)}}
+%   Cet environnement insère le \meta{contenu à encadrer} :
+%   \begin{itemize}
+%   \item \emph{à l'emplacement où il est utilisé} ;
+%   \item dans un cadre
+%     \begin{itemize}
+%     \item de largeur la ligne courante, donc notamment de la largeur de la ligne
+%       d'une colonne en mode bi-colonne ;
+%     \item pourvu d'une zone de titre seulement si un titre est spécifié au moyen de
+%       la clé \refKey{title}.
+%     \end{itemize}
+%   \end{itemize}
+% \end{docEnvironment}
+%
+% \begin{docEnvironment}[doclang/environment content=contenu à encadrer]{gztframe*}{\oarg{option(s)}}
+%   Cet environnement insère le \meta{contenu à encadrer} :
+%   \begin{itemize}
+%   \item en haut de la page où il a été employé, donc probablement \emph{pas}
+%     à l'emplacement où il est utilisé (il s'agit d'un cadre
+%     \enquote{flottant}) ;
+%   \item dans un cadre :
+%     \begin{itemize}
+%     \item de largeur celle de l'empagement, donc à cheval sur les deux colonnes
+%       en mode bi-colonne ;
+%     \item pourvu d'une zone de titre seulement si un titre est spécifié au moyen de
+%       la clé \refKey{title}.
+%     \end{itemize}
+%   \end{itemize}
+% \end{docEnvironment}
+%
+% \subsubsection{Options}
+% \label{sec-options-gzt}
 
-Une image est incluse au moyen :
-\begin{itemize}
-\item soit de la commande standard \docAuxCommand{includegraphics}\footnote{Il
-    est possible de passer à cette commande toutes ses options définies par le
-    \Package{graphicx}.} ;
-\item soit de code \LaTeX{} de création de dessins\footnote{Cf. par exemple les
-    packages \package{TikZ} et dérivés.} ;
-\end{itemize}
-à insérer dans l'un des deux environnements \refEnv{gztfigure} et
-\refEnv{gztfigure*} suivants.
-
-\begin{docEnvironment}[doclang/environment content=image]{gztfigure}{\oarg{option(s)}}
-  Cet environnement insère l'image :
-  \begin{itemize}
-  \item \emph{à l'emplacement où il est utilisé} ;
-  \item dans un cadre de largeur la ligne courante, donc notamment de la largeur
-    de la ligne d'une colonne en mode bi-colonne.
-  \end{itemize}
-\end{docEnvironment}
-
-\begin{docEnvironment}[doclang/environment content=image]{gztfigure*}{\oarg{option(s)}}
-  Cet environnement insère l'image :
-  \begin{itemize}
-  \item en haut de la page où il a été employé, donc probablement \emph{pas}
-    à l'emplacement où il est utilisé (il s'agit d'une figure
-    \enquote{flottante}) ;
-  \item dans un cadre de largeur celle de l'empagement, donc à cheval sur les
-    deux colonnes en mode bi-colonne.
-  \end{itemize}
-\end{docEnvironment}
-
-\subsubsection{Tableaux}
-\label{sec-tableaux}
-
-Un tableau est créé au moyen de l'environnement standard
-\docAuxEnvironment{tabular}\footnote{Il est recommandé de faire usage du
-  \Package*{booktabs} pour produire des tableaux plus lisibles.} mais celui-ci
-doit être employé dans l'un des deux environnements \refEnv{gzttable} et
-\refEnv{gzttable*} suivants.
-
-\begin{docEnvironment}[doclang/environment content=tableau créé avec \docAuxEnvironment{tabular}]{gzttable}{\oarg{option(s)}}
-  Cet environnement insère le tableau :
-  \begin{itemize}
-  \item \emph{à l'emplacement où il est utilisé} ;
-  \item dans un cadre de largeur la ligne courante, donc notamment de la largeur
-    de la ligne d'une colonne en mode bi-colonne.
-  \end{itemize}
-\end{docEnvironment}
-
-\begin{docEnvironment}[doclang/environment content=tableau créé avec \docAuxEnvironment{tabular}]{gzttable*}{\oarg{option(s)}}
-  Cet environnement insère le tableau :
-  \begin{itemize}
-  \item en haut de la page où il a été employé, donc probablement \emph{pas}
-    à l'emplacement où il est utilisé (il s'agit d'un tableau
-    \enquote{flottant}) ;
-  \item dans un cadre de largeur celle de l'empagement, donc à cheval sur les
-    deux colonnes en mode bi-colonne.
-  \end{itemize}
-\end{docEnvironment}
-
-\subsubsection{Cadres}
-\label{sec-cadres}
-
-Le contenu
-% \footnote{Notamment des images et, le cas échéant, des tableaux.}
-devant être encadré mais sans être estampillé \enquote{Figure} ou
-\enquote{Tableau} le sera au moyen de l'un des deux environnements
-\refEnv{gztframe} et \refEnv{gztframe*} suivants.
-
-\begin{docEnvironment}[doclang/environment content=contenu à encadrer]{gztframe}{\oarg{option(s)}}
-  Cet environnement insère le \meta{contenu à encadrer} :
-  \begin{itemize}
-  \item \emph{à l'emplacement où il est utilisé} ;
-  \item dans un cadre
-    \begin{itemize}
-    \item de largeur la ligne courante, donc notamment de la largeur de la ligne
-      d'une colonne en mode bi-colonne ;
-    \item pourvu d'une zone de titre seulement si un titre est spécifié au moyen de
-      la clé \refKey{title}.
-    \end{itemize}
-  \end{itemize}
-\end{docEnvironment}
-
-\begin{docEnvironment}[doclang/environment content=contenu à encadrer]{gztframe*}{\oarg{option(s)}}
-  Cet environnement insère le \meta{contenu à encadrer} :
-  \begin{itemize}
-  \item en haut de la page où il a été employé, donc probablement \emph{pas}
-    à l'emplacement où il est utilisé (il s'agit d'un cadre
-    \enquote{flottant}) ;
-  \item dans un cadre :
-    \begin{itemize}
-    \item de largeur celle de l'empagement, donc à cheval sur les deux colonnes
-      en mode bi-colonne ;
-    \item pourvu d'une zone de titre seulement si un titre est spécifié au moyen de
-      la clé \refKey{title}.
-    \end{itemize}
-  \end{itemize}
-\end{docEnvironment}
-
-\subsubsection{Options}
-\label{sec-options-gzt}
-
-Les environnements
-\begin{itemize}
-\item \refEnv{gztfigure} et \refEnv{gztfigure*} ;
-\item \refEnv{gzttable} et \refEnv{gzttable*} ;
-\end{itemize}
-admettent en argument optionnel :
+Ces environnements admettent en \meta{options} :
 \begin{itemize}
 \item la plupart des (très nombreuses) options de l'environnement
   \docAuxEnvironment{tcolorbox} du \Package*{tcolorbox}. On retiendra notamment
   les options suivantes :
 \begin{docKey}{title}{=\meta{titre}}{pas de valeur par défaut,
     initialement vide}
-  Cette clé permet de spécifier l'éventuel \meta{titre} (ou légende).
+  Cette clé permet de spécifier l'éventuel \meta{titre} (au sens de
+  \enquote{légende} de flottant).
 \end{docKey}
 \begin{docKey}{label}{=\meta{label}}{pas de valeur par défaut, initialement
     vide}
@@ -584,6 +597,24 @@ admettent en argument optionnel :
     \emph{copyright}.
 \end{docKey}
 \end{itemize}
+
+\begin{dbremark}{Production des images et tableaux}{}
+  \begin{itemize}
+  \item Une \meta{image} est incluse au moyen :
+    \begin{itemize}
+    \item soit de la commande standard
+      \docAuxCommand{includegraphics}\footnote{Il est possible de passer à cette
+        commande toutes ses options définies par le \Package{graphicx}.} ;
+    \item soit de code \LaTeX{} de création de dessins\footnote{Cf. par exemple
+        les packages \package{TikZ} et dérivés (notamment \package{pgfplots}).}.
+    \end{itemize}
+  \item Un \meta{tableau} est créé au moyen de l'environnement standard
+    \docAuxEnvironment{tabular} ou
+    assimilé\footnote{P. ex. \docAuxEnvironment{tabularx} du package
+      éponyme.}. Il est recommandé de faire usage du \Package*{booktabs} pour
+    produire des tableaux plus lisibles.
+  \end{itemize}
+\end{dbremark}
 
 Les exemples suivants illustrent les environnements et options qui viennent
 d'être vus.

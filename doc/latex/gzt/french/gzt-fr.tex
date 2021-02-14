@@ -1,10 +1,11 @@
 \documentclass{gztarticle}
 %
-\newdate{release-date}{17}{03}{2020}
-\newcommand{\releaseversion}{1.0.0}
-%
-\usepackage{denisbdoc}
+\usepackage[gzt]{denisbdoc}
 \usepackage[firstpage]{draftwatermark}
+%
+\lstset{%
+  alsolanguage=[varioref]TeX,%
+}
 %
 \indexsetup{level=\section*,toclevel=section,noclearpage,firstpagestyle=__gzt_mainmatter_ps}
 \makeindex[columns=3]
@@ -70,37 +71,38 @@
 }
 \ExplSyntaxOff
 %
-\lstMakeShortInline[style=dbtex]|
-%
 \SetWatermarkColor{gray!10}%
 \SetWatermarkFontSize{30mm}%
 \SetWatermarkText{\MakeUppercase{travail en cours}}%
 %
 \addbibresource{gzt-fr.bib}
 %
+\input{sections/fixed-footnotes}
+%
+\DTMsavedate{filedate}{\gztfiledate}
+%
 \begin{document}
 \title[short=Documentation de la classe de la \emph{Gazette} destinée aux
 auteurs]{Documentation de la classe \LaTeX{} de la \gzt*{} destinée aux
   auteurs}
-\subtitle[short=Version \releaseversion{}
-(\displaydate{release-date})]{\bigskip\Large Version \releaseversion{} en date du
-  \displaydate{release-date}}%
+\subtitle[short=Version \gztfileversion{}
+(\DTMusedate{filedate})]{\bigskip\Large Version \gztfileversion{} en date du
+  \DTMusedate{filedate}}%
 %
 \author[%
 affiliation={%
   Université du Littoral Côte d'Opale, Laboratoire de mathématiques pures et
   appliquées%
 },%
-photo=denis,%
-email=denis.bitouze@lmpa.univ-littoral.fr,%
-webpage=http://gte.univ-littoral.fr/members/dbitouze/pub/latex/,%
+photo=./denis,%
+email=denis.bitouze@univ-littoral.fr,%
+webpage=https://gte.univ-littoral.fr/Members/denis-bitouze/pub/latex,%
 ]{Bitouzé, Denis}
 %
 \maketitle*
 %
 \localtableofcontents
 %
-\input{sections/fixed-footnotes}
 \input{sections/gztarticle}
 \input{sections/packages-charges}
 \input{sections/notations}
