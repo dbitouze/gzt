@@ -5729,14 +5729,13 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 % \begin{macro}{\printminibios}
-% \begin{macro}{\printauthorsdetails}
 % We define the public command which displays
 % \begin{itemize}
 % \item the affiliation(s), email(s) and minibiographie(s) of the authors,
 % \item the acknowledgements if not empty.
 % \end{itemize}
 %    \begin{macrocode}
-\NewDocumentCommand \printminibios {} {
+\NewDocumentCommand \printminibios { s } {
   \bool_if:NT {\g_@@_multicols_bool} {
     \end{multicols}%
   }
@@ -5747,7 +5746,11 @@ This work consists of the file  gzt.dtx
 %    \begin{macrocode}
   \FloatBarrier%
   \begin{_@@_minibiographies_acknowledgements_tcbox}
-    \@@_display_people_by_role:n { author-art-\int_use:N \g_@@_articles_int }
+    \nopagebreak[0]
+    \IfBooleanF {#1}
+    {
+      \@@_display_people_by_role:n { author-art-\int_use:N \g_@@_articles_int }
+    }
     \DTLsavelastrowcount{\_@@_authors_number}
     \tl_if_empty:NF \l_@@_article_acknowledgements_tl
     {%
@@ -5766,11 +5769,6 @@ This work consists of the file  gzt.dtx
     \bool_gset_true:N \g_@@_previous_article_with_bibliography_or_minibio_bool
   \end{_@@_minibiographies_acknowledgements_tcbox}
 }
-%    \end{macrocode}
-% \end{macro}
-% We define "\printauthorsdetails" as an alias of "\printminibios".
-%    \begin{macrocode}
-\let\printauthorsdetails\printminibios
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5802,10 +5800,11 @@ This work consists of the file  gzt.dtx
     \_@@_printbibliography[heading=subbibliography,resetnumbers,#2]
   \end{_@@_bibliography_tcbox}
   %
-  \IfBooleanF {#1}
+  \IfBooleanTF {#1}
   {
-    \nopagebreak[0]
-    \printauthorsdetails
+    \printminibios*
+  }{
+    \printminibios
   }
 }
 %    \end{macrocode}
