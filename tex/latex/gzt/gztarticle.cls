@@ -15,8 +15,6 @@
 %% -----------------------------------------------------------------------------
 \def\gztfileversion{1.0.1}
 \def\gztfiledate{2021-02-14}
-\RequirePackage{silence}%
-\WarningFilter{kpfonts}{With 'easyscsl' option}
 \RequirePackage{xpatch}%
 \patchcmd%
   {\use@@tikzlibrary}%
@@ -135,7 +133,7 @@
   }{
     \RequirePackage{fontspec}
   }
-\RequirePackage[sfmath,easyscsl,noDcommand]{kpfonts}
+\RequirePackage[sfmath,noDcommand]{kpfonts}
 \RequirePackage[pagestyles]{titlesec}%
 \RequirePackage{multicol}%
 \RequirePackage{graphicx}%
@@ -2880,11 +2878,6 @@
 \DeclareFieldFormat[book]{volume}{\mkbibbold{#1}}
 \DeclareFieldFormat[article]{number}{\bibstring{number}#1}
 \DeclareLanguageMapping{french}{gzt}% use the new abbreviations
-\ifkp@easyscsl
-\DeclareRobustCommand{\itshape}{\not@math@alphabet\itshape\mathit%
-  \ifthenelse{\equal{\f@shape}{\scdefault}}{\fontshape{scsl}}{%
-    \fontshape\itdefault}\selectfont}
-\fi
 \DeclareMathAlphabet\mathfrak{U}{euf}{m}{n}
 \SetMathAlphabet\mathfrak{bold}{U}{euf}{b}{n}
 \@ifpackageloaded{draftwatermark}{%
