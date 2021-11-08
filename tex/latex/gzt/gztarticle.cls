@@ -2228,7 +2228,7 @@
   \bool_if:NTF {\g__gzt_special_edition_bool} {
     \g__gzt_special_edition_title_tl
   }{
-    \includegraphics{gzt-logo}
+    \includegraphics[scale=.9]{gzt-logo}
   }
 }
 \tl_new:N \g__gzt_frontmatter_page_headrule_tl
@@ -2409,13 +2409,17 @@
 \NewDocumentCommand \acknowledgements { +m } {
   \__gzt_article_acknowledgements:n {#1}%
 }
-\NewDocumentCommand \printminibios {} {
+\NewDocumentCommand \printminibios { s } {
   \bool_if:NT {\g__gzt_multicols_bool} {
     \end{multicols}%
   }
   \FloatBarrier%
   \begin{__gzt_minibiographies_acknowledgements_tcbox}
-    \__gzt_display_people_by_role:n { author-art-\int_use:N \g__gzt_articles_int }
+    \nopagebreak[0]
+    \IfBooleanF {#1}
+    {
+      \__gzt_display_people_by_role:n { author-art-\int_use:N \g__gzt_articles_int }
+    }
     \DTLsavelastrowcount{\__gzt_authors_number}
     \tl_if_empty:NF \l__gzt_article_acknowledgements_tl
     {%
@@ -2434,7 +2438,6 @@
     \bool_gset_true:N \g__gzt_previous_article_with_bibliography_or_minibio_bool
   \end{__gzt_minibiographies_acknowledgements_tcbox}
 }
-\let\printauthorsdetails\printminibios
 \cs_set_eq:NN \__gzt_printbibliography \printbibliography
 \RenewDocumentCommand \printbibliography { s O{} } {
   \bool_if:NT {\g__gzt_multicols_bool} {
@@ -2445,10 +2448,11 @@
     \__gzt_printbibliography[heading=subbibliography,resetnumbers,#2]
   \end{__gzt_bibliography_tcbox}
   %
-  \IfBooleanF {#1}
+  \IfBooleanTF {#1}
   {
-    \nopagebreak[0]
-    \printauthorsdetails
+    \printminibios*
+  }{
+    \printminibios
   }
 }
 \deftranslation[to=French]{__gzt_century}{si\`ecle}%
