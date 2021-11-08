@@ -183,42 +183,45 @@ This work consists of the file  gzt.dtx
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\documentclass{standalone}
+\documentclass[varwidth]{standalone}
 \usepackage{fontspec}
-\usepackage[export]{adjustbox}
+% \usepackage[export]{adjustbox}
 \usepackage[cmyk]{xcolor}
 \usepackage{xparse}
 %
 \setmainfont{HelveticaNeueLTStd-ThEx}
-\newfontfamily\des{HelveticaNeueLTStd-Th}
+\newfontfamily\dela{HelveticaNeueLTStd-Th}
 \newfontfamily\mathematiciens{HelveticaNeueLTStd-Lt}
 %
 \ExplSyntaxOn
 \tl_new:N \l__gzt_frontmatter_head_text_tl
 \tl_set:Nn \l__gzt_frontmatter_head_text_tl {%
-  \adjustbox{stack=r}
-  {%
-    \addfontfeature{LetterSpace=10}
+  % \adjustbox{stack}
+  % {%
+    \addfontfeature{LetterSpace=9}
     \textcolor{__gzt_generic_light_color}{%
-      \fontsize{21}{0}\selectfont%
-      la\hspace{5mm}%
-      \fontsize{45}{0}\selectfont%
+      \fontsize{24}{0}\selectfont%
+      \mbox{}\hspace{.9cm}
+      la
+      \hspace{4mm}%
+      \fontsize{52}{62}\selectfont%
       Gazette%
     }%
-    \\[1.7mm]%
+    \\[2.7mm]%
     \fontsize{15}{0}\selectfont%
+    \mbox{}\hspace{1.5cm}
     \textcolor{__gzt_generic_light_color}{%
-      \des%
+      \dela%
       \addfontfeature{LetterSpace=6}%
-      des%
+      de~ la~
     }%
-    \hspace{2.5mm}%
+    % \hspace{2mm}%
     \textcolor{__gzt_generic_dark_color}{%
       \mathematiciens%
-      \addfontfeature{LetterSpace=6}%
-      Math\'ematiciens%
+      % \addfontfeature{LetterSpace=6}%
+      Société~ Mathématique~ de~ France%
     }%
- }%
+ % }%
 }
 %
 \NewDocumentCommand \frontmatterheadtext {} {
@@ -5129,7 +5132,7 @@ This work consists of the file  gzt.dtx
   \bool_if:NTF {\g_@@_special_edition_bool} {
     \g_@@_special_edition_title_tl
   }{
-    \includegraphics{gzt-logo}
+    \includegraphics[scale=.9]{gzt-logo}
   }
 }
 %    \end{macrocode}
