@@ -5,21 +5,19 @@
 %% The original source files were:
 %%
 %% gzt.dtx  (with options: `datamodel')
-%% -----------------------------------------------------------------------------
-%% gzt --- SMF bundle of classes for the French journal "La Gazette des
-%%         Math'ematiciens"
-%% 
-%% E-mail: denis.bitouze@univ-littoral.fr
-%% Released under the LaTeX Project Public License v1.3c or later
-%% See http://www.latex-project.org/lppl.txt
-%% -----------------------------------------------------------------------------
+%% -------:| -----------------------------------------------------------------
+%%     gzt:| Bundle of two classes and BibLaTeX styles for the French journal [“La Gazette de la Société Mathématique de France”
+%%  Author:| Denis Bitouzé
+%%  E-mail:| denis.bitouze@univ-littoral.fr
+%% License:| Released under the LaTeX Project Public License v1.3c or later
+%%     See:| http://www.latex-project.org/lppl.txt
 \DeclareDatamodelFields[type=list,datatype=name]{interviewee}
 \DeclareDatamodelEntryfields[interview]{
   interviewee,
   author
 }
 \DeclareBibliographyDriver{interview}{%
-  \printnames{author}~interviewent~\printnames{interviewee}%
+  \printnames{author}~ interviewent~ \printnames{interviewee}%
   \usebibmacro{finentry}%
 }
 \DeclareBibliographyDriver{bookreview}{%
@@ -99,7 +97,7 @@
     ,fontlower=\large
     ,flushleft lower
     ,boxrule=0mm
-    ,frame hidden%
+    ,frame hidden
     ,leftright skip=0mm
     ,before skip=0mm
     ,lower separated=false
@@ -190,11 +188,11 @@
       \medskip
       %
       \begin{center}
-        Prix~public~:\c_space_tl
+        Prix~ public~ :\c_space_tl
         \EUR{\printfield{publicprice}}
-        \c_space_tl\textendash\c_space_tl Prix~membre~\smf{}~:\c_space_tl
+        \c_space_tl\textendash\c_space_tl Prix~ membre~ \smf{}~ :\c_space_tl
         \EUR{\printfield{smfprice}}
-        \c_space_tl\textendash\c_space_tl Frais~de~port~non~compris
+        \c_space_tl\textendash\c_space_tl Frais~ de~ port~ non~ compris
       \end{center}
     }
     \iffieldundef{englishabstract}
@@ -204,40 +202,39 @@
       \bigskip
       \begin{otherlanguage}{english}
         \itshape
-        \printfield{englishabstract}%
+        \printfield{englishabstract}
         %
         \par
         \medskip
         %
         \begin{center}
-          Public~price:\c_space_tl
+          Public~ price:\c_space_tl
           \EUR{\printfield{publicprice}}
-          \c_space_tl\textendash\c_space_tl \smf{}~member~price:\c_space_tl
+          \c_space_tl\textendash\c_space_tl \smf{}~ member~ price:\c_space_tl
           \EUR{\printfield{smfprice}}
-          \c_space_tl\textendash\c_space_tl Shipping~costs~not~included
+          \c_space_tl\textendash\c_space_tl Shipping~ costs~ not~ included
         \end{center}
       \end{otherlanguage}
     }
   \usebibmacro{finentry}
 }
-%% ----------------------------------------------------------------------------
+%% 
+%% Copyright (C) 2014-2021 by Denis Bitouzé <denis.bitouze@univ-littoral.fr>
+%% 
 %% This work may be distributed and/or modified under the
-%% conditions of the LaTeX Project Public License, either version 1.3c
-%% of this license or (at your option) any later version.
-%% The latest version of this license is in
-%%   http://www.latex-project.org/lppl.txt
-%% and version 1.3c or later is part of all distributions of LaTeX
-%% version 2005/12/01 or later.
+%% conditions of the LaTeX Project Public License (LPPL), either
+%% version 1.3c of this license or (at your option) any later
+%% version.  The latest version of this license is in the file:
 %% 
-%% This work has the LPPL maintenance status `maintained'.
+%% http://www.latex-project.org/lppl.txt
 %% 
-%% The Current Maintainer of this work is Denis Bitouz'e.
+%% This work is "maintained" (as per LPPL maintenance status) by
+%% Denis Bitouzé.
 %% 
-%% This work consists of the file  gzt.dtx
-%%           and the derived files gzt.cls,
-%%                                 gztarticle.cls,
-%%                                 gzt.ins,
-%%                                 gzt.pdf,
-%%                                 and a number of configuration files.
+%% This work consists of the file gzt.dtx and a Makefile.
+%% Running "make" generates the derived files README, gzt.pdf and gzt.cls.
+%% Running "make inst" installs the files in the user's TeX tree.
+%% Running "make install" installs the files in the local TeX tree.
+%% 
 %%
 %% End of file `gzt.dbx'.
