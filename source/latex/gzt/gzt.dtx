@@ -341,45 +341,34 @@ Running "make install" installs the files in the local TeX tree.
 %    \begin{macrocode}
 \documentclass[varwidth]{standalone}
 \usepackage{fontspec}
-% \usepackage[export]{adjustbox}
 \usepackage[cmyk]{xcolor}
 \usepackage{xparse}
-%
 \setmainfont{HelveticaNeueLTStd-ThEx}
 \newfontfamily\dela{HelveticaNeueLTStd-Th}
 \newfontfamily\mathematiciens{HelveticaNeueLTStd-Lt}
-%
-% \ExplSyntaxOn
+\ExplSyntaxOn
 \tl_new:N \l__gzt_frontmatter_head_text_tl
 \tl_set:Nn \l__gzt_frontmatter_head_text_tl {
-  % \adjustbox{stack}
-  % {
-    \addfontfeature{LetterSpace=9}
-    \textcolor{__gzt_generic_light_color}{
-      \fontsize{24}{0}\selectfont
-      \mbox{}\hspace{.9cm}
-      la
-      \hspace{4mm}
-      \fontsize{52}{62}\selectfont
-      Gazette
-    }
-    \\[2.7mm]
-    \fontsize{15}{0}\selectfont
-    \mbox{}\hspace{1.5cm}
-    \textcolor{__gzt_generic_light_color}{
-      \dela
-      \addfontfeature{LetterSpace=6}
-      de~ la~
-    }
-    % \hspace{2mm}
-    \textcolor{__gzt_generic_dark_color}{
-      \mathematiciens
-      % \addfontfeature{LetterSpace=6}
-      Société~ Mathématique~ de~ France
-    }
- % }
+  \addfontfeature{LetterSpace=10}
+  \textcolor{__gzt_generic_light_color}{
+    \fontsize{21}{0}\selectfont
+    la
+    \hspace{3mm}
+    \fontsize{46}{0}\selectfont
+    Gazette
+  }
+  \\[1.7mm]
+  \fontsize{12}{0}\selectfont
+  \mbox{}\hfill%
+  \textcolor{__gzt_generic_light_color}{
+    \dela
+    de~ la~
+  }
+  \textcolor{__gzt_generic_dark_color}{
+    \mathematiciens
+    Société~ Mathématique~ de~ France
+  }
 }
-%
 \NewDocumentCommand \frontmatterheadtext {} {
   \l__gzt_frontmatter_head_text_tl
 }
@@ -7394,8 +7383,7 @@ Running "make install" installs the files in the local TeX tree.
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-% \ExplSyntaxOff
-%
+\ExplSyntaxOff
 \begin{document}
 \frontmatterheadtext
 \end{document}
