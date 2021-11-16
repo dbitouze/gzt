@@ -74,12 +74,15 @@ $quote_filenames = 0;
 %    \end{macrocode}
 # [Unreleased]
 
-# [1.0.2] - 2021-11-08
+# [1.1.0] - 2021-11-16
 
 ## Changed
 - New Gazette's "logo".
-- Allow acknowledgments despite empty minibios
-- `easyscsl` option of `kpfonts` removed as now useless
+- Allow acknowledgments despite empty minibios.
+- `easyscsl` option of `kpfonts` removed as now useless.
+- Complete reworked of the `.dtx` source file:
+  - use of `l3doc`,
+  - (incomplete) documentation of the code available as a PDF file.
 
 # [1.0.1] - 2021-02-14
 
@@ -171,8 +174,8 @@ Gazette de la Société Mathématique de France”](https://smf.emath.fr/les-pub
 \fi
 %</internal>
 %<*class|class-article|install>
-\def\gztfileversion{1.0.2}
-\def\gztfiledate{2021-11-08}
+\def\gztfileversion{1.1.0}
+\def\gztfiledate{2021-11-16}
 %</class|class-article|install>
 %<*install>
 \input l3docstrip.tex
@@ -305,7 +308,7 @@ Running "make install" installs the files in the local TeX tree.
 % editions.}
 % \changes{v1.0.0}{2020-03-17}{Eighth CTAN version.}
 % \changes{v1.0.1}{2021-02-14}{Nineth CTAN version.}
-% \changes{v1.0.2}{2021-11-08}{Tenth CTAN version.}
+% \changes{v1.1.0}{2021-11-16}{Tenth CTAN version.}
 %
 % \begin{abstract}
 %   This bundle provides two classes and BibLaTeX styles for the French journal
@@ -7397,7 +7400,8 @@ Running "make install" installs the files in the local TeX tree.
 %
 % \PrintIndex
 %
-% Local Variables:
-% mode: doctex
-% TeX-master: t
-% End:
+%%% Local Variables:
+%%% mode: doctex
+%%% TeX-command-default: "TeX"
+%%% TeX-master: t
+%%% End:
