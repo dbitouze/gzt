@@ -1637,7 +1637,7 @@ Running "make install" installs the files in the local TeX tree.
 %    \end{macrocode}
 % For the graphics extensions.
 %    \begin{macrocode}
-\clist_const:Nn \c_@@__graphics_extensions_clist {png,PNG,jpg,JPG,jpeg,JPEG,pdf,PDF}
+\clist_const:Nn \c_@@_graphics_extensions_clist {png,PNG,jpg,JPG,jpeg,JPEG,pdf,PDF}
 %    \end{macrocode}
 % For the pdftitle text.
 %    \begin{macrocode}
@@ -2243,7 +2243,7 @@ Running "make install" installs the files in the local TeX tree.
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\l_thumbnail_width_dim}
+% \begin{macro}{\l_@@_thumbnail_width_dim}
 %   We declare the width of the possible thumbnail glued to the box containing
 %   the issue number.
 %    \begin{macrocode}
@@ -3445,7 +3445,7 @@ Running "make install" installs the files in the local TeX tree.
   \bool_if:NTF {\g_@@_special_edition_bool} {
     \mbox{}
     \vfill
-    \clist_map_inline:Nn \c_@@__graphics_extensions_clist{
+    \clist_map_inline:Nn \c_@@_graphics_extensions_clist{
       \file_if_exist:nT {\c_@@_issue_images_path_string_tl/\g_@@_special_edition_backcover_image_tl.#1} {
         \begin{center}
           \includegraphics[width=.25\linewidth]{\g_@@_special_edition_backcover_image_tl}
@@ -3935,7 +3935,7 @@ Running "make install" installs the files in the local TeX tree.
 %<*class>
 %    \end{macrocode}
 %
-% \begin{macro}{\_@@_about_frontcover}
+% \begin{macro}{\g_@@_about_frontcover}
 %   We define the internal function than let us tell a few words about the front
 %   cover.
 %    \begin{macrocode}
@@ -4195,7 +4195,7 @@ Running "make install" installs the files in the local TeX tree.
 %
 %    \end{macrocode}
 %
-% \begin{macro}{\_@@_maketitle}
+% \begin{macro}{\maketitle}
 %   The command that \enquote{makes} the title is redefined.
 %    \begin{macrocode}
 \RenewDocumentCommand \maketitle { s } {
