@@ -12,7 +12,7 @@
 %
 % This work has the LPPL maintenance status `maintained'.
 %
-% The Current Maintainer of this work is Denis Bitouz'e.
+% The Current Maintainer of this work is Denis Bitouzé.
 %
 % This work consists of the files gzt.dtx and gzt.ins
 % and the derived filebase gzt.cls.
@@ -263,7 +263,7 @@ Running "make install" installs the files in the local TeX tree.
 % \iffalse
 %<*driver>
 \ProvidesFile{gzt.dtx}
-\documentclass[full,english,draft]{l3doc}
+\documentclass[full,english]{l3doc}
 \usepackage[a4paper,inner=5cm,landscape]{geometry}
 \usepackage[gzt]{denisbdoc}
 \usepackage{csquotes}
@@ -283,11 +283,11 @@ Running "make install" installs the files in the local TeX tree.
 % \GetFileInfo{\jobname.dtx}
 %
 % \title{\textsf{gzt} --- A bundle of two classes and \textsf{BibLaTeX} styles
-% for the French journal “La Gazette de la Société Mathématique de
+% for the French journal\\“La Gazette de la Société Mathématique de
 % France”\thanks{This file describes version \fileversion, last revised
-% \filedate.}\\Implementation%
+% \filedate.}\\[.25cm]Implementation%
 % }
-% \author{Denis Bitouzé\thanks{E-mail: denis.bitouze@univ-littoral.fr}}
+% \author{Denis Bitouzé\thanks{E-mail: \nolinkurl{denis.bitouze@univ-littoral.fr}}}
 % \date{Released \filedate}
 %
 %\maketitle
@@ -3196,11 +3196,25 @@ Running "make install" installs the files in the local TeX tree.
   \exp_after:wN\includegraphics\exp_after:wN[\g_@@_frontcover_image_options_tl]{\g_@@_frontcover_image_file_tl}
   \begin{tikzpicture}[remember~ picture, overlay]
     \coordinate (@@_circle_minitoc_center) at
-    ([xshift=\g_@@_minitoc_xshift_dim-\c_@@_potential_layoutoffset_dim,yshift=\g_@@_minitoc_yshift_dim+\c_@@_potential_layoutoffset_dim]current~ page.south~ east) ;
-    \node[name=@@_circle_minitoc,shape=circle,inner~ sep=\c_zero_dim,fill=\g_@@_special_edition_color_tl,text~ width=\g_@@_minitoc_circle_diameter_dim] at
+    (
+      [xshift=\g_@@_minitoc_xshift_dim-\c_@@_potential_layoutoffset_dim,
+       yshift=\g_@@_minitoc_yshift_dim+\c_@@_potential_layoutoffset_dim]
+      current~ page.south~ east
+    ) ;
+    \node[
+      name=@@_circle_minitoc,
+      shape=circle,
+      inner~ sep=\c_zero_dim,
+      fill=\g_@@_special_edition_color_tl,
+      text~ width=\g_@@_minitoc_circle_diameter_dim
+    ] at
     (@@_circle_minitoc_center) {};
     \node[text~ width=\g_@@_minitoc_textwidth_dim,anchor=north~ west] at
-    ([xshift=\c_@@_minitoc_from_circle_xshift_dim,yshift=\c_@@_minitoc_from_circle_yshift_dim]$ (@@_circle_minitoc.north)!.5!(@@_circle_minitoc.west) $)
+    (
+      [xshift=\c_@@_minitoc_from_circle_xshift_dim,
+       yshift=\c_@@_minitoc_from_circle_yshift_dim]
+      $ (@@_circle_minitoc.north)!.5!(@@_circle_minitoc.west) $
+    )
     {
       \bool_if:NF {\g_@@_frontcover_without_minitoc_bool} {
         \large
@@ -3215,8 +3229,17 @@ Running "make install" installs the files in the local TeX tree.
   \bool_if:NT {\g_@@_cover_bool} {
     \small
     \begin{tikzpicture}[remember~ picture, overlay]
-      \node[name=@@_binding_sw,inner~ sep=\c_zero_dim,fill=\g_@@_special_edition_color_tl,rotate=90,anchor=west] at
-      ([xshift=0.45\c_@@_potential_bindingoffset_dim,yshift=15mm+\c_@@_potential_layoutoffset_dim]current~ page.south~ west) {
+      \node[
+        name=@@_binding_sw,
+        inner~ sep=\c_zero_dim,
+        fill=\g_@@_special_edition_color_tl,
+        rotate=90,anchor=west
+      ]
+      at
+      (
+        [xshift=0.45\c_@@_potential_bindingoffset_dim,
+         yshift=15mm+\c_@@_potential_layoutoffset_dim]
+        current~ page.south~ west) {
         \No
         \bool_if:NTF {\g_@@_special_edition_bool} {
           \c_@@_special_edition_string_tl
@@ -3544,7 +3567,7 @@ Running "make install" installs the files in the local TeX tree.
   }
 %    \end{macrocode}
 %
-% If not specified as \refCom{issuesetup}'s key-value options, issue's month and
+% If not specified as ×\issuesetup×'s key-value options, issue's month and
 % year are computed from issue number (which defaults to
 % ×\c_@@_first_issue_month_int×).
 %
@@ -4086,7 +4109,6 @@ Running "make install" installs the files in the local TeX tree.
 \tl_new:N \l_@@_people_first_last_names_tl
 \tl_new:N \g_@@_authors_first_last_names_tl
 \tl_new:N \l_@@_interviewees_first_last_names_tl
-\tl_new:N \g__@@_citeauthor_no_firstinits
 \tl_new:N \g_@@_citeauthor_tl
 \tl_new:N \g_@@_citeinterviewee_tl
 %
@@ -5653,14 +5675,20 @@ Running "make install" installs the files in the local TeX tree.
 %       %% lower right
 %       \draw ([yshift=\c_@@_potential_layoutoffset_dim]current~ page.south~ east) -- +(-0.25,0);
 %       \draw
-%       ([xshift=-\c_@@_potential_layoutoffset_dim-\c_@@_potential_bindingoffset_dim]current~ page.south~ east) -- +(0,0.25);
+%       (
+%         [xshift=-\c_@@_potential_layoutoffset_dim-\c_@@_potential_bindingoffset_dim]
+%         current~ page.south~ east
+%       ) -- +(0,0.25);
 %       %% upper left
 %       \draw ([yshift=-\c_@@_potential_layoutoffset_dim]current~ page.north~ west) -- +(0.25,0);
 %       \draw ([xshift=\c_@@_potential_layoutoffset_dim]current~ page.north~ west) -- +(0,-0.25);
 %       %% upper right
 %       \draw ([yshift=-\c_@@_potential_layoutoffset_dim]current~ page.north~ east) -- +(-0.25,0);
 %       \draw
-%       ([xshift=-\c_@@_potential_layoutoffset_dim-\c_@@_potential_bindingoffset_dim]current~ page.north~ east) -- +(0,-0.25);
+%       (
+%         [xshift=-\c_@@_potential_layoutoffset_dim-\c_@@_potential_bindingoffset_dim]
+%         current~ page.north~ east) -- +(0,-0.25
+%       );
 %     }
 %   }
 % }
@@ -6924,7 +6952,7 @@ Running "make install" installs the files in the local TeX tree.
 \arrayrulecolor{@@_arrayrule_color}
 %    \end{macrocode}
 %
-% We change the floating table name (as translated by the \pkg{frenchb}
+% We change the floating table name (as translated by the \pkg{french-babel}
 % module from \Pkg{babel}) from \enquote{Table} to \enquote{Tableau}.
 %    \begin{macrocode}
 \addto\captionsfrench{\def\tablename{{\scshape Tableau}}}
