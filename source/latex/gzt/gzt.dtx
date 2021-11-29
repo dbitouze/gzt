@@ -6551,7 +6551,7 @@ Running "make install" installs the files in the local TeX tree.
 %    \begin{macrocode}
 \bool_if:NF {\g_@@_coverpage_bool} {
   \bool_if:NF {\g_@@_inside_pages_bool} {
-    \AddToHook{enddocument/end}{
+    \AddToHook{enddocument}{
       \bool_gset_true:N \g_@@_backmatter_bool
       \g_@@_display_inside_backcover_tl
       \newpage
