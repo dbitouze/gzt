@@ -4780,6 +4780,7 @@ Running "make install" installs the files in the local TeX tree.
 \cs_new_protected:Nn \_@@_before_frontmatter_stuff:
 {
   \bool_gset_true:N \g_@@_frontmatter_bool
+  \cleardoublepage
   \pagestyle{@@_frontmatter_ps}
   \exp_after:wN\newgeometry\exp_after:wN{\c_@@_front_matter_geometry_tl}
 }
