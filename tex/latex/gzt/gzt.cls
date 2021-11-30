@@ -11,8 +11,8 @@
 %%  E-mail:| denis.bitouze@univ-littoral.fr
 %% License:| Released under the LaTeX Project Public License v1.3c or later
 %%     See:| http://www.latex-project.org/lppl.txt
-\def\gztfileversion{1.0.2}
-\def\gztfiledate{2021-11-08}
+\def\gztfileversion{1.1.0}
+\def\gztfiledate{2021-11-30}
 \def\sectioncommandslist{}
 \let\saved@ifdefinable\@ifdefinable
 \let\saved@@ifdefinable\@@ifdefinable
@@ -358,7 +358,7 @@
     }
   }
 }
-\clist_const:Nn \c__gzt__graphics_extensions_clist {png,PNG,jpg,JPG,jpeg,JPEG,pdf,PDF}
+\clist_const:Nn \c__gzt_graphics_extensions_clist {png,PNG,jpg,JPG,jpeg,JPEG,pdf,PDF}
 \tl_const:Nn \c__gzt_pdftitle_string_tl {
   \bool_if:NTF {\g__gzt_moral_report_bool} {
     \c__gzt_moralreport_rubric_string_tl
@@ -1277,11 +1277,25 @@
   \exp_after:wN\includegraphics\exp_after:wN[\g__gzt_frontcover_image_options_tl]{\g__gzt_frontcover_image_file_tl}
   \begin{tikzpicture}[remember~ picture, overlay]
     \coordinate (__gzt_circle_minitoc_center) at
-    ([xshift=\g__gzt_minitoc_xshift_dim-\c__gzt_potential_layoutoffset_dim,yshift=\g__gzt_minitoc_yshift_dim+\c__gzt_potential_layoutoffset_dim]current~ page.south~ east) ;
-    \node[name=__gzt_circle_minitoc,shape=circle,inner~ sep=\c_zero_dim,fill=\g__gzt_special_edition_color_tl,text~ width=\g__gzt_minitoc_circle_diameter_dim] at
+    (
+      [xshift=\g__gzt_minitoc_xshift_dim-\c__gzt_potential_layoutoffset_dim,
+       yshift=\g__gzt_minitoc_yshift_dim+\c__gzt_potential_layoutoffset_dim]
+      current~ page.south~ east
+    ) ;
+    \node[
+      name=__gzt_circle_minitoc,
+      shape=circle,
+      inner~ sep=\c_zero_dim,
+      fill=\g__gzt_special_edition_color_tl,
+      text~ width=\g__gzt_minitoc_circle_diameter_dim
+    ] at
     (__gzt_circle_minitoc_center) {};
     \node[text~ width=\g__gzt_minitoc_textwidth_dim,anchor=north~ west] at
-    ([xshift=\c__gzt_minitoc_from_circle_xshift_dim,yshift=\c__gzt_minitoc_from_circle_yshift_dim]$ (__gzt_circle_minitoc.north)!.5!(__gzt_circle_minitoc.west) $)
+    (
+      [xshift=\c__gzt_minitoc_from_circle_xshift_dim,
+       yshift=\c__gzt_minitoc_from_circle_yshift_dim]
+      $ (__gzt_circle_minitoc.north)!.5!(__gzt_circle_minitoc.west) $
+    )
     {
       \bool_if:NF {\g__gzt_frontcover_without_minitoc_bool} {
         \large
@@ -1296,8 +1310,17 @@
   \bool_if:NT {\g__gzt_cover_bool} {
     \small
     \begin{tikzpicture}[remember~ picture, overlay]
-      \node[name=__gzt_binding_sw,inner~ sep=\c_zero_dim,fill=\g__gzt_special_edition_color_tl,rotate=90,anchor=west] at
-      ([xshift=0.45\c__gzt_potential_bindingoffset_dim,yshift=15mm+\c__gzt_potential_layoutoffset_dim]current~ page.south~ west) {
+      \node[
+        name=__gzt_binding_sw,
+        inner~ sep=\c_zero_dim,
+        fill=\g__gzt_special_edition_color_tl,
+        rotate=90,anchor=west
+      ]
+      at
+      (
+        [xshift=0.45\c__gzt_potential_bindingoffset_dim,
+         yshift=15mm+\c__gzt_potential_layoutoffset_dim]
+        current~ page.south~ west) {
         \No
         \bool_if:NTF {\g__gzt_special_edition_bool} {
           \c__gzt_special_edition_string_tl
@@ -1485,7 +1508,7 @@
   \bool_if:NTF {\g__gzt_special_edition_bool} {
     \mbox{}
     \vfill
-    \clist_map_inline:Nn \c__gzt__graphics_extensions_clist{
+    \clist_map_inline:Nn \c__gzt_graphics_extensions_clist{
       \file_if_exist:nT {\c__gzt_issue_images_path_string_tl/\g__gzt_special_edition_backcover_image_tl.#1} {
         \begin{center}
           \includegraphics[width=.25\linewidth]{\g__gzt_special_edition_backcover_image_tl}
@@ -1893,7 +1916,6 @@
 \tl_new:N \l__gzt_people_first_last_names_tl
 \tl_new:N \g__gzt_authors_first_last_names_tl
 \tl_new:N \l__gzt_interviewees_first_last_names_tl
-\tl_new:N \g__gzt_citeauthor_no_firstinits
 \tl_new:N \g__gzt_citeauthor_tl
 \tl_new:N \g__gzt_citeinterviewee_tl
 \tl_new:N \g__gzt_blx_given_first_inits_tl
@@ -2375,6 +2397,7 @@
 \cs_new_protected:Nn \__gzt_before_frontmatter_stuff:
 {
   \bool_gset_true:N \g__gzt_frontmatter_bool
+  \cleardoublepage
   \pagestyle{__gzt_frontmatter_ps}
   \exp_after:wN\newgeometry\exp_after:wN{\c__gzt_front_matter_geometry_tl}
 }
@@ -3620,7 +3643,7 @@
 }
 \bool_if:NF {\g__gzt_coverpage_bool} {
   \bool_if:NF {\g__gzt_inside_pages_bool} {
-    \AddToHook{enddocument/end}{
+    \AddToHook{enddocument}{
       \bool_gset_true:N \g__gzt_backmatter_bool
       \g__gzt_display_inside_backcover_tl
       \newpage
