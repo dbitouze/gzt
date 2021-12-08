@@ -70,6 +70,146 @@ $quote_filenames = 0;
 %    \end{macrocode}
 %
 %    \begin{macrocode}
+%<*ctanomat>
+%    \end{macrocode}
+% This is a description file for ctan-o-mat.
+% It manages uploads of a package to
+% CTAN -- the Comprehensive TeX Archive Network.
+%
+% The syntax is roughly oriented towards (La)TeX.
+% Two form of the macros are used. The simple macros take one argument
+% in braces. Here the argument may not contain embedded macros.
+%
+% The second form uses an environment enclosed in \begin{}/\end{}.
+% In the long text fields logo macros can be used.
+%
+% You should enter your values between the begin and the end of the
+% named type.
+% -------------------------------------------------------------------------
+% This field contains the CTAN id of the package.
+% The value is optional.
+% The value is restricted to 32 characters.
+\pkg{gzt}
+% -------------------------------------------------------------------------
+% This field contains the version of the package.
+% The value is optional.
+% The value is restricted to 32 characters.
+\version{1.1.0 2021-11-30}
+% -------------------------------------------------------------------------
+% This field contains the name of the author(s).
+% The value is optional.
+% The value is restricted to 128 characters.
+\author{Denis Bitouzé}
+% -------------------------------------------------------------------------
+% This field contains the email address of the uploader.
+% The value is an email address.
+% The value is restricted to 255 characters.
+\email{denis.bitouze@univ-littoral.fr}
+% -------------------------------------------------------------------------
+% This field contains the name of the uploader.
+% The value is restricted to 255 characters.
+\uploader{Denis Bitouzé}
+% -------------------------------------------------------------------------
+% This field contains the directory on CTAN.
+% The value is optional.
+% The value is restricted to 255 characters.
+\ctanPath{/macros/latex/contrib/gzt}
+% -------------------------------------------------------------------------
+% This field contains the license.
+% The value is optional.
+% The value is restricted to 2048 characters.
+% Multiple values are allowed.
+\license{lppl1.3c}
+% -------------------------------------------------------------------------
+% This field contains the URL of the home page.
+% The value is optional.
+% The value is a URL.
+% The value is restricted to 255 characters.
+% Multiple values are allowed.
+\home{}
+% -------------------------------------------------------------------------
+% This field contains the URL of the bug tracker.
+% The value is optional.
+% The value is a URL.
+% The value is restricted to 255 characters.
+% Multiple values are allowed.
+\bugtracker{https://github.com/dbitouze/gzt/issues/}
+% -------------------------------------------------------------------------
+% This field contains the support channel.
+% The value is optional.
+% The value is a URL.
+% The value is restricted to 255 characters.
+% Multiple values are allowed.
+\support{}
+% -------------------------------------------------------------------------
+% This field contains the version management.
+% The value is optional.
+% The value is a URL.
+% The value is restricted to 255 characters.
+% Multiple values are allowed.
+\repository{https://github.com/dbitouze/gzt/}
+% -------------------------------------------------------------------------
+% This field contains the developer's channel.
+% The value is optional.
+% The value is a URL.
+% The value is restricted to 255 characters.
+% Multiple values are allowed.
+\development{}
+% -------------------------------------------------------------------------
+% This field contains the update indicator; true for update.
+% The value is optional.
+% The value is restricted to 8 characters.
+\update{true}
+% -------------------------------------------------------------------------
+% This field contains the topics id.
+% The value is optional.
+% The value is restricted to 1024 characters.
+% Multiple values are allowed.
+\topic{}
+% -------------------------------------------------------------------------
+% This field contains the text for the mail announcement.
+% The value is optional.
+% The value is restricted to 8192 characters.
+\begin{announcement}
+\end{announcement}
+% -------------------------------------------------------------------------
+% This field contains the one-liner for the package.
+% The value is optional.
+% The value is restricted to 128 characters.
+\summary{Bundle of classes for “La Gazette de la Société Mathématique de France”}
+% -------------------------------------------------------------------------
+% This field contains the descriptive abstract for the package.
+% The value is optional.
+% The value is restricted to 4096 characters.
+\begin{description}
+This bundle provides two classes and `BibLaTeX` styles for the French journal
+[“La Gazette de la Société Mathématique de
+France”](https://smf.emath.fr/les-publications/la-gazette):
+
+- gzt for the complete issues of the journal, aimed at the Gazette’s team,
+- gztarticle, intended for authors who wish to publish an article in the
+  Gazette. This class’s goals are to
+  - faithfully reproduce the layout of the Gazette, thus enabling the authors to
+    be able to work their document in actual conditions, and
+  - provide a number of tools (commands and environments) to facilitate the
+  drafting of documents, in particular those containing mathematical formulas.
+\end{description}
+% -------------------------------------------------------------------------
+% This field contains the note to the CTAN upload managers.
+% The value is optional.
+% The value is restricted to 2048 characters.
+\begin{note}
+\end{note}
+% -------------------------------------------------------------------------
+% This field contains the archive file.
+% The value is the file name of the archive to be uploaded.
+% It may have a relative or absolute directory.
+\file{../dtx-forge/gzt.zip}
+%    \begin{macrocode}
+%</ctanomat>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 %<*changelog>
 %    \end{macrocode}
 # [Unreleased]
@@ -236,6 +376,11 @@ Running "make install" installs the files in the local TeX tree.
 %</install>
 %<install>\endbatchfile
 %<*internal>
+\usedir{.}
+\generate{
+  \nopreamble\nopostamble
+  \file{\GZT@classname.pkg}{\from{\jobname.dtx}{ctanomat}}
+}%
 \usedir{source/latex/\GZT@classname}
 \generate{
   \file{\GZT@classname.ins}{\from{\jobname.dtx}{install}}
