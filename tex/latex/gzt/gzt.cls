@@ -3643,11 +3643,12 @@
 }
 \bool_if:NF {\g__gzt_coverpage_bool} {
   \bool_if:NF {\g__gzt_inside_pages_bool} {
-    \AddToHook{enddocument}{
+    \AddToHook{enddocument/end}{
       \bool_gset_true:N \g__gzt_backmatter_bool
       \g__gzt_display_inside_backcover_tl
       \newpage
       \g__gzt_display_backcover_tl
+      \newpage
     }
   }
 }
