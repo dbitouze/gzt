@@ -11,8 +11,8 @@
 %%  E-mail:| denis.bitouze@univ-littoral.fr
 %% License:| Released under the LaTeX Project Public License v1.3c or later
 %%     See:| http://www.latex-project.org/lppl.txt
-\def\gztfileversion{1.1.0}
-\def\gztfiledate{2021-11-30}
+\def\gztfileversion{1.1.1}
+\def\gztfiledate{2021-12-16}
 \def\sectioncommandslist{}
 \let\saved@ifdefinable\@ifdefinable
 \let\saved@@ifdefinable\@@ifdefinable
