@@ -6696,18 +6696,20 @@ Running "make install" installs the files in the local TeX tree.
 % If we don't ask the cover page (only), the inside back cover and back cover
 % pages are automatically included at the end of the document, the former
 % containing some condensed instructions to authors. But, this cannot be done
-% within ×\AddToHook{enddocument}× and ×\preto\@enddocumenthook× should be used instead
-% (see \url{https://tex.stackexchange.com/q/240318/18401}). (Update (2021-02-14):
-% we now rely on the new ×\AddToHook{env/document/end}×.)
+% within ×\AddToHook{enddocument}× and ×\preto\@enddocumenthook× should be used
+% instead (see \url{https://tex.stackexchange.com/q/240318/18401}). (Update
+% (2021-02-14): we now rely on the new ×\AddToHook{env/document/end}×.) (Update
+% (2021-12-16): we have to be more carefull with the hooks, see
+% \url{https://github.com/plk/biblatex/issues/1197}.)
 %    \begin{macrocode}
+\DeclareHookRule{enddocument}{citations}{before}{biblatex}
 \bool_if:NF {\g_@@_coverpage_bool} {
   \bool_if:NF {\g_@@_inside_pages_bool} {
-    \AddToHook{enddocument/end}{
+    \AddToHook{enddocument}[citations]{
       \bool_gset_true:N \g_@@_backmatter_bool
       \g_@@_display_inside_backcover_tl
       \newpage
       \g_@@_display_backcover_tl
-      \newpage
     }
   }
 }
