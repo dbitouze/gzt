@@ -11,8 +11,8 @@
 %%  E-mail:| denis.bitouze@univ-littoral.fr
 %% License:| Released under the LaTeX Project Public License v1.3c or later
 %%     See:| http://www.latex-project.org/lppl.txt
-\def\gztfileversion{1.1.1}
-\def\gztfiledate{2021-12-16}
+\def\gztfileversion{1.1.2}
+\def\gztfiledate{2022-03-18}
 \RequirePackage{xpatch}
 \patchcmd
   {\use@@tikzlibrary}
@@ -333,7 +333,7 @@
 \tl_const:Nn \c__gzt_authors_instructions_file_tl {\c_sys_jobname_str.\c__gzt_authors_instructions_file_extension_tl}
 \tl_const:Nn \c__gzt_about_frontcover_string_tl {\`A~ propos~ de~ la~ couverture.}
 \tl_const:Nn \c__gzt_credit_frontcover_string_tl {cr\'edit}
-\tl_const:Nn \c__gzt_authors_instructions_string_tl {Instructions~ aux~ auteurs}
+\tl_const:Nn \c__gzt_authors_instructions_string_tl {Instructions~ aux~ autrices~ et~ auteurs}
 \tl_const:Nn \c__gzt_preliminary_version_string_tl {
   Ce~ document~ est~ une~ {\'e}preuve~ vous~ permettant~ de~ contr{\^o}ler~ l'int{\'e}grit{\'e}~ du~
   texte~ d'origine~ (et~ de~ la~ bibliographie~ s'il~ y~ en~ a~ une)~ de~ votre~ article~
