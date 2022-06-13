@@ -94,7 +94,7 @@ $quote_filenames = 0;
 % This field contains the version of the package.
 % The value is optional.
 % The value is restricted to 32 characters.
-\version{1.1.2 2022-03-18}
+\version{1.1.3 2022-06-13}
 % -------------------------------------------------------------------------
 % This field contains the name of the author(s).
 % The value is optional.
@@ -213,6 +213,11 @@ France”](https://smf.emath.fr/les-publications/la-gazette):
 %<*changelog>
 %    \end{macrocode}
 # [Unreleased]
+
+# [1.1.3] - 2022-06-13
+
+## Added
+New options for special special (!) editions
 
 # [1.1.2] - 2022-03-18
 
@@ -1097,6 +1102,8 @@ Running "make install" installs the files in the local TeX tree.
   specialedition / color .code:n = {
     \tl_gset:Nn \g_@@_special_edition_color_tl {#1}
   },
+  specialedition / invisible~ titles .bool_gset:N = \g_@@_invisible_titles_bool,
+  specialedition / rubrics~ in~ toc .bool_gset:N = \g_@@_rubrics_in_toc_bool,
   specialedition / minitoc .code:n = {
     \bool_gset_false:N \g_@@_frontcover_without_minitoc_bool
   },
@@ -4157,7 +4164,7 @@ Running "make install" installs the files in the local TeX tree.
     \int_zero:N \g_@@_item_in_rubric_int
     \phantomsection
     \par
-    \bool_if:NF {\g_@@_special_edition_bool} {
+    \bool_if:nF {\g_@@_special_edition_bool && !\g_@@_rubrics_in_toc_bool} {
       \addcontentsline{toc}{part}{\g_@@_rubric_title_tl}
     }
     \thispagestyle{@@_rubric_ps}
@@ -4522,57 +4529,61 @@ Running "make install" installs the files in the local TeX tree.
 \tl_set:Nn \l_@@_title_box_tl
 {
   \noindent
-  \hspace*{18mm}
-  \begin{adjustbox}{minipage=\linewidth-18mm,valign=t}
-    \raggedright
-    \color{@@_article_title_color}
-    \fontsize{20}{25}\selectfont
-    \bfseries
-    \g_@@_title_tl
-    \tl_if_empty:NF \g_@@_subtitle_tl {
-      \par
-      \g_@@_subtitle_tl
-    }
-  \phantomsection
-  \par
-  \bool_if:NTF {\g_@@_title_not_in_toc_bool} {
-    \bookmark[page=\thepage,level=chapter]{\g_@@_short_title_tl}
-  }{
-    \addcontentsline{toc}{chapter}{
-      \tl_if_empty:NTF \g_@@_short_title_tl {
-        \g_@@_title_tl
-      }{
-        \g_@@_short_title_tl
+  \bool_if:NF {\g_@@_invisible_titles_bool} {
+    \hspace*{18mm}
+    \begin{adjustbox}{minipage=\linewidth-18mm,valign=t}
+      \raggedright
+      \color{@@_article_title_color}
+      \fontsize{20}{25}\selectfont
+      \bfseries
+      \g_@@_title_tl
+      \tl_if_empty:NF \g_@@_subtitle_tl {
+        \par
+        \g_@@_subtitle_tl
       }
-      \bool_if:NF {\g_@@_subtitle_not_in_toc_bool} {
+      \phantomsection
+      \par
+    }
+    \bool_if:NTF {\g_@@_title_not_in_toc_bool} {
+      \bookmark[page=\thepage,level=chapter]{\g_@@_short_title_tl}
+    }{
+      \addcontentsline{toc}{chapter}{
+        \tl_if_empty:NTF \g_@@_short_title_tl {
+          \g_@@_title_tl
+        }{
+          \g_@@_short_title_tl
+        }
+        \bool_if:NF {\g_@@_subtitle_not_in_toc_bool} {
+          \bool_if:nF {
+            \tl_if_empty_p:N \g_@@_short_subtitle_tl ||
+            \g_@@_interview_rubric_bool ||
+            \g_@@_rearviewmirror_rubric_bool
+          }{
+            \c_space_tl\textendash{}\c_space_tl\g_@@_short_subtitle_tl
+          }
+        }
         \bool_if:nF {
-          \tl_if_empty_p:N \g_@@_short_subtitle_tl ||
+          \tl_if_empty_p:N \l_@@_people_first_last_names_tl ||
           \g_@@_interview_rubric_bool ||
           \g_@@_rearviewmirror_rubric_bool
         }{
-          \c_space_tl\textendash{}\c_space_tl\g_@@_short_subtitle_tl
-        }
-      }
-      \bool_if:nF {
-        \tl_if_empty_p:N \l_@@_people_first_last_names_tl ||
-        \g_@@_interview_rubric_bool ||
-        \g_@@_rearviewmirror_rubric_bool
-      }{
-        \textsl{
-          \cs_if_exist:cTF {texorpdfstring}
-          {
-            \texorpdfstring{
+          \textsl{
+            \cs_if_exist:cTF {texorpdfstring}
+            {
+              \texorpdfstring{
+                \c_space_tl\textendash{}\c_space_tl\citeauthor{\g_@@_article_bib_key_tl}
+              }{}
+            }{
               \c_space_tl\textendash{}\c_space_tl\citeauthor{\g_@@_article_bib_key_tl}
-            }{}
-          }{
-            \c_space_tl\textendash{}\c_space_tl\citeauthor{\g_@@_article_bib_key_tl}
+            }
           }
         }
       }
     }
+    \bool_if:NF {\g_@@_invisible_titles_bool} {
+      \end{adjustbox}
+    }
   }
-  \end{adjustbox}
-}
   \dim_gset:Nn \g_@@_abstract_box_width_dim {0.75\linewidth}
   % \bool_if:nT { \tl_if_empty_p:N \l_@@_people_first_last_names_tl }
   % {
@@ -4593,17 +4604,26 @@ Running "make install" installs the files in the local TeX tree.
   }
   \tl_set:Nn \l_@@_authors_box_tl
   {
-    \begin{adjustbox}{minipage=0.3\linewidth,min~ width=0.3\linewidth,valign=t}
+    \bool_if:NF {\g_@@_invisible_titles_bool} {
+      \begin{adjustbox}{minipage=0.3\linewidth,min~
+          width=0.3\linewidth,valign=t}
+      }
       \bool_if:nTF { \tl_if_empty_p:N \l_@@_people_first_last_names_tl || \g_@@_interview_rubric_bool }
       {
         \mbox{}
       }
       {
         \color{@@_people_color}
-        \_@@_itemized_citeauthor:n {\g_@@_article_bib_key_tl}
+        \bool_if:NTF {\g_@@_invisible_titles_bool} {
+          \nocite {\g__gzt_article_bib_key_tl}
+        }{
+          \_@@_itemized_citeauthor:n {\g_@@_article_bib_key_tl}
+        }
       }
-    \end{adjustbox}
-  }
+      \bool_if:NF {\g_@@_invisible_titles_bool} {
+        \end{adjustbox}
+      }
+    }
     \bool_if:nTF {
       \int_compare_p:nNn { \g_@@_item_in_rubric_int } = { 1 }
     }

@@ -149,6 +149,8 @@
   specialedition / color .code:n = {
     \tl_gset:Nn \g__gzt_special_edition_color_tl {#1}
   },
+  specialedition / invisible~ titles .bool_gset:N = \g__gzt_invisible_titles_bool,
+  specialedition / rubrics~ in~ toc .bool_gset:N = \g__gzt_rubrics_in_toc_bool,
   specialedition / minitoc .code:n = {
     \bool_gset_false:N \g__gzt_frontcover_without_minitoc_bool
   },
@@ -1830,7 +1832,7 @@
     \int_zero:N \g__gzt_item_in_rubric_int
     \phantomsection
     \par
-    \bool_if:NF {\g__gzt_special_edition_bool} {
+    \bool_if:nF {\g__gzt_special_edition_bool && !\g__gzt_rubrics_in_toc_bool} {
       \addcontentsline{toc}{part}{\g__gzt_rubric_title_tl}
     }
     \thispagestyle{__gzt_rubric_ps}
@@ -2071,57 +2073,61 @@
 \tl_set:Nn \l__gzt_title_box_tl
 {
   \noindent
-  \hspace*{18mm}
-  \begin{adjustbox}{minipage=\linewidth-18mm,valign=t}
-    \raggedright
-    \color{__gzt_article_title_color}
-    \fontsize{20}{25}\selectfont
-    \bfseries
-    \g__gzt_title_tl
-    \tl_if_empty:NF \g__gzt_subtitle_tl {
-      \par
-      \g__gzt_subtitle_tl
-    }
-  \phantomsection
-  \par
-  \bool_if:NTF {\g__gzt_title_not_in_toc_bool} {
-    \bookmark[page=\thepage,level=chapter]{\g__gzt_short_title_tl}
-  }{
-    \addcontentsline{toc}{chapter}{
-      \tl_if_empty:NTF \g__gzt_short_title_tl {
-        \g__gzt_title_tl
-      }{
-        \g__gzt_short_title_tl
+  \bool_if:NF {\g__gzt_invisible_titles_bool} {
+    \hspace*{18mm}
+    \begin{adjustbox}{minipage=\linewidth-18mm,valign=t}
+      \raggedright
+      \color{__gzt_article_title_color}
+      \fontsize{20}{25}\selectfont
+      \bfseries
+      \g__gzt_title_tl
+      \tl_if_empty:NF \g__gzt_subtitle_tl {
+        \par
+        \g__gzt_subtitle_tl
       }
-      \bool_if:NF {\g__gzt_subtitle_not_in_toc_bool} {
+      \phantomsection
+      \par
+    }
+    \bool_if:NTF {\g__gzt_title_not_in_toc_bool} {
+      \bookmark[page=\thepage,level=chapter]{\g__gzt_short_title_tl}
+    }{
+      \addcontentsline{toc}{chapter}{
+        \tl_if_empty:NTF \g__gzt_short_title_tl {
+          \g__gzt_title_tl
+        }{
+          \g__gzt_short_title_tl
+        }
+        \bool_if:NF {\g__gzt_subtitle_not_in_toc_bool} {
+          \bool_if:nF {
+            \tl_if_empty_p:N \g__gzt_short_subtitle_tl ||
+            \g__gzt_interview_rubric_bool ||
+            \g__gzt_rearviewmirror_rubric_bool
+          }{
+            \c_space_tl\textendash{}\c_space_tl\g__gzt_short_subtitle_tl
+          }
+        }
         \bool_if:nF {
-          \tl_if_empty_p:N \g__gzt_short_subtitle_tl ||
+          \tl_if_empty_p:N \l__gzt_people_first_last_names_tl ||
           \g__gzt_interview_rubric_bool ||
           \g__gzt_rearviewmirror_rubric_bool
         }{
-          \c_space_tl\textendash{}\c_space_tl\g__gzt_short_subtitle_tl
-        }
-      }
-      \bool_if:nF {
-        \tl_if_empty_p:N \l__gzt_people_first_last_names_tl ||
-        \g__gzt_interview_rubric_bool ||
-        \g__gzt_rearviewmirror_rubric_bool
-      }{
-        \textsl{
-          \cs_if_exist:cTF {texorpdfstring}
-          {
-            \texorpdfstring{
+          \textsl{
+            \cs_if_exist:cTF {texorpdfstring}
+            {
+              \texorpdfstring{
+                \c_space_tl\textendash{}\c_space_tl\citeauthor{\g__gzt_article_bib_key_tl}
+              }{}
+            }{
               \c_space_tl\textendash{}\c_space_tl\citeauthor{\g__gzt_article_bib_key_tl}
-            }{}
-          }{
-            \c_space_tl\textendash{}\c_space_tl\citeauthor{\g__gzt_article_bib_key_tl}
+            }
           }
         }
       }
     }
+    \bool_if:NF {\g__gzt_invisible_titles_bool} {
+      \end{adjustbox}
+    }
   }
-  \end{adjustbox}
-}
   \dim_gset:Nn \g__gzt_abstract_box_width_dim {0.75\linewidth}
   % \bool_if:nT { \tl_if_empty_p:N \l__gzt_people_first_last_names_tl }
   % {
@@ -2142,17 +2148,26 @@
   }
   \tl_set:Nn \l__gzt_authors_box_tl
   {
-    \begin{adjustbox}{minipage=0.3\linewidth,min~ width=0.3\linewidth,valign=t}
+    \bool_if:NF {\g__gzt_invisible_titles_bool} {
+      \begin{adjustbox}{minipage=0.3\linewidth,min~
+          width=0.3\linewidth,valign=t}
+      }
       \bool_if:nTF { \tl_if_empty_p:N \l__gzt_people_first_last_names_tl || \g__gzt_interview_rubric_bool }
       {
         \mbox{}
       }
       {
         \color{__gzt_people_color}
-        \__gzt_itemized_citeauthor:n {\g__gzt_article_bib_key_tl}
+        \bool_if:NTF {\g__gzt_invisible_titles_bool} {
+          \nocite {\g__gzt_article_bib_key_tl}
+        }{
+          \__gzt_itemized_citeauthor:n {\g__gzt_article_bib_key_tl}
+        }
       }
-    \end{adjustbox}
-  }
+      \bool_if:NF {\g__gzt_invisible_titles_bool} {
+        \end{adjustbox}
+      }
+    }
     \bool_if:nTF {
       \int_compare_p:nNn { \g__gzt_item_in_rubric_int } = { 1 }
     }
