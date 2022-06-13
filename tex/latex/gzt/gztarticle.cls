@@ -11,8 +11,8 @@
 %%  E-mail:| denis.bitouze@univ-littoral.fr
 %% License:| Released under the LaTeX Project Public License v1.3c or later
 %%     See:| http://www.latex-project.org/lppl.txt
-\def\gztfileversion{1.1.2}
-\def\gztfiledate{2022-03-18}
+\def\gztfileversion{1.1.3}
+\def\gztfiledate{2022-06-13}
 \RequirePackage{xpatch}
 \patchcmd
   {\use@@tikzlibrary}
@@ -75,6 +75,8 @@
 \bool_new:N \g__gzt_cover_bool
 \bool_new:N \g__gzt_coverpage_bool
 \bool_new:N \g__gzt_inside_pages_bool
+\bool_new:N \g__gzt_invisible_titles_bool
+\bool_new:N \g__gzt_rubrics_in_toc_bool
 \bool_new:N \g__gzt_no_inside_backcover_bool
 \bool_gset_true:N \g__gzt_for_authors_bool
 \bool_gset_true:N \g__gzt_inside_pages_bool
