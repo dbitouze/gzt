@@ -143,6 +143,11 @@
   },
   output / web .code:n = {
   },
+  maindarkcolor .code:n = {
+    \AddToHook{begindocument/before}{
+      \definecolor{__gzt_generic_dark_color}{cmyk}{#1}
+    }
+  },
   specialedition .code:n = {
     \bool_gset_true:N \g__gzt_special_edition_bool
     \bool_gset_true:N \g__gzt_frontcover_without_minitoc_bool
@@ -150,6 +155,11 @@
   },
   specialedition / color .code:n = {
     \tl_gset:Nn \g__gzt_special_edition_color_tl {#1}
+  },
+  specialedition / ornaments~ color .code:n = {
+    \AddToHook{begindocument/before}{
+      \definecolor{__gzt_generic_dark_color}{cmyk}{#1}
+    }
   },
   specialedition / invisible~ titles .bool_gset:N = \g__gzt_invisible_titles_bool,
   specialedition / rubrics~ in~ toc .bool_gset:N = \g__gzt_rubrics_in_toc_bool,
@@ -964,54 +974,53 @@
   { theorem~ or~ definition~ or~ proof }
   { \exp_not:n {#1} }
 }
-\definecolorset{cmyk}{__gzt_}{_color}{
-  generic_dark,1,.60,.10,0; % kind of blue (!)
-  light_generic_dark,1,.35,0,0 % kind of blue (!), light
+\definecolor{__gzt_generic_dark_color}{cmyk}{1,.60,.10,0}
+\AddToHook{begindocument}{
+  \colorlet{__gzt_generic_light_color}{black!50}
+  \colorlet{__gzt_dark_generic_light_color}{black!60}
+  \colorlet{__gzt_description_label_light_color}{__gzt_dark_generic_light_color}
+  \colorlet{__gzt_minitoc_color}{__gzt_generic_light_color}
+  \colorlet{__gzt_cover_itemize_label_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_default_text_color}{black}
+  \colorlet{__gzt_head_text_color}{black!65}
+  \colorlet{__gzt_rubric_head_text_color}{__gzt_head_text_color}
+  \colorlet{__gzt_bibliography_minibios_acknowledgements_bg_color}{black!10}
+  \colorlet{__gzt_headrule_color}{__gzt_generic_light_color!65}
+  \colorlet{__gzt_circlerule_color}{__gzt_generic_dark_color!65}
+  \colorlet{__gzt_frontmatter_text_color}{black!75}
+  \colorlet{__gzt_people_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_arrayrule_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_acknowledgements_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_question_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_boxed_issue_number_bg_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_rule_in_toc_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_rubric_in_toc_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_article_in_toc_color}{__gzt_frontmatter_text_color}
+  \colorlet{__gzt_rubric_title_color}{__gzt_generic_light_color}
+  \colorlet{__gzt_article_title_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_section_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_subsection_color}{__gzt_generic_dark_color!90}
+  \colorlet{__gzt_subsubsection_color}{__gzt_generic_dark_color!80}
+  \colorlet{__gzt_rubric_abstract_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_article_abstract_color}{__gzt_generic_light_color}
+  \colorlet{__gzt_dotfill_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_about_frontcover_title_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_reflected_text_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_inside_frontcover_frame_bg_color}{__gzt_generic_dark_color!8}
+  \colorlet{__gzt_inside_frontcover_frame_title_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_footer_bg_color}{black!10}
+  \colorlet{__gzt_float_title_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_float_title_bg_color}{__gzt_generic_dark_color!10}
+  \colorlet{__gzt_float_frame_color}{__gzt_generic_dark_color!20}
+  \colorlet{__gzt_chapter_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_smf_number_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_date_color}{__gzt_generic_light_color}
+  \colorlet{__gzt_table_head_color}{__gzt_generic_dark_color!25}
+  \colorlet{__gzt_book_review_frame_bg_color}{__gzt_generic_dark_color!8}
+  \colorlet{__gzt_book_advertisement_bg_color}{white}
+  \colorlet{__gzt_book_advertisement_frame_color}{__gzt_generic_dark_color}
+  \colorlet{__gzt_default_cover_color}{white}
 }
-\colorlet{__gzt_generic_light_color}{black!50}
-\colorlet{__gzt_dark_generic_light_color}{black!60}
-\colorlet{__gzt_description_label_light_color}{__gzt_dark_generic_light_color}
-\colorlet{__gzt_minitoc_color}{__gzt_generic_light_color}
-\colorlet{__gzt_cover_itemize_label_color}{__gzt_light_generic_dark_color}
-\colorlet{__gzt_default_text_color}{black}
-\colorlet{__gzt_head_text_color}{black!65}
-\colorlet{__gzt_rubric_head_text_color}{__gzt_head_text_color}
-\colorlet{__gzt_bibliography_minibios_acknowledgements_bg_color}{black!10}
-\colorlet{__gzt_headrule_color}{__gzt_generic_light_color!65}
-\colorlet{__gzt_circlerule_color}{__gzt_generic_dark_color!65}
-\colorlet{__gzt_frontmatter_text_color}{black!75}
-\colorlet{__gzt_people_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_arrayrule_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_acknowledgements_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_question_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_boxed_issue_number_bg_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_rule_in_toc_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_rubric_in_toc_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_article_in_toc_color}{__gzt_frontmatter_text_color}
-\colorlet{__gzt_rubric_title_color}{__gzt_generic_light_color}
-\colorlet{__gzt_article_title_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_section_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_subsection_color}{__gzt_generic_dark_color!90}
-\colorlet{__gzt_subsubsection_color}{__gzt_generic_dark_color!80}
-\colorlet{__gzt_rubric_abstract_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_article_abstract_color}{__gzt_generic_light_color}
-\colorlet{__gzt_dotfill_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_about_frontcover_title_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_reflected_text_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_inside_frontcover_frame_bg_color}{__gzt_generic_dark_color!8}
-\colorlet{__gzt_inside_frontcover_frame_title_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_footer_bg_color}{black!10}
-\colorlet{__gzt_float_title_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_float_title_bg_color}{__gzt_generic_dark_color!10}
-\colorlet{__gzt_float_frame_color}{__gzt_generic_dark_color!20}
-\colorlet{__gzt_chapter_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_smf_number_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_date_color}{__gzt_generic_light_color}
-\colorlet{__gzt_table_head_color}{__gzt_generic_dark_color!25}
-\colorlet{__gzt_book_review_frame_bg_color}{__gzt_generic_dark_color!8}
-\colorlet{__gzt_book_advertisement_bg_color}{white}
-\colorlet{__gzt_book_advertisement_frame_color}{__gzt_generic_dark_color}
-\colorlet{__gzt_default_cover_color}{white}
 \AddToHook{env/multicols/begin}{
   \bool_gset_true:N \g__gzt_multicols_bool
 }
@@ -2228,7 +2237,7 @@
       \else
       \l__gzt_bullet_and_rule_even_tl
       \fi
-      \bigskip
+      \ifvmode\bigskip\fi
     }
     \par
     \nopagebreak[4]
@@ -2431,7 +2440,6 @@
   \__gzt_boxed_issue_number:nn {#1}{#2}
   \color{__gzt_frontmatter_text_color}
   \fontsize{11}{13.6}\selectfont
-  \RaggedRight
 }
 \cs_new_protected:Nn \__gzt_after_editorial_presidentmessage:
 {
@@ -3488,7 +3496,7 @@
   columns=flexible,
   inputencoding=utf8/latin1
 }
-\DeclareTotalTCBox{\gztverb}{ v }{verbatim,blank,fuzzy~ halo=0pt~ with~ __gzt_light_generic_dark_color!8}{#1}
+\DeclareTotalTCBox{\gztverb}{ v }{verbatim,blank,fuzzy~ halo=0pt~ with~ __gzt_generic_dark_color!8}{#1}
 \NewTCBListing{gztcode}{ !O{} }{
   listing~ style=__gzt_lst_style,
   listing~ only,
