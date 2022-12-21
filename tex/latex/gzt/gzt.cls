@@ -82,9 +82,9 @@
   {gzt}
   {\gztfiledate}
   {\gztfileversion}
-  {
-    SMF~ class~ for~ the~ French~ journal^^J
-    "La~ Gazette~ de~ la~ Soci'et'e~ Math'ematique~ de~ France".
+  {%
+    SMF class for the French journal^^J
+    “La Gazette de la Société Mathématique de France”.
   }
 \NeedsTeXFormat{LaTeX2e}
 \bool_new:N \g__gzt_moral_report_bool
@@ -882,7 +882,9 @@
 {
   short .tl_gset:N = \g__gzt_short_title_tl,
   minishort .tl_gset:N = \g__gzt_mini_short_title_tl,
+  notinarticle .bool_gset:N = \g__gzt_title_not_in_article_bool,
   notintoc .bool_gset:N = \g__gzt_title_not_in_toc_bool,
+  without~ rule .bool_gset:N = \g__gzt_title_without_rule_bool,
   short .value_required:n = true,
   minishort .value_required:n = true,
 }
@@ -890,6 +892,7 @@
 {
   short .tl_gset:N = \g__gzt_short_subtitle_tl,
   minishort .tl_gset:N = \g__gzt_mini_short_subtitle_tl,
+  notinarticle .bool_gset:N = \g__gzt_subtitle_not_in_article_bool,
   notintoc .bool_gset:N = \g__gzt_subtitle_not_in_toc_bool,
   short .value_required:n = true,
   minishort .value_required:n = true,
@@ -1727,7 +1730,9 @@
   \int_gincr:N \g__gzt_articles_int
   \tl_gclear:N \g__gzt_short_title_tl
   \tl_gclear:N \g__gzt_short_subtitle_tl
+  \bool_gset_false:N \g__gzt_title_not_in_article_bool
   \bool_gset_false:N \g__gzt_title_not_in_toc_bool
+  \bool_gset_false:N \g__gzt_title_without_rule_bool
   \IfNoValueF {#1}
   {
     \keys_set:nn { gzt/title } { #1 }
@@ -2083,8 +2088,9 @@
 }
 \tl_set:Nn \l__gzt_title_box_tl
 {
-  \noindent
   \bool_if:NF {\g__gzt_invisible_titles_bool} {
+    \noindent
+    % \bool_show:N \g__gzt_title_not_in_article_bool
     \hspace*{18mm}
     \begin{adjustbox}{minipage=\linewidth-18mm,valign=t}
       \raggedright
@@ -2099,46 +2105,8 @@
       \phantomsection
       \par
     }
-    \bool_if:NTF {\g__gzt_title_not_in_toc_bool} {
-      \bookmark[page=\thepage,level=chapter]{\g__gzt_short_title_tl}
-    }{
-      \addcontentsline{toc}{chapter}{
-        \tl_if_empty:NTF \g__gzt_short_title_tl {
-          \g__gzt_title_tl
-        }{
-          \g__gzt_short_title_tl
-        }
-        \bool_if:NF {\g__gzt_subtitle_not_in_toc_bool} {
-          \bool_if:nF {
-            \tl_if_empty_p:N \g__gzt_short_subtitle_tl ||
-            \g__gzt_interview_rubric_bool ||
-            \g__gzt_rearviewmirror_rubric_bool
-          }{
-            \c_space_tl\textendash{}\c_space_tl\g__gzt_short_subtitle_tl
-          }
-        }
-        \bool_if:nF {
-          \tl_if_empty_p:N \l__gzt_people_first_last_names_tl ||
-          \g__gzt_interview_rubric_bool ||
-          \g__gzt_rearviewmirror_rubric_bool
-        }{
-          \textsl{
-            \cs_if_exist:cTF {texorpdfstring}
-            {
-              \texorpdfstring{
-                \c_space_tl\textendash{}\c_space_tl\citeauthor{\g__gzt_article_bib_key_tl}
-              }{}
-            }{
-              \c_space_tl\textendash{}\c_space_tl\citeauthor{\g__gzt_article_bib_key_tl}
-            }
-          }
-        }
-      }
-    }
-    \bool_if:NF {\g__gzt_invisible_titles_bool} {
-      \end{adjustbox}
-    }
-  }
+  \end{adjustbox}
+}
   \dim_gset:Nn \g__gzt_abstract_box_width_dim {0.75\linewidth}
   % \bool_if:nT { \tl_if_empty_p:N \l__gzt_people_first_last_names_tl }
   % {
@@ -2169,20 +2137,18 @@
       }
       {
         \color{__gzt_people_color}
-        \bool_if:NTF {\g__gzt_invisible_titles_bool} {
-          \nocite {\g__gzt_article_bib_key_tl}
-        }{
+        \bool_if:NF {\g__gzt_invisible_titles_bool} {
           \__gzt_itemized_citeauthor:n {\g__gzt_article_bib_key_tl}
         }
       }
       \bool_if:NF {\g__gzt_invisible_titles_bool} {
-        \end{adjustbox}
-      }
+      \end{adjustbox}
     }
-    \bool_if:nTF {
-      \int_compare_p:nNn { \g__gzt_item_in_rubric_int } = { 1 }
-    }
-    {
+  }
+  \bool_if:nTF {
+    \int_compare_p:nNn { \g__gzt_item_in_rubric_int } = { 1 }
+  }
+  {
       \mbox{}
       \par
       \bool_if:nTF {
@@ -2219,74 +2185,115 @@
       }
     }
     \bool_gset_false:N \g__gzt_previous_article_with_bibliography_or_minibio_bool
-\bool_if:NT {\g__gzt_for_authors_bool} {
-  \hypersetup{
-    pdftitle=\g__gzt_short_title_tl,
-    pdfauthor=\l__gzt_people_first_last_names_tl
-  }
-}
-  \bool_if:nF { \g__gzt_for_authors_bool } {
-    % \xleaders\vbox {
-      %   \bigskip
-      % }
-      %   \vskip\bigskipamount
-      \noindent
-      \checkoddpage
-      \ifoddpage
-      \l__gzt_bullet_and_rule_odd_tl
-      \else
-      \l__gzt_bullet_and_rule_even_tl
-      \fi
-      \ifvmode\bigskip\fi
+    \bool_if:NT {\g__gzt_for_authors_bool} {
+      \hypersetup{
+        pdftitle=\g__gzt_short_title_tl,
+        pdfauthor=\l__gzt_people_first_last_names_tl
+      }
+    }
+    \bool_if:nF { \g__gzt_for_authors_bool } {
+      \bool_if:NF {\g__gzt_title_without_rule_bool} {
+        % \xleaders\vbox {
+        % \bigskip
+        % }
+        %   \vskip\bigskipamount
+        \noindent
+        \checkoddpage
+        \ifoddpage
+          \l__gzt_bullet_and_rule_odd_tl
+        \else
+          \l__gzt_bullet_and_rule_even_tl
+        \fi
+        \bigskip
+      }
     }
     \par
     \nopagebreak[4]
-  \l__gzt_title_box_tl
-  \normalsize
-  \nopagebreak[3]
-  \bool_if:nF {
-    \tl_if_empty_p:N \g__gzt_abstract_body_tl
-    &&
-    (
-      \tl_if_empty_p:N \l__gzt_people_first_last_names_tl ||
-      \g__gzt_interview_rubric_bool ||
-      \g__gzt_rearviewmirror_rubric_bool
-    )
-  }{
-    \par
+    \nocite {\g__gzt_article_bib_key_tl}
+    \bool_if:NTF {\g__gzt_title_not_in_toc_bool} {
+      \bookmark[page=\thepage,level=chapter]{\g__gzt_short_title_tl}
+    }{
+      \addcontentsline{toc}{chapter}{
+        \tl_if_empty:NTF \g__gzt_short_title_tl {
+          \g__gzt_title_tl
+        }{
+          \g__gzt_short_title_tl
+        }
+        \bool_if:NF {\g__gzt_subtitle_not_in_toc_bool} {
+          \bool_if:nF {
+            \tl_if_empty_p:N \g__gzt_short_subtitle_tl ||
+            \g__gzt_interview_rubric_bool ||
+            \g__gzt_rearviewmirror_rubric_bool
+          }{
+            \c_space_tl\textendash{}\c_space_tl\g__gzt_short_subtitle_tl
+          }
+        }
+        \bool_if:nF {
+          \tl_if_empty_p:N \l__gzt_people_first_last_names_tl ||
+          \g__gzt_interview_rubric_bool ||
+          \g__gzt_rearviewmirror_rubric_bool
+        }{
+          \textsl{
+            \cs_if_exist:cTF {texorpdfstring}
+            {
+              \texorpdfstring{
+                \c_space_tl\textendash{}\c_space_tl\citeauthor{\g__gzt_article_bib_key_tl}
+              }{}
+            }{
+              \c_space_tl\textendash{}\c_space_tl\citeauthor{\g__gzt_article_bib_key_tl}
+            }
+          }
+        }
+      }
+    }
+    \bool_if:NF {\g__gzt_title_not_in_article_bool} {
+      \l__gzt_title_box_tl
+      \normalsize
+      \nopagebreak[3]
+      \bool_if:nF {
+        \tl_if_empty_p:N \g__gzt_abstract_body_tl
+        &&
+        (
+        \tl_if_empty_p:N \l__gzt_people_first_last_names_tl ||
+        \g__gzt_interview_rubric_bool ||
+        \g__gzt_rearviewmirror_rubric_bool
+        )
+      }{
+        \par
+        \bigskip
+        \bigskip
+        \large
+        \mbox{}
+        \checkoddpage
+        \ifoddpage
+          \l__gzt_abstract_box_tl
+          \hspace*{11mm}
+          \l__gzt_authors_box_tl
+        \else
+          \hspace*{-.85\c__gzt_outermargin_dim}
+          \l__gzt_authors_box_tl
+          \hspace*{11mm}
+          \l__gzt_abstract_box_tl
+        \fi
+      }
+    }
+    \tl_gclear:N \g__gzt_title_tl
+    \tl_gclear:N \g__gzt_subtitle_tl
+    \tl_gclear:N \g__gzt_abstract_body_tl
+    \normalsize
     \bigskip
-    \bigskip
-    \large
-    \mbox{}
-    \checkoddpage
-    \ifoddpage
-    \l__gzt_abstract_box_tl
-    \hspace*{11mm}
-    \l__gzt_authors_box_tl
-    \else
-    \hspace*{-.85\c__gzt_outermargin_dim}
-    \l__gzt_authors_box_tl
-    \hspace*{11mm}
-    \l__gzt_abstract_box_tl
-    \fi
-  }
-  \tl_gclear:N \g__gzt_title_tl
-  \tl_gclear:N \g__gzt_subtitle_tl
-  \tl_gclear:N \g__gzt_abstract_body_tl
-  \normalsize
-  \bigskip
-  \tl_if_empty:NF \g__gzt_abstract_body_tl
-  % {
-  %   \tl_if_empty:NF \l__gzt_people_first_last_names_tl
-  %   {
-  %     \bigskip
-  %   }
-  % }
-  {
-    \bigskip
-  }
-  \bool_if:nT \g__gzt_interview_rubric_bool
-  {
+    \tl_if_empty:NF \g__gzt_abstract_body_tl
+    % {
+    % \tl_if_empty:NF \l__gzt_people_first_last_names_tl
+    % {
+    % \bigskip
+    % }
+    % }
+    {
+      \bigskip
+    }
+    \bool_if:nT \g__gzt_interview_rubric_bool
+    {
     \dim_zero:N \parindent
     % \tl_if_empty:NF \l__gzt_people_photo_tl
     % {
@@ -3119,11 +3126,15 @@
     \end{multicols}
   }
   \FloatBarrier
-  \begin{__gzt_minibiographies_acknowledgements_tcbox}
     \nopagebreak[0]
-    \IfBooleanF {#1}
+    \IfBooleanTF {#1}
     {
-      \__gzt_display_people_by_role:n { author-art-\int_use:N \g__gzt_articles_int }
+      \tl_if_empty:NF \l__gzt_article_acknowledgements_tl {
+        \begin{__gzt_minibiographies_acknowledgements_tcbox}
+      }
+    }{
+      \begin{__gzt_minibiographies_acknowledgements_tcbox}
+        \__gzt_display_people_by_role:n { author-art-\int_use:N \g__gzt_articles_int }
     }
     \DTLsavelastrowcount{\__gzt_authors_number}
     \tl_if_empty:NF \l__gzt_article_acknowledgements_tl
@@ -3141,7 +3152,14 @@
       \end{adjustbox}
     }
     \bool_gset_true:N \g__gzt_previous_article_with_bibliography_or_minibio_bool
-  \end{__gzt_minibiographies_acknowledgements_tcbox}
+    \IfBooleanTF {#1}
+    {
+      \tl_if_empty:NF \l__gzt_article_acknowledgements_tl {
+      \end{__gzt_minibiographies_acknowledgements_tcbox}
+      }
+    }{
+    \end{__gzt_minibiographies_acknowledgements_tcbox}
+  }
 }
 \cs_set_eq:NN \__gzt_printbibliography \printbibliography
 \RenewDocumentCommand \printbibliography { s O{} } {
@@ -3151,6 +3169,26 @@
   \FloatBarrier
   \begin{__gzt_bibliography_tcbox}
     \__gzt_printbibliography[heading=subbibliography,resetnumbers,#2]
+  \end{__gzt_bibliography_tcbox}
+  \nopagebreak[0]
+  \IfBooleanTF {#1}
+  {
+    \printminibios*
+  }{
+    \printminibios
+  }
+}
+\cs_set_eq:NN \__gzt_bibbycategory \bibbycategory
+\RenewDocumentCommand \bibbycategory { s O{} } {
+  \bool_if:NT {\g__gzt_multicols_bool} {
+    \end{multicols}
+  }
+  \FloatBarrier
+  \begin{__gzt_bibliography_tcbox}
+    \defbibheading{bibliography}{%
+      \section*{Références}}
+    \printbibheading
+    \__gzt_bibbycategory[#2]
   \end{__gzt_bibliography_tcbox}
   \nopagebreak[0]
   \IfBooleanTF {#1}
@@ -3800,6 +3838,7 @@
     enhanced,
     colback=__gzt_book_review_frame_bg_color,
     breakable,
+    use~ color~ stack,
     % height=50mm,
     boxrule=\c_zero_dim,
     sharp~ corners=all,
@@ -3878,6 +3917,7 @@
   __gzt_tcb_bibliography_style/.style={
     colback=__gzt_bibliography_minibios_acknowledgements_bg_color,
     breakable,
+    use~ color~ stack,
     boxrule=\c_zero_dim,
     sharp~ corners=all,
     enhanced
@@ -3887,6 +3927,7 @@
   __gzt_tcb_minibiographies_acknowledgements_style/.style={
     colback=__gzt_bibliography_minibios_acknowledgements_bg_color,
     breakable,
+    use~ color~ stack,
     boxrule=\c_zero_dim,
     extras~ unbroken~ and~ last={drop~ lifted~ shadow},
     sharp~ corners=all,
