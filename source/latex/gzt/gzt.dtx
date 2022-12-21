@@ -6082,6 +6082,33 @@ Running "make install" installs the files in the local TeX tree.
     \printminibios
   }
 }
+\cs_set_eq:NN \_@@_bibbycategory \bibbycategory
+\RenewDocumentCommand \bibbycategory { s O{} } {
+  \bool_if:NT {\g_@@_multicols_bool} {
+    \end{multicols}
+  }
+%    \end{macrocode}
+% We force all the previous floats to be processed no later on the page
+% following the beginning of the bibliography, \textsc{cv} or
+% acknowledgements.
+%    \begin{macrocode}
+% \afterpage{
+  \FloatBarrier
+% }
+  \begin{_@@_bibliography_tcbox}
+    \defbibheading{bibliography}{%
+      \section*{Références}}
+    \printbibheading
+    \_@@_bibbycategory[#2]
+  \end{_@@_bibliography_tcbox}
+  \nopagebreak[0]
+  \IfBooleanTF {#1}
+  {
+    \printminibios*
+  }{
+    \printminibios
+  }
+}
 %    \end{macrocode}
 % \end{macro}
 %
