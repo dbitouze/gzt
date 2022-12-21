@@ -6009,11 +6009,15 @@ Running "make install" installs the files in the local TeX tree.
 % acknowledgements.
 %    \begin{macrocode}
   \FloatBarrier
-  \begin{_@@_minibiographies_acknowledgements_tcbox}
     \nopagebreak[0]
-    \IfBooleanF {#1}
+    \IfBooleanTF {#1}
     {
-      \@@_display_people_by_role:n { author-art-\int_use:N \g_@@_articles_int }
+      \tl_if_empty:NF \l_@@_article_acknowledgements_tl {
+        \begin{_@@_minibiographies_acknowledgements_tcbox}
+      }
+    }{
+      \begin{_@@_minibiographies_acknowledgements_tcbox}
+        \@@_display_people_by_role:n { author-art-\int_use:N \g_@@_articles_int }
     }
     \DTLsavelastrowcount{\_@@_authors_number}
     \tl_if_empty:NF \l_@@_article_acknowledgements_tl
@@ -6031,7 +6035,14 @@ Running "make install" installs the files in the local TeX tree.
       \end{adjustbox}
     }
     \bool_gset_true:N \g_@@_previous_article_with_bibliography_or_minibio_bool
-  \end{_@@_minibiographies_acknowledgements_tcbox}
+    \IfBooleanTF {#1}
+    {
+      \tl_if_empty:NF \l_@@_article_acknowledgements_tl {
+      \end{_@@_minibiographies_acknowledgements_tcbox}
+      }
+    }{
+    \end{_@@_minibiographies_acknowledgements_tcbox}
+  }
 }
 %    \end{macrocode}
 % \end{macro}
