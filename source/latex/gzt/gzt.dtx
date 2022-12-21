@@ -2735,7 +2735,9 @@ Running "make install" installs the files in the local TeX tree.
 {
   short .tl_gset:N = \g_@@_short_title_tl,
   minishort .tl_gset:N = \g_@@_mini_short_title_tl,
+  notinarticle .bool_gset:N = \g_@@_title_not_in_article_bool,
   notintoc .bool_gset:N = \g_@@_title_not_in_toc_bool,
+  without~ rule .bool_gset:N = \g_@@_title_without_rule_bool,
 %    \end{macrocode}
 %
 % The following options, when used, must receive a value.
@@ -2764,6 +2766,7 @@ Running "make install" installs the files in the local TeX tree.
 {
   short .tl_gset:N = \g_@@_short_subtitle_tl,
   minishort .tl_gset:N = \g_@@_mini_short_subtitle_tl,
+  notinarticle .bool_gset:N = \g_@@_subtitle_not_in_article_bool,
   notintoc .bool_gset:N = \g_@@_subtitle_not_in_toc_bool,
 %    \end{macrocode}
 %
@@ -3995,7 +3998,9 @@ Running "make install" installs the files in the local TeX tree.
   \int_gincr:N \g_@@_articles_int
   \tl_gclear:N \g_@@_short_title_tl
   \tl_gclear:N \g_@@_short_subtitle_tl
+  \bool_gset_false:N \g_@@_title_not_in_article_bool
   \bool_gset_false:N \g_@@_title_not_in_toc_bool
+  \bool_gset_false:N \g_@@_title_without_rule_bool
   \IfNoValueF {#1}
   {
     \keys_set:nn { gzt/title } { #1 }
@@ -4382,6 +4387,20 @@ Running "make install" installs the files in the local TeX tree.
 \RenewDocumentCommand \maketitle { s } {
 %    \end{macrocode}
 %
+% % We add to this command some options that let us specify:
+% % \begin{itemize}
+% % \item whether the blue rule and bullet is displayed or not at the beginning of
+% % the article,
+% % \item whether the title is visible or not at the beginning of the article,
+% % \item whether the title is visible or not in the ToC.
+% % \end{itemize}
+% %    \begin{macrocode}
+%   \IfNoValueF {#1}
+%   {
+%     \keys_set:nn { gzt/maketitle } { #1 }
+%   }
+% %    \end{macrocode}
+%
 % We force all the previous floats to be processed before a new article starts
 % (this is already done in ×bibliography_minibiographies_acknowledgements×
 % environment but is repeated here if what is before provides floats but neither
@@ -4539,8 +4558,9 @@ Running "make install" installs the files in the local TeX tree.
 }
 \tl_set:Nn \l_@@_title_box_tl
 {
-  \noindent
   \bool_if:NF {\g_@@_invisible_titles_bool} {
+    \noindent
+    % \bool_show:N \g_@@_title_not_in_article_bool
     \hspace*{18mm}
     \begin{adjustbox}{minipage=\linewidth-18mm,valign=t}
       \raggedright
@@ -4555,46 +4575,8 @@ Running "make install" installs the files in the local TeX tree.
       \phantomsection
       \par
     }
-    \bool_if:NTF {\g_@@_title_not_in_toc_bool} {
-      \bookmark[page=\thepage,level=chapter]{\g_@@_short_title_tl}
-    }{
-      \addcontentsline{toc}{chapter}{
-        \tl_if_empty:NTF \g_@@_short_title_tl {
-          \g_@@_title_tl
-        }{
-          \g_@@_short_title_tl
-        }
-        \bool_if:NF {\g_@@_subtitle_not_in_toc_bool} {
-          \bool_if:nF {
-            \tl_if_empty_p:N \g_@@_short_subtitle_tl ||
-            \g_@@_interview_rubric_bool ||
-            \g_@@_rearviewmirror_rubric_bool
-          }{
-            \c_space_tl\textendash{}\c_space_tl\g_@@_short_subtitle_tl
-          }
-        }
-        \bool_if:nF {
-          \tl_if_empty_p:N \l_@@_people_first_last_names_tl ||
-          \g_@@_interview_rubric_bool ||
-          \g_@@_rearviewmirror_rubric_bool
-        }{
-          \textsl{
-            \cs_if_exist:cTF {texorpdfstring}
-            {
-              \texorpdfstring{
-                \c_space_tl\textendash{}\c_space_tl\citeauthor{\g_@@_article_bib_key_tl}
-              }{}
-            }{
-              \c_space_tl\textendash{}\c_space_tl\citeauthor{\g_@@_article_bib_key_tl}
-            }
-          }
-        }
-      }
-    }
-    \bool_if:NF {\g_@@_invisible_titles_bool} {
-      \end{adjustbox}
-    }
-  }
+  \end{adjustbox}
+}
   \dim_gset:Nn \g_@@_abstract_box_width_dim {0.75\linewidth}
   % \bool_if:nT { \tl_if_empty_p:N \l_@@_people_first_last_names_tl }
   % {
@@ -4625,20 +4607,18 @@ Running "make install" installs the files in the local TeX tree.
       }
       {
         \color{@@_people_color}
-        \bool_if:NTF {\g_@@_invisible_titles_bool} {
-          \nocite {\g__gzt_article_bib_key_tl}
-        }{
+        \bool_if:NF {\g_@@_invisible_titles_bool} {
           \_@@_itemized_citeauthor:n {\g_@@_article_bib_key_tl}
         }
       }
       \bool_if:NF {\g_@@_invisible_titles_bool} {
-        \end{adjustbox}
-      }
+      \end{adjustbox}
     }
-    \bool_if:nTF {
-      \int_compare_p:nNn { \g_@@_item_in_rubric_int } = { 1 }
-    }
-    {
+  }
+  \bool_if:nTF {
+    \int_compare_p:nNn { \g_@@_item_in_rubric_int } = { 1 }
+  }
+  {
       \mbox{}
       \par
       \bool_if:nTF {
@@ -4691,12 +4671,12 @@ Running "make install" installs the files in the local TeX tree.
 %
 % We fix some of the PDF's metadata .
 %    \begin{macrocode}
-\bool_if:NT {\g_@@_for_authors_bool} {
-  \hypersetup{
-    pdftitle=\g_@@_short_title_tl,
-    pdfauthor=\l_@@_people_first_last_names_tl
-  }
-}
+    \bool_if:NT {\g_@@_for_authors_bool} {
+      \hypersetup{
+        pdftitle=\g_@@_short_title_tl,
+        pdfauthor=\l_@@_people_first_last_names_tl
+      }
+    }
 %    \end{macrocode}
 %
 % Here, we put the \pkg{TikZ}'s picture of the \enquote{bullet and rule}
@@ -4704,19 +4684,21 @@ Running "make install" installs the files in the local TeX tree.
 % follows a ×\cleaders× that makes the whole vanishes at pages boundaries
 % (cf. \url{https://tex.stackexchange.com/a/31615/18401}).
 %    \begin{macrocode}
-  \bool_if:nF { \g_@@_for_authors_bool } {
-    % \xleaders\vbox {
-      %   \bigskip
-      % }
-      %   \vskip\bigskipamount
-      \noindent
-      \checkoddpage
-      \ifoddpage
-      \l_@@_bullet_and_rule_odd_tl
-      \else
-      \l_@@_bullet_and_rule_even_tl
-      \fi
-      \bigskip
+    \bool_if:nF { \g_@@_for_authors_bool } {
+      \bool_if:NF {\g_@@_title_without_rule_bool} {
+        % \xleaders\vbox {
+        % \bigskip
+        % }
+        %   \vskip\bigskipamount
+        \noindent
+        \checkoddpage
+        \ifoddpage
+          \l_@@_bullet_and_rule_odd_tl
+        \else
+          \l_@@_bullet_and_rule_even_tl
+        \fi
+        \bigskip
+      }
     }
     \par
     \nopagebreak[4]
@@ -4731,52 +4713,91 @@ Running "make install" installs the files in the local TeX tree.
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-  \l_@@_title_box_tl
-  \normalsize
-  \nopagebreak[3]
-  \bool_if:nF {
-    \tl_if_empty_p:N \g_@@_abstract_body_tl
-    &&
-    (
-      \tl_if_empty_p:N \l_@@_people_first_last_names_tl ||
-      \g_@@_interview_rubric_bool ||
-      \g_@@_rearviewmirror_rubric_bool
-    )
-  }{
-    \par
+    \nocite {\g__gzt_article_bib_key_tl}
+    \bool_if:NTF {\g_@@_title_not_in_toc_bool} {
+      \bookmark[page=\thepage,level=chapter]{\g_@@_short_title_tl}
+    }{
+      \addcontentsline{toc}{chapter}{
+        \tl_if_empty:NTF \g_@@_short_title_tl {
+          \g_@@_title_tl
+        }{
+          \g_@@_short_title_tl
+        }
+        \bool_if:NF {\g_@@_subtitle_not_in_toc_bool} {
+          \bool_if:nF {
+            \tl_if_empty_p:N \g_@@_short_subtitle_tl ||
+            \g_@@_interview_rubric_bool ||
+            \g_@@_rearviewmirror_rubric_bool
+          }{
+            \c_space_tl\textendash{}\c_space_tl\g_@@_short_subtitle_tl
+          }
+        }
+        \bool_if:nF {
+          \tl_if_empty_p:N \l_@@_people_first_last_names_tl ||
+          \g_@@_interview_rubric_bool ||
+          \g_@@_rearviewmirror_rubric_bool
+        }{
+          \textsl{
+            \cs_if_exist:cTF {texorpdfstring}
+            {
+              \texorpdfstring{
+                \c_space_tl\textendash{}\c_space_tl\citeauthor{\g_@@_article_bib_key_tl}
+              }{}
+            }{
+              \c_space_tl\textendash{}\c_space_tl\citeauthor{\g_@@_article_bib_key_tl}
+            }
+          }
+        }
+      }
+    }
+    \bool_if:NF {\g_@@_title_not_in_article_bool} {
+      \l_@@_title_box_tl
+      \normalsize
+      \nopagebreak[3]
+      \bool_if:nF {
+        \tl_if_empty_p:N \g_@@_abstract_body_tl
+        &&
+        (
+        \tl_if_empty_p:N \l_@@_people_first_last_names_tl ||
+        \g_@@_interview_rubric_bool ||
+        \g_@@_rearviewmirror_rubric_bool
+        )
+      }{
+        \par
+        \bigskip
+        \bigskip
+        \large
+        \mbox{}
+        \checkoddpage
+        \ifoddpage
+          \l_@@_abstract_box_tl
+          \hspace*{11mm}
+          \l_@@_authors_box_tl
+        \else
+          \hspace*{-.85\c_@@_outermargin_dim}
+          \l_@@_authors_box_tl
+          \hspace*{11mm}
+          \l_@@_abstract_box_tl
+        \fi
+      }
+    }
+    \tl_gclear:N \g_@@_title_tl
+    \tl_gclear:N \g_@@_subtitle_tl
+    \tl_gclear:N \g_@@_abstract_body_tl
+    \normalsize
     \bigskip
-    \bigskip
-    \large
-    \mbox{}
-    \checkoddpage
-    \ifoddpage
-    \l_@@_abstract_box_tl
-    \hspace*{11mm}
-    \l_@@_authors_box_tl
-    \else
-    \hspace*{-.85\c_@@_outermargin_dim}
-    \l_@@_authors_box_tl
-    \hspace*{11mm}
-    \l_@@_abstract_box_tl
-    \fi
-  }
-  \tl_gclear:N \g_@@_title_tl
-  \tl_gclear:N \g_@@_subtitle_tl
-  \tl_gclear:N \g_@@_abstract_body_tl
-  \normalsize
-  \bigskip
-  \tl_if_empty:NF \g_@@_abstract_body_tl
-  % {
-  %   \tl_if_empty:NF \l_@@_people_first_last_names_tl
-  %   {
-  %     \bigskip
-  %   }
-  % }
-  {
-    \bigskip
-  }
-  \bool_if:nT \g_@@_interview_rubric_bool
-  {
+    \tl_if_empty:NF \g_@@_abstract_body_tl
+    % {
+    % \tl_if_empty:NF \l_@@_people_first_last_names_tl
+    % {
+    % \bigskip
+    % }
+    % }
+    {
+      \bigskip
+    }
+    \bool_if:nT \g_@@_interview_rubric_bool
+    {
 %    \end{macrocode}
 %
 % We set ×\parindent× to zero in \enquote{Interview} rubric.
