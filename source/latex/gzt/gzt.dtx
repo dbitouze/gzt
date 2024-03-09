@@ -2784,6 +2784,7 @@ Running "make install" installs the files in the local TeX tree.
 \keys_define:nn { gzt/rubric }
 {
   abstract .tl_gset:N = \g_@@_rubric_abstract_tl,
+  header .tl_gset:N = \g_@@_rubric_header_tl,
   title .tl_gset:N = \g_@@_rubric_title_tl,
   pictogram .tl_gset:N = \g_@@_rubric_pictofile_tl,
 %    \end{macrocode}
@@ -4153,6 +4154,7 @@ Running "make install" installs the files in the local TeX tree.
 {
   \newpage
   \tl_gclear:N \g_@@_rubric_abstract_tl
+  \tl_gclear:N \g_@@_rubric_header_tl
   \tl_gset:Nn \g_@@_rubric_title_tl {#2}
   \file_if_exist:nTF { #3.pdf }{
     \tl_gset:Nn \g_@@_rubric_pictofile_tl {#3}
@@ -4882,20 +4884,23 @@ Running "make install" installs the files in the local TeX tree.
     \edef\toctablepiece {
       \ExceptFirstPart {\noexpand\\[-1.5mm]}
       \unexpanded{
-        \color{@@_rubric_in_toc_color}\scshape\fontseries{bx}\selectfont
+        \protect\leavevmode\color{@@_rubric_in_toc_color}%
+        \scshape\fontseries{bx}\selectfont
       }
       \unexpanded\expandafter{\etocthelinkedname}&
       % \ifShowPartPageInToc
-      \unexpanded{\bfseries\color{@@_rubric_in_toc_color}}
+      \unexpanded{\bfseries%
+        \protect\leavevmode\color{@@_rubric_in_toc_color}%
+      }
       \unexpanded\expandafter{\etocthelinkedpage}
       % \fi
       \noexpand\\}
     \gdef\ExceptFirstPart ##1{##1}
   }
   \newcommand*\PrepareChapter{
-    \edef\toctablepiece {
-      \unexpanded{\color{@@_article_in_toc_color}\small}
-      \unexpanded\expandafter{\etocthelinkedname}&
+    \edef\toctablepiece {\begingroup
+      \unexpanded{\small\color{@@_article_in_toc_color}}
+      \unexpanded\expandafter{\etocthelinkedname}\endgroup&
       \unexpanded{\color{@@_article_in_toc_color}\small}
       \unexpanded\expandafter{\etocthelinkedpage}
       \noexpand\\[1mm]}
@@ -4943,6 +4948,7 @@ Running "make install" installs the files in the local TeX tree.
 \tl_gset:Nn \g_@@_boxed_issue_number_tl {
   \tcbox{\Large\No\g_@@_issue_number_int}
 }
+\tl_new:N \l_@@_boxed_issue_number_title_tl
 \cs_new_protected:Nn \@@_boxed_issue_number:nn
 {
   \noindent
@@ -4956,14 +4962,14 @@ Running "make install" installs the files in the local TeX tree.
       }
     }
     \bool_if:NTF {\g_@@_special_edition_bool} {
-      \tl_set:Nn \l_tmpa_tl {\c_@@_short_special_edition_string_tl}
+      \tl_set:Nn \l_@@_boxed_issue_number_title_tl {\c_@@_short_special_edition_string_tl}
     }{
-      \tl_set:Nn \l_tmpa_tl {\No\int_use:N\g_@@_issue_number_int}
+      \tl_set:Nn \l_@@_boxed_issue_number_title_tl {\No\int_use:N\g_@@_issue_number_int}
     }
     \begin{adjustbox}{valign=t}
       \begin{tcolorbox}[
         enhanced,
-        title=\l_tmpa_tl,%\int_use:N \g_@@_issue_number_int,
+        title=\l_@@_boxed_issue_number_title_tl,%\int_use:N \g_@@_issue_number_int,
         fonttitle=\Large,
         colback=white,
         sharp~ corners=all,
@@ -5939,9 +5945,14 @@ Running "make install" installs the files in the local TeX tree.
   ]
   [
   \adjustbox{raise={\c_@@_header_yshift_dim}{\height}}{
-    \large\bfseries\scshape\color{@@_head_text_color}\g_@@_rubric_title_tl
+    \large\bfseries\scshape\color{@@_head_text_color}
+    \tl_if_empty:NTF \g_@@_rubric_header_tl {
+      \g_@@_rubric_title_tl
+    }{
+      \g_@@_rubric_header_tl
     }
-    ]
+  }
+  ]
   []
   {}
   {
