@@ -11,8 +11,8 @@
 %%  E-mail:| denis.bitouze@univ-littoral.fr
 %% License:| Released under the LaTeX Project Public License v1.3c or later
 %%     See:| http://www.latex-project.org/lppl.txt
-\def\gztfileversion{1.1.3}
-\def\gztfiledate{2022-06-13}
+\def\gztfileversion{1.1.4}
+\def\gztfiledate{2024-03-09}
 \RequirePackage{xpatch}
 \patchcmd
   {\use@@tikzlibrary}
@@ -814,6 +814,7 @@
 \keys_define:nn { gzt/rubric }
 {
   abstract .tl_gset:N = \g__gzt_rubric_abstract_tl,
+  header .tl_gset:N = \g__gzt_rubric_header_tl,
   title .tl_gset:N = \g__gzt_rubric_title_tl,
   pictogram .tl_gset:N = \g__gzt_rubric_pictofile_tl,
   abstract .value_required:n = true,
@@ -2106,6 +2107,7 @@
 \tl_gset:Nn \g__gzt_boxed_issue_number_tl {
   \tcbox{\Large\No\g__gzt_issue_number_int}
 }
+\tl_new:N \l__gzt_boxed_issue_number_title_tl
 \cs_new_protected:Nn \__gzt_boxed_issue_number:nn
 {
   \noindent
@@ -2119,14 +2121,14 @@
       }
     }
     \bool_if:NTF {\g__gzt_special_edition_bool} {
-      \tl_set:Nn \l_tmpa_tl {\c__gzt_short_special_edition_string_tl}
+      \tl_set:Nn \l__gzt_boxed_issue_number_title_tl {\c__gzt_short_special_edition_string_tl}
     }{
-      \tl_set:Nn \l_tmpa_tl {\No\int_use:N\g__gzt_issue_number_int}
+      \tl_set:Nn \l__gzt_boxed_issue_number_title_tl {\No\int_use:N\g__gzt_issue_number_int}
     }
     \begin{adjustbox}{valign=t}
       \begin{tcolorbox}[
         enhanced,
-        title=\l_tmpa_tl,%\int_use:N \g__gzt_issue_number_int,
+        title=\l__gzt_boxed_issue_number_title_tl,%\int_use:N \g__gzt_issue_number_int,
         fonttitle=\Large,
         colback=white,
         sharp~ corners=all,
@@ -2444,9 +2446,14 @@
   ]
   [
   \adjustbox{raise={\c__gzt_header_yshift_dim}{\height}}{
-    \large\bfseries\scshape\color{__gzt_head_text_color}\g__gzt_rubric_title_tl
+    \large\bfseries\scshape\color{__gzt_head_text_color}
+    \tl_if_empty:NTF \g__gzt_rubric_header_tl {
+      \g__gzt_rubric_title_tl
+    }{
+      \g__gzt_rubric_header_tl
     }
-    ]
+  }
+  ]
   []
   {}
   {
@@ -3357,7 +3364,7 @@
 \NewDocumentCommand \C {} {\mathbb{C}}
 \NewDocumentCommand \K {} {\mathbb{K}}
 %% 
-%% Copyright (C) 2014-2021 by Denis Bitouzé <denis.bitouze@univ-littoral.fr>
+%% Copyright (C) 2014-2024 by Denis Bitouzé <denis.bitouze@univ-littoral.fr>
 %% 
 %% This work may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License (LPPL), either
