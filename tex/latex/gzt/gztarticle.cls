@@ -229,9 +229,8 @@
 {
   \int_compare:nNnTF { \g__gzt_editors_in_chief_int } > { 1 }
   { \c__gzt_editorsinchief_string_tl }
-  { \c__gzt_editorinchief_string_tl }
+  { \g__gzt_editorinchief_string_tl }
 }
-\tl_const:Nn \c__gzt_editorinchief_string_tl {R\'edacteur~ en~ chef }
 \tl_const:Nn \c__gzt_editorsinchief_string_tl {R\'edacteurs~ en~ chef }
 \tl_const:Nn \c__gzt_editors_string_tl {R\'edacteurs }
 \tl_const:Nn \c__gzt_editorial_board_string_tl {Comit\'e~ de~ r\'edaction}
@@ -243,7 +242,6 @@
 \tl_const:Nn \c__gzt_phone_string_tl {T\'el.}
 \tl_const:Nn \c__gzt_fax_string_tl {Fax}
 \tl_const:Nn \c__gzt_informations_string_tl {Renseignements}
-\tl_const:Nn \c__gzt_publishingdirector_string_tl {Directeur~ de~ la~ publication}
 \tl_const:Nn \c__gzt_issn_string_tl {\textsc{issn}}
 \tl_const:Nn \c__gzt_isbn_string_tl {\textsc{isbn}}
 \tl_const:Nn \c__gzt_latexclass_string_tl {Classe~ \LaTeX{}}
@@ -257,12 +255,7 @@
     \tl_const:Nn \c__gzt_editorial_heading_string_tl {\'Editorial}
   }
 }
-\tl_const:Nn \c__gzt_editorinchief_signatory_string_tl {
-  \c__gzt_editorinchief_string_tl~ de~ la~ \c__gzt_journal_title_string_tl
-}
 \tl_const:Nn \c__gzt_toc_string_tl {Sommaire}
-\tl_const:Nn \c__gzt_president_message_string_tl {Mot~ du~ pr\'esident}
-\tl_const:Nn \c__gzt_president_signatory_string_tl {pr\'esident~ de~ la~ \g__gzt_smf_short_string_tl}
 \tl_const:Nn \c__gzt_editorinchief_message_date_string_tl {Le~ \displaydate{__gzt_editorinchief_message_date}}
 \tl_const:Nn \c__gzt_president_message_date_string_tl {Le~ }
 \tl_const:Nn \c__gzt_special_edition_string_tl {\c_space_tl{}sp{\'e}cial}
@@ -773,6 +766,13 @@
 \tl_new:N \l__gzt_journal_url_tl
 \tl_new:N \l__gzt_journal_issn_tl
 \tl_new:N \l__gzt_journal_isbn_tl
+\tl_new:N \g__gzt_journal_president_wording_tl
+\tl_new:N \g__gzt_president_message_string_tl
+\tl_new:N \g__gzt_editorinchief_string_tl
+\tl_gset:Nn \g__gzt_journal_president_wording_tl {Mot~ du~     pr\'esident }
+\tl_gset:Nn \g__gzt_president_signatory_string_tl {pr\'esident~ de~ la~ \g__gzt_smf_short_string_tl}
+\tl_gset:Nn \g__gzt_editorinchief_string_tl {R\'edacteur~ en~ chef }
+\tl_gset:Nn \g__gzt_publishingdirector_string_tl {Directeur~ de~ la~ publication}
 \keys_define:nn { gzt/journalsetup }
 {
   publisher .tl_set:N = \l__gzt_journal_publisher_tl,
@@ -783,6 +783,24 @@
   url .tl_set:N = \l__gzt_journal_url_tl,
   issn .tl_set:N = \l__gzt_journal_issn_tl,
   isbn .tl_set:N = \l__gzt_journal_isbn_tl,
+  president~ gender .choice:,
+  president~ gender /   male .code:n = { },
+  president~ gender / female .code:n = {
+    \tl_gset:Nn \g__gzt_journal_president_wording_tl {Mot~ de~ la~ pr\'esidente}
+    \tl_gset:Nn \g__gzt_president_signatory_string_tl {pr\'esidente~ de~ la~ \g__gzt_smf_short_string_tl}
+  },
+  editorinchief~ gender .choice:,
+  editorinchief~ gender /   male .code:n = { },
+  editorinchief~ gender / female .code:n = {
+    \tl_gset:Nn \g__gzt_editorinchief_string_tl {R\'edactrice~ ~ en~ chef }
+  },
+  publishingdirector~ gender .choice:,
+  publishingdirector~ gender /   male .code:n = { },
+  publishingdirector~ gender / female .code:n = {
+    \tl_gset:Nn \g__gzt_publishingdirector_string_tl {Directrice~ de~ la~ publication}
+
+  },
+,
   publisher .value_required:n = true,
   address .value_required:n = true,
   phone .value_required:n = true,
@@ -1097,7 +1115,7 @@
     ,\l__gzt_people_photo_tl=photo
     ,\l__gzt_people_speciality=speciality
     ,\l__gzt_people_role_tl=role
-    ,\l__gzt_people_webpage_tl=webpage
+    ,\g__gzt_people_webpage_tl=webpage
   }{
     \tl_if_in:NnTF \l__gzt_people_role_tl { editor } {
     \item[
@@ -1152,10 +1170,10 @@
                 \par
                 \href{mailto:\l__gzt_people_email_tl}{\nolinkurl{\l__gzt_people_email_tl}}
               }
-              \tl_if_empty:NF \l__gzt_people_webpage_tl
+              \tl_if_empty:NF \g__gzt_people_webpage_tl
               {
                 \par
-                \url{\l__gzt_people_webpage_tl}
+                \url{\g__gzt_people_webpage_tl}
               }
               \tl_if_empty:NF \l__gzt_people_minibio_tl
               {
@@ -1166,6 +1184,9 @@
             \end{description}
           \end{adjustbox}
         }
+        % \tl_show:N \g__gzt_people_webpage_tl
+        \tl_gclear:N \g__gzt_people_webpage_tl
+        % \tl_show:N \g__gzt_people_webpage_tl
       }{
         \__gzt_citeauthor_no_firstinits:n {\c__gzt_issue_bib_key_tl -#1-
           \exp_not:V\DTLcurrentindex}
@@ -1341,12 +1362,11 @@
         \__gzt_display_people_by_role:n { secretary }\par
         \l__gzt_journal_address_tl\par
         \c__gzt_phone_string_tl{}~ :~ \l__gzt_journal_phone_tl{} \c_space_tl\textendash{}\c_space_tl
-        \c__gzt_fax_string_tl{}~ :~ \l__gzt_journal_fax_tl\par
         \href{mailto:\l__gzt_journal_email_tl}{\nolinkurl{\l__gzt_journal_email_tl}}
         % \newline
         \c_space_tl\textendash{}\c_space_tl
         \url{\l__gzt_journal_url_tl}
-      \item[\c__gzt_publishingdirector_string_tl{}~ :]
+      \item[\g__gzt_publishingdirector_string_tl{}~ :]
         \__gzt_display_people_by_role:n { president }
       \item[\c__gzt_issn_string_tl{}~ :] \l__gzt_journal_issn_tl
         \tl_if_empty:NF \l__gzt_journal_isbn_tl
@@ -2103,6 +2123,42 @@
 \file_if_exist:nT { \c__gzt_acronyms_file_string_tl } {
   \AddToHook{begindocument/before}{\loadglsentries{\c__gzt_acronyms_file_string_tl}}
 }
+\AddToHook{begindocument/before}{
+\tl_set_eq:NN \g__gzt_president_message_string_tl \g__gzt_journal_president_wording_tl
+\cs_new_protected:Nn \__gzt_before_display_presidentmessage:
+{
+  \__gzt_before_editorial_presidentmessage:nn {\c__gzt_smf_logo_file_string_tl}{\g__gzt_president_message_string_tl}
+  \phantomsection
+  \par
+  \addcontentsline{toc}{part}{\g__gzt_smf_short_string_tl}
+  \addcontentsline{toc}{chapter}{\g__gzt_president_message_string_tl}
+}
+\cs_new_protected:Nn \__gzt_after_display_presidentmessage:
+{
+  \__gzt_after_editorial_presidentmessage: {}
+  \hspace*{\fill}
+  \c__gzt_president_message_date_string_tl
+  \displaydate{__gzt_president_message_date}
+  \\[1.5mm]
+  \hspace*{\fill}
+  \__gzt_display_people_by_role:n { president }
+  ,\c_space_tl
+  \g__gzt_president_signatory_string_tl
+  \__gzt_after_frontmatter_stuff: {}
+}
+\cs_new_protected:Nn \__gzt_display_president_message:
+{
+  \__gzt_before_display_presidentmessage: {}
+  \file_input:n {\c__gzt_president_message_file_string_tl}
+  \__gzt_after_display_presidentmessage: {}
+}
+\NewDocumentCommand \presidentmessage {}
+{
+  \bool_if:NF {\g__gzt_for_authors_bool} {
+    \__gzt_display_president_message: {}
+  }
+}
+}
 \tl_new:N \g__gzt_boxed_issue_number_tl
 \tl_gset:Nn \g__gzt_boxed_issue_number_tl {
   \tcbox{\Large\No\g__gzt_issue_number_int}
@@ -2223,39 +2279,6 @@
     \bool_if:NF {\g__gzt_for_authors_bool} {
       \__gzt_display_editorial:n {#1}
     }
-  }
-}
-\cs_new_protected:Nn \__gzt_before_display_presidentmessage:
-{
-  \__gzt_before_editorial_presidentmessage:nn {\c__gzt_smf_logo_file_string_tl}{\c__gzt_president_message_string_tl}
-  \phantomsection
-  \par
-  \addcontentsline{toc}{part}{\g__gzt_smf_short_string_tl}
-  \addcontentsline{toc}{chapter}{\c__gzt_president_message_string_tl}
-}
-\cs_new_protected:Nn \__gzt_after_display_presidentmessage:
-{
-  \__gzt_after_editorial_presidentmessage: {}
-  \hspace*{\fill}
-  \c__gzt_president_message_date_string_tl
-  \displaydate{__gzt_president_message_date}
-  \\[1.5mm]
-  \hspace*{\fill}
-  \__gzt_display_people_by_role:n { president }
-  ,\c_space_tl
-  \c__gzt_president_signatory_string_tl
-  \__gzt_after_frontmatter_stuff: {}
-}
-\cs_new_protected:Nn \__gzt_display_president_message:
-{
-  \__gzt_before_display_presidentmessage: {}
-  \file_input:n {\c__gzt_president_message_file_string_tl}
-  \__gzt_after_display_presidentmessage: {}
-}
-\NewDocumentCommand \presidentmessage {}
-{
-  \bool_if:NF {\g__gzt_for_authors_bool} {
-    \__gzt_display_president_message: {}
   }
 }
 \titleformat{\chapter}
@@ -3234,7 +3257,7 @@
   \tl_clear:N \l__gzt_newtheorem_frenchtitle_tl
   \tl_clear:N \l__gzt_newtheorem_englishtitle_tl
   \tl_set:Nn \l__gzt_newtheorem_englishtitle_tl {
-    \text_titlecase:n {#2}
+    \text_titlecase_first:n {#2}
   }
   \tl_set:Nf \l__gzt_newtheorem_frenchtitle_tl {
     \l__gzt_newtheorem_englishtitle_tl

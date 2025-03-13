@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 % 
-% File: gzt.dtx Copyright (C) 2014-2024 by
+% File: gzt.dtx Copyright (C) 2014-2025 by
 % Denis Bitouzé <denis.bitouze@univ-littoral.fr>
 %
 % It may be distributed and/or modified under the conditions of the
@@ -1677,7 +1677,7 @@ Running "make install" installs the files in the local TeX tree.
 %
 % We now declare some private string constants.
 %
-% \begin{macro}{\c_@@_journal_short_title_string_tl,\c_@@_journal_title_string_tl,\c_@@_editors_in_chief_string_tl,\c_@@_editors_string_tl,\c_@@_editorial_board_string_tl,\c_@@_editorial_secretariat_string_tl,\c_@@_phone_string_tl,\c_@@_fax_string_tl,\c_@@_informations_string_tl,\c_@@_publishingdirector_string_tl,\c_@@_issn_string_tl,\c_@@_isbn_string_tl,\c_@@_latexclass_string_tl,\c_@@_font_string_tl,\c_@@_configuration_file_string_tl,\c_@@_cover_string_tl,\c_@@_artistic_director_string_tl,\c_@@_editorial_heading_string_tl,\c_@@_toc_string_tl,\c_@@_message_string_tl,\c_@@_president_signatory_string_tl,\c_@@_editorinchief_signatory_string_tl,\c_@@_issue_bib_file_tl,\c_@@_about_frontcover_string_tl,\c_@@_credit_frontcover_string_tl,\c_@@_authors_instructions_string_tl}
+% \begin{macro}{\c_@@_journal_short_title_string_tl,\c_@@_journal_title_string_tl,\c_@@_editors_in_chief_string_tl,\c_@@_editors_string_tl,\c_@@_editorial_board_string_tl,\c_@@_editorial_secretariat_string_tl,\c_@@_phone_string_tl,\c_@@_fax_string_tl,\c_@@_informations_string_tl,\g_@@_publishingdirector_string_tl,\c_@@_issn_string_tl,\c_@@_isbn_string_tl,\c_@@_latexclass_string_tl,\c_@@_font_string_tl,\c_@@_configuration_file_string_tl,\c_@@_cover_string_tl,\c_@@_artistic_director_string_tl,\c_@@_editorial_heading_string_tl,\c_@@_toc_string_tl,\c_@@_message_string_tl,\g_@@_president_signatory_string_tl,\c_@@_editorinchief_signatory_string_tl,\c_@@_issue_bib_file_tl,\c_@@_about_frontcover_string_tl,\c_@@_credit_frontcover_string_tl,\c_@@_authors_instructions_string_tl}
 % For the journal's short and long titles.
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_journal_short_title_string_tl {Gazette}
@@ -1698,12 +1698,8 @@ Running "make install" installs the files in the local TeX tree.
 {
   \int_compare:nNnTF { \g_@@_editors_in_chief_int } > { 1 }
   { \c_@@_editorsinchief_string_tl }
-  { \c_@@_editorinchief_string_tl }
+  { \g_@@_editorinchief_string_tl }
 }
-%    \end{macrocode}
-% For the editor in chief.
-%    \begin{macrocode}
-\tl_const:Nn \c_@@_editorinchief_string_tl {R\'edacteur~ en~ chef }
 %    \end{macrocode}
 % For the editors in chief (plural form of the previous one).
 %    \begin{macrocode}
@@ -1740,10 +1736,6 @@ Running "make install" installs the files in the local TeX tree.
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_informations_string_tl {Renseignements}
 %    \end{macrocode}
-% For the publishing director.
-%    \begin{macrocode}
-\tl_const:Nn \c_@@_publishingdirector_string_tl {Directeur~ de~ la~ publication}
-%    \end{macrocode}
 % For the \textsc{issn}.
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_issn_string_tl {\textsc{issn}}
@@ -1778,23 +1770,9 @@ Running "make install" installs the files in the local TeX tree.
   }
 }
 %    \end{macrocode}
-% For the editor in chief.
-%    \begin{macrocode}
-\tl_const:Nn \c_@@_editorinchief_signatory_string_tl {
-  \c_@@_editorinchief_string_tl~ de~ la~ \c_@@_journal_title_string_tl
-}
-%    \end{macrocode}
 % For the table of contents.
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_toc_string_tl {Sommaire}
-%    \end{macrocode}
-% For the president message.
-%    \begin{macrocode}
-\tl_const:Nn \c_@@_president_message_string_tl {Mot~ du~ pr\'esident}
-%    \end{macrocode}
-% For the president.
-%    \begin{macrocode}
-\tl_const:Nn \c_@@_president_signatory_string_tl {pr\'esident~ de~ la~ \g_@@_smf_short_string_tl}
 %    \end{macrocode}
 % For the date of the editor in chief's message.
 %    \begin{macrocode}
@@ -2094,7 +2072,7 @@ Running "make install" installs the files in the local TeX tree.
 % We now declare the booleans that will be used.
 %
 % \begin{macro}{\g_@@_frontcover_bool,\g_@@_inside_frontcover_bool,\g_@@_inside_backcover_bool,\g_@@_frontmatter_bool,\g_@@_rubric_bool,\g_@@_interview_rubric_bool,\g_@@_mainmatter_bool,\g_@@_backmatter_bool,\g_@@_backcover_bool}
-%   The following booleans will be used to test wheter we are respectively in the
+%   The following booleans will be used to test whether we are respectively in the
 %   front cover, in the inside front cover, in the frontmatter, in (first page
 %   of) a rubric, in the mainmatter.
 %    \begin{macrocode}
@@ -2125,7 +2103,7 @@ Running "make install" installs the files in the local TeX tree.
 % \end{macro}
 %
 % \begin{macro}{\g_@@_advertisement_bool}
-%   The following boolean will be used to test wheter we are inside
+%   The following boolean will be used to test whether we are inside
 %   an advertisement page.
 %    \begin{macrocode}
 \bool_new:N \g_@@_advertisement_bool
@@ -2133,7 +2111,7 @@ Running "make install" installs the files in the local TeX tree.
 % \end{macro}
 %
 % \begin{macro}{\g_@@_multicols_bool}
-%   The following boolean will be used to test wheter we are inside
+%   The following boolean will be used to test whether we are inside
 %   a \pkg{multicol}'s ×multicols× environment.
 %    \begin{macrocode}
 \bool_new:N \g_@@_multicols_bool
@@ -2141,12 +2119,11 @@ Running "make install" installs the files in the local TeX tree.
 % \end{macro}
 %
 % \begin{macro}{\g_@@_refsection_bool}
-%   The following boolean will be used to test wheter we are inside
+%   The following boolean will be used to test whether we are inside
 %   a \pkg{biblatex}'s ×refsection× environment.
 %    \begin{macrocode}
 \bool_new:N \g_@@_refsection_bool
 %    \end{macrocode}
-% \end{macro}
 %
 % \subsubsection{Dimensions}
 %
@@ -2700,8 +2677,16 @@ Running "make install" installs the files in the local TeX tree.
 \tl_new:N \l_@@_journal_url_tl
 \tl_new:N \l_@@_journal_issn_tl
 \tl_new:N \l_@@_journal_isbn_tl
+\tl_new:N \g_@@_journal_president_wording_tl
+\tl_new:N \g_@@_president_message_string_tl
+\tl_new:N \g_@@_editorinchief_string_tl
 %    \end{macrocode}
-% \end{macro}
+% We know that's bad but, by default, we suppose both the president, the
+% editor in chief and the publishing director to be males.
+\tl_gset:Nn \g_@@_journal_president_wording_tl {Mot~ du~     pr\'esident }
+\tl_gset:Nn \g_@@_president_signatory_string_tl {pr\'esident~ de~ la~ \g_@@_smf_short_string_tl}
+\tl_gset:Nn \g_@@_editorinchief_string_tl {R\'edacteur~ en~ chef }
+\tl_gset:Nn \g_@@_publishingdirector_string_tl {Directeur~ de~ la~ publication}
 %
 % \begin{macro}{publisher,address,phone,fax,email,url,issn,isbn}
 % The keys options are created.
@@ -2716,6 +2701,24 @@ Running "make install" installs the files in the local TeX tree.
   url .tl_set:N = \l_@@_journal_url_tl,
   issn .tl_set:N = \l_@@_journal_issn_tl,
   isbn .tl_set:N = \l_@@_journal_isbn_tl,
+  president~ gender .choice:,
+  president~ gender /   male .code:n = { },
+  president~ gender / female .code:n = {
+    \tl_gset:Nn \g_@@_journal_president_wording_tl {Mot~ de~ la~ pr\'esidente}
+    \tl_gset:Nn \g_@@_president_signatory_string_tl {pr\'esidente~ de~ la~ \g_@@_smf_short_string_tl}
+  },
+  editorinchief~ gender .choice:,
+  editorinchief~ gender /   male .code:n = { },
+  editorinchief~ gender / female .code:n = {
+    \tl_gset:Nn \g_@@_editorinchief_string_tl {R\'edactrice~ ~ en~ chef }
+  },
+  publishingdirector~ gender .choice:,
+  publishingdirector~ gender /   male .code:n = { },
+  publishingdirector~ gender / female .code:n = {
+    \tl_gset:Nn \g_@@_publishingdirector_string_tl {Directrice~ de~ la~ publication}
+
+  },
+,
 %    \end{macrocode}
 %
 % All these options, when used, must receive a value.
@@ -3044,7 +3047,7 @@ Running "make install" installs the files in the local TeX tree.
 % \subsection{Miscellaneous patches}
 %
 % We patch the \pkg{biblatex}'s ×refsection× environment definition by adding
-% a flag that will be used to test wheter we are inside such an environment or
+% a flag that will be used to test whether we are inside such an environment or
 % not.
 %    \begin{macrocode}
 \AddToHook{env/multicols/begin}{
@@ -3273,7 +3276,7 @@ Running "make install" installs the files in the local TeX tree.
     ,\l_@@_people_photo_tl=photo
     ,\l_@@_people_speciality=speciality
     ,\l_@@_people_role_tl=role
-    ,\l_@@_people_webpage_tl=webpage
+    ,\g_@@_people_webpage_tl=webpage
   }{
     \tl_if_in:NnTF \l_@@_people_role_tl { editor } {
     \item[
@@ -3328,10 +3331,10 @@ Running "make install" installs the files in the local TeX tree.
                 \par
                 \href{mailto:\l_@@_people_email_tl}{\nolinkurl{\l_@@_people_email_tl}}
               }
-              \tl_if_empty:NF \l_@@_people_webpage_tl
+              \tl_if_empty:NF \g_@@_people_webpage_tl
               {
                 \par
-                \url{\l_@@_people_webpage_tl}
+                \url{\g_@@_people_webpage_tl}
               }
               \tl_if_empty:NF \l_@@_people_minibio_tl
               {
@@ -3342,6 +3345,9 @@ Running "make install" installs the files in the local TeX tree.
             \end{description}
           \end{adjustbox}
         }
+        % \tl_show:N \g_@@_people_webpage_tl
+        \tl_gclear:N \g_@@_people_webpage_tl
+        % \tl_show:N \g_@@_people_webpage_tl
       }{
         \_@@_citeauthor_no_firstinits:n {\c_@@_issue_bib_key_tl -#1-
           \exp_not:V\DTLcurrentindex}
@@ -3535,12 +3541,11 @@ Running "make install" installs the files in the local TeX tree.
         \@@_display_people_by_role:n { secretary }\par
         \l_@@_journal_address_tl\par
         \c_@@_phone_string_tl{}~ :~ \l_@@_journal_phone_tl{} \c_space_tl\textendash{}\c_space_tl
-        \c_@@_fax_string_tl{}~ :~ \l_@@_journal_fax_tl\par
         \href{mailto:\l_@@_journal_email_tl}{\nolinkurl{\l_@@_journal_email_tl}}
         % \newline
         \c_space_tl\textendash{}\c_space_tl
         \url{\l_@@_journal_url_tl}
-      \item[\c_@@_publishingdirector_string_tl{}~ :]
+      \item[\g_@@_publishingdirector_string_tl{}~ :]
         \@@_display_people_by_role:n { president }
       \item[\c_@@_issn_string_tl{}~ :] \l_@@_journal_issn_tl
         \tl_if_empty:NF \l_@@_journal_isbn_tl
@@ -4952,6 +4957,48 @@ Running "make install" installs the files in the local TeX tree.
 %<*class|class-article>
 %    \end{macrocode}
 %
+% \subsection{Displaying the president's message}
+%
+% We create an internal function that displays the president's message.
+%    \begin{macrocode}
+\AddToHook{begindocument/before}{
+\tl_set_eq:NN \g_@@_president_message_string_tl \g_@@_journal_president_wording_tl
+\cs_new_protected:Nn \_@@_before_display_presidentmessage:
+{
+  \_@@_before_editorial_presidentmessage:nn {\c_@@_smf_logo_file_string_tl}{\g_@@_president_message_string_tl}
+  \phantomsection
+  \par
+  \addcontentsline{toc}{part}{\g_@@_smf_short_string_tl}
+  \addcontentsline{toc}{chapter}{\g_@@_president_message_string_tl}
+}
+\cs_new_protected:Nn \_@@_after_display_presidentmessage:
+{
+  \_@@_after_editorial_presidentmessage: {}
+  \hspace*{\fill}
+  \c_@@_president_message_date_string_tl
+  \displaydate{@@_president_message_date}
+  \\[1.5mm]
+  \hspace*{\fill}
+  \@@_display_people_by_role:n { president }
+  ,\c_space_tl
+  \g_@@_president_signatory_string_tl
+  \_@@_after_frontmatter_stuff: {}
+}
+\cs_new_protected:Nn \_@@_display_president_message:
+{
+  \_@@_before_display_presidentmessage: {}
+  \file_input:n {\c_@@_president_message_file_string_tl}
+  \_@@_after_display_presidentmessage: {}
+}
+\NewDocumentCommand \presidentmessage {}
+{
+  \bool_if:NF {\g_@@_for_authors_bool} {
+    \_@@_display_president_message: {}
+  }
+}
+}
+%    \end{macrocode}
+%
 % \subsection{Special tools common to the editorial, the table of contents and the
 % president message}
 %
@@ -5174,45 +5221,6 @@ Running "make install" installs the files in the local TeX tree.
 %
 %    \begin{macrocode}
 %<*class|class-article>
-%    \end{macrocode}
-%
-% \subsection{Displaying the president's message}
-%
-% We create an internal function that displays the president's message.
-%    \begin{macrocode}
-\cs_new_protected:Nn \_@@_before_display_presidentmessage:
-{
-  \_@@_before_editorial_presidentmessage:nn {\c_@@_smf_logo_file_string_tl}{\c_@@_president_message_string_tl}
-  \phantomsection
-  \par
-  \addcontentsline{toc}{part}{\g_@@_smf_short_string_tl}
-  \addcontentsline{toc}{chapter}{\c_@@_president_message_string_tl}
-}
-\cs_new_protected:Nn \_@@_after_display_presidentmessage:
-{
-  \_@@_after_editorial_presidentmessage: {}
-  \hspace*{\fill}
-  \c_@@_president_message_date_string_tl
-  \displaydate{@@_president_message_date}
-  \\[1.5mm]
-  \hspace*{\fill}
-  \@@_display_people_by_role:n { president }
-  ,\c_space_tl
-  \c_@@_president_signatory_string_tl
-  \_@@_after_frontmatter_stuff: {}
-}
-\cs_new_protected:Nn \_@@_display_president_message:
-{
-  \_@@_before_display_presidentmessage: {}
-  \file_input:n {\c_@@_president_message_file_string_tl}
-  \_@@_after_display_presidentmessage: {}
-}
-\NewDocumentCommand \presidentmessage {}
-{
-  \bool_if:NF {\g_@@_for_authors_bool} {
-    \_@@_display_president_message: {}
-  }
-}
 %    \end{macrocode}
 %
 % \subsection{Chapter, sections, etc. customization}
@@ -6788,7 +6796,7 @@ Running "make install" installs the files in the local TeX tree.
 %    \end{macrocode}
 %
 % We create a variant of the ×\input× macro which cleans the local
-% customizations if any and, if necessary open and close the ×refsection× and
+% customizations if any and, if necessary opens and closes the ×refsection× and
 % ×multicols× environments.
 %    \begin{macrocode}
 \NewDocumentCommand \gztinput { m m } {
@@ -7334,7 +7342,7 @@ Running "make install" installs the files in the local TeX tree.
   \tl_clear:N \l_@@_newtheorem_frenchtitle_tl
   \tl_clear:N \l_@@_newtheorem_englishtitle_tl
   \tl_set:Nn \l_@@_newtheorem_englishtitle_tl {
-    \text_titlecase:n {#2}
+    \text_titlecase_first:n {#2}
   }
   \tl_set:Nf \l_@@_newtheorem_frenchtitle_tl {
     \l_@@_newtheorem_englishtitle_tl
